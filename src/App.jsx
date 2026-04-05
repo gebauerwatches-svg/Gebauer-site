@@ -56,33 +56,70 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
 }
 
 
+// Helper: figure out rank from referral count
+function getRankInfo(referrals) {
+  let idx = 0
+  for (let i = RAVEN_PATH.length - 1; i >= 0; i--) {
+    if (referrals >= RAVEN_PATH[i].referrals) { idx = i; break }
+  }
+  return { index: idx, rank: RAVEN_PATH[idx], next: RAVEN_PATH[idx + 1] || null }
+}
+
 function App() {
   const [layer, setLayer] = useState('landing')
   const [showSignup, setShowSignup] = useState(false)
-  const [firstName, setFirstName] = useState('')
-  const [email, setEmail] = useState('')
   const [honeypot, setHoneypot] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
-
   const [needsVerification, setNeedsVerification] = useState(false)
+  const [referralFrom, setReferralFrom] = useState('')
 
-  // Check URL params for verification redirect
+  // User data (persisted in localStorage, fetched from API)
+  const [firstName, setFirstName] = useState(() => localStorage.getItem('gebauer_name') || '')
+  const [email, setEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
+  const [userData, setUserData] = useState(null) // { first_name, referral_count, referral_code, current_position }
+  const [statsLoading, setStatsLoading] = useState(false)
+  const [statsError, setStatsError] = useState('')
+
+  // Fetch stats for a returning user
+  const fetchStats = async (userEmail) => {
+    if (!userEmail) return
+    setStatsLoading(true)
+    setStatsError('')
+    try {
+      const resp = await fetch(`/api/stats?email=${encodeURIComponent(userEmail)}`)
+      const ct = resp.headers.get('content-type') || ''
+      if (!ct.includes('application/json')) { setStatsLoading(false); return }
+      const data = await resp.json()
+      if (data.error) {
+        setStatsError(data.error)
+      } else {
+        setUserData(data)
+        localStorage.setItem('gebauer_name', data.first_name)
+        localStorage.setItem('gebauer_email', data.email)
+        setFirstName(data.first_name)
+        setEmail(data.email)
+      }
+    } catch { setStatsError('Could not load stats.') }
+    finally { setStatsLoading(false) }
+  }
+
+  // On mount: check URL params, auto-fetch stats for returning users
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (params.get('verified') === 'true') {
+      const savedEmail = localStorage.getItem('gebauer_email')
+      if (savedEmail) fetchStats(savedEmail)
       setLayer('inside')
-      // Clean the URL
       window.history.replaceState({}, '', window.location.pathname)
     }
-    // Get referral code from URL
-    if (params.get('ref')) {
-      setReferralFrom(params.get('ref'))
-    }
-  }, [])
+    if (params.get('ref')) setReferralFrom(params.get('ref'))
 
-  const [referralFrom, setReferralFrom] = useState('')
+    // Auto-fetch stats if we have a saved email
+    const savedEmail = localStorage.getItem('gebauer_email')
+    if (savedEmail) fetchStats(savedEmail)
+  }, [])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -114,8 +151,12 @@ function App() {
       if (!resp.ok || data.error) {
         setError(data.error || 'Something went wrong.')
       } else if (data.needs_verification) {
+        localStorage.setItem('gebauer_email', email.trim().toLowerCase())
+        localStorage.setItem('gebauer_name', firstName.trim())
         setNeedsVerification(true)
       } else {
+        localStorage.setItem('gebauer_email', email.trim().toLowerCase())
+        localStorage.setItem('gebauer_name', firstName.trim())
         setLayer('inside')
         setShowSignup(false)
       }
@@ -127,39 +168,57 @@ function App() {
   }
 
   const handleCopyLink = () => {
-    navigator.clipboard.writeText(`https://waitlist.gebauerwatches.com/?ref=${DEMO_USER.referralCode}`)
+    const code = userData?.referral_code || ''
+    navigator.clipboard.writeText(`https://gebauerwatches.com/?ref=${code}`)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
 
-  const userReferrals = DEMO_USER.referralCount
-  let currentRankIndex = 0
-  for (let i = RAVEN_PATH.length - 1; i >= 0; i--) {
-    if (userReferrals >= RAVEN_PATH[i].referrals) { currentRankIndex = i; break }
-  }
-  const currentRank = RAVEN_PATH[currentRankIndex]
-  const nextRank = RAVEN_PATH[currentRankIndex + 1] || null
+  // Compute rank from real or demo data
+  const userReferrals = userData?.referral_count ?? DEMO_USER.referralCount
+  const { index: currentRankIndex, rank: currentRank, next: nextRank } = getRankInfo(userReferrals)
 
   // ---- LAYER 2 ----
   if (layer === 'inside') {
+    const displayName = userData?.first_name || firstName || 'there'
+    const refCode = userData?.referral_code || ''
+
     return (
       <div className="l2">
+        {/* Big rank header */}
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />
-          <h1 className="l2-welcome-title fade-in">You're one of <em>The First 300.</em></h1>
-          <p className="l2-welcome-sub fade-in-delay-1">The movement started with you.</p>
+          <h1 className="l2-rank-hero fade-in">
+            You are <em>{currentRank.name}</em>
+          </h1>
+          <p className="l2-rank-detail fade-in-delay-1">
+            {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
+          </p>
+          <p className="l2-welcome-sub fade-in-delay-1">
+            {displayName}, you're one of The First 300.
+          </p>
         </header>
+
+        {/* Referral link */}
         <section className="l2-referral fade-in-delay-1">
           <p className="l2-section-label">Your Referral Link</p>
           <div className="l2-referral-box">
-            <span className="l2-referral-url">waitlist.gebauerwatches.com/?ref={DEMO_USER.referralCode}</span>
-            <button className="l2-copy-btn" onClick={handleCopyLink}>{copied ? 'Copied' : 'Copy'}</button>
+            <span className="l2-referral-url">
+              {refCode ? `gebauerwatches.com/?ref=${refCode}` : 'Loading...'}
+            </span>
+            <button className="l2-copy-btn" onClick={handleCopyLink} disabled={!refCode}>
+              {copied ? 'Copied' : 'Copy'}
+            </button>
           </div>
           <p className="l2-referral-hint">Every friend who joins moves you up The Igdrasil.</p>
         </section>
+
+        {/* Next rank progress */}
         {nextRank && (
           <section className="l2-next-rank fade-in-delay-2">
-            <p className="l2-next-rank-text">You're a <strong>{currentRank.name}</strong>. Refer {nextRank.referrals - userReferrals} more to become <strong>{nextRank.name}</strong>.</p>
+            <p className="l2-next-rank-text">
+              Refer {nextRank.referrals - userReferrals} more to become <strong>{nextRank.name}</strong>.
+            </p>
             <div className="l2-next-rank-bar"><div className="l2-next-rank-fill" style={{ width: `${Math.min(100, ((userReferrals - currentRank.referrals) / (nextRank.referrals - currentRank.referrals)) * 100)}%` }} /></div>
           </section>
         )}
@@ -201,6 +260,9 @@ function App() {
           </h1>
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Join the Movement</button>
+            {userData && (
+              <button className="hero-stats-btn" onClick={() => setLayer('inside')}>My Stats</button>
+            )}
             <p className="hero-proof">{WAITLIST_COUNT} people are already in.</p>
           </div>
         </div>
@@ -356,8 +418,8 @@ function App() {
             <div className="tree-nodes">
               {[...RAVEN_PATH].reverse().map((rank, i) => {
                 const originalIndex = RAVEN_PATH.length - 1 - i
-                const isReached = originalIndex <= 5 // demo: Jarl (index 5) is current
-                const isActive = originalIndex === 5
+                const isReached = originalIndex <= currentRankIndex
+                const isActive = originalIndex === currentRankIndex
                 const isTop = originalIndex === RAVEN_PATH.length - 1
                 const isBottom = originalIndex === 0
                 const side = originalIndex % 2 === 0 ? 'left' : 'right'

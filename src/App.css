@@ -25,6 +25,17 @@
 .hero-cta { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .hero-join-btn { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-dark); background: var(--gold); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s, box-shadow 0.3s; }
 .hero-join-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.3); }
+
+.hero-stats-btn {
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-primary); background: none;
+  border: 1px solid rgba(240, 236, 245, 0.2);
+  padding: 12px 36px; cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+}
+.hero-stats-btn:hover { border-color: var(--gold-muted); background: rgba(212, 166, 42, 0.06); }
+
 .hero-proof { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-secondary); opacity: 0.5; }
 .scroll-hint { position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 2; opacity: 0.2; animation: bob 3s ease-in-out infinite; }
 .scroll-hint-line { width: 1px; height: 24px; background: var(--text-secondary); opacity: 0.4; }
@@ -361,9 +372,10 @@
 .l2 { min-height: 100vh; background: var(--bg-light); display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
 .l2-welcome { text-align: center; padding: 64px 0 32px; max-width: 480px; }
 .l2-logo { width: 56px; height: auto; margin-bottom: 28px; opacity: 0.85; }
-.l2-welcome-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: clamp(26px, 5vw, 36px); line-height: 1.2; color: var(--text-dark); margin-bottom: 10px; }
-.l2-welcome-title em { font-style: italic; font-weight: 400; color: var(--purple); }
-.l2-welcome-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--text-muted); }
+.l2-rank-hero { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(32px, 6vw, 48px); line-height: 1.15; color: var(--text-dark); margin-bottom: 4px; }
+.l2-rank-hero em { font-style: italic; font-weight: 500; color: var(--gold); }
+.l2-rank-detail { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 22px; color: var(--purple); margin-bottom: 12px; }
+.l2-welcome-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 14px; color: var(--text-muted); }
 .l2-section-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 8px; }
 .l2-referral { width: 100%; max-width: 440px; margin-bottom: 28px; }
 .l2-referral-box { display: flex; border: 1px solid rgba(45, 27, 78, 0.08); background: var(--white); overflow: hidden; }
