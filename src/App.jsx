@@ -455,7 +455,7 @@ function App() {
           </div>
 
           <button className="community-cta" onClick={() => setShowSignup(true)}>Join the Movement</button>
-          <p className="community-proof">{waitlistCount} people. {300 - WAITLIST_COUNT} spots left.</p>
+          <p className="community-proof">{waitlistCount} people. {300 - waitlistCount} spots left.</p>
         </div>
       </Reveal>
 
