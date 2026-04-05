@@ -132,36 +132,188 @@
    COMMUNITY / IGDRASIL: compact path
    =========================================== */
 
-.community { background: var(--bg-dark); padding: 72px 24px; position: relative; overflow: hidden; }
-.community::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0px, transparent 60px, rgba(157, 122, 219, 0.015) 60px, rgba(157, 122, 219, 0.015) 61px); }
-.community-inner { max-width: 480px; margin: 0 auto; text-align: center; position: relative; }
+.community { background: var(--bg-dark); padding: 80px 24px; position: relative; overflow: hidden; }
+.community::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 60%, rgba(74, 45, 122, 0.08) 0%, transparent 70%); }
+.community-inner { max-width: 600px; margin: 0 auto; text-align: center; position: relative; }
 .community-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(26px, 5vw, 38px); line-height: 1.25; color: var(--text-primary); margin-bottom: 12px; }
 .community-headline em { font-style: italic; color: var(--gold-light); }
-.community-text { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.6; color: var(--text-secondary); opacity: 0.5; margin-bottom: 36px; }
+.community-text { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.6; color: var(--text-secondary); opacity: 0.5; margin-bottom: 48px; }
 
-.raven-path { position: relative; max-width: 360px; margin: 0 auto 36px; text-align: left; }
-.raven-path-line { position: absolute; left: 19px; top: 20px; bottom: 20px; width: 2px; background: linear-gradient(180deg, var(--purple-glow) 0%, rgba(157, 122, 219, 0.08) 100%); }
+/* ---- WORLD TREE ---- */
 
-.raven-node { display: flex; align-items: center; gap: 16px; padding: 8px 0; position: relative; }
-.raven-node-marker { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(157, 122, 219, 0.05); border: 2px solid rgba(157, 122, 219, 0.1); position: relative; z-index: 1; transition: all 0.3s; }
-.raven-node-symbol { font-size: 16px; color: var(--text-secondary); opacity: 0.25; }
-.raven-node.reached .raven-node-marker { border-color: var(--purple-light); background: rgba(107, 66, 168, 0.1); }
-.raven-node.reached .raven-node-symbol { color: var(--purple-glow); opacity: 1; }
-.raven-node.active .raven-node-marker { border-color: var(--gold); background: rgba(212, 166, 42, 0.1); box-shadow: 0 0 0 5px rgba(212, 166, 42, 0.08), 0 0 20px rgba(212, 166, 42, 0.1); }
-.raven-node.active .raven-node-symbol { color: var(--gold); font-size: 18px; opacity: 1; }
-.raven-node:not(.reached):not(.active) { opacity: 0.3; }
+.world-tree {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto 48px;
+  min-height: 720px;
+}
 
-.raven-node-content { display: flex; align-items: baseline; gap: 8px; flex: 1; }
-.raven-node-name { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 16px; color: var(--text-secondary); }
-.raven-node.reached .raven-node-name { color: var(--text-primary); }
-.raven-node.active .raven-node-name { color: var(--gold); }
-.raven-node-refs { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-secondary); opacity: 0.3; }
-.raven-node.reached .raven-node-refs { color: var(--purple-glow); opacity: 0.6; }
-.raven-node.active .raven-node-refs { color: var(--gold-muted); opacity: 1; }
+.tree-svg {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
 
-.community-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-dark); background: var(--gold); border: none; padding: 18px 48px; cursor: pointer; margin-bottom: 12px; transition: background 0.3s, transform 0.15s, box-shadow 0.3s; }
+.tree-nodes {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* Each rank node */
+.tree-node {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-radius: 4px;
+  transition: all 0.4s ease;
+}
+
+/* Alternate sides: left nodes push right, right nodes push left */
+.tree-node.left {
+  flex-direction: row;
+  margin-right: 40%;
+  text-align: left;
+}
+
+.tree-node.right {
+  flex-direction: row-reverse;
+  margin-left: 40%;
+  text-align: right;
+}
+
+@media (max-width: 600px) {
+  .tree-node.left { margin-right: 20%; }
+  .tree-node.right { margin-left: 20%; }
+}
+
+/* Orb (the glowing node) */
+.tree-node-orb {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 2px solid rgba(157, 122, 219, 0.12);
+  background: rgba(26, 17, 40, 0.6);
+  transition: all 0.4s;
+}
+
+.tree-node-symbol {
+  font-size: 20px;
+  color: var(--text-secondary);
+  opacity: 0.2;
+  transition: all 0.3s;
+}
+
+/* Reached (lit up in gold) */
+.tree-node.reached .tree-node-orb {
+  border-color: var(--gold-muted);
+  background: rgba(212, 166, 42, 0.08);
+  box-shadow: 0 0 12px rgba(212, 166, 42, 0.1);
+}
+
+.tree-node.reached .tree-node-symbol {
+  color: var(--gold);
+  opacity: 0.9;
+}
+
+/* Active (current rank, bright glow) */
+.tree-node.active .tree-node-orb {
+  border-color: var(--gold);
+  background: rgba(212, 166, 42, 0.12);
+  box-shadow:
+    0 0 0 6px rgba(212, 166, 42, 0.08),
+    0 0 24px rgba(212, 166, 42, 0.2),
+    0 0 48px rgba(212, 166, 42, 0.08);
+}
+
+.tree-node.active .tree-node-symbol {
+  color: var(--gold-light);
+  opacity: 1;
+  font-size: 24px;
+}
+
+/* Pulse animation on active node */
+.tree-node-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+  opacity: 0;
+  animation: node-pulse 2.5s ease-out infinite;
+}
+
+@keyframes node-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Locked (dim) */
+.tree-node.locked .tree-node-orb {
+  border-color: rgba(157, 122, 219, 0.08);
+  background: rgba(26, 17, 40, 0.4);
+}
+
+.tree-node.locked { opacity: 0.3; }
+
+/* Node info */
+.tree-node-info { flex: 1; min-width: 0; }
+
+.tree-node-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 19px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  margin-bottom: 2px;
+}
+
+.tree-node.reached .tree-node-name { color: var(--text-primary); opacity: 1; }
+.tree-node.active .tree-node-name { color: var(--gold); opacity: 1; }
+
+.tree-node-refs {
+  font-family: 'Inter', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  opacity: 0.3;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.tree-node.reached .tree-node-refs { color: var(--gold-muted); opacity: 0.7; }
+.tree-node.active .tree-node-refs { color: var(--gold); opacity: 1; }
+
+.tree-node-unlock {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  opacity: 0.25;
+  line-height: 1.4;
+}
+
+.tree-node.reached .tree-node-unlock { opacity: 0.45; }
+.tree-node.active .tree-node-unlock { opacity: 0.6; }
+
+/* CTA */
+.community-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-dark); background: var(--gold); border: none; padding: 20px 52px; cursor: pointer; margin-bottom: 12px; transition: background 0.3s, transform 0.15s, box-shadow 0.3s; }
 .community-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.25); }
-.community-proof { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-secondary); opacity: 0.25; }
+.community-proof { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-secondary); opacity: 0.25; }
 
 
 /* ===========================================

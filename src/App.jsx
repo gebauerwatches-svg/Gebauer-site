@@ -148,12 +148,11 @@ function App() {
         <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
         <div className="hero-overlay" />
         <div className="hero-content">
-          <img src={logo} alt="Gebauer" className="hero-logo fade-in" />
-          <h1 className="hero-headline fade-in-delay-1">
+          <h1 className="hero-headline fade-in">
             Built by teens, for teens.
             <span className="hero-accent"> Because we're different.</span>
           </h1>
-          <div className="hero-cta fade-in-delay-2">
+          <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Join the Movement</button>
             <p className="hero-proof">{WAITLIST_COUNT} people are already in.</p>
           </div>
@@ -268,24 +267,76 @@ function App() {
         <p className="testimonials-hook">Reach Einherjar (12 referrals) and earn your place on the Founders Wall.</p>
       </Reveal>
 
-      {/* IGDRASIL: compact, fun side thing */}
+      {/* IGDRASIL: Norse World Tree */}
       <Reveal className="community">
         <div className="community-inner">
-          <RavenIcon className="section-raven section-raven-gold" size={28} />
           <h2 className="community-headline">Climb The Igdrasil. <em>It's kind of our thing.</em></h2>
           <p className="community-text">8 ranks. Refer friends. Unlock access. Not the reason to join, but a fun reason to stay.</p>
-          <div className="raven-path">
-            <div className="raven-path-line" />
-            {RAVEN_PATH.map((rank, i) => (
-              <div key={rank.name} className={`raven-node ${i === 5 ? 'active' : ''} ${i <= 5 ? 'reached' : ''}`}>
-                <div className="raven-node-marker"><span className="raven-node-symbol">{rank.symbol}</span></div>
-                <div className="raven-node-content">
-                  <h3 className="raven-node-name">{rank.name}</h3>
-                  <span className="raven-node-refs">{rank.referrals === 0 ? 'Join' : rank.referrals}</span>
-                </div>
-              </div>
-            ))}
+
+          <div className="world-tree">
+            {/* SVG tree trunk and branches */}
+            <svg className="tree-svg" viewBox="0 0 200 720" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+              {/* Roots */}
+              <path d="M100 720 Q80 700 60 710 Q40 720 20 715" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.3" />
+              <path d="M100 720 Q120 700 140 710 Q160 720 180 715" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.3" />
+              <path d="M100 720 Q90 705 70 700" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M100 720 Q110 705 130 700" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              {/* Main trunk */}
+              <path d="M100 720 Q98 600 100 480 Q102 360 100 240 Q98 120 100 20" stroke="url(#trunk-gradient)" strokeWidth="4" strokeLinecap="round" />
+              {/* Branches (alternating sides, growing from trunk to nodes) */}
+              <path d="M100 630 Q70 625 50 620" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
+              <path d="M100 540 Q130 535 155 530" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
+              <path d="M100 450 Q65 440 45 435" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
+              <path d="M100 360 Q135 352 158 345" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.2" />
+              <path d="M100 270 Q62 258 42 250" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.2" />
+              <path d="M100 185 Q140 178 160 172" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
+              <path d="M100 105 Q65 95 48 88" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
+              {/* Crown/canopy hint at top */}
+              <path d="M100 20 Q80 5 60 10" stroke="var(--gold-muted)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M100 20 Q120 5 140 10" stroke="var(--gold-muted)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M100 20 Q90 -5 75 0" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
+              <path d="M100 20 Q110 -5 125 0" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
+              <defs>
+                <linearGradient id="trunk-gradient" x1="100" y1="720" x2="100" y2="20" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.5" />
+                  <stop offset="60%" stopColor="var(--purple-glow)" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="var(--purple-mid)" stopOpacity="0.15" />
+                </linearGradient>
+              </defs>
+            </svg>
+
+            {/* Rank nodes positioned over the tree */}
+            <div className="tree-nodes">
+              {[...RAVEN_PATH].reverse().map((rank, i) => {
+                const originalIndex = RAVEN_PATH.length - 1 - i
+                const isReached = originalIndex <= 5 // demo: Jarl (index 5) is current
+                const isActive = originalIndex === 5
+                const isTop = originalIndex === RAVEN_PATH.length - 1
+                const isBottom = originalIndex === 0
+                const side = originalIndex % 2 === 0 ? 'left' : 'right'
+
+                return (
+                  <div
+                    key={rank.name}
+                    className={`tree-node ${isReached ? 'reached' : 'locked'} ${isActive ? 'active' : ''} ${side}`}
+                  >
+                    <div className="tree-node-orb">
+                      <span className="tree-node-symbol">{rank.symbol}</span>
+                      {isActive && <div className="tree-node-pulse" />}
+                    </div>
+                    <div className="tree-node-info">
+                      <h3 className="tree-node-name">{rank.name}</h3>
+                      <span className="tree-node-refs">
+                        {rank.referrals === 0 ? 'Join' : `${rank.referrals} referrals`}
+                      </span>
+                      <p className="tree-node-unlock">{rank.unlock}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
+
           <button className="community-cta" onClick={() => setShowSignup(true)}>Join the Movement</button>
           <p className="community-proof">{WAITLIST_COUNT} people. {300 - WAITLIST_COUNT} spots left.</p>
         </div>
