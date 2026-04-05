@@ -100,6 +100,16 @@ function App() {
           honeypot,
         }),
       })
+
+      // Check if we got a valid JSON response (not an HTML error page)
+      const contentType = resp.headers.get('content-type') || ''
+      if (!contentType.includes('application/json')) {
+        console.error('API returned non-JSON response. Status:', resp.status)
+        setError('Signup is temporarily unavailable. Try again soon.')
+        setLoading(false)
+        return
+      }
+
       const data = await resp.json()
       if (!resp.ok || data.error) {
         setError(data.error || 'Something went wrong.')
@@ -109,7 +119,10 @@ function App() {
         setLayer('inside')
         setShowSignup(false)
       }
-    } catch (err) { setError('Something went wrong. Try again.') }
+    } catch (err) {
+      console.error('Signup error:', err)
+      setError('Could not connect to the server. Try again.')
+    }
     finally { setLoading(false) }
   }
 
