@@ -23,12 +23,7 @@ const TESTIMONIALS = [
   { quote: "I'm picking my edition number early. That's the kind of thing that makes you feel like you matter to a brand.", name: 'Sam', rank: 'Jarl', referrals: 16, position: 7 },
 ]
 
-const DEMO_USER = { firstName: 'Liam', referralCode: 'GEBAUER-LG42', referralCount: 3 }
-const DEMO_LEADERBOARD = [
-  { name: 'Loke', referrals: 79 }, { name: 'Maya', referrals: 12 },
-  { name: 'James', referrals: 8 }, { name: 'Ava', referrals: 5 }, { name: 'Finn', referrals: 4 },
-]
-const WAITLIST_COUNT = 152
+const FALLBACK_WAITLIST_COUNT = 152
 
 const RavenIcon = ({ className = '', size = 20 }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
@@ -76,6 +71,8 @@ function App() {
   const [referralFrom, setReferralFrom] = useState('')
   const [showStats, setShowStats] = useState(false)
   const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
+  const [leaderboard, setLeaderboard] = useState([])
+  const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
 
   // User data (persisted in localStorage, fetched from API)
   const [firstName, setFirstName] = useState(() => localStorage.getItem('gebauer_name') || '')
@@ -121,6 +118,15 @@ function App() {
     // Auto-fetch stats if we have a saved email
     const savedEmail = localStorage.getItem('gebauer_email')
     if (savedEmail) fetchStats(savedEmail)
+
+    // Fetch real leaderboard
+    fetch('/api/leaderboard')
+      .then(r => r.json())
+      .then(data => {
+        if (data.leaderboard) setLeaderboard(data.leaderboard)
+        if (data.total) setWaitlistCount(data.total)
+      })
+      .catch(() => {})
   }, [])
 
   const handleSubmit = async (e) => {
@@ -177,7 +183,7 @@ function App() {
   }
 
   // Compute rank from real or demo data
-  const userReferrals = userData?.referral_count ?? DEMO_USER.referralCount
+  const userReferrals = userData?.referral_count ?? 0
   const { index: currentRankIndex, rank: currentRank, next: nextRank } = getRankInfo(userReferrals)
 
   // ---- LAYER 2 ----
@@ -239,10 +245,12 @@ function App() {
             })}
           </div>
         </section>
-        <section className="l2-leaderboard fade-in-delay-3">
-          <h3 className="l2-leaderboard-title">Top Referrers</h3>
-          <div className="l2-leaderboard-list">{DEMO_LEADERBOARD.map((p, i) => <div key={p.name} className="l2-leaderboard-row"><span className="l2-leaderboard-pos">{i+1}</span><span className="l2-leaderboard-name">{p.name}</span><span className="l2-leaderboard-count">{p.referrals}</span></div>)}</div>
-        </section>
+        {leaderboard.length > 0 && (
+          <section className="l2-leaderboard fade-in-delay-3">
+            <h3 className="l2-leaderboard-title">Top Referrers</h3>
+            <div className="l2-leaderboard-list">{leaderboard.slice(0, 5).map((p, i) => <div key={p.name + i} className="l2-leaderboard-row"><span className="l2-leaderboard-pos">{i+1}</span><span className="l2-leaderboard-name">{p.name}</span><span className="l2-leaderboard-count">{p.referrals}</span></div>)}</div>
+          </section>
+        )}
         <footer className="l2-footer"><button className="l2-back" onClick={() => setLayer('landing')}>Back to home</button><p>&copy; {new Date().getFullYear()} Gebauer Watches</p></footer>
       </div>
     )
@@ -263,7 +271,7 @@ function App() {
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Join the Movement</button>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
-            <p className="hero-proof">{WAITLIST_COUNT} people are already in.</p>
+            <p className="hero-proof">{waitlistCount} people are already in.</p>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
@@ -447,7 +455,7 @@ function App() {
           </div>
 
           <button className="community-cta" onClick={() => setShowSignup(true)}>Join the Movement</button>
-          <p className="community-proof">{WAITLIST_COUNT} people. {300 - WAITLIST_COUNT} spots left.</p>
+          <p className="community-proof">{waitlistCount} people. {300 - WAITLIST_COUNT} spots left.</p>
         </div>
       </Reveal>
 
@@ -488,7 +496,7 @@ function App() {
                   {error && <p className="signup-error">{error}</p>}
                   <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the Movement'}</button>
                 </form>
-                <p className="signup-count">{WAITLIST_COUNT} people are already in.</p>
+                <p className="signup-count">{waitlistCount} people are already in.</p>
               </>
             )}
           </div>
