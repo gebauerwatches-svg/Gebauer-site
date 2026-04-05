@@ -74,6 +74,8 @@ function App() {
   const [copied, setCopied] = useState(false)
   const [needsVerification, setNeedsVerification] = useState(false)
   const [referralFrom, setReferralFrom] = useState('')
+  const [showStats, setShowStats] = useState(false)
+  const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
 
   // User data (persisted in localStorage, fetched from API)
   const [firstName, setFirstName] = useState(() => localStorage.getItem('gebauer_name') || '')
@@ -260,9 +262,7 @@ function App() {
           </h1>
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Join the Movement</button>
-            {userData && (
-              <button className="hero-stats-btn" onClick={() => setLayer('inside')}>My Stats</button>
-            )}
+            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
             <p className="hero-proof">{WAITLIST_COUNT} people are already in.</p>
           </div>
         </div>
@@ -489,6 +489,59 @@ function App() {
                   <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the Movement'}</button>
                 </form>
                 <p className="signup-count">{WAITLIST_COUNT} people are already in.</p>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* STATS LOOKUP MODAL */}
+      {showStats && (
+        <div className="signup-overlay overlay-enter">
+          <div className="signup-backdrop" onClick={() => setShowStats(false)} />
+          <div className="signup-card card-enter">
+            <button className="signup-close" onClick={() => setShowStats(false)} aria-label="Close">&times;</button>
+
+            {userData ? (
+              <>
+                <h2>Welcome back, {userData.first_name}.</h2>
+                <p className="signup-sub">Your stats are ready.</p>
+                <button className="signup-submit" onClick={() => { setShowStats(false); setLayer('inside') }}>View My Stats</button>
+              </>
+            ) : (
+              <>
+                <h2>Check Your Stats</h2>
+                <p className="signup-sub">Enter the email you signed up with.</p>
+                <form className="signup-form" onSubmit={async (e) => {
+                  e.preventDefault()
+                  setStatsError('')
+                  setStatsLoading(true)
+                  try {
+                    const resp = await fetch(`/api/stats?email=${encodeURIComponent(statsEmail)}`)
+                    const ct = resp.headers.get('content-type') || ''
+                    if (!ct.includes('application/json')) { setStatsError('Could not connect.'); return }
+                    const data = await resp.json()
+                    if (data.error) {
+                      setStatsError(data.error)
+                    } else {
+                      setUserData(data)
+                      localStorage.setItem('gebauer_email', data.email)
+                      localStorage.setItem('gebauer_name', data.first_name)
+                      setFirstName(data.first_name)
+                      setEmail(data.email)
+                      setShowStats(false)
+                      setLayer('inside')
+                    }
+                  } catch { setStatsError('Could not connect.') }
+                  finally { setStatsLoading(false) }
+                }}>
+                  <div>
+                    <label htmlFor="statsEmail">Email</label>
+                    <input id="statsEmail" type="email" placeholder="Your email" value={statsEmail} onChange={(e) => setStatsEmail(e.target.value)} required maxLength={255} />
+                  </div>
+                  {statsError && <p className="signup-error">{statsError}</p>}
+                  <button type="submit" className="signup-submit" disabled={statsLoading}>{statsLoading ? 'Looking up...' : 'View My Stats'}</button>
+                </form>
               </>
             )}
           </div>
