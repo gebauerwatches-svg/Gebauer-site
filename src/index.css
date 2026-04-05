@@ -5,7 +5,7 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter', -apple-system, sans-serif;
-  background-color: var(--bg-light);
+  background-color: var(--bg-light); /* warm off-white */
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

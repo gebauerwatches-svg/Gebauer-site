@@ -1,47 +1,35 @@
 /*
   GEBAUER WATCHES — Brand Color Palette
-  Purple + Gold — The Raven's Colors
-  Updated based on real teen feedback: old green/cream felt too Rolex/mainstream.
-  Purple and gold fits the raven, feels unique, and stands apart from every other watch brand.
+  Purple & Gold with warm off-white foundations.
+  Feels like discovering a story, not browsing a tech site.
 */
 
 :root {
   /* ─── PRIMARY ─── */
-  --purple:         #2D1B4E;  /* Deep raven purple — primary brand color */
-  --purple-mid:     #4A2D7A;  /* Medium purple — sections, cards */
-  --purple-light:   #6B42A8;  /* Lighter purple — hover states, accents */
-  --purple-soft:    #8B6BBF;  /* Soft purple — subtle text on dark backgrounds */
-  --purple-glow:    #9D7ADB;  /* Glowing purple — highlights, active states */
+  --purple:         #2D1B4E;
+  --purple-mid:     #4A2D7A;
+  --purple-light:   #6B42A8;
+  --purple-soft:    #8B6BBF;
+  --purple-glow:    #9D7ADB;
 
-  --gold:           #D4A62A;  /* Rich gold — primary accent */
-  --gold-light:     #E8C04A;  /* Bright gold — hover states, highlights */
-  --gold-muted:     #B8922A;  /* Subdued gold — borders, subtle accents */
-  --gold-pale:      #F0D878;  /* Pale gold — gentle highlights on dark bg */
+  --gold:           #D4A62A;
+  --gold-light:     #E8C04A;
+  --gold-muted:     #B8922A;
+  --gold-pale:      #F0D878;
 
-  /* ─── BACKGROUNDS ─── */
-  --bg-dark:        #1A1128;  /* Darkest — hero sections, footer */
-  --bg-deep:        #221638;  /* Deep purple-black — main dark sections */
-  --bg-card:        #2A1D42;  /* Card backgrounds on dark sections */
-  --bg-light:       #F8F5FC;  /* Light lavender — light section backgrounds */
-  --bg-cream:       #FAF7FF;  /* Off-white with purple tint — softest background */
+  /* ─── BACKGROUNDS (warmer, off-white foundation) ─── */
+  --bg-dark:        #1A1128;
+  --bg-deep:        #221638;
+  --bg-card:        #2A1D42;
+  --bg-light:       #FAF8F5;   /* warm off-white, not lavender */
+  --bg-cream:       #F5F2ED;   /* warmer cream for alternating sections */
+  --bg-warm:        #EFECE6;   /* slightly deeper warm tone */
 
   /* ─── NEUTRALS ─── */
-  --white:          #FEFCFF;  /* Clean white with warmth */
-  --text-primary:   #F0ECF5;  /* Primary text on dark backgrounds */
-  --text-secondary: #B8AFCA;  /* Secondary text on dark backgrounds */
-  --text-dark:      #1A1128;  /* Primary text on light backgrounds */
-  --text-muted:     #6B6080;  /* Muted text on light backgrounds */
-
-  /* ─── USAGE GUIDE ─── */
-  /*
-    Dark sections:   --bg-dark or --bg-deep background, --text-primary for text
-    Light sections:  --bg-light or --bg-cream background, --text-dark for text
-    Cards:           --bg-card on dark, white on light
-    Headings:        --gold on dark bg, --purple on light bg
-    Buttons:         --gold (bg) + --bg-dark (text), or --purple-mid (bg) + --white (text)
-    Accents:         --gold, --purple-glow
-    Hover states:    --gold-light, --purple-light
-    Links:           --gold on dark, --purple-mid on light
-    Raven elements:  --purple-glow, --gold
-  */
+  --white:          #FEFCFA;   /* warm white */
+  --text-primary:   #F0ECF5;
+  --text-secondary: #B8AFCA;
+  --text-dark:      #2A2235;   /* softer than pure black */
+  --text-muted:     #7A7086;
+  --text-warm:      #5C5466;   /* warm mid-tone for body text on light bg */
 }
