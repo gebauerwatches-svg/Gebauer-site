@@ -66,16 +66,50 @@ function App() {
   const [error, setError] = useState('')
   const [copied, setCopied] = useState(false)
 
+  const [needsVerification, setNeedsVerification] = useState(false)
+
+  // Check URL params for verification redirect
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('verified') === 'true') {
+      setLayer('inside')
+      // Clean the URL
+      window.history.replaceState({}, '', window.location.pathname)
+    }
+    // Get referral code from URL
+    if (params.get('ref')) {
+      setReferralFrom(params.get('ref'))
+    }
+  }, [])
+
+  const [referralFrom, setReferralFrom] = useState('')
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (honeypot) return
     setError('')
     setLoading(true)
     try {
-      await new Promise(resolve => setTimeout(resolve, 800))
-      setLayer('inside')
-      setShowSignup(false)
-    } catch (err) { setError(err.message || 'Something went wrong') }
+      const resp = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name: firstName,
+          email,
+          referred_by: referralFrom || undefined,
+          honeypot,
+        }),
+      })
+      const data = await resp.json()
+      if (!resp.ok || data.error) {
+        setError(data.error || 'Something went wrong.')
+      } else if (data.needs_verification) {
+        setNeedsVerification(true)
+      } else {
+        setLayer('inside')
+        setShowSignup(false)
+      }
+    } catch (err) { setError('Something went wrong. Try again.') }
     finally { setLoading(false) }
   }
 
@@ -353,19 +387,35 @@ function App() {
       {/* SIGNUP MODAL */}
       {showSignup && (
         <div className="signup-overlay overlay-enter">
-          <div className="signup-backdrop" onClick={() => setShowSignup(false)} />
+          <div className="signup-backdrop" onClick={() => { setShowSignup(false); setNeedsVerification(false) }} />
           <div className="signup-card card-enter">
-            <button className="signup-close" onClick={() => setShowSignup(false)} aria-label="Close">&times;</button>
-            <h2>Join The First 300</h2>
-            <p className="signup-sub">You found this before everyone else.</p>
-            <form className="signup-form" onSubmit={handleSubmit}>
-              <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
-              <div><label htmlFor="firstName">Full Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
-              <div><label htmlFor="email">Email</label><input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} /></div>
-              {error && <p className="signup-error">{error}</p>}
-              <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the Movement'}</button>
-            </form>
-            <p className="signup-count">{WAITLIST_COUNT} people are already in.</p>
+            <button className="signup-close" onClick={() => { setShowSignup(false); setNeedsVerification(false) }} aria-label="Close">&times;</button>
+
+            {needsVerification ? (
+              <>
+                <div className="verify-icon">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h2>Check Your Email</h2>
+                <p className="signup-sub">We sent a verification link to <strong>{email}</strong>. Click it to lock in your spot.</p>
+                <p className="verify-note">Link expires in 48 hours. Check spam if you don't see it.</p>
+              </>
+            ) : (
+              <>
+                <h2>Join The First 300</h2>
+                <p className="signup-sub">You found this before everyone else.</p>
+                <form className="signup-form" onSubmit={handleSubmit}>
+                  <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
+                  <div><label htmlFor="firstName">Full Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
+                  <div><label htmlFor="email">Email</label><input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} /></div>
+                  {error && <p className="signup-error">{error}</p>}
+                  <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the Movement'}</button>
+                </form>
+                <p className="signup-count">{WAITLIST_COUNT} people are already in.</p>
+              </>
+            )}
           </div>
         </div>
       )}

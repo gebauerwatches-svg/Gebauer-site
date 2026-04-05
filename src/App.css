@@ -350,6 +350,9 @@
 .signup-error { font-family: 'Inter', sans-serif; font-size: 12px; color: #B54A4A; text-align: center; }
 .signup-count { font-family: 'Inter', sans-serif; font-size: 11px; color: var(--text-muted); margin-top: 16px; opacity: 0.6; }
 
+.verify-icon { width: 56px; height: 56px; border: 1.5px solid var(--purple-mid); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; color: var(--purple); }
+.verify-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); opacity: 0.6; margin-top: 8px; }
+
 
 /* ===========================================
    LAYER 2
