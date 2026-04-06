@@ -20,7 +20,7 @@ const RAVEN_PATH = [
 const TESTIMONIALS = [
   { quote: "The wood dial is something I've never seen before. Knowing there are only 300 makes it hit different.", name: 'Aiden', rank: 'Jarl', referrals: 19, position: 3 },
   { quote: 'I showed one friend and it just spread. This community is real.', name: 'Carson', rank: 'Jarl', referrals: 17, position: 5 },
-  { quote: "I'm picking my edition number early. That's the kind of thing that makes you feel like you matter to a brand.", name: 'Sam', rank: 'Jarl', referrals: 16, position: 7 },
+  { quote: "I love feeling like I'm part of something rare and bold by getting one of the first watches.", name: 'Sam', rank: 'Huginn', referrals: 49, position: 2 },
 ]
 
 const FALLBACK_WAITLIST_COUNT = 152
