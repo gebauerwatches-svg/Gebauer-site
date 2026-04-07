@@ -277,6 +277,31 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
+      {/* THE PRIZE: #1 gets the first watch */}
+      <Reveal className="prize">
+        <div className="prize-inner">
+          <p className="prize-label">The Race to #1</p>
+          <h2 className="prize-headline">
+            The first <em>Gebauer ever made</em> goes to #1.
+          </h2>
+          <p className="prize-text">
+            Whoever has the most referrals when the samples land this summer takes home <strong>watch 001/300</strong>. The first one off the line. The one engraved before any other.
+          </p>
+          <div className="prize-current">
+            {leaderboard.length > 0 ? (
+              <>
+                <span className="prize-current-label">Currently in 1st:</span>
+                <span className="prize-current-name">{leaderboard[0].name}</span>
+                <span className="prize-current-refs">{leaderboard[0].referrals} referrals</span>
+              </>
+            ) : (
+              <span className="prize-current-label">Race in progress.</span>
+            )}
+          </div>
+          <button className="prize-cta" onClick={() => setShowSignup(true)}>Join the Race</button>
+        </div>
+      </Reveal>
+
       {/* FOUNDER: short, punchy, visual */}
       <Reveal className="founder">
         <div className="founder-inner">
