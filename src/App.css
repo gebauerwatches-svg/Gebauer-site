@@ -119,42 +119,101 @@
   font-weight: 500;
 }
 
-/* Current leader callout */
-.prize-current {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 28px;
-  background: rgba(212, 166, 42, 0.06);
-  border: 1px solid rgba(212, 166, 42, 0.2);
-  margin-bottom: 36px;
-  flex-wrap: wrap;
-  justify-content: center;
+/* Full leaderboard inside the prize section */
+.prize-leaderboard {
+  max-width: 480px;
+  margin: 0 auto 40px;
+  padding: 28px 28px 20px;
+  background: rgba(212, 166, 42, 0.04);
+  border: 1px solid rgba(212, 166, 42, 0.18);
 }
 
-.prize-current-label {
+.prize-leaderboard-label {
   font-family: 'Inter', sans-serif;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--gold-muted);
+  text-align: center;
+  margin-bottom: 18px;
 }
 
-.prize-current-name {
+.prize-leaderboard-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.prize-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid rgba(212, 166, 42, 0.1);
+  transition: background 0.2s;
+}
+
+.prize-row:last-child {
+  border-bottom: none;
+}
+
+.prize-row:hover {
+  background: rgba(212, 166, 42, 0.04);
+}
+
+/* Position number */
+.prize-row-pos {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 500;
-  font-size: 22px;
-  color: var(--gold-light);
+  font-size: 18px;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  text-align: center;
 }
 
-.prize-current-refs {
+/* Name */
+.prize-row-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--text-primary);
+  text-align: left;
+}
+
+/* BIG referral count */
+.prize-row-refs {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.prize-row-label {
   font-family: 'Inter', sans-serif;
-  font-size: 12px;
+  font-size: 10px;
   font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--text-secondary);
-  opacity: 0.7;
-  letter-spacing: 0.05em;
+  opacity: 0.5;
+  align-self: center;
+}
+
+/* First place: glowing gold */
+.prize-row.first { background: rgba(212, 166, 42, 0.08); margin: 0 -8px; padding: 14px 12px; border-bottom: 1px solid rgba(212, 166, 42, 0.2); }
+.prize-row.first .prize-row-pos { color: var(--gold); opacity: 1; font-size: 22px; }
+.prize-row.first .prize-row-name { color: var(--gold-light); font-size: 20px; }
+.prize-row.first .prize-row-refs { color: var(--gold-light); font-size: 32px; }
+
+@media (max-width: 600px) {
+  .prize-leaderboard { padding: 22px 18px 16px; }
+  .prize-row { grid-template-columns: 24px 1fr auto auto; gap: 8px; padding: 10px 2px; }
+  .prize-row-name { font-size: 16px; }
+  .prize-row-refs { font-size: 22px; }
+  .prize-row.first .prize-row-name { font-size: 18px; }
+  .prize-row.first .prize-row-refs { font-size: 28px; }
 }
 
 .prize-actions {

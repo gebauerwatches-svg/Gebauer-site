@@ -14,7 +14,7 @@ export async function onRequestGet(context) {
 
   try {
     const resp = await supabaseQuery(env,
-      `waitlist_signups?select=first_name,referral_count&email_verified=eq.true&referral_count=gt.0&order=referral_count.desc&limit=10`
+      `waitlist_signups?select=first_name,referral_count&email_verified=eq.true&referral_count=gt.0&order=referral_count.desc&limit=100`
     )
 
     const leaderboard = (resp.data || []).map(r => ({

@@ -287,17 +287,22 @@ function App() {
           <p className="prize-text">
             Whoever has the most referrals when the samples land this summer takes home <strong>watch 001/300</strong>. The first one off the line. The one engraved before any other.
           </p>
-          <div className="prize-current">
-            {leaderboard.length > 0 ? (
-              <>
-                <span className="prize-current-label">Currently in 1st:</span>
-                <span className="prize-current-name">{leaderboard[0].name}</span>
-                <span className="prize-current-refs">{leaderboard[0].referrals} referrals</span>
-              </>
-            ) : (
-              <span className="prize-current-label">Race in progress.</span>
-            )}
-          </div>
+          {leaderboard.length > 0 && (
+            <div className="prize-leaderboard">
+              <p className="prize-leaderboard-label">The Leaderboard</p>
+              <div className="prize-leaderboard-list">
+                {leaderboard.map((person, i) => (
+                  <div key={person.name + i} className={`prize-row ${i === 0 ? 'first' : ''}`}>
+                    <span className="prize-row-pos">{i + 1}</span>
+                    <span className="prize-row-name">{person.name}</span>
+                    <span className="prize-row-refs">{person.referrals}</span>
+                    <span className="prize-row-label">{person.referrals === 1 ? 'referral' : 'referrals'}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <div className="prize-actions">
             <button className="prize-cta" onClick={() => setShowSignup(true)}>Join the Race</button>
             <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
