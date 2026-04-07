@@ -298,7 +298,10 @@ function App() {
               <span className="prize-current-label">Race in progress.</span>
             )}
           </div>
-          <button className="prize-cta" onClick={() => setShowSignup(true)}>Join the Race</button>
+          <div className="prize-actions">
+            <button className="prize-cta" onClick={() => setShowSignup(true)}>Join the Race</button>
+            <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
+          </div>
         </div>
       </Reveal>
 

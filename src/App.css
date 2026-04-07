@@ -157,9 +157,14 @@
   letter-spacing: 0.05em;
 }
 
+.prize-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
 .prize-cta {
-  display: block;
-  margin: 0 auto;
   font-family: 'Inter', sans-serif;
   font-weight: 500;
   font-size: 15px;
@@ -177,6 +182,26 @@
   background: var(--gold-light);
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(212, 166, 42, 0.35);
+}
+
+.prize-stats-btn {
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  background: none;
+  border: 1px solid rgba(212, 166, 42, 0.3);
+  padding: 12px 36px;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s, color 0.3s;
+}
+
+.prize-stats-btn:hover {
+  border-color: var(--gold);
+  background: rgba(212, 166, 42, 0.06);
+  color: var(--gold);
 }
 
 @media (max-width: 600px) {
