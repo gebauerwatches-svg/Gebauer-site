@@ -17,12 +17,6 @@ const RAVEN_PATH = [
   { name: 'Huginn', referrals: 25, unlock: 'Signed card from Liam.', symbol: '\u2726' },
 ]
 
-const TESTIMONIALS = [
-  { quote: "The wood dial is something I've never seen before. Knowing there are only 300 makes it hit different.", name: 'Aiden', rank: 'Jarl', referrals: 19, position: 3 },
-  { quote: 'I showed one friend and it just spread. This community is real.', name: 'Carson', rank: 'Jarl', referrals: 17, position: 5 },
-  { quote: "I love feeling like I'm part of something rare and bold by getting one of the first watches.", name: 'Sam', rank: 'Huginn', referrals: 49, position: 2 },
-]
-
 const FALLBACK_WAITLIST_COUNT = 152
 
 const RavenIcon = ({ className = '', size = 20 }) => (
@@ -397,21 +391,6 @@ function App() {
             </p>
           </div>
         </div>
-      </Reveal>
-
-      {/* TESTIMONIALS: compact */}
-      <Reveal className="testimonials">
-        <h2 className="testimonials-headline">From The First 300.</h2>
-        <div className="testimonials-grid">
-          {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="testimonial-card">
-              <div className="testimonial-avatar"><span>{t.name[0]}</span></div>
-              <p className="testimonial-quote">"{t.quote}"</p>
-              <div className="testimonial-meta"><span className="testimonial-name">{t.name}</span><span className="testimonial-rank">{t.rank}</span></div>
-            </div>
-          ))}
-        </div>
-        <p className="testimonials-hook">Reach Einherjar (12 referrals) and earn your place on the Founders Wall.</p>
       </Reveal>
 
       {/* IGDRASIL: Norse World Tree */}
