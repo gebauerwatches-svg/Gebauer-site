@@ -259,10 +259,10 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            300 watches.
-            <span className="hero-accent"> You found this first.</span>
+            Built by Teens,
+            <span className="hero-accent"> For Teens.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">Real wood dials. Made in Japan. Designed by a 16 year old. The first drop is December 2026.</p>
+          <p className="hero-sub fade-in-delay-1">300 watches. Real wood dials. Made in Japan. The first drop is December 2026. You found this first.</p>
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
