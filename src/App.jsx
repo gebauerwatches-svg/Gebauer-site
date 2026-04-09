@@ -302,7 +302,17 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* THE PRIZE + COUNTDOWN: #1 gets the first watch */}
+      {/* STATS BAR: right after hero, off-white */}
+      <Reveal className="stats-bar">
+        <div className="stats-bar-inner">
+          <div className="stats-bar-item"><span className="stats-bar-num">2hrs/day</span><span className="stats-bar-label">after school, every day</span></div>
+          <div className="stats-bar-item"><span className="stats-bar-num">60+</span><span className="stats-bar-label">teens interviewed</span></div>
+          <div className="stats-bar-item"><span className="stats-bar-num">Japan</span><span className="stats-bar-label">manufacturing partner</span></div>
+          <div className="stats-bar-item"><span className="stats-bar-num">16</span><span className="stats-bar-label">years old, founder</span></div>
+        </div>
+      </Reveal>
+
+      {/* THE PRIZE + COUNTDOWN */}
       <Reveal className="prize">
         <div className="prize-inner">
           {countdown && <p className="prize-countdown">{countdown} until the first drop</p>}
@@ -357,11 +367,6 @@ function App() {
             Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Found a manufacturer in Japan. Now I'm the youngest founder in the High Country Accelerator with 300 watches on the way. This drop is just the first chapter.
           </p>
           <p className="founder-signoff">— Liam, 16</p>
-          <div className="founder-stats">
-            <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
-          </div>
         </div>
       </Reveal>
 
@@ -375,6 +380,19 @@ function App() {
             <p className="updates-desc">
               Gebauer got into the spring cohort in Steamboat Springs. Most founders in the room are 30+. Liam is 16. The accelerator is how we go from 300 watches to whatever Gebauer becomes after.
             </p>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* WHAT YOU GET: compact perks */}
+      <Reveal className="perks">
+        <div className="perks-inner">
+          <h2 className="perks-headline">What you get for being early.</h2>
+          <div className="perks-grid">
+            <div className="perks-item"><h3>Behind the Scenes</h3><p>Factory footage, design decisions, wood sourcing. Before anyone else sees it.</p></div>
+            <div className="perks-item"><h3>First Look at Samples</h3><p>When they arrive this summer, you see them first.</p></div>
+            <div className="perks-item"><h3>Pick Your Number</h3><p>Top referrers choose their edition number. 001, 042, 300.</p></div>
+            <div className="perks-item"><h3>Founders Wall</h3><p>Your name. Permanent. The people who were here before anyone knew.</p></div>
           </div>
         </div>
       </Reveal>
