@@ -411,7 +411,6 @@ function App() {
               <p className="wood-fact">{w.fact}</p>
               <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
                 {woodVote === w.id ? 'Your pick' : 'This one'}
-                {woodVotes[w.id] > 0 && <span className="wood-vote-count">{woodVotes[w.id]}</span>}
               </button>
             </div>
           ))}
