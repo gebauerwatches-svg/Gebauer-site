@@ -411,26 +411,33 @@
 .path-headline em { font-style: italic; color: var(--gold); }
 .path-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 14px; color: var(--text-warm); margin-bottom: 32px; }
 
-/* The track: vertical path */
-.path-track { text-align: left; position: relative; margin-bottom: 32px; }
+/* Mini World Tree */
+.mini-tree { position: relative; max-width: 400px; margin: 0 auto 32px; min-height: 520px; }
+.mini-tree-svg { position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 160px; height: 100%; pointer-events: none; z-index: 0; }
+.mini-tree-nodes { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 6px; padding: 4px 0; }
 
-.path-node { display: flex; align-items: flex-start; gap: 16px; padding: 10px 0; position: relative; padding-left: 4px; border-left: 2px solid var(--bg-warm); margin-left: 18px; }
+.mt-node { display: flex; align-items: center; gap: 12px; padding: 6px 12px; transition: all 0.3s; }
+.mt-node.left { flex-direction: row; margin-right: 35%; }
+.mt-node.right { flex-direction: row-reverse; margin-left: 35%; text-align: right; }
+@media (max-width: 480px) { .mt-node.left { margin-right: 20%; } .mt-node.right { margin-left: 20%; } }
 
-.path-node-dot { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-warm); background: var(--white); font-size: 14px; color: var(--text-warm); opacity: 0.4; position: relative; left: -23px; margin-right: -23px; transition: all 0.3s; }
+.mt-orb { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-warm); background: var(--white); position: relative; transition: all 0.3s; }
+.mt-orb span { font-size: 16px; color: var(--text-warm); opacity: 0.3; }
 
-.path-node.reached { border-left-color: var(--gold-muted); }
-.path-node.reached .path-node-dot { border-color: var(--gold-muted); background: rgba(212, 166, 42, 0.06); color: var(--gold); opacity: 1; }
-.path-node.current { border-left-color: var(--gold); }
-.path-node.current .path-node-dot { border-color: var(--gold); background: rgba(212, 166, 42, 0.1); color: var(--gold); opacity: 1; box-shadow: 0 0 0 4px rgba(212, 166, 42, 0.08); }
-.path-node:not(.reached):not(.current) { opacity: 0.35; }
+.mt-node.reached .mt-orb { border-color: var(--gold-muted); background: rgba(212, 166, 42, 0.06); }
+.mt-node.reached .mt-orb span { color: var(--gold); opacity: 0.8; }
+.mt-node.active .mt-orb { border-color: var(--gold); background: rgba(212, 166, 42, 0.1); box-shadow: 0 0 0 4px rgba(212, 166, 42, 0.08), 0 0 16px rgba(212, 166, 42, 0.08); }
+.mt-node.active .mt-orb span { color: var(--gold); opacity: 1; font-size: 18px; }
+.mt-node.locked { opacity: 0.25; }
 
-.path-node-info { padding-top: 6px; }
-.path-node-info h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 17px; color: var(--text-dark); margin-bottom: 2px; }
-.path-node.reached .path-node-info h3 { color: var(--text-dark); }
-.path-node.current .path-node-info h3 { color: var(--gold); }
-.path-node-refs { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--text-warm); opacity: 0.5; margin-left: 8px; }
-.path-node.reached .path-node-refs { color: var(--gold-muted); opacity: 1; }
-.path-node-info p { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300; color: var(--text-warm); opacity: 0.6; line-height: 1.5; }
+.mt-pulse { position: absolute; inset: -3px; border-radius: 50%; border: 1px solid var(--gold); opacity: 0; animation: mt-p 2.5s ease-out infinite; }
+@keyframes mt-p { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.4); opacity: 0; } }
+
+.mt-info h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 16px; color: var(--text-dark); }
+.mt-node.reached .mt-info h3 { color: var(--text-dark); }
+.mt-node.active .mt-info h3 { color: var(--gold); }
+.mt-refs { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.08em; color: var(--text-warm); opacity: 0.4; }
+.mt-node.reached .mt-refs { color: var(--gold-muted); opacity: 0.8; }
 
 .path-deadline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--gold); margin-bottom: 28px; }
 

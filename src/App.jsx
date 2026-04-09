@@ -393,16 +393,45 @@ function App() {
           <h2 className="path-headline">Your path. <em>The Raven Path.</em></h2>
           <p className="path-sub">Refer friends. Climb the ranks. Each one unlocks something real.</p>
 
-          <div className="path-track">
-            {RAVEN_PATH.map((rank, i) => (
-              <div key={rank.name} className={`path-node ${i <= currentRankIndex ? 'reached' : ''} ${i === currentRankIndex ? 'current' : ''}`}>
-                <div className="path-node-dot"><span>{rank.symbol}</span></div>
-                <div className="path-node-info">
-                  <h3>{rank.name} <span className="path-node-refs">{rank.referrals === 0 ? 'Start' : rank.referrals}</span></h3>
-                  <p>{rank.unlock}</p>
-                </div>
-              </div>
-            ))}
+          <div className="mini-tree">
+            <svg className="mini-tree-svg" viewBox="0 0 160 520" fill="none" preserveAspectRatio="xMidYMid meet">
+              <path d="M80 520 Q65 510 50 515 Q35 520 20 518" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M80 520 Q95 510 110 515 Q125 520 140 518" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M80 520 Q78 430 80 340 Q82 250 80 160 Q78 80 80 10" stroke="url(#mt-grad)" strokeWidth="3" strokeLinecap="round" />
+              <path d="M80 455 Q55 450 40 447" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M80 390 Q105 385 125 382" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
+              <path d="M80 325 Q50 318 38 313" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
+              <path d="M80 260 Q110 253 128 248" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
+              <path d="M80 195 Q48 186 35 180" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.12" />
+              <path d="M80 130 Q112 123 128 118" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.12" />
+              <path d="M80 70 Q50 62 40 58" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.1" />
+              <path d="M80 10 Q65 0 50 4" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
+              <path d="M80 10 Q95 0 110 4" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
+              <defs>
+                <linearGradient id="mt-grad" x1="80" y1="520" x2="80" y2="10" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.4" />
+                  <stop offset="50%" stopColor="var(--purple-glow)" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="var(--purple-mid)" stopOpacity="0.1" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="mini-tree-nodes">
+              {[...RAVEN_PATH].reverse().map((rank, i) => {
+                const oi = RAVEN_PATH.length - 1 - i
+                const isReached = oi <= currentRankIndex
+                const isActive = oi === currentRankIndex
+                const side = oi % 2 === 0 ? 'left' : 'right'
+                return (
+                  <div key={rank.name} className={`mt-node ${isReached ? 'reached' : 'locked'} ${isActive ? 'active' : ''} ${side}`}>
+                    <div className="mt-orb"><span>{rank.symbol}</span>{isActive && <div className="mt-pulse" />}</div>
+                    <div className="mt-info">
+                      <h3>{rank.name}</h3>
+                      <span className="mt-refs">{rank.referrals === 0 ? 'Start' : rank.referrals}</span>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
           <p className="path-deadline">Leaderboard closes June 30. Watch 001 goes to #1.</p>
