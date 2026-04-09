@@ -302,37 +302,15 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* WHY GEBAUER: 4 quick punches */}
-      <Reveal className="why">
-        <div className="why-inner">
-          <div className="why-item">
-            <h3>300. That's the drop.</h3>
-            <p>Numbered. Engraved. Then we move on to the next chapter.</p>
-          </div>
-          <div className="why-item">
-            <h3>Built by a 16 year old.</h3>
-            <p>Not endorsed. Not consulted. Designed.</p>
-          </div>
-          <div className="why-item">
-            <h3>Real wood. Made in Japan.</h3>
-            <p>Three variants. The grain on yours isn't on anyone else's.</p>
-          </div>
-          <div className="why-item">
-            <h3>December 2026.</h3>
-            <p>The first watches ship. You're in or you're watching.</p>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* THE PRIZE: #1 gets the first watch */}
+      {/* THE PRIZE + COUNTDOWN: #1 gets the first watch */}
       <Reveal className="prize">
         <div className="prize-inner">
-          <p className="prize-label">The Race to #1</p>
+          {countdown && <p className="prize-countdown">{countdown} until the first drop</p>}
           <h2 className="prize-headline">
             Watch <em>001</em> goes to whoever ends up at the top.
           </h2>
           <p className="prize-text">
-            When the first 300 ship in December, <strong>001/300</strong> goes to the #1 spot on this list. The first watch off the line. Engraved before any other.
+            300 watches ship December 2026. <strong>001/300</strong> goes to #1 on this list.
           </p>
           <p className="prize-deadline">Leaderboard closes June 30.</p>
           {leaderboard.length > 0 && (
@@ -368,42 +346,27 @@ function App() {
         </div>
       </Reveal>
 
-      {/* FOUNDER: signed note from Liam */}
+      {/* FOUNDER: tight */}
       <Reveal className="founder">
         <div className="founder-inner">
-          <RavenIcon className="section-raven" size={24} />
-          <p className="founder-label">From Liam</p>
           <h2 className="founder-headline">
             I'm 16. I started Gebauer because <em>nothing in this category was made for us.</em>
           </h2>
           <p className="founder-text">
-            I bought my first real watch in Milan with money I'd saved up for months. The second it was on my wrist I noticed nobody my age had anything close. Watches that actually had weight to them were all built by old guys, for old guys. Everything aimed at us was plastic and disposable.
-          </p>
-          <p className="founder-text">
-            So I started learning. Movements, materials, manufacturers. Spent months pitching factories until one in Japan said yes. A year later we have three wood variants locked, the youngest founder in the High Country Accelerator, and 300 watches on the way.
-          </p>
-          <p className="founder-text">
-            Gebauer is going to be a movement. This drop is just the first chapter, and the people in it are the reason any of the chapters after exist.
+            Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Found a manufacturer in Japan. Now I'm the youngest founder in the High Country Accelerator with 300 watches on the way. This drop is just the first chapter.
           </p>
           <p className="founder-signoff">— Liam, 16</p>
-          <div className="founder-stats">
-            <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
-          </div>
         </div>
       </Reveal>
 
       {/* THE WOOD: story-driven with voting */}
       <Reveal className="wood">
-        <h2 className="wood-headline">Three woods. <em>Three stories.</em></h2>
-        <p className="wood-sub">Real wood dials. Cut, not printed. The grain on yours isn't on anyone else's because grain doesn't repeat. That's the whole thing.</p>
-        <p className="wood-vote-prompt">Which one's yours?</p>
+        <h2 className="wood-headline">Three woods. <em>Which one's yours?</em></h2>
         <div className="wood-grid">
           {[
-            { id: 'padauk', img: watchPadauk, name: 'African Padauk', tagline: 'Ages in real time.', fact: "Starts fiery orange. Over years, the wood deepens into burgundy on its own. The dial you see now isn't the dial you'll see in five years. It's the only watch on the planet that changes color with time." },
-            { id: 'ebony', img: watchEbony, name: 'Black Ebony', tagline: 'Rarer than gold. Once.', fact: 'Nearly black, with razor-thin grain lines that catch light from certain angles. One of the densest woods on earth. In ancient Egypt it was rarer than gold. The flex is quiet.' },
-            { id: 'hinoki', img: watchHinoki, name: 'Hinoki', tagline: 'Sacred wood. Real one.', fact: 'Hinoki built Japanese temples for over a thousand years. The forests are protected by law. Soft golden grain. The kind of detail people only notice if they\'re really looking, which is the point.' },
+            { id: 'padauk', img: watchPadauk, name: 'African Padauk', tagline: 'Ages in real time.', fact: 'Starts orange. Darkens to burgundy over years. The only watch that changes color with time.' },
+            { id: 'ebony', img: watchEbony, name: 'Black Ebony', tagline: 'Rarer than gold. Once.', fact: 'Nearly black. Razor-thin grain. Rarer than gold in ancient Egypt. The flex is quiet.' },
+            { id: 'hinoki', img: watchHinoki, name: 'Hinoki', tagline: 'Sacred wood.', fact: 'Built Japanese temples for 1,000+ years. Forests protected by law. Soft golden grain.' },
           ].map(w => (
             <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
               <div className="wood-img-wrap"><img src={w.img} alt={w.name} /></div>
@@ -427,81 +390,6 @@ function App() {
             <span className="wood-vote-check">Vote recorded</span>
           </div>
         )}
-      </Reveal>
-
-      {/* INSIDER ACCESS: exclusive perks for being on the list */}
-      <Reveal className="insider">
-        <div className="insider-inner">
-          <RavenIcon className="section-raven section-raven-gold" size={24} />
-          <p className="insider-label">What You Get for Being Early</p>
-          <h2 className="insider-headline">This isn't just a waitlist. <em>It's access.</em></h2>
-          <div className="insider-grid">
-            <div className="insider-perk">
-              <span className="insider-icon">&#9670;</span>
-              <h3>Behind the Scenes</h3>
-              <p>See the watches being made. Factory footage, wood sourcing, design decisions. Before it goes public.</p>
-            </div>
-            <div className="insider-perk">
-              <span className="insider-icon">&#9670;</span>
-              <h3>First Look at Samples</h3>
-              <p>When the first samples arrive this summer, you see them before anyone else does.</p>
-            </div>
-            <div className="insider-perk">
-              <span className="insider-icon">&#9670;</span>
-              <h3>Pick Your Number</h3>
-              <p>Top referrers choose their edition number. 001, 042, 300. First come, first pick.</p>
-            </div>
-            <div className="insider-perk">
-              <span className="insider-icon">&#9670;</span>
-              <h3>Founders Wall</h3>
-              <p>Your name on a permanent page on the site. The people who were here before anyone knew.</p>
-            </div>
-          </div>
-          <button className="insider-cta" onClick={() => setShowSignup(true)}>Get In</button>
-        </div>
-      </Reveal>
-
-      {/* WHERE WE ARE NOW */}
-      <Reveal className="journey">
-        <div className="journey-inner">
-          <RavenIcon className="section-raven section-raven-gold" size={24} />
-          <p className="journey-label">The Countdown</p>
-          <h2 className="journey-headline">First drop. <em>December 2026.</em></h2>
-          {countdown && <p className="journey-countdown">{countdown}</p>}
-          <div className="journey-timeline">
-            <div className="journey-item journey-done">
-              <span className="journey-marker">&#10003;</span>
-              <div><h3>The Design is Locked</h3><p>Three woods. Raven caseback. Every detail signed off.</p></div>
-            </div>
-            <div className="journey-item journey-done">
-              <span className="journey-marker">&#10003;</span>
-              <div><h3>The Partner is Signed</h3><p>Manufacturer in Japan. Tokiji is producing the official technical drawings right now.</p></div>
-            </div>
-            <div className="journey-item journey-active">
-              <span className="journey-marker-active" />
-              <div><h3>Samples This Summer</h3><p>Real watches in hand. First time anyone outside the team gets to see them.</p></div>
-            </div>
-            <div className="journey-item journey-active">
-              <span className="journey-marker-active" />
-              <div><h3>The First 300 Drop in December</h3><p>Numbered, engraved, and shipped to whoever made it onto the list in time.</p></div>
-            </div>
-          </div>
-          <p className="journey-cta-text">After this drop, the next chapter starts. You want to be in the first one.</p>
-        </div>
-      </Reveal>
-
-      {/* UPDATES */}
-      <Reveal className="updates">
-        <div className="updates-inner">
-          <p className="updates-label">Latest</p>
-          <div className="updates-card">
-            <span className="updates-date">April 2026</span>
-            <h3 className="updates-title">Liam is the youngest founder in the High Country Accelerator</h3>
-            <p className="updates-desc">
-              Gebauer got into the spring cohort in Steamboat Springs. Most founders in the room are 30+. Liam is 16. The accelerator is how we go from 300 watches to whatever Gebauer becomes after.
-            </p>
-          </div>
-        </div>
       </Reveal>
 
       {/* IGDRASIL: Norse World Tree */}

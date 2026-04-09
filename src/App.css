@@ -104,6 +104,13 @@
   z-index: 1;
 }
 
+.prize-countdown {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500; font-size: clamp(28px, 5vw, 42px);
+  color: var(--gold); text-align: center;
+  margin-bottom: 24px; letter-spacing: 0.02em;
+}
+
 .prize-label {
   font-family: 'Inter', sans-serif;
   font-size: 11px;
