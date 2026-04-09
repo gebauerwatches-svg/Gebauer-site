@@ -291,6 +291,15 @@
   color: var(--gold);
 }
 
+.prize-share-btn {
+  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-secondary); opacity: 0.5;
+  background: none; border: none; padding: 8px 16px;
+  cursor: pointer; transition: opacity 0.3s, color 0.3s;
+}
+.prize-share-btn:hover { opacity: 1; color: var(--gold-light); }
+
 @media (max-width: 600px) {
   .prize-current { padding: 14px 20px; }
   .prize-current-name { font-size: 18px; }
@@ -335,7 +344,30 @@
 .wood-card:hover .wood-img-wrap img { transform: scale(1.03); }
 .wood-card h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 24px; color: var(--text-dark); padding: 24px 24px 4px; }
 .wood-card .wood-tagline { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 17px; color: var(--gold-muted); padding: 0 24px 12px; }
-.wood-card .wood-fact { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--text-warm); padding: 0 24px 28px; }
+.wood-card .wood-fact { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--text-warm); padding: 0 24px 16px; }
+
+/* Wood voting */
+.wood-vote-prompt { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 18px; color: var(--gold-muted); text-align: center; margin-bottom: 40px; margin-top: -8px; }
+
+.wood-vote-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: calc(100% - 48px); margin: 0 24px 24px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--text-warm); background: none;
+  border: 1px solid var(--bg-warm); padding: 12px;
+  cursor: pointer; transition: all 0.3s;
+}
+
+.wood-vote-btn:hover { border-color: var(--gold-muted); color: var(--gold); }
+.wood-vote-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212, 166, 42, 0.06); }
+
+.wood-vote-count {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px; font-weight: 500; color: var(--gold);
+}
+
+.wood-card.voted { box-shadow: 0 0 0 2px var(--gold-muted); }
 
 
 /* ===========================================
@@ -347,6 +379,13 @@
 .journey-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 16px; text-align: center; }
 .journey-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(26px, 5vw, 38px); line-height: 1.25; color: var(--text-primary); text-align: center; margin-bottom: 48px; }
 .journey-headline em { font-style: italic; color: var(--gold-light); }
+
+.journey-countdown {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 500; font-size: clamp(36px, 6vw, 56px);
+  color: var(--gold); text-align: center;
+  margin-bottom: 40px; letter-spacing: 0.03em;
+}
 
 .journey-timeline { display: flex; flex-direction: column; gap: 0; margin-bottom: 36px; }
 .journey-item { display: flex; gap: 20px; padding: 20px 0; border-left: 2px solid rgba(157, 122, 219, 0.08); margin-left: 16px; padding-left: 28px; position: relative; }

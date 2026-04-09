@@ -68,6 +68,45 @@ function App() {
   const [leaderboard, setLeaderboard] = useState([])
   const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
 
+  // Wood voting (localStorage only, fun interaction)
+  const [woodVote, setWoodVote] = useState(() => localStorage.getItem('gebauer_wood_vote') || '')
+  const [woodVotes, setWoodVotes] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('gebauer_wood_votes') || '{}') }
+    catch { return {} }
+  })
+  const handleWoodVote = (wood) => {
+    const prev = woodVote
+    const votes = { ...woodVotes }
+    if (prev) votes[prev] = Math.max(0, (votes[prev] || 0) - 1)
+    if (prev === wood) {
+      // Unvote
+      setWoodVote('')
+      localStorage.setItem('gebauer_wood_vote', '')
+    } else {
+      votes[wood] = (votes[wood] || 0) + 1
+      setWoodVote(wood)
+      localStorage.setItem('gebauer_wood_vote', wood)
+    }
+    setWoodVotes(votes)
+    localStorage.setItem('gebauer_wood_votes', JSON.stringify(votes))
+  }
+
+  // Countdown to December 2026 drop
+  const [countdown, setCountdown] = useState('')
+  useEffect(() => {
+    const target = new Date('2026-12-01T00:00:00').getTime()
+    const update = () => {
+      const diff = target - Date.now()
+      if (diff <= 0) { setCountdown('The drop is here.'); return }
+      const days = Math.floor(diff / 86400000)
+      const hours = Math.floor((diff % 86400000) / 3600000)
+      setCountdown(`${days}d ${hours}h`)
+    }
+    update()
+    const interval = setInterval(update, 60000)
+    return () => clearInterval(interval)
+  }, [])
+
   // User data (persisted in localStorage, fetched from API)
   const [firstName, setFirstName] = useState(() => localStorage.getItem('gebauer_name') || '')
   const [email, setEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
@@ -323,6 +362,14 @@ function App() {
           <div className="prize-actions">
             <button className="prize-cta" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
+            <button className="prize-share-btn" onClick={() => {
+              if (navigator.share) {
+                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
+              } else {
+                navigator.clipboard.writeText('https://gebauerwatches.com')
+                alert('Link copied')
+              }
+            }}>Share This</button>
           </div>
         </div>
       </Reveal>
@@ -353,29 +400,28 @@ function App() {
         </div>
       </Reveal>
 
-      {/* THE WOOD: story-driven */}
+      {/* THE WOOD: story-driven with voting */}
       <Reveal className="wood">
         <h2 className="wood-headline">Three woods. <em>Three stories.</em></h2>
         <p className="wood-sub">Real wood dials. Cut, not printed. The grain on yours isn't on anyone else's because grain doesn't repeat. That's the whole thing.</p>
+        <p className="wood-vote-prompt">Which one's yours?</p>
         <div className="wood-grid">
-          <div className="wood-card">
-            <div className="wood-img-wrap"><img src={watchPadauk} alt="African Padauk" /></div>
-            <h3>African Padauk</h3>
-            <p className="wood-tagline">Ages in real time.</p>
-            <p className="wood-fact">Starts fiery orange. Over years, the wood deepens into burgundy on its own. The dial you see now isn't the dial you'll see in five years. It's the only watch on the planet that changes color with time.</p>
-          </div>
-          <div className="wood-card">
-            <div className="wood-img-wrap"><img src={watchEbony} alt="Black Ebony" /></div>
-            <h3>Black Ebony</h3>
-            <p className="wood-tagline">Rarer than gold. Once.</p>
-            <p className="wood-fact">Nearly black, with razor-thin grain lines that catch light from certain angles. One of the densest woods on earth. In ancient Egypt it was rarer than gold. The flex is quiet.</p>
-          </div>
-          <div className="wood-card">
-            <div className="wood-img-wrap"><img src={watchHinoki} alt="Hinoki" /></div>
-            <h3>Hinoki</h3>
-            <p className="wood-tagline">Sacred wood. Real one.</p>
-            <p className="wood-fact">Hinoki built Japanese temples for over a thousand years. The forests are protected by law. Soft golden grain. The kind of detail people only notice if they're really looking, which is the point.</p>
-          </div>
+          {[
+            { id: 'padauk', img: watchPadauk, name: 'African Padauk', tagline: 'Ages in real time.', fact: "Starts fiery orange. Over years, the wood deepens into burgundy on its own. The dial you see now isn't the dial you'll see in five years. It's the only watch on the planet that changes color with time." },
+            { id: 'ebony', img: watchEbony, name: 'Black Ebony', tagline: 'Rarer than gold. Once.', fact: 'Nearly black, with razor-thin grain lines that catch light from certain angles. One of the densest woods on earth. In ancient Egypt it was rarer than gold. The flex is quiet.' },
+            { id: 'hinoki', img: watchHinoki, name: 'Hinoki', tagline: 'Sacred wood. Real one.', fact: 'Hinoki built Japanese temples for over a thousand years. The forests are protected by law. Soft golden grain. The kind of detail people only notice if they\'re really looking, which is the point.' },
+          ].map(w => (
+            <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
+              <div className="wood-img-wrap"><img src={w.img} alt={w.name} /></div>
+              <h3>{w.name}</h3>
+              <p className="wood-tagline">{w.tagline}</p>
+              <p className="wood-fact">{w.fact}</p>
+              <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
+                {woodVote === w.id ? 'Your pick' : 'This one'}
+                {woodVotes[w.id] > 0 && <span className="wood-vote-count">{woodVotes[w.id]}</span>}
+              </button>
+            </div>
+          ))}
         </div>
       </Reveal>
 
@@ -385,6 +431,7 @@ function App() {
           <RavenIcon className="section-raven section-raven-gold" size={24} />
           <p className="journey-label">The Countdown</p>
           <h2 className="journey-headline">First drop. <em>December 2026.</em></h2>
+          {countdown && <p className="journey-countdown">{countdown}</p>}
           <div className="journey-timeline">
             <div className="journey-item journey-done">
               <span className="journey-marker">&#10003;</span>
