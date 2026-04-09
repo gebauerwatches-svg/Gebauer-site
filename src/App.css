@@ -182,10 +182,10 @@
 /* Full leaderboard inside the prize section */
 .prize-leaderboard {
   max-width: 480px;
-  margin: 0 auto 40px;
+  margin: 0 auto 0;
   padding: 28px 28px 20px;
-  background: rgba(212, 166, 42, 0.04);
-  border: 1px solid rgba(212, 166, 42, 0.18);
+  background: var(--white);
+  border: 1px solid rgba(42, 34, 53, 0.06);
 }
 
 .prize-leaderboard-label {
@@ -210,7 +210,7 @@
   align-items: baseline;
   gap: 12px;
   padding: 12px 4px;
-  border-bottom: 1px solid rgba(212, 166, 42, 0.1);
+  border-bottom: 1px solid rgba(42, 34, 53, 0.06);
   transition: background 0.2s;
 }
 
@@ -237,7 +237,7 @@
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 500;
   font-size: 18px;
-  color: var(--text-primary);
+  color: var(--text-dark);
   text-align: left;
 }
 
@@ -256,16 +256,16 @@
   font-weight: 400;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-warm);
   opacity: 0.5;
   align-self: center;
 }
 
-/* First place: glowing gold */
-.prize-row.first { background: rgba(212, 166, 42, 0.08); margin: 0 -8px; padding: 14px 12px; border-bottom: 1px solid rgba(212, 166, 42, 0.2); }
+/* First place */
+.prize-row.first { background: rgba(212, 166, 42, 0.06); margin: 0 -8px; padding: 14px 12px; border-bottom: 1px solid rgba(212, 166, 42, 0.15); }
 .prize-row.first .prize-row-pos { color: var(--gold); opacity: 1; font-size: 22px; }
-.prize-row.first .prize-row-name { color: var(--gold-light); font-size: 20px; }
-.prize-row.first .prize-row-refs { color: var(--gold-light); font-size: 32px; }
+.prize-row.first .prize-row-name { color: var(--text-dark); font-size: 20px; }
+.prize-row.first .prize-row-refs { color: var(--gold); font-size: 32px; }
 
 @media (max-width: 600px) {
   .prize-leaderboard { padding: 22px 18px 16px; }
@@ -386,15 +386,37 @@
    PERKS (what you get, off-white)
    =========================================== */
 
-.perks { background: var(--bg-light); padding: 72px 24px; }
+.perks { background: var(--bg-dark); padding: 72px 24px; }
 .perks-inner { max-width: 720px; margin: 0 auto; text-align: center; }
-.perks-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 34px); color: var(--text-dark); margin-bottom: 36px; }
-.perks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+.perks-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 34px); color: var(--text-primary); margin-bottom: 36px; }
+.perks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; margin-bottom: 36px; }
 @media (max-width: 768px) { .perks-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .perks-grid { grid-template-columns: 1fr; } }
-.perks-item { padding: 20px 16px; }
-.perks-item h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--text-dark); margin-bottom: 6px; }
-.perks-item p { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.6; color: var(--text-warm); }
+.perks-item { padding: 24px 16px; background: var(--bg-card); border: 1px solid rgba(157, 122, 219, 0.06); transition: transform 0.3s, box-shadow 0.3s; }
+.perks-item:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+.perks-icon { font-size: 14px; color: var(--gold); display: block; margin-bottom: 12px; }
+.perks-item h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--text-primary); margin-bottom: 6px; }
+.perks-item p { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 12px; line-height: 1.6; color: var(--text-secondary); opacity: 0.6; }
+.perks-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-dark); background: var(--gold); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s, box-shadow 0.3s; }
+.perks-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.3); }
+
+/* ===========================================
+   THE RACE (light background, leaderboard)
+   =========================================== */
+
+.race { background: var(--bg-light); padding: 72px 24px; }
+.race-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.race-countdown { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(28px, 5vw, 42px); color: var(--purple); margin-bottom: 20px; }
+.race-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 36px); line-height: 1.2; color: var(--text-dark); margin-bottom: 12px; }
+.race-headline em { font-style: italic; color: var(--gold); }
+.race-text { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 15px; color: var(--text-warm); margin-bottom: 12px; }
+.race-text strong { color: var(--purple); font-weight: 500; }
+.race-deadline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(20px, 3.5vw, 28px); color: var(--gold); margin-bottom: 32px; padding: 14px 24px; border: 1px solid rgba(212, 166, 42, 0.25); display: inline-block; }
+.race-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
+.race-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-light); background: var(--purple); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s; }
+.race-cta:hover { background: var(--purple-mid); transform: translateY(-2px); }
+.race-stats-btn { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-soft); background: none; border: 1px solid rgba(45, 27, 78, 0.15); padding: 12px 36px; cursor: pointer; transition: border-color 0.3s, color 0.3s; }
+.race-stats-btn:hover { border-color: var(--purple); color: var(--purple); }
 
 
 .wood-card .wood-tagline { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 17px; color: var(--gold-muted); padding: 0 24px 12px; }

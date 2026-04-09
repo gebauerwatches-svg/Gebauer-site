@@ -283,7 +283,7 @@ function App() {
   // ---- LAYER 1 ----
   return (
     <>
-      {/* HERO */}
+      {/* 1. HERO */}
       <section className="hero">
         <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
         <div className="hero-overlay" />
@@ -292,7 +292,7 @@ function App() {
             Built by Teens,
             <span className="hero-accent"> For Teens.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">300 watches. Real wood dials. Made in Japan. The first drop is December 2026. You found this first.</p>
+          <p className="hero-sub fade-in-delay-1">300 watches. Real wood dials. Made in Japan. First drop December 2026.</p>
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
@@ -302,61 +302,7 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* STATS BAR: right after hero, off-white */}
-      <Reveal className="stats-bar">
-        <div className="stats-bar-inner">
-          <div className="stats-bar-item"><span className="stats-bar-num">2hrs/day</span><span className="stats-bar-label">after school, every day</span></div>
-          <div className="stats-bar-item"><span className="stats-bar-num">60+</span><span className="stats-bar-label">teens interviewed</span></div>
-          <div className="stats-bar-item"><span className="stats-bar-num">Japan</span><span className="stats-bar-label">manufacturing partner</span></div>
-          <div className="stats-bar-item"><span className="stats-bar-num">16</span><span className="stats-bar-label">years old, founder</span></div>
-        </div>
-      </Reveal>
-
-      {/* THE PRIZE + COUNTDOWN */}
-      <Reveal className="prize">
-        <div className="prize-inner">
-          {countdown && <p className="prize-countdown">{countdown} until the first drop</p>}
-          <h2 className="prize-headline">
-            Watch <em>001</em> goes to whoever ends up at the top.
-          </h2>
-          <p className="prize-text">
-            300 watches ship December 2026. <strong>001/300</strong> goes to #1 on this list.
-          </p>
-          <p className="prize-deadline">Leaderboard closes June 30.</p>
-          {leaderboard.length > 0 && (
-            <div className="prize-leaderboard">
-              <p className="prize-leaderboard-label">The Leaderboard</p>
-              <div className="prize-leaderboard-list">
-                {leaderboard.map((person, i) => (
-                  <div key={person.name + i} className={`prize-row ${i === 0 ? 'first' : ''}`}>
-                    <span className="prize-row-pos">{i + 1}</span>
-                    <span className="prize-row-name">{person.name}</span>
-                    <span className="prize-row-refs">{person.referrals}</span>
-                    <span className="prize-row-label">{person.referrals === 1 ? 'referral' : 'referrals'}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          <div className="prize-actions">
-            <button className="prize-cta" onClick={() => setShowSignup(true)}>Get In</button>
-            <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
-          </div>
-          <button className="share-btn" onClick={() => {
-            if (navigator.share) {
-              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
-            } else {
-              navigator.clipboard.writeText('https://gebauerwatches.com')
-              const btn = document.querySelector('.share-btn')
-              btn.textContent = 'Link Copied'
-              setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
-            }
-          }}>Share Gebauer</button>
-        </div>
-      </Reveal>
-
-      {/* FOUNDER */}
+      {/* 2. THE STORY (light) */}
       <Reveal className="founder">
         <div className="founder-inner">
           <h2 className="founder-headline">
@@ -367,37 +313,15 @@ function App() {
             Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Found a manufacturer in Japan. Now I'm the youngest founder in the High Country Accelerator with 300 watches on the way. This drop is just the first chapter.
           </p>
           <p className="founder-signoff">— Liam, 16</p>
-        </div>
-      </Reveal>
-
-      {/* UPDATES */}
-      <Reveal className="updates">
-        <div className="updates-inner">
-          <p className="updates-label">Latest</p>
-          <div className="updates-card">
-            <span className="updates-date">April 2026</span>
-            <h3 className="updates-title">Liam is the youngest founder in the High Country Accelerator</h3>
-            <p className="updates-desc">
-              Gebauer got into the spring cohort in Steamboat Springs. Most founders in the room are 30+. Liam is 16. The accelerator is how we go from 300 watches to whatever Gebauer becomes after.
-            </p>
+          <div className="founder-stats">
+            <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
+            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
+            <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
           </div>
         </div>
       </Reveal>
 
-      {/* WHAT YOU GET: compact perks */}
-      <Reveal className="perks">
-        <div className="perks-inner">
-          <h2 className="perks-headline">What you get for being early.</h2>
-          <div className="perks-grid">
-            <div className="perks-item"><h3>Behind the Scenes</h3><p>Factory footage, design decisions, wood sourcing. Before anyone else sees it.</p></div>
-            <div className="perks-item"><h3>First Look at Samples</h3><p>When they arrive this summer, you see them first.</p></div>
-            <div className="perks-item"><h3>Pick Your Number</h3><p>Top referrers choose their edition number. 001, 042, 300.</p></div>
-            <div className="perks-item"><h3>Founders Wall</h3><p>Your name. Permanent. The people who were here before anyone knew.</p></div>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* THE WOOD: story-driven with voting */}
+      {/* 3. THE WATCHES + VOTE (cream) */}
       <Reveal className="wood">
         <h2 className="wood-headline">Three woods. <em>Which one's yours?</em></h2>
         <div className="wood-grid">
@@ -430,78 +354,71 @@ function App() {
         )}
       </Reveal>
 
-      {/* IGDRASIL: Norse World Tree */}
-      <Reveal className="community">
-        <div className="community-inner">
-          <h2 className="community-headline">The Igdrasil. <em>Climb it.</em></h2>
-          <p className="community-text">8 ranks pulled from Norse myth. Refer friends, move up the tree. The person at the top when we ship gets watch 001.</p>
-
-          <div className="world-tree">
-            {/* SVG tree trunk and branches */}
-            <svg className="tree-svg" viewBox="0 0 200 720" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
-              {/* Roots */}
-              <path d="M100 720 Q80 700 60 710 Q40 720 20 715" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.3" />
-              <path d="M100 720 Q120 700 140 710 Q160 720 180 715" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.3" />
-              <path d="M100 720 Q90 705 70 700" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M100 720 Q110 705 130 700" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              {/* Main trunk */}
-              <path d="M100 720 Q98 600 100 480 Q102 360 100 240 Q98 120 100 20" stroke="url(#trunk-gradient)" strokeWidth="4" strokeLinecap="round" />
-              {/* Branches (alternating sides, growing from trunk to nodes) */}
-              <path d="M100 630 Q70 625 50 620" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
-              <path d="M100 540 Q130 535 155 530" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
-              <path d="M100 450 Q65 440 45 435" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.25" />
-              <path d="M100 360 Q135 352 158 345" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.2" />
-              <path d="M100 270 Q62 258 42 250" stroke="var(--purple-mid)" strokeWidth="2" opacity="0.2" />
-              <path d="M100 185 Q140 178 160 172" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
-              <path d="M100 105 Q65 95 48 88" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
-              {/* Crown/canopy hint at top */}
-              <path d="M100 20 Q80 5 60 10" stroke="var(--gold-muted)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M100 20 Q120 5 140 10" stroke="var(--gold-muted)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M100 20 Q90 -5 75 0" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
-              <path d="M100 20 Q110 -5 125 0" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
-              <defs>
-                <linearGradient id="trunk-gradient" x1="100" y1="720" x2="100" y2="20" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.5" />
-                  <stop offset="60%" stopColor="var(--purple-glow)" stopOpacity="0.3" />
-                  <stop offset="100%" stopColor="var(--purple-mid)" stopOpacity="0.15" />
-                </linearGradient>
-              </defs>
-            </svg>
-
-            {/* Rank nodes positioned over the tree */}
-            <div className="tree-nodes">
-              {[...RAVEN_PATH].reverse().map((rank, i) => {
-                const originalIndex = RAVEN_PATH.length - 1 - i
-                const isReached = originalIndex <= currentRankIndex
-                const isActive = originalIndex === currentRankIndex
-                const isTop = originalIndex === RAVEN_PATH.length - 1
-                const isBottom = originalIndex === 0
-                const side = originalIndex % 2 === 0 ? 'left' : 'right'
-
-                return (
-                  <div
-                    key={rank.name}
-                    className={`tree-node ${isReached ? 'reached' : 'locked'} ${isActive ? 'active' : ''} ${side}`}
-                  >
-                    <div className="tree-node-orb">
-                      <span className="tree-node-symbol">{rank.symbol}</span>
-                      {isActive && <div className="tree-node-pulse" />}
-                    </div>
-                    <div className="tree-node-info">
-                      <h3 className="tree-node-name">{rank.name}</h3>
-                      <span className="tree-node-refs">
-                        {rank.referrals === 0 ? 'Join' : `${rank.referrals} referrals`}
-                      </span>
-                      <p className="tree-node-unlock">{rank.unlock}</p>
-                    </div>
-                  </div>
-                )
-              })}
+      {/* 4. WHAT YOU GET (dark) */}
+      <Reveal className="perks">
+        <div className="perks-inner">
+          <h2 className="perks-headline">What you get for being early.</h2>
+          <div className="perks-grid">
+            <div className="perks-item">
+              <span className="perks-icon">&#9670;</span>
+              <h3>Behind the Scenes</h3>
+              <p>Factory footage, design decisions, wood sourcing. Before anyone else.</p>
+            </div>
+            <div className="perks-item">
+              <span className="perks-icon">&#9670;</span>
+              <h3>First Look at Samples</h3>
+              <p>When they arrive this summer, you see them first.</p>
+            </div>
+            <div className="perks-item">
+              <span className="perks-icon">&#9670;</span>
+              <h3>Pick Your Number</h3>
+              <p>Top referrers choose their edition. 001, 042, 300.</p>
+            </div>
+            <div className="perks-item">
+              <span className="perks-icon">&#9670;</span>
+              <h3>Founders Wall</h3>
+              <p>Your name. Permanent. Before anyone knew.</p>
             </div>
           </div>
+          <button className="perks-cta" onClick={() => setShowSignup(true)}>Get In</button>
+        </div>
+      </Reveal>
 
-          <button className="community-cta" onClick={() => setShowSignup(true)}>Get In</button>
-          <p className="community-proof">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
+      {/* 5. THE RACE (light) */}
+      <Reveal className="race">
+        <div className="race-inner">
+          {countdown && <p className="race-countdown">{countdown} until the first drop</p>}
+          <h2 className="race-headline">Watch <em>001</em> goes to whoever ends up at the top.</h2>
+          <p className="race-text">300 watches ship December 2026. <strong>001/300</strong> goes to #1 on this list.</p>
+          <p className="race-deadline">Leaderboard closes June 30.</p>
+          {leaderboard.length > 0 && (
+            <div className="prize-leaderboard">
+              <div className="prize-leaderboard-list">
+                {leaderboard.map((person, i) => (
+                  <div key={person.name + i} className={`prize-row ${i === 0 ? 'first' : ''}`}>
+                    <span className="prize-row-pos">{i + 1}</span>
+                    <span className="prize-row-name">{person.name}</span>
+                    <span className="prize-row-refs">{person.referrals}</span>
+                    <span className="prize-row-label">{person.referrals === 1 ? 'referral' : 'referrals'}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="race-actions">
+            <button className="race-cta" onClick={() => setShowSignup(true)}>Get In</button>
+            <button className="race-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
+          </div>
+          <button className="share-btn" onClick={() => {
+            if (navigator.share) {
+              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
+            } else {
+              navigator.clipboard.writeText('https://gebauerwatches.com')
+              const btn = document.querySelector('.share-btn')
+              btn.textContent = 'Link Copied'
+              setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
+            }
+          }}>Share Gebauer</button>
         </div>
       </Reveal>
 
