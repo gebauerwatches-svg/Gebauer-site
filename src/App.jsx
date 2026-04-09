@@ -197,7 +197,7 @@ function App() {
             {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
           </p>
           <p className="l2-welcome-sub fade-in-delay-1">
-            {displayName}, you're one of The First 300.
+            {displayName}, you got in early. Watch 001 ships end of 2026 to whoever's at #1.
           </p>
         </header>
 
@@ -259,27 +259,50 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Built by teens, for teens.
-            <span className="hero-accent"> Because we're different.</span>
+            The watch you'll still wear
+            <span className="hero-accent"> when you're 30.</span>
           </h1>
+          <p className="hero-sub fade-in-delay-1">An heirloom, built for teenagers. Dropping end of 2026. Only 300 ever made.</p>
           <div className="hero-cta fade-in-delay-1">
-            <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Join the Movement</button>
+            <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Get on the List</button>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
-            <p className="hero-proof">{waitlistCount} people are already in.</p>
+            <p className="hero-proof">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
+
+      {/* WHY GEBAUER: 4 quick punches */}
+      <Reveal className="why">
+        <div className="why-inner">
+          <div className="why-item">
+            <h3>Real wood. No two alike.</h3>
+            <p>Like the person wearing it.</p>
+          </div>
+          <div className="why-item">
+            <h3>Designed by a 16 year old.</h3>
+            <p>Who got tired of the gap between "real watch" and "watch teens want."</p>
+          </div>
+          <div className="why-item">
+            <h3>300. Then never again.</h3>
+            <p>Each one numbered. When they're gone, that's it.</p>
+          </div>
+          <div className="why-item">
+            <h3>Drops end of 2026.</h3>
+            <p>You either got in early, or you didn't.</p>
+          </div>
+        </div>
+      </Reveal>
 
       {/* THE PRIZE: #1 gets the first watch */}
       <Reveal className="prize">
         <div className="prize-inner">
           <p className="prize-label">The Race to #1</p>
           <h2 className="prize-headline">
-            The first <em>Gebauer ever made</em> goes to #1.
+            The first <em>Gebauer ever made</em> goes to whoever ends up #1.
           </h2>
           <p className="prize-text">
-            Whoever has the most referrals when the samples land this summer takes home <strong>watch 001/300</strong>. The first one off the line. The one engraved before any other.
+            When the first 300 ship at the end of the year, watch <strong>001/300</strong> goes to the person at the top of this list. First one off the line. Engraved before any other. Yours forever.
           </p>
           {leaderboard.length > 0 && (
             <div className="prize-leaderboard">
@@ -298,53 +321,61 @@ function App() {
           )}
 
           <div className="prize-actions">
-            <button className="prize-cta" onClick={() => setShowSignup(true)}>Join the Race</button>
+            <button className="prize-cta" onClick={() => setShowSignup(true)}>Get on the List</button>
             <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
           </div>
         </div>
       </Reveal>
 
-      {/* FOUNDER: short, punchy, visual */}
+      {/* FOUNDER: signed note from Liam */}
       <Reveal className="founder">
         <div className="founder-inner">
           <RavenIcon className="section-raven" size={24} />
+          <p className="founder-label">A note from the founder</p>
           <h2 className="founder-headline">
-            Most watch brands are run by old guys in suits.
-            <em> Ours was founded by a teenager.</em>
+            I was 15, in Milan, holding my first real watch.
+            <em> I knew nobody my age had anything like it.</em>
           </h2>
+          <p className="founder-text">
+            I'd saved up for months. The second it was on my wrist, I got it. This was something I'd actually keep. Something I'd still wear at 25. At 30. Not a phone, not headphones, not the next thing replacing the last thing.
+          </p>
+          <p className="founder-text">
+            But the only watches that hit like that were made by old guys in suits, for old guys in suits. Nothing for someone my age that actually meant something. So I started building it.
+          </p>
+          <p className="founder-text">
+            One year later we have a manufacturer in Japan, three wood variants locked, and 300 watches on the way. I'm the youngest founder in the High Country Accelerator. The first 300 ship at the end of this year. After that, never again.
+          </p>
+          <p className="founder-signoff">— Liam, 16</p>
           <div className="founder-stats">
             <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teen interviews</span></div>
+            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
             <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
           </div>
-          <p className="founder-text">
-            Liam bought his first real watch in Milan at 15. A year later he was designing his own with a manufacturer in Japan. Gebauer is what happens when a teen builds the watch brand that didn't exist yet.
-          </p>
         </div>
       </Reveal>
 
-      {/* THE WOOD: story-driven, no prices */}
+      {/* THE WOOD: story-driven */}
       <Reveal className="wood">
-        <h2 className="wood-headline">The wood is <em>the whole point.</em></h2>
-        <p className="wood-sub">Every dial is cut from real wood. No prints. No veneers. The grain you see is the grain you get, and no two pieces will ever be alike.</p>
+        <h2 className="wood-headline">No two dials will ever be alike. <em>Like the person wearing it.</em></h2>
+        <p className="wood-sub">Every dial is cut from real wood. Not a print. Not a veneer. The grain on yours doesn't exist on anyone else's, and never will.</p>
         <div className="wood-grid">
           <div className="wood-card">
             <div className="wood-img-wrap"><img src={watchPadauk} alt="African Padauk" /></div>
             <h3>African Padauk</h3>
             <p className="wood-tagline">The one that changes with you.</p>
-            <p className="wood-fact">Padauk starts as a vivid, fiery orange. Over months and years it darkens into a deep burgundy. Your watch at year one will look nothing like your watch at year five. It tells your story without you saying a word.</p>
+            <p className="wood-fact">Starts fiery orange. Over years, it darkens into a deep burgundy. The dial you wear in high school is not the dial you'll wear out of college. It ages with you, in real time.</p>
           </div>
           <div className="wood-card">
             <div className="wood-img-wrap"><img src={watchEbony} alt="Black Ebony" /></div>
             <h3>Black Ebony</h3>
             <p className="wood-tagline">The one that never fades.</p>
-            <p className="wood-fact">One of the densest woods on earth. Nearly black, with razor-thin grain lines that catch light at certain angles. Ebony was rarer than gold in ancient Egypt. It does not shift or transform. It is permanent.</p>
+            <p className="wood-fact">One of the densest woods on earth. Nearly black, with razor-thin grain lines that catch light at certain angles. Ebony was rarer than gold in ancient Egypt. Your grandkids will see this dial exactly the way you see it now.</p>
           </div>
           <div className="wood-card">
             <div className="wood-img-wrap"><img src={watchHinoki} alt="Hinoki" /></div>
             <h3>Hinoki</h3>
             <p className="wood-tagline">The one from sacred ground.</p>
-            <p className="wood-fact">Hinoki is the wood used to build Japanese temples and shrines for over a thousand years. Forests are protected by law. It has a soft golden grain and a clean, subtle beauty that ages gracefully.</p>
+            <p className="wood-fact">Used to build Japanese temples for over a thousand years. The forests are protected by law. Soft golden grain, subtle, the kind of detail people only notice if they're really looking. You'll know it's there.</p>
           </div>
         </div>
       </Reveal>
@@ -353,27 +384,27 @@ function App() {
       <Reveal className="journey">
         <div className="journey-inner">
           <RavenIcon className="section-raven section-raven-gold" size={24} />
-          <p className="journey-label">Where We Are Right Now</p>
-          <h2 className="journey-headline">You're watching a brand <em>get built in real time.</em></h2>
+          <p className="journey-label">The Countdown</p>
+          <h2 className="journey-headline">300 watches. <em>Shipping end of 2026.</em></h2>
           <div className="journey-timeline">
             <div className="journey-item journey-done">
               <span className="journey-marker">&#10003;</span>
-              <div><h3>The Design</h3><p>Three wood variants locked. Raven caseback designed. Every detail decided.</p></div>
+              <div><h3>The Design is Locked</h3><p>Three woods. Raven caseback. Every detail decided.</p></div>
             </div>
             <div className="journey-item journey-done">
               <span className="journey-marker">&#10003;</span>
-              <div><h3>The Partner</h3><p>We found our manufacturer in Japan. Tokiji is producing the first official technical drawings right now.</p></div>
+              <div><h3>The Partner is Signed</h3><p>Manufacturer in Japan. Tokiji is producing the official technical drawings right now.</p></div>
             </div>
             <div className="journey-item journey-active">
               <span className="journey-marker-active" />
-              <div><h3>The Samples</h3><p>First samples are coming this summer. Real watches. Real wood. The moment everything becomes tangible.</p></div>
+              <div><h3>Samples This Summer</h3><p>Real watches. Real wood. First time anyone outside the team gets to see them.</p></div>
             </div>
-            <div className="journey-item journey-future">
-              <span className="journey-marker-future" />
-              <div><h3>The First 300</h3><p>Full production run of 300 individually numbered watches. Every one engraved. Fall 2026.</p></div>
+            <div className="journey-item journey-active">
+              <span className="journey-marker-active" />
+              <div><h3>The First 300 Drop December 2026</h3><p>Numbered. Engraved. Once they're gone, never made again.</p></div>
             </div>
           </div>
-          <p className="journey-cta-text">You're here before any of that has shipped. That makes you part of the founding story.</p>
+          <p className="journey-cta-text">You either got in early, or you didn't.</p>
         </div>
       </Reveal>
 
@@ -383,11 +414,9 @@ function App() {
           <p className="updates-label">Latest</p>
           <div className="updates-card">
             <span className="updates-date">April 2026</span>
-            <h3 className="updates-title">Liam Accepted into High Country Accelerator</h3>
+            <h3 className="updates-title">Liam is the youngest founder in the High Country Accelerator</h3>
             <p className="updates-desc">
-              Gebauer was selected for the High Country Accelerator spring cohort in Steamboat Springs.
-              Liam is the youngest founder in the program. The accelerator connects Gebauer with mentors,
-              investors, and the resources to scale from 300 watches to a real brand.
+              Gebauer was selected for the spring cohort in Steamboat Springs. Most founders in the room are 30+. Liam is 16. The accelerator connects us with mentors, investors, and the people who help take 300 watches and turn them into a real brand.
             </p>
           </div>
         </div>
@@ -397,7 +426,7 @@ function App() {
       <Reveal className="community">
         <div className="community-inner">
           <h2 className="community-headline">Climb The Igdrasil. <em>It's kind of our thing.</em></h2>
-          <p className="community-text">8 ranks. Refer friends. Unlock access. Not the reason to join, but a fun reason to stay.</p>
+          <p className="community-text">8 ranks rooted in Norse myth. Each one unlocks something. Refer friends, climb the tree, and the person at the top when we ship gets watch 001.</p>
 
           <div className="world-tree">
             {/* SVG tree trunk and branches */}
@@ -463,8 +492,8 @@ function App() {
             </div>
           </div>
 
-          <button className="community-cta" onClick={() => setShowSignup(true)}>Join the Movement</button>
-          <p className="community-proof">{waitlistCount} people. {300 - waitlistCount} spots left.</p>
+          <button className="community-cta" onClick={() => setShowSignup(true)}>Get on the List</button>
+          <p className="community-proof">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
         </div>
       </Reveal>
 
@@ -472,7 +501,8 @@ function App() {
       <footer className="site-footer">
         <RavenIcon className="footer-raven" size={24} />
         <img src={logo} alt="Gebauer" className="footer-logo" />
-        <p className="footer-tagline">Founded by a teen. Crafted in Japan. Built to age with you.</p>
+        <p className="footer-raven-line">The raven is engraved on the back. You'll see it when it's on your wrist.</p>
+        <p className="footer-tagline">Founded by a 16 year old. Crafted in Japan. Yours forever.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
       </footer>
 
@@ -491,13 +521,13 @@ function App() {
                   </svg>
                 </div>
                 <h2>Check Your Email</h2>
-                <p className="signup-sub">We sent a verification link to <strong>{email}</strong>. Click it to lock in your spot.</p>
+                <p className="signup-sub">We sent a link to <strong>{email}</strong>. Click it and you're in.</p>
                 <p className="verify-note">Link expires in 48 hours. Check spam if you don't see it.</p>
               </>
             ) : (
               <>
-                <h2>Join The First 300</h2>
-                <p className="signup-sub">You found this before everyone else.</p>
+                <h2>Get on the List</h2>
+                <p className="signup-sub">You found this before everyone else. Don't waste it.</p>
                 <form className="signup-form" onSubmit={handleSubmit}>
                   <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
                   <div><label htmlFor="firstName">Full Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
