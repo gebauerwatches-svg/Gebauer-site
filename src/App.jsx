@@ -70,25 +70,16 @@ function App() {
 
   // Wood voting (localStorage only, fun interaction)
   const [woodVote, setWoodVote] = useState(() => localStorage.getItem('gebauer_wood_vote') || '')
-  const [woodVotes, setWoodVotes] = useState(() => {
-    try { return JSON.parse(localStorage.getItem('gebauer_wood_votes') || '{}') }
-    catch { return {} }
-  })
+  const [woodSubmitted, setWoodSubmitted] = useState(() => localStorage.getItem('gebauer_wood_submitted') === 'true')
   const handleWoodVote = (wood) => {
-    const prev = woodVote
-    const votes = { ...woodVotes }
-    if (prev) votes[prev] = Math.max(0, (votes[prev] || 0) - 1)
-    if (prev === wood) {
-      // Unvote
-      setWoodVote('')
-      localStorage.setItem('gebauer_wood_vote', '')
-    } else {
-      votes[wood] = (votes[wood] || 0) + 1
-      setWoodVote(wood)
-      localStorage.setItem('gebauer_wood_vote', wood)
-    }
-    setWoodVotes(votes)
-    localStorage.setItem('gebauer_wood_votes', JSON.stringify(votes))
+    if (woodSubmitted) return
+    setWoodVote(wood === woodVote ? '' : wood)
+  }
+  const handleWoodSubmit = () => {
+    if (!woodVote) return
+    localStorage.setItem('gebauer_wood_vote', woodVote)
+    localStorage.setItem('gebauer_wood_submitted', 'true')
+    setWoodSubmitted(true)
   }
 
   // Countdown to December 2026 drop
@@ -425,8 +416,16 @@ function App() {
             </div>
           ))}
         </div>
-        {woodVote && (
-          <p className="wood-vote-confirmed">You picked <strong>{woodVote === 'padauk' ? 'Padauk' : woodVote === 'ebony' ? 'Ebony' : 'Hinoki'}</strong>. Good taste.</p>
+        {!woodSubmitted && woodVote && (
+          <button className="wood-submit-btn" onClick={handleWoodSubmit}>Submit My Pick</button>
+        )}
+        {woodSubmitted && (
+          <div className="wood-vote-confirmed">
+            {woodVote === 'padauk' && <p>Padauk. You want a watch that tells a different story every year. Respect.</p>}
+            {woodVote === 'ebony' && <p>Ebony. The rarest one. You know exactly what you want.</p>}
+            {woodVote === 'hinoki' && <p>Hinoki. Sacred Japanese wood on your wrist. That's a quiet flex nobody else would think of.</p>}
+            <span className="wood-vote-check">Vote recorded</span>
+          </div>
         )}
       </Reveal>
 

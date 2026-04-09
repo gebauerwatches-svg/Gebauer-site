@@ -376,11 +376,29 @@
 
 .wood-card.voted { box-shadow: 0 0 0 2px var(--gold-muted); }
 
-.wood-vote-confirmed {
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400;
-  color: var(--gold); text-align: center; margin-top: 24px;
+.wood-submit-btn {
+  display: block; margin: 32px auto 0;
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--bg-cream); background: var(--gold);
+  border: none; padding: 18px 52px; cursor: pointer;
+  transition: background 0.3s, transform 0.15s, box-shadow 0.3s;
 }
-.wood-vote-confirmed strong { font-weight: 600; }
+.wood-submit-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.25); }
+
+.wood-vote-confirmed {
+  text-align: center; margin-top: 32px; padding: 24px;
+  background: rgba(212, 166, 42, 0.04); border: 1px solid rgba(212, 166, 42, 0.15);
+  max-width: 480px; margin-left: auto; margin-right: auto;
+}
+.wood-vote-confirmed p {
+  font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic;
+  font-size: 18px; line-height: 1.5; color: var(--gold); margin-bottom: 8px;
+}
+.wood-vote-check {
+  font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500;
+  letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-warm); opacity: 0.5;
+}
 
 
 /* ===========================================
