@@ -362,15 +362,17 @@ function App() {
           <div className="prize-actions">
             <button className="prize-cta" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="prize-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
-            <button className="prize-share-btn" onClick={() => {
-              if (navigator.share) {
-                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
-              } else {
-                navigator.clipboard.writeText('https://gebauerwatches.com')
-                alert('Link copied')
-              }
-            }}>Share This</button>
           </div>
+          <button className="share-btn" onClick={() => {
+            if (navigator.share) {
+              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
+            } else {
+              navigator.clipboard.writeText('https://gebauerwatches.com')
+              const btn = document.querySelector('.share-btn')
+              btn.textContent = 'Link Copied'
+              setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
+            }
+          }}>Share Gebauer</button>
         </div>
       </Reveal>
 
@@ -422,6 +424,41 @@ function App() {
               </button>
             </div>
           ))}
+        </div>
+        {woodVote && (
+          <p className="wood-vote-confirmed">You picked <strong>{woodVote === 'padauk' ? 'Padauk' : woodVote === 'ebony' ? 'Ebony' : 'Hinoki'}</strong>. Good taste.</p>
+        )}
+      </Reveal>
+
+      {/* INSIDER ACCESS: exclusive perks for being on the list */}
+      <Reveal className="insider">
+        <div className="insider-inner">
+          <RavenIcon className="section-raven section-raven-gold" size={24} />
+          <p className="insider-label">What You Get for Being Early</p>
+          <h2 className="insider-headline">This isn't just a waitlist. <em>It's access.</em></h2>
+          <div className="insider-grid">
+            <div className="insider-perk">
+              <span className="insider-icon">&#9670;</span>
+              <h3>Behind the Scenes</h3>
+              <p>See the watches being made. Factory footage, wood sourcing, design decisions. Before it goes public.</p>
+            </div>
+            <div className="insider-perk">
+              <span className="insider-icon">&#9670;</span>
+              <h3>First Look at Samples</h3>
+              <p>When the first samples arrive this summer, you see them before anyone else does.</p>
+            </div>
+            <div className="insider-perk">
+              <span className="insider-icon">&#9670;</span>
+              <h3>Pick Your Number</h3>
+              <p>Top referrers choose their edition number. 001, 042, 300. First come, first pick.</p>
+            </div>
+            <div className="insider-perk">
+              <span className="insider-icon">&#9670;</span>
+              <h3>Founders Wall</h3>
+              <p>Your name on a permanent page on the site. The people who were here before anyone knew.</p>
+            </div>
+          </div>
+          <button className="insider-cta" onClick={() => setShowSignup(true)}>Get In</button>
         </div>
       </Reveal>
 

@@ -291,14 +291,21 @@
   color: var(--gold);
 }
 
-.prize-share-btn {
-  font-family: 'Inter', sans-serif; font-weight: 400; font-size: 12px;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--text-secondary); opacity: 0.5;
-  background: none; border: none; padding: 8px 16px;
-  cursor: pointer; transition: opacity 0.3s, color 0.3s;
+/* Share button (prominent, full-width) */
+.share-btn {
+  display: block; width: 100%; max-width: 480px; margin: 28px auto 0;
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold-light); background: rgba(212, 166, 42, 0.08);
+  border: 1px solid rgba(212, 166, 42, 0.3);
+  padding: 18px; cursor: pointer;
+  transition: all 0.3s;
 }
-.prize-share-btn:hover { opacity: 1; color: var(--gold-light); }
+.share-btn:hover {
+  background: rgba(212, 166, 42, 0.14);
+  border-color: var(--gold);
+  color: var(--gold);
+}
 
 @media (max-width: 600px) {
   .prize-current { padding: 14px 20px; }
@@ -368,6 +375,35 @@
 }
 
 .wood-card.voted { box-shadow: 0 0 0 2px var(--gold-muted); }
+
+.wood-vote-confirmed {
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 400;
+  color: var(--gold); text-align: center; margin-top: 24px;
+}
+.wood-vote-confirmed strong { font-weight: 600; }
+
+
+/* ===========================================
+   INSIDER ACCESS (perks for being early)
+   =========================================== */
+
+.insider { background: var(--bg-dark); padding: 88px 24px; }
+.insider-inner { max-width: 720px; margin: 0 auto; text-align: center; }
+.insider-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+.insider-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(26px, 5vw, 38px); line-height: 1.25; color: var(--text-primary); margin-bottom: 48px; }
+.insider-headline em { font-style: italic; color: var(--gold-light); }
+
+.insider-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 40px; text-align: left; }
+@media (max-width: 600px) { .insider-grid { grid-template-columns: 1fr; gap: 20px; } }
+
+.insider-perk { padding: 28px 24px; background: var(--bg-card); border: 1px solid rgba(157, 122, 219, 0.06); transition: transform 0.3s, box-shadow 0.3s; }
+.insider-perk:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); }
+.insider-icon { font-size: 14px; color: var(--gold); display: block; margin-bottom: 12px; }
+.insider-perk h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 20px; color: var(--text-primary); margin-bottom: 8px; }
+.insider-perk p { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; line-height: 1.65; color: var(--text-secondary); opacity: 0.6; }
+
+.insider-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-dark); background: var(--gold); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s, box-shadow 0.3s; }
+.insider-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.3); }
 
 
 /* ===========================================
