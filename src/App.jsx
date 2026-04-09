@@ -302,7 +302,7 @@ function App() {
             Watch <em>001</em> goes to whoever ends up at the top.
           </h2>
           <p className="prize-text">
-            When the first 300 ship in December, <strong>001/300</strong> goes to the #1 spot on this list. The first watch off the line. Engraved before any other.
+            When the first 300 ship in December, <strong>001/300</strong> goes to the #1 spot on this list. The first watch off the line. Engraved before any other. The leaderboard closes June 30.
           </p>
           {leaderboard.length > 0 && (
             <div className="prize-leaderboard">
