@@ -271,8 +271,10 @@ function App() {
         </section>
         {leaderboard.length > 0 && (
           <section className="l2-leaderboard fade-in-delay-3">
-            <h3 className="l2-leaderboard-title">Top Referrers</h3>
-            <div className="l2-leaderboard-list">{leaderboard.slice(0, 5).map((p, i) => <div key={p.name + i} className="l2-leaderboard-row"><span className="l2-leaderboard-pos">{i+1}</span><span className="l2-leaderboard-name">{p.name}</span><span className="l2-leaderboard-count">{p.referrals}</span></div>)}</div>
+            <h3 className="l2-leaderboard-title">The Leaderboard</h3>
+            <p className="l2-leaderboard-sub">Everyone who's referred. Watch 001 goes to #1 when we ship.</p>
+            <div className="l2-leaderboard-list">{leaderboard.map((p, i) => <div key={p.name + i} className={`l2-leaderboard-row ${i === 0 ? 'l2-first' : ''}`}><span className="l2-leaderboard-pos">{i+1}</span><span className="l2-leaderboard-name">{p.name}</span><span className="l2-leaderboard-refs">{p.referrals}</span><span className="l2-leaderboard-label">{p.referrals === 1 ? 'referral' : 'referrals'}</span></div>)}</div>
+            <p className="l2-leaderboard-deadline">Leaderboard closes June 30.</p>
           </section>
         )}
         <footer className="l2-footer"><button className="l2-back" onClick={() => setLayer('landing')}>Back to home</button><p>&copy; {new Date().getFullYear()} Gebauer Watches</p></footer>
@@ -384,30 +386,30 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 5. THE RACE (light) */}
-      <Reveal className="race">
-        <div className="race-inner">
-          {countdown && <p className="race-countdown">{countdown} until the first drop</p>}
-          <h2 className="race-headline">Watch <em>001</em> goes to whoever ends up at the top.</h2>
-          <p className="race-text">300 watches ship December 2026. <strong>001/300</strong> goes to #1 on this list.</p>
-          <p className="race-deadline">Leaderboard closes June 30.</p>
-          {leaderboard.length > 0 && (
-            <div className="prize-leaderboard">
-              <div className="prize-leaderboard-list">
-                {leaderboard.map((person, i) => (
-                  <div key={person.name + i} className={`prize-row ${i === 0 ? 'first' : ''}`}>
-                    <span className="prize-row-pos">{i + 1}</span>
-                    <span className="prize-row-name">{person.name}</span>
-                    <span className="prize-row-refs">{person.referrals}</span>
-                    <span className="prize-row-label">{person.referrals === 1 ? 'referral' : 'referrals'}</span>
-                  </div>
-                ))}
+      {/* 5. YOUR PATH (light) — compact Igdrasil, personal focus */}
+      <Reveal className="path-section">
+        <div className="path-inner">
+          {countdown && <p className="path-countdown">{countdown} until the first drop</p>}
+          <h2 className="path-headline">Your path. <em>The Raven Path.</em></h2>
+          <p className="path-sub">Refer friends. Climb the ranks. Each one unlocks something real.</p>
+
+          <div className="path-track">
+            {RAVEN_PATH.map((rank, i) => (
+              <div key={rank.name} className={`path-node ${i <= currentRankIndex ? 'reached' : ''} ${i === currentRankIndex ? 'current' : ''}`}>
+                <div className="path-node-dot"><span>{rank.symbol}</span></div>
+                <div className="path-node-info">
+                  <h3>{rank.name} <span className="path-node-refs">{rank.referrals === 0 ? 'Start' : rank.referrals}</span></h3>
+                  <p>{rank.unlock}</p>
+                </div>
               </div>
-            </div>
-          )}
-          <div className="race-actions">
-            <button className="race-cta" onClick={() => setShowSignup(true)}>Get In</button>
-            <button className="race-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
+            ))}
+          </div>
+
+          <p className="path-deadline">Leaderboard closes June 30. Watch 001 goes to #1.</p>
+
+          <div className="path-actions">
+            <button className="path-cta" onClick={() => setShowSignup(true)}>Get In</button>
+            <button className="path-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
           </div>
           <button className="share-btn" onClick={() => {
             if (navigator.share) {

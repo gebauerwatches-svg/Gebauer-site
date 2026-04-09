@@ -401,22 +401,44 @@
 .perks-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.3); }
 
 /* ===========================================
-   THE RACE (light background, leaderboard)
+   YOUR PATH (compact Raven Path on landing)
    =========================================== */
 
-.race { background: var(--bg-light); padding: 72px 24px; }
-.race-inner { max-width: 600px; margin: 0 auto; text-align: center; }
-.race-countdown { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(28px, 5vw, 42px); color: var(--purple); margin-bottom: 20px; }
-.race-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 36px); line-height: 1.2; color: var(--text-dark); margin-bottom: 12px; }
-.race-headline em { font-style: italic; color: var(--gold); }
-.race-text { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 15px; color: var(--text-warm); margin-bottom: 12px; }
-.race-text strong { color: var(--purple); font-weight: 500; }
-.race-deadline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(20px, 3.5vw, 28px); color: var(--gold); margin-bottom: 32px; padding: 14px 24px; border: 1px solid rgba(212, 166, 42, 0.25); display: inline-block; }
-.race-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 32px; }
-.race-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-light); background: var(--purple); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s; }
-.race-cta:hover { background: var(--purple-mid); transform: translateY(-2px); }
-.race-stats-btn { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-soft); background: none; border: 1px solid rgba(45, 27, 78, 0.15); padding: 12px 36px; cursor: pointer; transition: border-color 0.3s, color 0.3s; }
-.race-stats-btn:hover { border-color: var(--purple); color: var(--purple); }
+.path-section { background: var(--bg-light); padding: 72px 24px; }
+.path-inner { max-width: 520px; margin: 0 auto; text-align: center; }
+.path-countdown { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: clamp(26px, 4vw, 38px); color: var(--purple); margin-bottom: 20px; }
+.path-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 34px); line-height: 1.2; color: var(--text-dark); margin-bottom: 8px; }
+.path-headline em { font-style: italic; color: var(--gold); }
+.path-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 14px; color: var(--text-warm); margin-bottom: 32px; }
+
+/* The track: vertical path */
+.path-track { text-align: left; position: relative; margin-bottom: 32px; }
+
+.path-node { display: flex; align-items: flex-start; gap: 16px; padding: 10px 0; position: relative; padding-left: 4px; border-left: 2px solid var(--bg-warm); margin-left: 18px; }
+
+.path-node-dot { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 2px solid var(--bg-warm); background: var(--white); font-size: 14px; color: var(--text-warm); opacity: 0.4; position: relative; left: -23px; margin-right: -23px; transition: all 0.3s; }
+
+.path-node.reached { border-left-color: var(--gold-muted); }
+.path-node.reached .path-node-dot { border-color: var(--gold-muted); background: rgba(212, 166, 42, 0.06); color: var(--gold); opacity: 1; }
+.path-node.current { border-left-color: var(--gold); }
+.path-node.current .path-node-dot { border-color: var(--gold); background: rgba(212, 166, 42, 0.1); color: var(--gold); opacity: 1; box-shadow: 0 0 0 4px rgba(212, 166, 42, 0.08); }
+.path-node:not(.reached):not(.current) { opacity: 0.35; }
+
+.path-node-info { padding-top: 6px; }
+.path-node-info h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 17px; color: var(--text-dark); margin-bottom: 2px; }
+.path-node.reached .path-node-info h3 { color: var(--text-dark); }
+.path-node.current .path-node-info h3 { color: var(--gold); }
+.path-node-refs { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; color: var(--text-warm); opacity: 0.5; margin-left: 8px; }
+.path-node.reached .path-node-refs { color: var(--gold-muted); opacity: 1; }
+.path-node-info p { font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 300; color: var(--text-warm); opacity: 0.6; line-height: 1.5; }
+
+.path-deadline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--gold); margin-bottom: 28px; }
+
+.path-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 16px; }
+.path-cta { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--bg-light); background: var(--purple); border: none; padding: 20px 56px; cursor: pointer; transition: background 0.3s, transform 0.15s; }
+.path-cta:hover { background: var(--purple-mid); transform: translateY(-2px); }
+.path-stats-btn { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-soft); background: none; border: 1px solid rgba(45, 27, 78, 0.15); padding: 12px 36px; cursor: pointer; transition: border-color 0.3s, color 0.3s; }
+.path-stats-btn:hover { border-color: var(--purple); color: var(--purple); }
 
 
 .wood-card .wood-tagline { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 17px; color: var(--gold-muted); padding: 0 24px 12px; }
@@ -700,14 +722,21 @@
 .l2-tree-node.unlocked .l2-tree-unlock { opacity: 0.65; }
 .l2-tree-node.current .l2-tree-unlock { opacity: 0.65; }
 .l2-tree-node:not(.unlocked):not(.current) { opacity: 0.35; }
-.l2-leaderboard { width: 100%; max-width: 360px; padding: 24px 28px; border: 1px solid rgba(42, 34, 53, 0.04); background: var(--white); margin-bottom: 40px; }
-.l2-leaderboard-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 16px; color: var(--text-dark); text-align: center; margin-bottom: 16px; }
+.l2-leaderboard { width: 100%; max-width: 500px; padding: 32px 28px; border: 1px solid rgba(42, 34, 53, 0.04); background: var(--white); margin-bottom: 40px; }
+.l2-leaderboard-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 26px; color: var(--text-dark); text-align: center; margin-bottom: 4px; }
+.l2-leaderboard-sub { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; color: var(--text-warm); text-align: center; margin-bottom: 24px; }
 .l2-leaderboard-list { display: flex; flex-direction: column; }
-.l2-leaderboard-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(42, 34, 53, 0.03); }
+.l2-leaderboard-row { display: grid; grid-template-columns: 32px 1fr auto auto; align-items: baseline; gap: 10px; padding: 12px 4px; border-bottom: 1px solid rgba(42, 34, 53, 0.05); }
 .l2-leaderboard-row:last-child { border-bottom: none; }
-.l2-leaderboard-pos { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 14px; color: var(--gold-muted); width: 24px; flex-shrink: 0; }
-.l2-leaderboard-name { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-dark); flex: 1; }
-.l2-leaderboard-count { font-family: 'Inter', sans-serif; font-size: 10px; color: var(--text-muted); }
+.l2-leaderboard-pos { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: var(--text-warm); opacity: 0.5; text-align: center; }
+.l2-leaderboard-name { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; font-weight: 500; color: var(--text-dark); }
+.l2-leaderboard-refs { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; font-weight: 600; color: var(--gold); }
+.l2-leaderboard-label { font-family: 'Inter', sans-serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-warm); opacity: 0.5; }
+.l2-leaderboard-deadline { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500; color: var(--gold); text-align: center; margin-top: 20px; }
+.l2-first { background: rgba(212, 166, 42, 0.04); margin: 0 -8px; padding: 14px 12px; }
+.l2-first .l2-leaderboard-pos { color: var(--gold); opacity: 1; font-size: 22px; }
+.l2-first .l2-leaderboard-name { font-size: 20px; }
+.l2-first .l2-leaderboard-refs { font-size: 30px; }
 .l2-footer { text-align: center; padding: 32px 0 40px; border-top: 1px solid rgba(42, 34, 53, 0.04); width: 100%; max-width: 480px; }
 .l2-back { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); background: none; border: none; cursor: pointer; padding: 6px 0; margin-bottom: 10px; transition: color 0.2s; }
 .l2-back:hover { color: var(--text-dark); }
