@@ -346,16 +346,36 @@ function App() {
         </div>
       </Reveal>
 
-      {/* FOUNDER: tight */}
+      {/* FOUNDER */}
       <Reveal className="founder">
         <div className="founder-inner">
           <h2 className="founder-headline">
-            I'm 16. I started Gebauer because <em>nothing in this category was made for us.</em>
+            Most watch brands are built by old guys in suits.
+            <em> Not us.</em>
           </h2>
           <p className="founder-text">
             Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Found a manufacturer in Japan. Now I'm the youngest founder in the High Country Accelerator with 300 watches on the way. This drop is just the first chapter.
           </p>
           <p className="founder-signoff">— Liam, 16</p>
+          <div className="founder-stats">
+            <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
+            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
+            <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* UPDATES */}
+      <Reveal className="updates">
+        <div className="updates-inner">
+          <p className="updates-label">Latest</p>
+          <div className="updates-card">
+            <span className="updates-date">April 2026</span>
+            <h3 className="updates-title">Liam is the youngest founder in the High Country Accelerator</h3>
+            <p className="updates-desc">
+              Gebauer got into the spring cohort in Steamboat Springs. Most founders in the room are 30+. Liam is 16. The accelerator is how we go from 300 watches to whatever Gebauer becomes after.
+            </p>
+          </div>
         </div>
       </Reveal>
 
