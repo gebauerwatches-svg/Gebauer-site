@@ -65,6 +65,7 @@ function App() {
   const [referralFrom, setReferralFrom] = useState('')
   const [showStats, setShowStats] = useState(false)
   const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [leaderboard, setLeaderboard] = useState([])
   const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
 
@@ -285,6 +286,27 @@ function App() {
   // ---- LAYER 1 ----
   return (
     <>
+      {/* NAV */}
+      <nav className="site-nav">
+        <a href="/" className="nav-logo"><img src={logo} alt="Gebauer" /></a>
+        <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <span className={`nav-bar ${menuOpen ? 'open' : ''}`} />
+          <span className={`nav-bar ${menuOpen ? 'open' : ''}`} />
+          <span className={`nav-bar ${menuOpen ? 'open' : ''}`} />
+        </button>
+        {menuOpen && (
+          <div className="nav-dropdown" onClick={() => setMenuOpen(false)}>
+            <a href="#story" className="nav-link">The Story</a>
+            <a href="#watches" className="nav-link">The Watches</a>
+            <a href="#perks" className="nav-link">Perks</a>
+            <a href="#path" className="nav-link">Raven Path</a>
+            <a href="/blog" className="nav-link">Blog</a>
+            <button className="nav-link nav-link-cta" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
+            <button className="nav-link nav-link-cta nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
+          </div>
+        )}
+      </nav>
+
       {/* 1. HERO */}
       <section className="hero">
         <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
@@ -305,7 +327,7 @@ function App() {
       </section>
 
       {/* 2. THE STORY (light) */}
-      <Reveal className="founder">
+      <Reveal className="founder" id="story">
         <div className="founder-inner">
           <h2 className="founder-headline">
             Most watch brands are built by old guys in suits.
@@ -324,7 +346,7 @@ function App() {
       </Reveal>
 
       {/* 3. THE WATCHES + VOTE (cream) */}
-      <Reveal className="wood">
+      <Reveal className="wood" id="watches">
         <h2 className="wood-headline">Three woods. <em>Which one's yours?</em></h2>
         <div className="wood-grid">
           {[
@@ -357,7 +379,7 @@ function App() {
       </Reveal>
 
       {/* 4. WHAT YOU GET (dark) */}
-      <Reveal className="perks">
+      <Reveal className="perks" id="perks">
         <div className="perks-inner">
           <h2 className="perks-headline">What you get for being early.</h2>
           <div className="perks-grid">
@@ -387,7 +409,7 @@ function App() {
       </Reveal>
 
       {/* 5. YOUR PATH (light) — compact Igdrasil, personal focus */}
-      <Reveal className="path-section">
+      <Reveal className="path-section" id="path">
         <div className="path-inner">
           {countdown && <p className="path-countdown">{countdown} until the first drop</p>}
           <h2 className="path-headline">Your path. <em>The Raven Path.</em></h2>
