@@ -26,9 +26,13 @@ export default function Blog() {
     } else {
       // Fetch all posts
       fetch('/api/blog')
-        .then(r => r.json())
+        .then(r => {
+          const ct = r.headers.get('content-type') || ''
+          if (!ct.includes('application/json')) throw new Error('Not JSON')
+          return r.json()
+        })
         .then(data => {
-          if (data.posts) setPosts(data.posts)
+          if (data.posts && Array.isArray(data.posts)) setPosts(data.posts)
           setLoading(false)
         })
         .catch(() => setLoading(false))
