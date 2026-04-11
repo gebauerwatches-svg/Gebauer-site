@@ -3,16 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './palette.css'
 import './index.css'
 import App from './App.jsx'
+import Blog from './Blog.jsx'
 
-// Error boundary so the page shows the error instead of going blank
 class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { error: null }
-  }
-  static getDerivedStateFromError(error) {
-    return { error }
-  }
+  constructor(props) { super(props); this.state = { error: null } }
+  static getDerivedStateFromError(error) { return { error } }
   render() {
     if (this.state.error) {
       return (
@@ -27,10 +22,14 @@ class ErrorBoundary extends Component {
   }
 }
 
+// Simple path-based routing (no react-router needed)
+const path = window.location.pathname
+const isBlog = path.startsWith('/blog')
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      <App />
+      {isBlog ? <Blog /> : <App />}
     </ErrorBoundary>
   </StrictMode>,
 )
