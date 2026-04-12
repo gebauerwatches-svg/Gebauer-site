@@ -3,33 +3,56 @@ import logo from './assets/gebauer-logo.svg'
 import posts from './posts.js'
 import './Blog.css'
 
+function SubscribeBlock({ subDone, subEmail, setSubEmail, subLoading, handleSubscribe }) {
+  if (subDone) {
+    return (
+      <div className="blog-subscribed">
+        <h2>You're in.</h2>
+        <p className="blog-subscribed-text">When Liam writes something new, you'll get it. Behind-the-scenes updates, design decisions, the story as it happens.</p>
+        <div className="blog-subscribed-links">
+          <a href="/blog" className="blog-subscribed-link">Back to the blog</a>
+          <a href="/" className="blog-subscribed-link blog-subscribed-home">Go to Gebauer</a>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="blog-subscribe">
+      <h3>Want Liam's posts in your inbox?</h3>
+      <p className="blog-subscribe-desc">Behind-the-scenes updates, design decisions, and the Gebauer story as it happens. No spam.</p>
+      <form className="blog-subscribe-form" onSubmit={handleSubscribe}>
+        <input type="email" placeholder="Your email" value={subEmail} onChange={(e) => setSubEmail(e.target.value)} required />
+        <button type="submit" disabled={subLoading}>{subLoading ? '...' : 'Subscribe'}</button>
+      </form>
+    </div>
+  )
+}
+
 export default function Blog() {
   const [subEmail, setSubEmail] = useState('')
-  const [subStatus, setSubStatus] = useState('')
+  const [subDone, setSubDone] = useState(false)
   const [subLoading, setSubLoading] = useState(false)
 
-  // Check URL for slug
   const slug = window.location.pathname.replace('/blog/', '').replace('/blog', '')
   const activePost = slug ? posts.find(p => p.slug === slug) : null
 
-  const handleSubscribe = async (e) => {
+  const handleSubscribe = (e) => {
     e.preventDefault()
     if (!subEmail) return
     setSubLoading(true)
-    // Save to localStorage since Supabase blog table isn't working yet
     const subs = JSON.parse(localStorage.getItem('gebauer_blog_subs') || '[]')
-    if (subs.includes(subEmail.toLowerCase())) {
-      setSubStatus("You're already subscribed.")
-    } else {
+    if (!subs.includes(subEmail.toLowerCase())) {
       subs.push(subEmail.toLowerCase())
       localStorage.setItem('gebauer_blog_subs', JSON.stringify(subs))
-      setSubStatus('Subscribed. You\'ll hear from Liam.')
-      setSubEmail('')
     }
+    setSubDone(true)
     setSubLoading(false)
   }
 
-  // Single post view
+  const subProps = { subDone, subEmail, setSubEmail, subLoading, handleSubscribe }
+
+  // Single post
   if (activePost) {
     return (
       <div className="blog">
@@ -45,20 +68,13 @@ export default function Blog() {
             {activePost.content.split('\n\n').map((para, i) => <p key={i}>{para}</p>)}
           </div>
         </article>
-        <div className="blog-subscribe">
-          <h3>Want Liam's posts in your inbox?</h3>
-          <form className="blog-subscribe-form" onSubmit={handleSubscribe}>
-            <input type="email" placeholder="Your email" value={subEmail} onChange={(e) => setSubEmail(e.target.value)} required />
-            <button type="submit" disabled={subLoading}>{subLoading ? '...' : 'Subscribe'}</button>
-          </form>
-          {subStatus && <p className="blog-subscribe-status">{subStatus}</p>}
-        </div>
+        <SubscribeBlock {...subProps} />
         <footer className="blog-footer"><a href="/">gebauerwatches.com</a></footer>
       </div>
     )
   }
 
-  // 404 if slug doesn't match
+  // 404
   if (slug && slug !== '' && slug !== '/') {
     return (
       <div className="blog">
@@ -72,7 +88,7 @@ export default function Blog() {
     )
   }
 
-  // Post list view
+  // Post list
   return (
     <div className="blog">
       <header className="blog-header">
@@ -96,14 +112,7 @@ export default function Blog() {
           ))}
         </div>
       )}
-      <div className="blog-subscribe">
-        <h3>Want Liam's posts in your inbox?</h3>
-        <form className="blog-subscribe-form" onSubmit={handleSubscribe}>
-          <input type="email" placeholder="Your email" value={subEmail} onChange={(e) => setSubEmail(e.target.value)} required />
-          <button type="submit" disabled={subLoading}>{subLoading ? '...' : 'Subscribe'}</button>
-        </form>
-        {subStatus && <p className="blog-subscribe-status">{subStatus}</p>}
-      </div>
+      <SubscribeBlock {...subProps} />
       <footer className="blog-footer"><a href="/">gebauerwatches.com</a></footer>
     </div>
   )
