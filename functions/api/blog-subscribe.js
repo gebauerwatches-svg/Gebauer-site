@@ -16,7 +16,7 @@ export async function onRequestOptions() {
 export async function onRequestPost(context) {
   const { env } = context
 
-  const mlKey = env.MAILERLITE_API_KEY || env.MAILERLITE_KEY || env.mailerlite_api_key
+  const mlKey = env.MAILERLITE_API_KEY || env['MAILERLITE_API_KEY '] || env.MAILERLITE_KEY
   if (!mlKey) {
     return json({ error: 'MailerLite key not configured. Add MAILERLITE_API_KEY to Cloudflare env vars.' }, 500)
   }
