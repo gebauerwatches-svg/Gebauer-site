@@ -37,15 +37,21 @@ export default function Blog() {
   const slug = window.location.pathname.replace('/blog/', '').replace('/blog', '')
   const activePost = slug ? posts.find(p => p.slug === slug) : null
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = async (e) => {
     e.preventDefault()
     if (!subEmail) return
     setSubLoading(true)
-    const subs = JSON.parse(localStorage.getItem('gebauer_blog_subs') || '[]')
-    if (!subs.includes(subEmail.toLowerCase())) {
-      subs.push(subEmail.toLowerCase())
-      localStorage.setItem('gebauer_blog_subs', JSON.stringify(subs))
-    }
+    try {
+      const resp = await fetch('/api/blog-subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: subEmail }),
+      })
+      const ct = resp.headers.get('content-type') || ''
+      if (ct.includes('application/json')) {
+        await resp.json()
+      }
+    } catch {}
     setSubDone(true)
     setSubLoading(false)
   }
