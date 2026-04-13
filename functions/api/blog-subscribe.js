@@ -16,8 +16,9 @@ export async function onRequestOptions() {
 export async function onRequestPost(context) {
   const { env } = context
 
-  if (!env.MAILERLITE_API_KEY) {
-    return json({ error: 'Server configuration error.' }, 500)
+  const mlKey = env.MAILERLITE_API_KEY || env.MAILERLITE_KEY || env.mailerlite_api_key
+  if (!mlKey) {
+    return json({ error: 'MailerLite key not configured. Add MAILERLITE_API_KEY to Cloudflare env vars.' }, 500)
   }
 
   let body
@@ -31,7 +32,7 @@ export async function onRequestPost(context) {
     const resp = await fetch('https://connect.mailerlite.com/api/subscribers', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.MAILERLITE_API_KEY}`,
+        'Authorization': `Bearer ${mlKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
