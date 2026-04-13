@@ -101,8 +101,8 @@ export default function Blog() {
         <a href="/" className="blog-home-link"><img src={logo} alt="Gebauer" className="blog-logo" /></a>
       </header>
       <div className="blog-list-header">
-        <h1 className="blog-title">From the Workshop</h1>
-        <p className="blog-subtitle">Behind the scenes. Updates. The story as it happens.</p>
+        <h1 className="blog-title">From Our Kitchen Table</h1>
+        <p className="blog-subtitle">The story of building a watch brand from scratch. As it happens.</p>
       </div>
       {posts.length === 0 ? (
         <div className="blog-empty"><p>No posts yet. First one coming soon.</p><a href="/" className="blog-empty-link">Back to Gebauer</a></div>

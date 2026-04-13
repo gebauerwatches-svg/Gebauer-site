@@ -13,6 +13,56 @@
 
 const posts = [
   {
+    slug: 'why-we-keep-things',
+    title: 'Why We Keep Things',
+    date: 'April 13, 2026',
+    author: 'Liam',
+    excerpt: "My mom has a watch in a velvet box in her dresser that she hasn't worn in fifteen years. What makes us hold onto objects that no longer serve any practical purpose?",
+    content: `My mom has a watch in a velvet box in her dresser that she hasn't worn in fifteen years. It's a gold Seiko from 1987, the year my grandfather gave it to her. The crystal is scratched. The band needs repair. She could replace it with something newer, something actually functional. She won't. Every few months she takes it out, holds it for a minute, puts it back. I asked her once why she doesn't just wear it. She said, "Because then I might lose it."
+
+That's not logic. That's something else entirely.
+
+Psychologists at Duke ran a study in the early 1990s that tried to measure this feeling. They gave students a coffee mug. Told half of them it was theirs to keep, told the other half they were just looking at it. Then they asked everyone: how much would you pay for this mug? The people who owned it wanted $5.25. The people who didn't wanted $2.25. Same mug. Different brains. The researchers called it the endowment effect: we value what we own 2-3 times more than what we don't. But that label doesn't explain anything. It just names the mystery.
+
+What's actually happening is stranger and more human than economics.
+
+When you own something, your brain starts weaving it into your identity. Not consciously. Neurologically. The object becomes part of the story you tell yourself about who you are. My mom's watch isn't a timekeeping device anymore. It's a physical link to a person she loved, a moment in time she wants to hold onto, a reminder that some things matter more than their function. The watch is part of how she knows herself.
+
+This is why people keep things that don't make sense to keep. A ticket stub from a concert they barely remember. A sweater they've outgrown but can't donate. A watch they won't wear because wearing it risks losing it. The object becomes a container for something it can't actually contain: memory, identity, proof that a moment was real. We keep it because throwing it away feels like throwing away a piece of ourselves.
+
+There's research from the University of Massachusetts that supports this. When people were asked to part with objects they owned, the part of their brain that activates is the same region that lights up when they experience physical pain. Losing an object you own doesn't just feel bad emotionally. It registers as an actual threat to your body. Your brain is protecting something it believes is part of you.
+
+The endowment effect isn't a flaw in human thinking. It's evidence that we're not actually rational about objects. We're relational. We don't keep things because of what they do. We keep them because of what they mean. Because they're witnesses to our lives. Because they're proof that we were somewhere, with someone, at a moment that mattered.
+
+This is why a milestone watch works differently than other gifts. It's not supposed to be practical. It's supposed to become part of someone's story, something they reach for not because they need to know the time, but because they need to remember who they are.
+
+My mom will keep that Seiko until she dies. Her kids will inherit it. We'll keep it too.`
+  },
+  {
+    slug: 'the-watch-that-had-to-work',
+    title: 'The Watch That Had to Work',
+    date: 'April 13, 2026',
+    author: 'Liam',
+    excerpt: "In 1927, a swimmer crossed the English Channel with a Rolex around her neck. When she came out, the watch was still running. That changed everything.",
+    content: `It's October 1927. The water off the French coast is cold enough that most swimmers don't attempt the crossing twice. Mercedes Gleitze, a young swimmer, has tried before and failed. This time, she's trying something different. Around her neck, secured by a cord, is a Rolex Oyster, a watch with a sealed case that the company claims is waterproof. Nobody has actually tested this claim in open water.
+
+What makes this story worth telling isn't the crossing itself. It's what happened after.
+
+When Gleitze climbed out of the water hours later, the watch was still running. Not just running. Running accurately. The salt water, the pressure, the temperature swings from the cold ocean to the warmth of her body, none of it had stopped the mechanism inside. It was an impossible result in 1927. Watches weren't supposed to survive that.
+
+Rolex's founder, Hans Wilsdorf, understood immediately what he had. The next day, a full-page advertisement appeared in the Daily Mail. There was no hyperbole, no exaggeration. Just a photograph of the watch and a simple statement: the Oyster had crossed the English Channel and kept perfect time. That was the entire message.
+
+The advertisement changed everything.
+
+Before that morning, Rolex was a small company competing against dozens of other watchmakers. They had no reputation. They made decent watches, but so did everyone else. After the Daily Mail ran that ad, Rolex became the watch that could survive what would kill an ordinary watch. Within months, people who had never heard of Rolex were asking for it by name.
+
+This is the part that most people get wrong about that story. They think it was clever marketing. Wilsdorf didn't build the Oyster to market it. He built it because he believed a watch should work, actually work, in the conditions real people lived in. The marketing was just him telling the truth about what the watch had done.
+
+That distinction matters because it's the difference between a brand that lasts and a brand that fades. Rolex didn't become trusted because they ran a good advertisement. They became trusted because they had something to advertise that was actually true.
+
+Mercedes Gleitze crossed the English Channel and came out the other side. The Oyster came out the other side too. That wasn't luck. It was the watch doing exactly what it was built to do.`
+  },
+  {
     slug: 'why-wood',
     title: 'Why We Put Real Wood on a Watch Dial',
     date: 'April 12, 2026',
