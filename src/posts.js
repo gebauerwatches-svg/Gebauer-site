@@ -13,6 +13,36 @@
 
 const posts = [
   {
+    slug: 'the-gift-that-gets-kept',
+    title: 'The Gift That Gets Kept',
+    date: 'April 14, 2026',
+    author: 'Liam',
+    excerpt: `My mom has a watch she hasn't worn in fifteen years. It sits in a velvet box in her dresser, next to a few old photographs and a letter she doesn't talk about. The watch doesn't work anymore. She coul...`,
+    content: `My mom has a watch she hasn't worn in fifteen years. It sits in a velvet box in her dresser, next to a few old photographs and a letter she doesn't talk about. The watch doesn't work anymore. She could get it fixed. She hasn't.
+
+When I asked her why she keeps it, she said something I didn't expect: "Because it's the only thing your grandfather gave me that actually meant he was paying attention."
+
+That landed differently after I started thinking about gifts.
+
+Most milestone gifts follow a pattern. You spend money proportional to the significance of the moment. Sixteen gets you something nicer than thirteen. Graduation gets you something nicer than a regular birthday. The logic is simple: bigger moment equals bigger price tag. But that's not actually how memory works.
+
+Researchers at Duke University studied something called the endowment effect, which is the tendency for people to value objects more highly simply because they own them. But there's a catch. The effect is strongest when the object carries a story. When someone gave it to you with intention. When it signals that they know who you actually are, not just what age you are.
+
+A gift card for a hundred dollars gets spent and forgotten. A watch chosen because someone noticed you actually care about craftsmanship, or time, or the idea of something lasting, gets kept. It gets shown to friends. It gets packed in a suitcase on a trip. It becomes the object someone reaches for when they want to feel like themselves.
+
+The difference isn't the cost. It's the attention.
+
+My grandfather bought my mom that watch because he noticed she was the kind of person who showed up on time, who kept her word, who understood that reliability meant something. The watch wasn't expensive. But it was chosen. It was specific. It was proof that he had actually looked at her and seen something worth honoring.
+
+When I think about what makes a gift stick in memory, it's almost never the price. It's whether the gift says: I know you. I see what matters to you. I chose this because it's right for who you're becoming.
+
+That's why the milestone gifts that last aren't the ones parents buy because they have to. They're the ones where a parent actually pauses and asks: what does this person need? What will they still own at thirty? What will they show their own kids someday?
+
+A gift like that doesn't need to be expensive. It just needs to be real.
+
+My mom's watch doesn't keep time anymore. But it still does exactly what it was supposed to do.`
+  },
+  {
     slug: 'why-we-keep-things',
     title: 'Why We Keep Things',
     date: 'April 13, 2026',
