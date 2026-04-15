@@ -13,6 +13,32 @@
 
 const posts = [
   {
+    slug: 'why-teenagers-are-wearing-watches-again-and-its-not-about-knowing-what-time-it-is',
+    title: 'Why Teenagers Are Wearing Watches Again (And It\'s Not About Knowing What Time It Is)',
+    date: 'April 15, 2026',
+    author: 'Liam',
+    excerpt: `I noticed it last month at a coffee shop in Denver. A girl about my age, sitting alone, kept glancing at her wrist. Not to check the time. To look at her watch. She'd tilt her arm, catch the light on ...`,
+    content: `I noticed it last month at a coffee shop in Denver. A girl about my age, sitting alone, kept glancing at her wrist. Not to check the time. To look at her watch. She'd tilt her arm, catch the light on the dial, then go back to her phone. The watch was doing something her phone could never do.
+
+It was being permanent.
+
+There's something happening right now that nobody talks about. Teenagers are buying analog watches at rates that haven't happened in twenty years. Not smartwatches. Not fitness trackers. Actual mechanical or quartz watches with hands and dials. Watches that don't sync to anything, don't notify you, don't ask for your attention. And we're doing it on purpose.
+
+I think it's because everything else in our lives is temporary.
+
+Your Instagram story disappears in 24 hours. Your TikTok algorithm changes overnight. The app you use to talk to your friends could get banned by the government next year. Nothing we own digitally feels like it's really ours. It's all rented from companies that can take it away with an update.
+
+A watch is different. You can hold it. Your fingers know the weight of it. If you take care of it, it'll be there in thirty years the way it is today. My grandfather has a watch from 1968. The crystal is scratched. The bracelet is stretched. And it still keeps time. That object survived his entire adult life. It outlasted relationships, jobs, houses, countries he visited. It's still here.
+
+I think we're wearing watches because we're looking for something that won't change. Something that isn't optimized to make us feel like we're missing out. A watch does one job and it does it perfectly. It doesn't need your data. It doesn't care if you open it or not. It just exists on your wrist, steady, the same way it was yesterday.
+
+There's also something about owning something that required actual thought to make. A watch is built. Designed. Assembled by people who know what they're doing. Every component has to work with every other component or the whole thing fails. When you wear something like that, you're wearing proof that humans can still make things that last.
+
+My friends who wear watches talk about them differently than they talk about their phones. There's no anxiety in it. No checking. Just a quiet kind of satisfaction. They'll send me photos of their wrists. Not to show off. To share something real.
+
+Maybe that's what we're actually looking for. Not the time. Just something that doesn't disappear.`
+  },
+  {
     slug: 'the-gift-that-gets-kept',
     title: 'The Gift That Gets Kept',
     date: 'April 14, 2026',
