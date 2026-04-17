@@ -4,6 +4,7 @@ import './palette.css'
 import './index.css'
 import App from './App.jsx'
 import Blog from './Blog.jsx'
+import Vote from './Vote.jsx'
 
 class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: null } }
@@ -25,11 +26,12 @@ class ErrorBoundary extends Component {
 // Simple path-based routing (no react-router needed)
 const path = window.location.pathname
 const isBlog = path.startsWith('/blog')
+const isVote = path.startsWith('/vote')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      {isBlog ? <Blog /> : <App />}
+      {isVote ? <Vote /> : isBlog ? <Blog /> : <App />}
     </ErrorBoundary>
   </StrictMode>,
 )
