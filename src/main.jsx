@@ -26,7 +26,7 @@ class ErrorBoundary extends Component {
 // Simple path-based routing (no react-router needed)
 const path = window.location.pathname
 const isBlog = path.startsWith('/blog')
-const isVote = path.startsWith('/vote')
+const isVote = path === '/vote' || path.startsWith('/vote/')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -300,7 +300,7 @@ function App() {
             <a href="#watches" className="nav-link">The Watches</a>
             <a href="#perks" className="nav-link">Perks</a>
             <a href="#path" className="nav-link">Raven Path</a>
-            <a href="/vote" className="nav-link" onClick={() => window.location.href = '/vote'}>Vote</a>
+            <a href="/vote" className="nav-link" onClick={() => window.location.href = '/vote/'}>Vote</a>
             <a href="/blog" className="nav-link" onClick={() => window.location.href = '/blog'}>Blog</a>
             <button className="nav-link nav-link-cta" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
             <button className="nav-link nav-link-cta nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
@@ -414,7 +414,7 @@ function App() {
         <div className="vote-callout-inner">
           <h2 className="vote-callout-title">Help us build the watch.</h2>
           <p className="vote-callout-text">We're making real design decisions right now and your vote shapes the final product. Current poll is live.</p>
-          <a href="/vote" className="vote-callout-btn" onClick={() => window.location.href = '/vote'}>Cast Your Vote</a>
+          <a href="/vote" className="vote-callout-btn" onClick={() => window.location.href = '/vote/'}>Cast Your Vote</a>
         </div>
       </Reveal>
 
