@@ -443,6 +443,23 @@
 .perks-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212, 166, 42, 0.3); }
 
 /* ===========================================
+   VOTE CALLOUT
+   =========================================== */
+
+.vote-callout { background: var(--bg-dark); padding: 64px 24px; text-align: center; }
+.vote-callout-inner { max-width: 480px; margin: 0 auto; }
+.vote-callout-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(24px, 4vw, 32px); color: var(--text-primary); margin-bottom: 12px; }
+.vote-callout-text { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 14px; line-height: 1.7; color: var(--text-secondary); opacity: 0.6; margin-bottom: 28px; }
+.vote-callout-btn {
+  display: inline-block; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+  letter-spacing: 0.2em; text-transform: uppercase; text-decoration: none;
+  color: var(--bg-dark); background: var(--gold); padding: 18px 48px;
+  transition: background 0.3s, transform 0.15s, box-shadow 0.3s;
+}
+.vote-callout-btn:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212, 166, 42, 0.25); }
+
+
+/* ===========================================
    YOUR PATH (compact Raven Path on landing)
    =========================================== */
 
