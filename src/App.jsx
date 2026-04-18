@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
 import heroVideo from './assets/gebauer-hero-video.mp4'
 import watchEbony from './assets/gebauer-ebony-watch.jpeg'
-import ravenDetailed from './assets/raven-detailed.png'
 import ravenSimple from './assets/raven-simple.png'
 import ravenMinimal from './assets/raven-minimal.png'
 import watchHinoki from './assets/image0.jpeg'
@@ -422,8 +421,7 @@ function App() {
           </p>
           <div className="vote-section-options">
             {[
-              { id: 'detailed', label: 'Detailed', desc: 'Shaded feathers, depth, circular frame. The most intricate.', img: ravenDetailed },
-              { id: 'simplified', label: 'Simple', desc: 'Clean outline with talons. Bold and readable.', img: ravenSimple },
+              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable at 39mm.', img: ravenSimple },
               { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle and understated.', img: ravenMinimal },
             ].map(opt => {
               const voted = localStorage.getItem('gebauer_vote_raven') || ''
