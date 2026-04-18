@@ -465,6 +465,9 @@
 .vote-section-opt:disabled:hover { transform: none; }
 .vote-section-opt.selected { border-color: var(--gold); background: rgba(212, 166, 42, 0.05); }
 
+.vote-section-img-wrap { width: 100%; max-height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: var(--white); margin-bottom: 12px; border-radius: 2px; }
+.vote-section-img { width: 100%; max-height: 200px; object-fit: contain; padding: 16px; }
+
 .vote-section-opt h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--text-primary); margin-bottom: 2px; }
 .vote-section-opt p { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--text-secondary); opacity: 0.6; }
 
