@@ -4,6 +4,12 @@ import heroVideo from './assets/gebauer-hero-video.mp4'
 import watchEbony from './assets/gebauer-ebony-watch.jpeg'
 import ravenSimple from './assets/raven-simple.png'
 import ravenMinimal from './assets/raven-minimal.png'
+import claspButterfly from './assets/polls/clasp-butterfly.png'
+import claspDeployed from './assets/polls/clasp-deployed.png'
+import boxDebossed from './assets/polls/box-debossed.png'
+import boxGoldLogo from './assets/polls/box-gold-logo.png'
+import interiorSuede from './assets/polls/interior-suede.jpeg'
+import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 import watchHinoki from './assets/image0.jpeg'
 import watchPadauk from './assets/image1-1.jpeg'
 import './App.css'
@@ -411,64 +417,104 @@ function App() {
         </div>
       </Reveal>
 
-      {/* COMMUNITY VOTE — inline on the main page */}
-      <Reveal className="vote-section" id="vote">
-        <div className="vote-section-inner">
-          <p className="vote-section-label">Design Input</p>
-          <h2 className="vote-section-title">Help us build the watch.</h2>
-          <p className="vote-section-context">
-            The raven is Huginn, one of Odin's ravens from Norse mythology. It gets engraved on the back of every watch, right below the edition number. We're deciding on the style.
-          </p>
-          <div className="vote-section-options">
-            {[
-              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable at 39mm.', img: ravenSimple },
-              { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle and understated.', img: ravenMinimal },
-            ].map(opt => {
-              const voted = localStorage.getItem('gebauer_vote_raven') || ''
-              const results = JSON.parse(localStorage.getItem('gebauer_results_raven') || '{}')
-              const total = Object.values(results).reduce((a, b) => a + b, 0)
-              const pct = total > 0 ? Math.round(((results[opt.id] || 0) / total) * 100) : 0
-              const isSelected = voted === opt.id
-              return (
-                <button
-                  key={opt.id}
-                  className={`vote-section-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
-                  onClick={() => {
-                    if (voted) return
-                    const r = JSON.parse(localStorage.getItem('gebauer_results_raven') || '{}')
-                    r[opt.id] = (r[opt.id] || 0) + 1
-                    localStorage.setItem('gebauer_results_raven', JSON.stringify(r))
-                    localStorage.setItem('gebauer_vote_raven', opt.id)
-                    window.location.hash = 'vote'
-                    window.location.reload()
-                  }}
-                  disabled={!!voted}
-                >
-                  <div className="vote-section-img-wrap">
-                    <img src={opt.img} alt={opt.label} className="vote-section-img" />
-                  </div>
-                  <div>
-                    <h3>{opt.label}</h3>
-                    <p>{opt.desc}</p>
-                  </div>
-                  {voted && (
-                    <div className="vote-section-bar">
-                      <div className="vote-section-fill" style={{ width: `${pct}%` }} />
-                      <span>{pct}%</span>
-                    </div>
-                  )}
-                </button>
-              )
-            })}
-          </div>
-          {localStorage.getItem('gebauer_vote_raven') && (
-            <p className="vote-section-thanks">Your vote is in. Check back to see how the community votes.</p>
-          )}
-          {!localStorage.getItem('gebauer_vote_raven') && (
-            <p className="vote-section-hint">Your vote shapes the final design. Pick one.</p>
-          )}
-        </div>
-      </Reveal>
+      {/* COMMUNITY VOTE — auto-rotating weekly polls */}
+      {(() => {
+        const POLLS = [
+          {
+            id: 'raven-caseback',
+            question: "Which raven belongs on the caseback?",
+            context: "Every Gebauer has a raven engraved on the back. Huginn, from Norse mythology. We're deciding the style.",
+            options: [
+              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable.', img: ravenSimple },
+              { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle.', img: ravenMinimal },
+            ],
+          },
+          {
+            id: 'clasp-style',
+            question: "Butterfly clasp or deployant?",
+            context: "The clasp is what you touch every time you put the watch on. We're choosing between two styles.",
+            options: [
+              { id: 'butterfly', label: 'Butterfly', desc: 'Folds from both sides. Clean when closed.', img: claspButterfly },
+              { id: 'deployant', label: 'Deployant', desc: 'Single fold with push button release.', img: claspDeployed },
+            ],
+          },
+          {
+            id: 'box-design',
+            question: "Which box do you want to open?",
+            context: "The unboxing is the first impression. Two directions we're considering.",
+            options: [
+              { id: 'debossed', label: 'Debossed', desc: 'Pressed logo, no color. Understated.', img: boxDebossed },
+              { id: 'gold-logo', label: 'Gold Logo', desc: 'Gold G on green. Bolder presence.', img: boxGoldLogo },
+            ],
+          },
+          {
+            id: 'interior-material',
+            question: "Suede or microfiber inside the box?",
+            context: "The interior is what touches the watch. Two materials, very different feel.",
+            options: [
+              { id: 'suede', label: 'Suede', desc: 'Warm, textured, classic luxury feel.', img: interiorSuede },
+              { id: 'microfiber', label: 'Microfiber', desc: 'Smooth, modern, protects the crystal.', img: interiorMicrofiber },
+            ],
+          },
+        ]
+
+        // Auto-rotate: pick poll based on the week number
+        const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
+        const poll = POLLS[weekNum % POLLS.length]
+        const voteKey = `gebauer_vote_${poll.id}`
+        const resultsKey = `gebauer_results_${poll.id}`
+        const voted = localStorage.getItem(voteKey) || ''
+        const results = JSON.parse(localStorage.getItem(resultsKey) || '{}')
+        const total = Object.values(results).reduce((a, b) => a + b, 0)
+
+        return (
+          <Reveal className="vote-section" id="vote">
+            <div className="vote-section-inner">
+              <p className="vote-section-label">Design Input</p>
+              <h2 className="vote-section-title">{poll.question}</h2>
+              <p className="vote-section-context">{poll.context}</p>
+              <div className="vote-section-options">
+                {poll.options.map(opt => {
+                  const pct = total > 0 ? Math.round(((results[opt.id] || 0) / total) * 100) : 0
+                  const isSelected = voted === opt.id
+                  return (
+                    <button
+                      key={opt.id}
+                      className={`vote-section-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
+                      onClick={() => {
+                        if (voted) return
+                        const r = JSON.parse(localStorage.getItem(resultsKey) || '{}')
+                        r[opt.id] = (r[opt.id] || 0) + 1
+                        localStorage.setItem(resultsKey, JSON.stringify(r))
+                        localStorage.setItem(voteKey, opt.id)
+                        window.location.hash = 'vote'
+                        window.location.reload()
+                      }}
+                      disabled={!!voted}
+                    >
+                      <div className="vote-section-img-wrap">
+                        <img src={opt.img} alt={opt.label} className="vote-section-img" />
+                      </div>
+                      <div>
+                        <h3>{opt.label}</h3>
+                        <p>{opt.desc}</p>
+                      </div>
+                      {voted && (
+                        <div className="vote-section-bar">
+                          <div className="vote-section-fill" style={{ width: `${pct}%` }} />
+                          <span>{pct}%</span>
+                        </div>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+              {voted && <p className="vote-section-thanks">Your vote is in. New poll drops next week.</p>}
+              {!voted && <p className="vote-section-hint">Your vote shapes the final design. Pick one.</p>}
+            </div>
+          </Reveal>
+        )
+      })()}
 
       {/* 5. YOUR PATH (light) — compact Igdrasil, personal focus */}
       <Reveal className="path-section" id="path">

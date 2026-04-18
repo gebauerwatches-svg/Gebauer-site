@@ -22,21 +22,21 @@ const posts = [
 
 It was being permanent.
 
-There's something happening right now that nobody talks about. Teenagers are buying analog watches at rates that haven't happened in twenty years. Not smartwatches. Not fitness trackers. Actual mechanical or quartz watches with hands and dials. Watches that don't sync to anything, don't notify you, don't ask for your attention. And we're doing it on purpose.
+Something is happening right now that most people don't notice. Teenagers are choosing analog watches. Not smartwatches. Not fitness trackers. Actual mechanical or quartz watches with hands and dials. Watches that don't sync to anything, don't notify you, don't ask for your attention. And we're doing it on purpose.
 
 I think it's because everything else in our lives is temporary.
 
-Your Instagram story disappears in 24 hours. Your TikTok algorithm changes overnight. The app you use to talk to your friends could get banned by the government next year. Nothing we own digitally feels like it's really ours. It's all rented from companies that can take it away with an update.
+Your Instagram story disappears in 24 hours. Your TikTok algorithm changes overnight. The app you use to talk to your friends could get banned by the government next year. Nothing we own digitally feels like it's really ours. It's all rented from companies that can change the terms whenever they want.
 
-A watch is different. You can hold it. Your fingers know the weight of it. If you take care of it, it'll be there in thirty years the way it is today. My grandfather has a watch from 1968. The crystal is scratched. The bracelet is stretched. And it still keeps time. That object survived his entire adult life. It outlasted relationships, jobs, houses, countries he visited. It's still here.
+A watch is different. You buy it once. You wear it. It works the same way tomorrow as it does today. In five years, it will still work. In fifty years, someone else might wear it. That's not something you can say about your phone or your account or your data.
 
-I think we're wearing watches because we're looking for something that won't change. Something that isn't optimized to make us feel like we're missing out. A watch does one job and it does it perfectly. It doesn't need your data. It doesn't care if you open it or not. It just exists on your wrist, steady, the same way it was yesterday.
+There's also something about the ritual of it. Checking your phone is automatic, thoughtless. You do it without deciding to. But looking at a watch is intentional. You have to lift your arm and actually look. It's a small friction that makes the moment real instead of just another scroll through your feed.
 
-There's also something about owning something that required actual thought to make. A watch is built. Designed. Assembled by people who know what they're doing. Every component has to work with every other component or the whole thing fails. When you wear something like that, you're wearing proof that humans can still make things that last.
+The watches teenagers are buying aren't expensive. They're not status symbols. A lot of them are vintage, picked up from thrift stores or online for thirty or forty dollars. Some are new but simple, nothing fancy. The price doesn't matter. What matters is that they exist outside the system. They're not connected. They're not tracking you. They're not trying to sell you something.
 
-My friends who wear watches talk about them differently than they talk about their phones. There's no anxiety in it. No checking. Just a quiet kind of satisfaction. They'll send me photos of their wrists. Not to show off. To share something real.
+My friends and I talk about this sometimes. We're tired. Tired of being optimized, tracked, and sold to. Tired of things disappearing. A watch is the opposite of that. It's stable. It's honest. It does one thing and does it well.
 
-Maybe that's what we're actually looking for. Not the time. Just something that doesn't disappear.`
+The girl in Denver knew what she was doing when she kept looking at her wrist. She wasn't checking the time. She was holding onto something that was actually hers.`
   },
   {
     slug: 'the-gift-that-gets-kept',
