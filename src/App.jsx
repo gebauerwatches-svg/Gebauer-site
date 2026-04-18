@@ -300,7 +300,7 @@ function App() {
             <a href="#watches" className="nav-link">The Watches</a>
             <a href="#perks" className="nav-link">Perks</a>
             <a href="#path" className="nav-link">Raven Path</a>
-            <a href="/vote" className="nav-link" onClick={() => window.location.href = '/vote/'}>Vote</a>
+            <a href="#vote" className="nav-link">Vote</a>
             <a href="/blog" className="nav-link" onClick={() => window.location.href = '/blog'}>Blog</a>
             <button className="nav-link nav-link-cta" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
             <button className="nav-link nav-link-cta nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
@@ -409,12 +409,60 @@ function App() {
         </div>
       </Reveal>
 
-      {/* COMMUNITY VOTE */}
-      <Reveal className="vote-callout">
-        <div className="vote-callout-inner">
-          <h2 className="vote-callout-title">Help us build the watch.</h2>
-          <p className="vote-callout-text">We're making real design decisions right now and your vote shapes the final product. Current poll is live.</p>
-          <a href="/vote" className="vote-callout-btn" onClick={() => window.location.href = '/vote/'}>Cast Your Vote</a>
+      {/* COMMUNITY VOTE — inline on the main page */}
+      <Reveal className="vote-section" id="vote">
+        <div className="vote-section-inner">
+          <p className="vote-section-label">Design Input</p>
+          <h2 className="vote-section-title">Help us build the watch.</h2>
+          <p className="vote-section-context">
+            The raven is Huginn, one of Odin's ravens from Norse mythology. It gets engraved on the back of every watch, right below the edition number. We're deciding on the style.
+          </p>
+          <div className="vote-section-options">
+            {[
+              { id: 'detailed', label: 'Detailed', desc: 'Realistic feather texture and depth. Intricate.' },
+              { id: 'simplified', label: 'Simplified', desc: 'Clean lines, almost abstract. Bold silhouette.' },
+              { id: 'minimal', label: 'Minimal', desc: 'Just the outline. Subtle and understated.' },
+            ].map(opt => {
+              const voted = localStorage.getItem('gebauer_vote_raven') || ''
+              const results = JSON.parse(localStorage.getItem('gebauer_results_raven') || '{}')
+              const total = Object.values(results).reduce((a, b) => a + b, 0)
+              const pct = total > 0 ? Math.round(((results[opt.id] || 0) / total) * 100) : 0
+              const isSelected = voted === opt.id
+              return (
+                <button
+                  key={opt.id}
+                  className={`vote-section-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
+                  onClick={() => {
+                    if (voted) return
+                    const r = JSON.parse(localStorage.getItem('gebauer_results_raven') || '{}')
+                    r[opt.id] = (r[opt.id] || 0) + 1
+                    localStorage.setItem('gebauer_results_raven', JSON.stringify(r))
+                    localStorage.setItem('gebauer_vote_raven', opt.id)
+                    window.location.hash = 'vote'
+                    window.location.reload()
+                  }}
+                  disabled={!!voted}
+                >
+                  <div>
+                    <h3>{opt.label}</h3>
+                    <p>{opt.desc}</p>
+                  </div>
+                  {voted && (
+                    <div className="vote-section-bar">
+                      <div className="vote-section-fill" style={{ width: `${pct}%` }} />
+                      <span>{pct}%</span>
+                    </div>
+                  )}
+                </button>
+              )
+            })}
+          </div>
+          {localStorage.getItem('gebauer_vote_raven') && (
+            <p className="vote-section-thanks">Your vote is in. Check back to see how the community votes.</p>
+          )}
+          {!localStorage.getItem('gebauer_vote_raven') && (
+            <p className="vote-section-hint">Your vote shapes the final design. Pick one.</p>
+          )}
         </div>
       </Reveal>
 
