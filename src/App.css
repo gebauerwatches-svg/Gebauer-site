@@ -163,10 +163,19 @@
   opacity: 0.6;
 }
 
+.manifesto-img {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
 .manifesto-img img {
-  width: 100%;
-  height: auto;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  object-position: center 40%;
   display: block;
+  margin: -5%;
 }
 
 
