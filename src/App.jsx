@@ -322,10 +322,10 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Built by Teens,
-            <span className="hero-accent"> For Teens.</span>
+            Milestone watches you
+            <span className="hero-accent"> actually want to wear.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">300 watches. Real wood dials. Made in Japan. First drop December 2026.</p>
+          <p className="hero-sub fade-in-delay-1">Real wood dials. Made in Japan. 300 ever made. First drop December 2026.</p>
           <div className="hero-cta fade-in-delay-1">
             <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
