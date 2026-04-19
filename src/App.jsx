@@ -359,7 +359,7 @@ function App() {
       <Reveal className="manifesto">
         <div className="manifesto-inner">
           <div className="manifesto-text">
-            <h2 className="manifesto-headline">What we believe.</h2>
+            <h2 className="manifesto-headline">The Gebauer Manifesto.</h2>
             <div className="manifesto-points">
               <div className="manifesto-point">
                 <h3>The beauty is already in the wood.</h3>
