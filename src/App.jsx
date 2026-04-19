@@ -12,6 +12,7 @@ import interiorSuede from './assets/polls/interior-suede.jpeg'
 import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 import watchHinoki from './assets/image0.jpeg'
 import watchPadauk from './assets/image1-1.jpeg'
+import padaukAged from './assets/padauk-aged.jpeg'
 import './App.css'
 
 const RAVEN_PATH = [
@@ -350,6 +351,36 @@ function App() {
             <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
             <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
             <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* MANIFESTO */}
+      <Reveal className="manifesto">
+        <div className="manifesto-inner">
+          <div className="manifesto-text">
+            <h2 className="manifesto-headline">What we believe.</h2>
+            <div className="manifesto-points">
+              <div className="manifesto-point">
+                <h3>The beauty is already in the wood.</h3>
+                <p>We don't add to it, cover it, or customize it. The grain is the design. Nature did the work.</p>
+              </div>
+              <div className="manifesto-point">
+                <h3>It's meant to be worn, not preserved.</h3>
+                <p>Scratches, patina, darkening grain. That's not damage. That's your story showing up.</p>
+              </div>
+              <div className="manifesto-point">
+                <h3>Crafted in Japan by hand.</h3>
+                <p>Not assembled. Crafted. By people who've been doing this for decades.</p>
+              </div>
+              <div className="manifesto-point">
+                <h3>Every one is different.</h3>
+                <p>Not because we engineered variation. Because wood is wood. No two pieces have ever looked the same.</p>
+              </div>
+            </div>
+          </div>
+          <div className="manifesto-img">
+            <img src={padaukAged} alt="Gebauer Padauk watch, worn and aged" />
           </div>
         </div>
       </Reveal>
