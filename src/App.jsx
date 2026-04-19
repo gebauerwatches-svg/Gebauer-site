@@ -340,11 +340,11 @@ function App() {
       <Reveal className="founder" id="story">
         <div className="founder-inner">
           <h2 className="founder-headline">
-            Most watch brands are built by old guys in suits.
-            <em> Not us.</em>
+            Class rings end up in drawers. Yearbooks collect dust.
+            <em> We wanted something better.</em>
           </h2>
           <p className="founder-text">
-            Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Found a manufacturer in Japan. Now I'm the youngest founder in the High Country Accelerator with 300 watches on the way. This drop is just the first chapter.
+            Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Realized nobody was making milestone gifts that young men actually wanted to wear. Found a manufacturer in Japan. Now 300 watches are on the way. This is just the first chapter.
           </p>
           <p className="founder-signoff">— Liam, 16</p>
           <div className="founder-stats">
