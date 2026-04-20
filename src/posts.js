@@ -13,6 +13,32 @@
 
 const posts = [
   {
+    slug: 'the-watch-that-changed-everything-was-completely-useless',
+    title: 'The Watch That Changed Everything Was Completely Useless',
+    date: 'April 20, 2026',
+    author: 'Liam',
+    excerpt: `In 1510, a German locksmith named Peter Henlein made something that didn't work, and it changed the world.`,
+    content: `In 1510, a German locksmith named Peter Henlein made something that didn't work, and it changed the world.
+
+It was called the Nuremberg Egg, and if you saw one today, you'd think it was a joke. Egg-shaped. Brass. About the size of a fist. Inside was a system of gears so crude that it gained or lost fifteen minutes every single day. Fifteen minutes. Modern watches are accurate to within seconds per month. The Egg was off by a quarter hour before breakfast.
+
+And yet it mattered so much that it's still the reason you're wearing a watch right now.
+
+Before the Egg, if you wanted to know the time, you looked at the sky. You found a church bell tower. You asked someone. Time wasn't something you carried. It was something you waited for. For thousands of years, that's how humans lived. The sun moved. The bells rang. That was enough.
+
+Then Henlein figured out how to make a spring store energy instead of relying on a falling weight. You could actually wind it up and carry it. Not accurately, but you could carry it.
+
+The thing is, the inaccuracy didn't matter as much as the possibility. Once people could carry time, they started wanting to know what it was. Constantly. Obsessively. Pocket watches became status symbols for merchants and nobility. If you had one, you had enough money to own something that barely worked. By the 1600s, they were everywhere in Europe, and makers were competing to make them better.
+
+Better meant faster gears. Smaller springs. Refinements that took a century and a half, but they happened because the Egg proved the concept worked. The Egg was the proof. It was useless, but it was possible.
+
+There's something worth sitting with there. The Nuremberg Egg was so inaccurate that it's almost embarrassing by modern standards. Henlein would be horrified by what a fifty-dollar Timex can do. But he created the category. He made the first thing. He proved that time could live on your wrist instead of in a tower, and that single shift changed how humans experience being alive.
+
+Every great innovation starts as something that doesn't quite work. It starts with someone making an Egg. Making the first version that's imperfect and flawed and somehow still exactly what the world needed.
+
+Sometimes being first matters more than being good.`
+  },
+  {
     slug: 'why-your-watch-dial-will-change-color-without-you-doing-anything',
     title: 'Why Your Watch Dial Will Change Color Without You Doing Anything',
     date: 'April 20, 2026',
