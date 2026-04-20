@@ -13,30 +13,52 @@
 
 const posts = [
   {
+    slug: 'why-your-watch-dial-will-change-color-without-you-doing-anything',
+    title: 'Why Your Watch Dial Will Change Color Without You Doing Anything',
+    date: 'April 20, 2026',
+    author: 'Liam',
+    excerpt: `I bought a blue Seiko in Milan when I was 15, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. ...`,
+    content: `I bought a blue Seiko in Milan when I was 15, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. The dial wasn't pristine. It had aged. And somehow that made it more real to me than any new watch could be.
+
+That's part of why we chose African Padauk for one of the Gebauer wood dials.
+
+Most watch materials are stable. Stainless steel stays stainless. Sapphire crystal doesn't shift. You buy the watch and it stays the watch. But Padauk does something different. It transforms. Right now, as you read this, every Padauk dial in the world is slowly becoming something it wasn't yesterday.
+
+Here's what's actually happening inside the wood.
+
+African Padauk contains a class of organic compounds called chromophores, molecules that absorb light at specific wavelengths and reflect others back. When the tree is freshly cut, those chromophores are in their original state, and the wood glows a bright, almost electric orange. But the moment that wood is exposed to ultraviolet light, something shifts at the molecular level. The UV energy excites the electrons in those chromophores, breaking some of the bonds that hold them together. The molecules don't disappear. They transform into a different compound, one that absorbs light differently and reflects back the deeper, warmer tones we associate with aged Padauk. Burgundy. Wine. The color that tells you time has passed.
+
+This isn't fading. It's not degradation. It's a chemical metamorphosis. The wood doesn't weaken. The transformation is stable once it's complete. A Padauk dial that's been on a wrist for five years and suddenly kept in a drawer won't shift back. The change is permanent.
+
+Most people don't think about this when they buy a watch. They want something finished, complete, done. But the parents I've talked to about Gebauer seem to get it differently. They're thinking about what the watch will be in five years, ten years, when their kid graduates or gets married or just keeps wearing it because it became part of who they are. They want an object that ages with intention, not against it.
+
+There's a word for what happens to Padauk: photodegradation. It sounds technical and cold, but it's really just time made visible. The watch doesn't break. It becomes a record. Orange to burgundy. Years marked in color. Every shift is proof that someone wore it, that it was there, that it mattered enough to carry into the sun.
+
+That's the craft I wanted to be part of.`
+  },
+  {
     slug: 'why-teenagers-are-wearing-watches-again-and-its-not-about-knowing-what-time-it-is',
     title: 'Why Teenagers Are Wearing Watches Again (And It\'s Not About Knowing What Time It Is)',
     date: 'April 15, 2026',
     author: 'Liam',
     excerpt: `I noticed it last month at a coffee shop in Denver. A girl about my age, sitting alone, kept glancing at her wrist. Not to check the time. To look at her watch. She'd tilt her arm, catch the light on ...`,
-    content: `I noticed it last month at a coffee shop in Denver. A girl about my age, sitting alone, kept glancing at her wrist. Not to check the time. To look at her watch. She'd tilt her arm, catch the light on the dial, then go back to her phone. The watch was doing something her phone could never do.
+    content: `I noticed it last month at a coffee shop in Denver. A girl about my age was sitting alone, and I watched her glance at her wrist. Not to check the time. She was looking at her watch itself, tilting her arm to catch the light on the dial before going back to her phone. The watch was doing something her phone never could.
 
-It was being permanent.
+It was staying the same.
 
-Something is happening right now that most people don't notice. Teenagers are choosing analog watches. Not smartwatches. Not fitness trackers. Actual mechanical or quartz watches with hands and dials. Watches that don't sync to anything, don't notify you, don't ask for your attention. And we're doing it on purpose.
+Everything else in my life moves. Instagram stories vanish in 24 hours. TikTok's algorithm shifts overnight. Apps I use to talk to my friends could disappear if the government decides they should. Nothing I own digitally feels permanent. It's all borrowed from companies that can change the rules whenever they want, and there's nothing I can do about it.
 
-I think it's because everything else in our lives is temporary.
+But a watch doesn't work that way.
 
-Your Instagram story disappears in 24 hours. Your TikTok algorithm changes overnight. The app you use to talk to your friends could get banned by the government next year. Nothing we own digitally feels like it's really ours. It's all rented from companies that can change the terms whenever they want.
+A mechanical watch from 1975 works the same way it did in 1975. The dial is still readable. The hands still move. If I buy one today, it'll work the same way in ten years, in thirty years, maybe in fifty. Nobody can update it or shut it down or decide I'm no longer allowed to use it. The company that made it can't push a software patch that changes how it looks or feels.
 
-A watch is different. You buy it once. You wear it. It works the same way tomorrow as it does today. In five years, it will still work. In fifty years, someone else might wear it. That's not something you can say about your phone or your account or your data.
+This permanence feels radical now. My friends are buying vintage Seikos and Timexes, pieces that cost less than a month of their phone bills but will outlast their phones by decades. They're not buying them to make a statement about technology or to seem sophisticated. They're buying them because they want to own something that won't change without their permission.
 
-There's also something about the ritual of it. Checking your phone is automatic, thoughtless. You do it without deciding to. But looking at a watch is intentional. You have to lift your arm and actually look. It's a small friction that makes the moment real instead of just another scroll through your feed.
+The girl in the coffee shop understood this. She was checking her phone constantly, scrolling through feeds that refreshed every few seconds. But when she looked at her watch, she slowed down. The watch wasn't demanding her attention or trying to sell her something. It was just there, reliable and unchanged, marking time in a world that never stops moving.
 
-The watches teenagers are buying aren't expensive. They're not status symbols. A lot of them are vintage, picked up from thrift stores or online for thirty or forty dollars. Some are new but simple, nothing fancy. The price doesn't matter. What matters is that they exist outside the system. They're not connected. They're not tracking you. They're not trying to sell you something.
+That's what we're really buying when we buy a watch. Not just a way to tell time, but a small piece of stability. Something that works the same way today as it did yesterday, and will work the same way tomorrow. In a world where everything digital feels temporary, that permanence has become precious.
 
-My friends and I talk about this sometimes. We're tired. Tired of being optimized, tracked, and sold to. Tired of things disappearing. A watch is the opposite of that. It's stable. It's honest. It does one thing and does it well.
-
-The girl in Denver knew what she was doing when she kept looking at her wrist. She wasn't checking the time. She was holding onto something that was actually hers.`
+The teenagers wearing watches aren't rejecting technology. They're choosing what parts of their lives they want to control. And a watch, more than almost anything else, gives them that control.`
   },
   {
     slug: 'the-gift-that-gets-kept',
