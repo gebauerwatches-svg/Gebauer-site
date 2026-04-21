@@ -44,23 +44,29 @@ Sometimes being first matters more than being good.`
     date: 'April 20, 2026',
     author: 'Liam',
     excerpt: `I bought a blue Seiko in Milan when I was 15, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. ...`,
-    content: `I bought a blue Seiko in Milan when I was 15, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. The dial wasn't pristine. It had aged. And somehow that made it more real to me than any new watch could be.
+    content: `I bought a blue Seiko in Milan when I was 15. The dial had aged from its original color, and that history made it more real to me than any pristine new watch could be. Time had left visible marks, proof of the years someone else had worn it.
 
-That's part of why we chose African Padauk for one of the Gebauer wood dials.
+That memory came back when we were developing the Gebauer Padauk dial. Here was a material that would age and change just like that old Seiko, but by design rather than accident.
 
 Most watch materials are stable. Stainless steel stays stainless. Sapphire crystal doesn't shift. You buy the watch and it stays the watch. But Padauk does something different. It transforms. Right now, as you read this, every Padauk dial in the world is slowly becoming something it wasn't yesterday.
 
 Here's what's actually happening inside the wood.
 
-African Padauk contains a class of organic compounds called chromophores, molecules that absorb light at specific wavelengths and reflect others back. When the tree is freshly cut, those chromophores are in their original state, and the wood glows a bright, almost electric orange. But the moment that wood is exposed to ultraviolet light, something shifts at the molecular level. The UV energy excites the electrons in those chromophores, breaking some of the bonds that hold them together. The molecules don't disappear. They transform into a different compound, one that absorbs light differently and reflects back the deeper, warmer tones we associate with aged Padauk. Burgundy. Wine. The color that tells you time has passed.
+African Padauk contains organic compounds called chromophores, molecules that absorb light at specific wavelengths and reflect others back. When the tree is freshly cut, those chromophores are in their original state, and the wood glows a bright orange-red. Almost electric in the right light.
 
-This isn't fading. It's not degradation. It's a chemical metamorphosis. The wood doesn't weaken. The transformation is stable once it's complete. A Padauk dial that's been on a wrist for five years and suddenly kept in a drawer won't shift back. The change is permanent.
+But exposure to ultraviolet light changes everything. The UV breaks down some chromophores while transforming others. The bright orange slowly shifts toward deeper reds, then browns, then eventually a rich chocolate color. This isn't damage or deterioration. It's the wood following its natural path.
 
-Most people don't think about this when they buy a watch. They want something finished, complete, done. But the parents I've talked to about Gebauer seem to get it differently. They're thinking about what the watch will be in five years, ten years, when their kid graduates or gets married or just keeps wearing it because it became part of who they are. They want an object that ages with intention, not against it.
+The process takes months or years depending on light exposure. A Padauk dial worn daily will darken faster than one kept in a drawer. Direct sunlight accelerates the change. Even indoor lighting contributes over time.
 
-There's a word for what happens to Padauk: photodegradation. It sounds technical and cold, but it's really just time made visible. The watch doesn't break. It becomes a record. Orange to burgundy. Years marked in color. Every shift is proof that someone wore it, that it was there, that it mattered enough to carry into the sun.
+We tested samples under different conditions. Padauk left in bright workshop light for six months showed dramatic darkening. The same wood kept in dim storage barely shifted. Temperature matters too. Heat speeds the chromophore breakdown.
 
-That's the craft I wanted to be part of.`
+What makes this fascinating is the unpredictability. Two identical Padauk dials worn by different people will age differently based on their lifestyles. Someone who works outdoors will see faster color evolution than someone in an office. The wood becomes a record of how you live.
+
+Some collectors worry about this instability. They want their watches to stay exactly as purchased. But I think they're missing the point. The color change isn't a flaw to prevent. It's the feature.
+
+Your Padauk dial will never look exactly like anyone else's after the first year. The specific orange-to-brown progression depends on your daily routine, your commute, where you vacation, how often you check the time near windows. The watch becomes uniquely yours in a way no other material can match.
+
+That blue Seiko taught me something about time and objects. The best watches don't fight change. They embrace it. They show their history. Padauk just does it faster and more beautifully than most materials dare to try.`
   },
   {
     slug: 'why-teenagers-are-wearing-watches-again-and-its-not-about-knowing-what-time-it-is',
