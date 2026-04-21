@@ -344,9 +344,9 @@ function App() {
             <em> We wanted something better.</em>
           </h2>
           <p className="founder-text">
-            Bought my first real watch in Milan at 15. Spent a year studying movements and materials. Realized nobody was making milestone gifts that young men actually wanted to wear. Found a manufacturer in Japan. Now 300 watches are on the way. This is just the first chapter.
+            Bought my first real watch in Milan at 13. Spent a year studying movements and materials. Realized nobody was making milestone gifts that young men actually wanted to wear. Found a manufacturer in Japan. Now 300 watches are on the way. This is just the first chapter.
           </p>
-          <p className="founder-signoff">— Liam, 16</p>
+          <p className="founder-signoff">— Liam, 14</p>
           <div className="founder-stats">
             <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
             <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
@@ -603,7 +603,7 @@ function App() {
           </div>
           <button className="share-btn" onClick={() => {
             if (navigator.share) {
-              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 16 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
+              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 14 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
             } else {
               navigator.clipboard.writeText('https://gebauerwatches.com')
               const btn = document.querySelector('.share-btn')
@@ -619,7 +619,7 @@ function App() {
         <RavenIcon className="footer-raven" size={24} />
         <img src={logo} alt="Gebauer" className="footer-logo" />
         <p className="footer-raven-line">The raven is on the back. You see it when it's on your wrist.</p>
-        <p className="footer-tagline">Built by a 16 year old. Made in Japan. First drop December 2026.</p>
+        <p className="footer-tagline">Built by a 14 year old. Made in Japan. First drop December 2026.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
       </footer>
 
