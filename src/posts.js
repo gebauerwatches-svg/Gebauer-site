@@ -20,23 +20,29 @@ const posts = [
     excerpt: `In 1510, a German locksmith named Peter Henlein made something that didn't work, and it changed the world.`,
     content: `In 1510, a German locksmith named Peter Henlein made something that didn't work, and it changed the world.
 
-It was called the Nuremberg Egg, and if you saw one today, you'd think it was a joke. Egg-shaped. Brass. About the size of a fist. Inside was a system of gears so crude that it gained or lost fifteen minutes every single day. Fifteen minutes. Modern watches are accurate to within seconds per month. The Egg was off by a quarter hour before breakfast.
+It was called the Nuremberg Egg, and if you saw one today, you'd think it was a joke. Egg-shaped. Brass. About the size of a fist. Inside was a system of gears so crude that it drifted hours every day. Modern watches are accurate to within seconds per month. The Egg was wildly unreliable.
 
 And yet it mattered so much that it's still the reason you're wearing a watch right now.
 
 Before the Egg, if you wanted to know the time, you looked at the sky. You found a church bell tower. You asked someone. Time wasn't something you carried. It was something you waited for. For thousands of years, that's how humans lived. The sun moved. The bells rang. That was enough.
 
-Then Henlein figured out how to make a spring store energy instead of relying on a falling weight. You could actually wind it up and carry it. Not accurately, but you could carry it.
+Then Henlein figured out how to make a spring store energy instead of relying on a falling weight. You could actually wind it up and carry it. Not accurately, but you could carry time itself.
 
-The thing is, the inaccuracy didn't matter as much as the possibility. Once people could carry time, they started wanting to know what it was. Constantly. Obsessively. Pocket watches became status symbols for merchants and nobility. If you had one, you had enough money to own something that barely worked. By the 1600s, they were everywhere in Europe, and makers were competing to make them better.
+Think about that shift. For the first time in human history, someone could pull time out of their pocket. It didn't matter that the Egg was wrong half the time. What mattered was the idea that time could be personal. Portable. Yours.
 
-Better meant faster gears. Smaller springs. Refinements that took a century and a half, but they happened because the Egg proved the concept worked. The Egg was the proof. It was useless, but it was possible.
+The wealthy loved it immediately, accuracy be damned. They wore these crude timepieces as jewelry, as status symbols, as conversation pieces. The actual timekeeping was almost secondary. What they were really buying was the future.
 
-There's something worth sitting with there. The Nuremberg Egg was so inaccurate that it's almost embarrassing by modern standards. Henlein would be horrified by what a fifty-dollar Timex can do. But he created the category. He made the first thing. He proved that time could live on your wrist instead of in a tower, and that single shift changed how humans experience being alive.
+Every innovation that followed, from the balance spring to the quartz crystal to the atomic clock, was just making Henlein's wild idea work better. The fundamental breakthrough happened in 1510 when he made time something you could own instead of something that owned you.
 
-Every great innovation starts as something that doesn't quite work. It starts with someone making an Egg. Making the first version that's imperfect and flawed and somehow still exactly what the world needed.
+I think about this when I look at any mechanical watch today. The balance wheel spinning back and forth, the escapement clicking away, the mainspring slowly unwinding. These aren't just mechanisms. They're direct descendants of that first clumsy Egg. The DNA is identical, just refined across five centuries of obsessive tinkering.
 
-Sometimes being first matters more than being good.`
+Modern watchmakers spend months perfecting components that Henlein couldn't have imagined. They chase accuracy measured in seconds per year, not hours per day. But they're still solving the same problem he solved: how to make time portable, personal, reliable.
+
+The Nuremberg Egg was useless as a timekeeper and revolutionary as an idea. Sometimes that's enough. Sometimes the thing that changes everything doesn't have to work perfectly. It just has to work differently.
+
+Every watch you've ever worn carries a piece of that first broken dream. Henlein's Egg didn't tell time well, but it told us something more important: that we didn't have to wait for time to come to us. We could carry it with us instead.
+
+That's still what we're doing, five hundred years later. We're just doing it better.`
   },
   {
     slug: 'why-your-watch-dial-will-change-color-without-you-doing-anything',
