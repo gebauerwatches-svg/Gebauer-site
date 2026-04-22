@@ -2,3 +2,5 @@
 /blog /index.html 200
 /vote/* /index.html 200
 /vote /index.html 200
+/privacy/* /index.html 200
+/privacy /index.html 200

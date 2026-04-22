@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Blog from './Blog.jsx'
 import Vote from './Vote.jsx'
+import Privacy from './Privacy.jsx'
 
 class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: null } }
@@ -27,11 +28,12 @@ class ErrorBoundary extends Component {
 const path = window.location.pathname
 const isBlog = path.startsWith('/blog')
 const isVote = path === '/vote' || path.startsWith('/vote/')
+const isPrivacy = path === '/privacy' || path.startsWith('/privacy/')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      {isVote ? <Vote /> : isBlog ? <Blog /> : <App />}
+      {isPrivacy ? <Privacy /> : isVote ? <Vote /> : isBlog ? <Blog /> : <App />}
     </ErrorBoundary>
   </StrictMode>,
 )
