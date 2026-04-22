@@ -13,6 +13,28 @@
 
 const posts = [
   {
+    slug: 'how-a-$25-watch-almost-destroyed-switzerland',
+    title: 'How a $25 Watch Almost Destroyed Switzerland',
+    date: 'April 22, 2026',
+    author: 'Liam',
+    excerpt: `In 1969, a single watch changed everything.`,
+    content: `In 1969, a single watch changed everything.
+
+Not a luxury timepiece. Not some intricate Swiss mechanism with a thousand tiny parts. A simple quartz watch from Japan, selling for less than $25. The Seiko Astron didn't just compete with Swiss watches. It rewrote the entire rules of an industry that had existed for three centuries.
+
+Imagine standing in a Swiss factory in 1970. The machines are still. Workbenches that used to hold forty people now sit empty. Where generations of families had crafted mechanical watches using techniques passed down for centuries, silence now echoes.
+
+The quartz movement was devastatingly simple. A tiny crystal - 32,768 vibrations per second - kept more accurate time than any mechanical watch ever built. Swiss watches might take 20 seconds to gain or lose time each month. The Seiko Astron? Less than one second. And it cost a fraction of what a mechanical watch cost to produce.
+
+By 1983, the Swiss watch workforce had collapsed from 90,000 to 28,000. Entire towns that had made nothing but watches for generations went quiet. This wasn't just an industry disruption. It was the end of a way of life.
+
+But the Swiss did something unexpected. Instead of trying to compete with quartz directly, they reimagined watchmaking entirely. Nicolas Hayek merged two struggling watch companies and created Swatch: a playful, cheap, fashionable watch that turned timekeeping into a personal statement. Watches became accessories, not just instruments.
+
+They transformed a potential extinction into reinvention. The same precision that had made mechanical watches great now got channeled into design, brand, and cultural meaning. They stopped competing on technology and started competing on story.
+
+Sometimes survival means letting go of what you thought made you valuable. Sometimes it means seeing your weakness as your potential strength.`
+  },
+  {
     slug: 'the-watch-that-changed-everything-was-completely-useless',
     title: 'The Watch That Changed Everything Was Completely Useless',
     date: 'April 20, 2026',
