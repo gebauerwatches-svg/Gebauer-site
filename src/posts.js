@@ -13,6 +13,30 @@
 
 const posts = [
   {
+    slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
+    title: 'Milestone Markers: Why Your Son Deserves More Than a Gift Card',
+    date: 'April 22, 2026',
+    author: 'Liam',
+    excerpt: `My grandfather's watch sits in a velvet box in my mom's dresser. The crystal is scratched. The leather band is worn smooth at the edges. But every time she opens that box, she tells the same story abo...`,
+    content: `My grandfather's watch sits in a velvet box in my mom's dresser. The crystal is scratched. The leather band is worn smooth at the edges. But every time she opens that box, she tells the same story about the day her father gave it to her.
+
+That's the thing about milestone gifts. They're not about the object. They're about the story.
+
+Parents ask me all the time what makes a truly meaningful gift for a confirmation or graduation. Not another gift card. Not another electronic device that will be obsolete in eighteen months. But something that actually marks a moment of transition.
+
+Most parents default to practical. Money. Electronics. Things that feel safe. But safe isn't memorable. Safe doesn't get passed down. Safe doesn't create a moment your child will tell their own children about decades from now.
+
+A meaningful milestone gift does three things. First, it represents the specific person receiving it. Second, it symbolizes growth and the next chapter of life. Third, it's something that improves or reveals something about the recipient.
+
+Watches have always done this brilliantly. They're not just timekeepers. They're personal artifacts that grow with you. Every scratch tells a story. Every slight adjustment of the band remembers a moment.
+
+When we designed Gebauer Watches, we thought about teenagers transitioning into their own identities. Our wood dials aren't just materials. They're living surfaces that change color and texture over years. The African Padauk wood shifts from bright orange to deep burgundy. The Black Ebony develops its own unique patina. These aren't just watches. They're personal histories waiting to be written.
+
+Confirmation and graduation aren't just calendar dates. They're profound personal transitions. Moments when a young person steps into a more adult version of themselves. The right gift should recognize that transition - not just celebrate it.
+
+A watch says: I see who you're becoming. I'm marking this moment. I believe in your journey.`
+  },
+  {
     slug: 'how-a-$25-watch-almost-destroyed-switzerland',
     title: 'How a $25 Watch Almost Destroyed Switzerland',
     date: 'April 22, 2026',
