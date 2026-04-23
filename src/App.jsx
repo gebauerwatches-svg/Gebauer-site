@@ -227,6 +227,11 @@ function App() {
 
     return (
       <div className="l2">
+        {/* Challenge banner */}
+        <div className="l2-challenge fade-in">
+          <p>No group chats. No mass shares. Tell one person at a time. If Gebauer grows, it grows because someone looked their friend in the eye and said "you need to see this."</p>
+        </div>
+
         {/* Big rank header */}
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />

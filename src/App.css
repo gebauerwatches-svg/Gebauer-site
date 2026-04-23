@@ -843,6 +843,8 @@
    =========================================== */
 
 .l2 { min-height: 100vh; background: var(--bg-light); display: flex; flex-direction: column; align-items: center; padding: 0 20px; }
+.l2-challenge { width: 100%; max-width: 480px; padding: 20px 24px; margin-top: 64px; background: var(--bg-dark); text-align: center; }
+.l2-challenge p { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 15px; line-height: 1.6; color: var(--gold-muted); margin: 0; }
 .l2-welcome { text-align: center; padding: 64px 0 32px; max-width: 480px; }
 .l2-logo { width: 56px; height: auto; margin-bottom: 28px; opacity: 0.8; }
 .l2-rank-hero { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(32px, 6vw, 48px); line-height: 1.15; color: var(--text-dark); margin-bottom: 4px; }
