@@ -13,6 +13,30 @@
 
 const posts = [
   {
+    slug: 'the-missing-piece-how-great-brands-are-born',
+    title: 'The Missing Piece: How Great Brands Are Born',
+    date: 'April 24, 2026',
+    author: 'Liam',
+    excerpt: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.`,
+    content: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.
+
+Hans Wilsdorf understood this in 1905. Wristwatches were considered unreliable curiosities. Pocket watches ruled the world. But Wilsdorf saw something others didn't: wristwatches could be more than a novelty. They could be precise, functional instruments.
+
+In 1910, Rolex received the first-ever chronometer certification granted to a wristwatch by the Official Watch Rating Centre in Bienne, Switzerland. In 1926, Wilsdorf launched the Oyster, the first waterproof wristwatch featuring a hermetically sealed case. He didn't just make a watch. He solved a problem nobody realized needed solving.
+
+The same story repeats across industries. Yvon Chouinard didn't start Patagonia to sell clothing. He started by making climbing equipment, noticing that existing gear was poorly designed and environmentally destructive. He later expanded into clothing, recognizing a lack of suitable apparel for climbers and outdoor enthusiasts.
+
+Look at Steve Jobs. He didn't wake up thinking "I'll make computers." He looked at early personal computers and saw machines so complex that average people couldn't use them. Phil Knight didn't just want to sell shoes. He saw running shoes that were heavy, clumsy things and imagined something better.
+
+These founders share something critical: they were obsessive observers. They didn't start with a product. They started with a question. What isn't working? What experience is being overlooked? What problem is everyone accepting as normal?
+
+For us at Gebauer, that question was simple: Where are the meaningful milestone gifts for young people? Not another gift card. Not another generic tech accessory. Something that actually marks a moment. Something that ages and tells a story.
+
+Great brands aren't born from marketing meetings. They're born from people who look at the world and see the gap between what exists and what could exist. Who refuse to accept "this is just how things are."
+
+The most interesting innovations don't scream. They whisper.`
+  },
+  {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
     title: 'Milestone Markers: Why Your Son Deserves More Than a Gift Card',
     date: 'April 22, 2026',
