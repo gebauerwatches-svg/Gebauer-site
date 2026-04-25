@@ -626,7 +626,7 @@ function App() {
         <p className="footer-raven-line">The raven is on the back. You see it when it's on your wrist.</p>
         <p className="footer-tagline">Built by a 14 year old. Made in Japan. First drop December 2026.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
-        <a href="/privacy" className="footer-legal">Privacy Policy</a>
+        <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
       </footer>
 
       {/* SIGNUP MODAL */}
