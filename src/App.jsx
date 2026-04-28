@@ -16,14 +16,14 @@ import padaukAged from './assets/padauk-aged.jpeg'
 import './App.css'
 
 const RAVEN_PATH = [
-  { name: 'Villager', referrals: 0, unlock: 'In the movement.', symbol: '\u2302' },
-  { name: 'Kindling', referrals: 2, unlock: 'Raven artwork.', symbol: '\u2740' },
-  { name: 'Runecaster', referrals: 5, unlock: 'Behind-the-scenes.', symbol: '\u16B1' },
-  { name: 'Skald', referrals: 8, unlock: 'Early sample photos.', symbol: '\u266B' },
-  { name: 'Einherjar', referrals: 12, unlock: 'Founders Wall.', symbol: '\u2694' },
-  { name: 'Jarl', referrals: 16, unlock: 'Pick your number.', symbol: '\u2655' },
-  { name: 'Muninn', referrals: 20, unlock: 'Inner circle.', symbol: '\u273B' },
-  { name: 'Huginn', referrals: 25, unlock: 'Signed card from Liam.', symbol: '\u2726' },
+  { name: 'Villager', referrals: 0, unlock: 'You signed up. But you\'re not in the movement yet.', tease: '', symbol: '\u2302' },
+  { name: 'Kindling', referrals: 2, unlock: 'You\'re in. Welcome to the movement.', tease: 'Bring 2 people and the door opens...', symbol: '\u2740' },
+  { name: 'Runecaster', referrals: 5, unlock: 'You see what we\'re building before anyone else.', tease: 'Something most people never get to see...', symbol: '\u16B1' },
+  { name: 'Skald', referrals: 8, unlock: 'Your voice shapes what Gebauer becomes.', tease: 'You start to influence what we make...', symbol: '\u266B' },
+  { name: 'Einherjar', referrals: 12, unlock: 'Your name goes on something permanent.', tease: 'This one\'s permanent...', symbol: '\u2694' },
+  { name: 'Jarl', referrals: 16, unlock: 'You choose your edition number. 001, 042, 300. Yours.', tease: 'You get to pick something nobody else can...', symbol: '\u2655' },
+  { name: 'Muninn', referrals: 20, unlock: 'Direct access to Liam. You\'re in the inner circle.', tease: 'The founder knows your name...', symbol: '\u273B' },
+  { name: 'Huginn', referrals: 25, unlock: 'Hand-signed card from Liam. Named in the founding story.', tease: 'You become part of the origin...', symbol: '\u2726' },
 ]
 
 const FALLBACK_WAITLIST_COUNT = 152
@@ -275,9 +275,8 @@ function App() {
               const isUnlocked = userReferrals >= rank.referrals
               const isCurrent = oi === currentRankIndex
               const isTop = oi === RAVEN_PATH.length - 1
-              // Only show unlock text for: current rank, unlocked ranks, and the NEXT rank (one above current)
+              // Show full unlock for: unlocked and current. Show tease for next rank. Show nothing beyond.
               const isNextRank = oi === currentRankIndex + 1
-              const showUnlock = isUnlocked || isCurrent || isNextRank
               return (
                 <div key={rank.name} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`}>
                   {!isTop && <div className={`l2-tree-branch ${isUnlocked ? 'unlocked' : ''}`} />}
@@ -287,7 +286,7 @@ function App() {
                       <h3 className="l2-tree-rank-name">{rank.name}</h3>
                       <span className="l2-tree-referrals">{rank.referrals === 0 ? 'Start' : `${rank.referrals}`}</span>
                     </div>
-                    <p className="l2-tree-unlock">{showUnlock ? rank.unlock : '???'}</p>
+                    <p className="l2-tree-unlock">{(isUnlocked || isCurrent) ? rank.unlock : isNextRank ? rank.tease : ''}</p>
                   </div>
                 </div>
               )
