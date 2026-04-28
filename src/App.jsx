@@ -192,13 +192,11 @@ function App() {
       const data = await resp.json()
       if (!resp.ok || data.error) {
         setError(data.error || 'Something went wrong.')
-      } else if (data.needs_verification) {
-        localStorage.setItem('gebauer_email', email.trim().toLowerCase())
-        localStorage.setItem('gebauer_name', firstName.trim())
-        setNeedsVerification(true)
       } else {
+        // Instant signup — no verification needed. Go straight to inside.
         localStorage.setItem('gebauer_email', email.trim().toLowerCase())
         localStorage.setItem('gebauer_name', firstName.trim())
+        fetchStats(email.trim().toLowerCase())
         setLayer('inside')
         setShowSignup(false)
       }
