@@ -271,12 +271,24 @@ function App() {
           <h2 className="l2-igdrasil-title">The Igdrasil</h2>
           <div className="l2-tree">
             {[...RAVEN_PATH].reverse().map((rank, i) => {
-              const oi = RAVEN_PATH.length - 1 - i, isUnlocked = userReferrals >= rank.referrals, isCurrent = oi === currentRankIndex, isTop = oi === RAVEN_PATH.length - 1
+              const oi = RAVEN_PATH.length - 1 - i
+              const isUnlocked = userReferrals >= rank.referrals
+              const isCurrent = oi === currentRankIndex
+              const isTop = oi === RAVEN_PATH.length - 1
+              // Only show unlock text for: current rank, unlocked ranks, and the NEXT rank (one above current)
+              const isNextRank = oi === currentRankIndex + 1
+              const showUnlock = isUnlocked || isCurrent || isNextRank
               return (
                 <div key={rank.name} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`}>
                   {!isTop && <div className={`l2-tree-branch ${isUnlocked ? 'unlocked' : ''}`} />}
                   <div className="l2-tree-circle">{isUnlocked ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg> : <span className="l2-tree-dot" />}</div>
-                  <div className="l2-tree-info"><div className="l2-tree-rank-row"><h3 className="l2-tree-rank-name">{rank.name}</h3><span className="l2-tree-referrals">{rank.referrals === 0 ? 'Start' : `${rank.referrals}`}</span></div><p className="l2-tree-unlock">{rank.unlock}</p></div>
+                  <div className="l2-tree-info">
+                    <div className="l2-tree-rank-row">
+                      <h3 className="l2-tree-rank-name">{rank.name}</h3>
+                      <span className="l2-tree-referrals">{rank.referrals === 0 ? 'Start' : `${rank.referrals}`}</span>
+                    </div>
+                    <p className="l2-tree-unlock">{showUnlock ? rank.unlock : '???'}</p>
+                  </div>
                 </div>
               )
             })}
