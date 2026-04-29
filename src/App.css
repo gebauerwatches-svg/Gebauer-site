@@ -549,6 +549,7 @@
 .vote-section-bar span { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: var(--gold); min-width: 36px; text-align: right; }
 
 .vote-section-thanks { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold-muted); text-align: center; }
+.vote-section-picked { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-top: 8px; }
 .vote-section-hint { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-secondary); opacity: 0.4; text-align: center; font-style: italic; }
 
 

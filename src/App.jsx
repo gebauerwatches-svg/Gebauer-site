@@ -317,11 +317,11 @@ function App() {
                   <div className="l2-tree-circle">{isUnlocked ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg> : <span className="l2-tree-dot" />}</div>
                   <div className="l2-tree-info">
                     <div className="l2-tree-rank-row">
-                      <h3 className="l2-tree-rank-name">{rank.name}</h3>
-                      <span className="l2-tree-referrals">{rank.referrals === 0 ? 'Start' : `${rank.referrals}`}</span>
+                      <h3 className="l2-tree-rank-name">{(isUnlocked || isCurrent || isNextRank) ? rank.name : '???'}</h3>
+                      <span className="l2-tree-referrals">{(isUnlocked || isCurrent) ? (rank.referrals === 0 ? 'Start' : `${rank.referrals}`) : isNextRank ? rank.referrals : ''}</span>
                     </div>
-                    <p className="l2-tree-unlock">{(isUnlocked || isCurrent) ? rank.unlock : isNextRank ? rank.tease : ''}</p>
-                    {rank.spots && <span className="l2-tree-spots">{rank.spots} spots</span>}
+                    <p className="l2-tree-unlock">{(isUnlocked || isCurrent) ? rank.unlock : isNextRank ? rank.tease : 'Something awaits...'}</p>
+                    {rank.spots && (isUnlocked || isCurrent || isNextRank) && <span className="l2-tree-spots">{rank.spots} spots</span>}
                   </div>
                 </div>
               )
@@ -548,7 +548,6 @@ function App() {
               <p className="vote-section-context">{poll.context}</p>
               <div className="vote-section-options">
                 {poll.options.map(opt => {
-                  const pct = total > 0 ? Math.round(((results[opt.id] || 0) / total) * 100) : 0
                   const isSelected = voted === opt.id
                   return (
                     <button
@@ -556,9 +555,6 @@ function App() {
                       className={`vote-section-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
                       onClick={() => {
                         if (voted) return
-                        const r = JSON.parse(localStorage.getItem(resultsKey) || '{}')
-                        r[opt.id] = (r[opt.id] || 0) + 1
-                        localStorage.setItem(resultsKey, JSON.stringify(r))
                         localStorage.setItem(voteKey, opt.id)
                         window.location.hash = 'vote'
                         window.location.reload()
@@ -572,11 +568,8 @@ function App() {
                         <h3>{opt.label}</h3>
                         <p>{opt.desc}</p>
                       </div>
-                      {voted && (
-                        <div className="vote-section-bar">
-                          <div className="vote-section-fill" style={{ width: `${pct}%` }} />
-                          <span>{pct}%</span>
-                        </div>
+                      {voted && isSelected && (
+                        <p className="vote-section-picked">Your pick</p>
                       )}
                     </button>
                   )
