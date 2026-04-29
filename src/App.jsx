@@ -367,13 +367,9 @@ function App() {
         )}
       </nav>
 
-      {/* 1. HERO — the chorus */}
+      {/* 1. HERO — video background */}
       <section className="hero">
-        <div className="hero-slideshow">
-          {heroImages.map((img, i) => (
-            <img key={i} src={img} alt="" className={`hero-slide ${i === heroSlide ? 'active' : ''}`} />
-          ))}
-        </div>
+        <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
@@ -391,8 +387,9 @@ function App() {
       </section>
 
       {/* 2. THE STORY — Milan */}
-      <Reveal className="story-beat story-cream" id="story">
-        <div className="story-beat-inner">
+      <Reveal className="story-beat story-milan" id="story">
+        <div className="story-milan-overlay" />
+        <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I walked into a watch shop in Milan at 13 and spent 310 euros on a Seiko I couldn't afford.</h2>
           <p className="story-beat-text">Most expensive thing I'd ever bought. But the second it was on my wrist I knew every cent was worth it. I went home and spent the next year learning everything about how watches are made, who makes the best ones, and why nothing like this existed for people my age.</p>
         </div>
