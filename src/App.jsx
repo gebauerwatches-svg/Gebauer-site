@@ -402,7 +402,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">Then I noticed something nobody else did.</h2>
-          <p className="story-beat-text">There's no watch for young men that actually means something. Nothing that marks the moments that matter. Nothing that ages with you, changes with you, becomes yours in a way that nothing else can. So I found a manufacturer in Japan and started building one.</p>
+          <p className="story-beat-text">There's no watch for people my age that actually means something. Nothing that marks the moments that matter. Nothing that ages with you, changes with you, becomes yours in a way that nothing else can. So I found a manufacturer in Japan and started building one.</p>
           <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
