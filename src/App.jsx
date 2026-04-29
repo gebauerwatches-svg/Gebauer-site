@@ -335,14 +335,6 @@ function App() {
     )
   }
 
-  // Slideshow state for hero
-  const [heroSlide, setHeroSlide] = useState(0)
-  const heroImages = [padaukAged, watchEbony, watchHinoki, watchPadauk]
-  useEffect(() => {
-    const interval = setInterval(() => setHeroSlide(s => (s + 1) % heroImages.length), 4000)
-    return () => clearInterval(interval)
-  }, [])
-
   // ---- LAYER 1 ----
   return (
     <>
@@ -491,7 +483,7 @@ function App() {
       </Reveal>
 
       {/* 9. THE INVITATION */}
-      <Reveal className="story-beat story-cream" style={{textAlign: 'center'}}>
+      <Reveal className="story-beat story-cream story-center">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
           <p className="story-beat-text">They believed before they could see it. Before they could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
