@@ -390,42 +390,34 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THE MOMENT */}
-      <Reveal className="story-beat story-dark" id="story">
+      {/* 2. THE STORY — Milan */}
+      <Reveal className="story-beat story-cream" id="story">
         <div className="story-beat-inner">
-          <h2 className="story-beat-headline">Every young man hits a moment that changes everything.</h2>
-          <p className="story-beat-text">Graduation. Sixteenth birthday. The day something clicks and you realize you're becoming someone new. Those moments deserve more than a memory that fades.</p>
+          <h2 className="story-beat-headline">I walked into a watch shop in Milan at 13 and spent 310 euros on a Seiko I couldn't afford.</h2>
+          <p className="story-beat-text">Most expensive thing I'd ever bought. But the second it was on my wrist I knew every cent was worth it. I went home and spent the next year learning everything about how watches are made, who makes the best ones, and why nothing like this existed for people my age.</p>
         </div>
       </Reveal>
 
-      {/* 3. THE PROBLEM */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">But nothing marks it.</h2>
-          <p className="story-beat-text">No object that lasts. No proof it happened. No anchor for the moment you started becoming who you are.</p>
-        </div>
-      </Reveal>
-
-      {/* 4. THE ANSWER — product reveal */}
+      {/* 3. THE REALIZATION */}
       <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">Then I noticed something nobody else did.</h2>
+          <p className="story-beat-text">There's no watch for young men that actually means something. Nothing that marks the moments that matter. Nothing that ages with you, changes with you, becomes yours in a way that nothing else can. So I found a manufacturer in Japan and started building one.</p>
+          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
+        </div>
+      </Reveal>
+
+      {/* 4. THE WATCH — product reveal */}
+      <Reveal className="story-beat story-cream">
         <div className="story-product">
           <div className="story-product-img">
             <img src={padaukAged} alt="Gebauer watch with aged Padauk wood dial" />
           </div>
           <div className="story-product-text">
-            <h2 className="story-beat-headline">A watch with a real wood dial that ages with whoever wears it.</h2>
-            <p className="story-beat-text">African Padauk that shifts from fiery orange to deep burgundy over years. Scratches that map your memories. Grain that deepens with time. The watch you put on today won't look the same in five years. Neither will you.</p>
+            <h2 className="story-beat-headline">Real wood. Real steel. Changes every year.</h2>
+            <p className="story-beat-text">Every dial is cut from actual wood. African Padauk that shifts from fiery orange to deep burgundy over time. Sapphire crystal. Japanese movement. 316L steel. Raven engraved on the caseback. 300 ever made per edition, each one numbered.</p>
             <p className="story-beat-accent">No two have ever been the same.</p>
           </div>
-        </div>
-      </Reveal>
-
-      {/* 5. THE ORIGIN */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">It started with a watch shop in Milan and a question nobody was asking.</h2>
-          <p className="story-beat-text">A 14 year old bought his first real watch, came home, and spent a year learning how they're made. He noticed something nobody else did: there was no meaningful object for the moments that shape who a young man becomes. So he found a manufacturer in Japan and started building the answer.</p>
-          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
