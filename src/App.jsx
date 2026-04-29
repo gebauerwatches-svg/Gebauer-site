@@ -380,7 +380,12 @@ function App() {
             A Gebauer is just
             <span className="hero-accent"> the beginning.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">The watch that becomes part of you.</p>
+          <p className="hero-sub fade-in-delay-1">Real wood. Japanese craft. 300 ever made. The watch that becomes part of you.</p>
+          <div className="hero-buttons fade-in-delay-2">
+            <button className="hero-cta-btn" onClick={() => setShowSignup(true)}>Get In</button>
+            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
+          </div>
+          <p className="hero-count fade-in-delay-2">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
@@ -426,7 +431,7 @@ function App() {
 
       {/* 6. THE PROOF — three woods */}
       <Reveal className="story-beat story-dark" id="watches">
-        <div className="story-beat-inner" style={{maxWidth: '100%'}}>
+        <div className="story-beat-inner" style={{maxWidth: 960}}>
           <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 48}}>Three woods. Each one tells a different story.</h2>
           <div className="wood-grid">
             {[
@@ -499,7 +504,19 @@ function App() {
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
           <p className="story-beat-text">They believed before they could see it. Before they could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
-          <button className="story-cta" onClick={() => setShowSignup(true)}>Get In</button>
+          <div className="invitation-buttons">
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Get In</button>
+            <button className="story-share" onClick={() => {
+              if (navigator.share) {
+                navigator.share({ title: 'Gebauer Watches', text: 'Real wood dials. Japanese craft. 300 ever made. A Gebauer is just the beginning.', url: 'https://gebauerwatches.com' })
+              } else {
+                navigator.clipboard.writeText('https://gebauerwatches.com')
+                const btn = document.querySelector('.story-share')
+                btn.textContent = 'Link Copied'
+                setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
+              }
+            }}>Share Gebauer</button>
+          </div>
         </div>
       </Reveal>
 
