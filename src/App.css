@@ -66,8 +66,8 @@
 .hero-slide.active { opacity: 1; }
 .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.2) 0%, rgba(15, 13, 20, 0.6) 60%, rgba(15, 13, 20, 0.9) 100%); }
 .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 28px; max-width: 700px; }
-.hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; font-size: clamp(36px, 7vw, 64px); line-height: 1.15; color: var(--text-primary); margin-bottom: 20px; }
-.hero-accent { color: var(--gold); font-style: italic; font-weight: 400; }
+.hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(40px, 8vw, 72px); line-height: 1.1; color: var(--text-primary); margin-bottom: 20px; letter-spacing: -0.02em; }
+.hero-accent { color: var(--gold); font-style: italic; font-weight: 400; display: block; }
 .hero-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 15px; line-height: 1.7; color: var(--text-secondary); opacity: 0.6; max-width: 460px; margin: 0 auto 28px; }
 
 .hero-buttons { display: flex; gap: 12px; align-items: center; justify-content: center; margin-bottom: 16px; }
@@ -93,8 +93,8 @@
 
 .story-beat-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 400; font-size: clamp(26px, 5vw, 42px);
-  line-height: 1.2; margin-bottom: 24px;
+  font-weight: 400; font-size: clamp(30px, 6vw, 50px);
+  line-height: 1.15; margin-bottom: 28px; letter-spacing: -0.01em;
 }
 .story-dark .story-beat-headline { color: var(--text-primary); }
 .story-cream .story-beat-headline { color: var(--text-dark); }
@@ -111,8 +111,8 @@
 .story-beat-accent {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic; font-weight: 400;
-  font-size: clamp(20px, 3.5vw, 28px);
-  color: var(--gold); margin-top: 24px;
+  font-size: clamp(24px, 4vw, 36px);
+  color: var(--gold); margin-top: 28px; line-height: 1.3;
 }
 
 .story-beat-signoff {
@@ -572,15 +572,16 @@
 .wood-headline em { font-style: italic; color: var(--purple); }
 .wood-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 15px; color: var(--text-warm); text-align: center; margin-bottom: 56px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
 
-.wood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 920px; margin: 0 auto; }
-@media (max-width: 768px) { .wood-grid { grid-template-columns: 1fr; gap: 32px; max-width: 400px; } }
+.wood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 920px; margin: 0 auto; }
+@media (max-width: 768px) { .wood-grid { grid-template-columns: 1fr; gap: 28px; max-width: 320px; } }
 
-.wood-card { background: var(--white); overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; border: 1px solid rgba(42, 34, 53, 0.04); }
-.wood-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(42, 34, 53, 0.08); }
-.wood-img-wrap { aspect-ratio: 3 / 4; overflow: hidden; }
-.wood-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
-.wood-card:hover .wood-img-wrap img { transform: scale(1.03); }
-.wood-card h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 24px; color: var(--text-dark); padding: 24px 24px 4px; }
+.wood-card { background: var(--bg-card); overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; border: 1px solid rgba(240, 236, 229, 0.06); text-align: center; }
+.wood-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3); }
+.wood-card-img { aspect-ratio: 1; overflow: hidden; background: var(--bg-deep); }
+.wood-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+.wood-card:hover .wood-card-img img { transform: scale(1.05); }
+.wood-card h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 22px; color: var(--text-primary); padding: 20px 20px 6px; }
+.wood-card p { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.6; color: var(--text-secondary); opacity: 0.6; padding: 0 20px 20px; }
 /* ===========================================
    PERKS (what you get, off-white)
    =========================================== */
@@ -693,16 +694,16 @@
 
 .wood-vote-btn {
   display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: calc(100% - 48px); margin: 0 24px 24px;
-  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  width: calc(100% - 40px); margin: 0 20px 20px;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500;
   letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--text-warm); background: none;
-  border: 1px solid var(--bg-warm); padding: 12px;
+  color: var(--text-secondary); background: none;
+  border: 1px solid rgba(240, 236, 229, 0.1); padding: 12px;
   cursor: pointer; transition: all 0.3s;
 }
 
 .wood-vote-btn:hover { border-color: var(--gold-muted); color: var(--gold); }
-.wood-vote-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(212, 166, 42, 0.06); }
+.wood-vote-btn.active { border-color: var(--gold); color: var(--gold); background: rgba(196, 149, 42, 0.08); }
 
 .wood-vote-count {
   font-family: 'Cormorant Garamond', Georgia, serif;
