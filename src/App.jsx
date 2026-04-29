@@ -227,26 +227,35 @@ function App() {
       <div className="l2">
         {/* Challenge banner */}
         <div className="l2-challenge fade-in">
-          <p>No group chats. No mass shares. Tell one person at a time. If Gebauer grows, it grows because someone looked their friend in the eye and said "you need to see this."</p>
+          <p>No group chats. No mass shares. Tell one person at a time.</p>
         </div>
 
-        {/* Big rank header */}
+        {/* Identity */}
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />
           <h1 className="l2-rank-hero fade-in">
-            You are <em>{currentRank.name}</em>
+            {userReferrals === 0
+              ? <>You signed up.<br /><em>But you're not in yet.</em></>
+              : <>You are <em>{currentRank.name}</em></>
+            }
           </h1>
           <p className="l2-rank-detail fade-in-delay-1">
-            {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
+            {userReferrals === 0
+              ? 'Bring 1 person to get inside.'
+              : `${userReferrals} referral${userReferrals !== 1 ? 's' : ''}`
+            }
           </p>
           <p className="l2-welcome-sub fade-in-delay-1">
-            {displayName}, you're early. Watch 001 ships in December to whoever ends up at #1.
+            {userReferrals === 0
+              ? `${displayName}, you're one of ${waitlistCount} people who found this. But the movement starts when you bring someone with you.`
+              : `${displayName}, you're one of the first ${waitlistCount}. You're inside.`
+            }
           </p>
         </header>
 
         {/* Referral link */}
         <section className="l2-referral fade-in-delay-1">
-          <p className="l2-section-label">Your Referral Link</p>
+          <p className="l2-section-label">Your Link</p>
           <div className="l2-referral-box">
             <span className="l2-referral-url">
               {refCode ? `gebauerwatches.com/?ref=${refCode}` : 'Loading...'}
@@ -255,27 +264,52 @@ function App() {
               {copied ? 'Copied' : 'Copy'}
             </button>
           </div>
-          <p className="l2-referral-hint">Every friend who joins moves you up The Igdrasil.</p>
+          <p className="l2-referral-hint">
+            {userReferrals === 0
+              ? 'Tell one person. That\'s all it takes to get in.'
+              : `Every person you bring in takes you deeper.`
+            }
+          </p>
         </section>
 
-        {/* Next rank progress */}
+        {/* Gated content: insider access at 2+ referrals */}
+        {userReferrals >= 2 && (
+          <section className="l2-insider fade-in-delay-2">
+            <p className="l2-section-label">Insider Access</p>
+            <h3 className="l2-insider-title">Behind the scenes.</h3>
+            <p className="l2-insider-text">Real emails between Liam and the manufacturers in Japan and Italy. What's actually being built and how.</p>
+            <p className="l2-insider-note">Content drops when there's something real to show. You'll be first to see it.</p>
+          </section>
+        )}
+
+        {userReferrals < 2 && userReferrals > 0 && (
+          <section className="l2-insider-locked fade-in-delay-2">
+            <p className="l2-section-label">Insider Access</p>
+            <h3 className="l2-insider-title">Locked.</h3>
+            <p className="l2-insider-text">Bring {2 - userReferrals} more {2 - userReferrals === 1 ? 'person' : 'people'} to see the real emails between Liam and the manufacturers in Japan and Italy.</p>
+          </section>
+        )}
+
+        {/* Next rank */}
         {nextRank && (
           <section className="l2-next-rank fade-in-delay-2">
             <p className="l2-next-rank-text">
-              Refer {nextRank.referrals - userReferrals} more to become <strong>{nextRank.name}</strong>.
+              {nextRank.referrals - userReferrals} more to become <strong>{nextRank.name}</strong>
             </p>
-            <div className="l2-next-rank-bar"><div className="l2-next-rank-fill" style={{ width: `${Math.min(100, ((userReferrals - currentRank.referrals) / (nextRank.referrals - currentRank.referrals)) * 100)}%` }} /></div>
+            <p className="l2-next-rank-tease">{nextRank.tease}</p>
           </section>
         )}
+
+        {/* The Igdrasil — depth, not competition */}
         <section className="l2-igdrasil fade-in-delay-2">
           <h2 className="l2-igdrasil-title">The Igdrasil</h2>
+          <p className="l2-igdrasil-sub">Go deeper.</p>
           <div className="l2-tree">
             {[...RAVEN_PATH].reverse().map((rank, i) => {
               const oi = RAVEN_PATH.length - 1 - i
               const isUnlocked = userReferrals >= rank.referrals
               const isCurrent = oi === currentRankIndex
               const isTop = oi === RAVEN_PATH.length - 1
-              // Show full unlock for: unlocked and current. Show tease for next rank. Show nothing beyond.
               const isNextRank = oi === currentRankIndex + 1
               return (
                 <div key={rank.name} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`}>
@@ -294,14 +328,7 @@ function App() {
             })}
           </div>
         </section>
-        {leaderboard.length > 0 && (
-          <section className="l2-leaderboard fade-in-delay-3">
-            <h3 className="l2-leaderboard-title">The Leaderboard</h3>
-            <p className="l2-leaderboard-sub">Everyone who's referred. Watch 001 goes to #1 when we ship.</p>
-            <div className="l2-leaderboard-list">{leaderboard.map((p, i) => <div key={p.name + i} className={`l2-leaderboard-row ${i === 0 ? 'l2-first' : ''}`}><span className="l2-leaderboard-pos">{i+1}</span><span className="l2-leaderboard-name">{p.name}</span><span className="l2-leaderboard-refs">{p.referrals}</span><span className="l2-leaderboard-label">{p.referrals === 1 ? 'referral' : 'referrals'}</span></div>)}</div>
-            <p className="l2-leaderboard-deadline">Leaderboard closes June 30.</p>
-          </section>
-        )}
+
         <footer className="l2-footer"><button className="l2-back" onClick={() => setLayer('landing')}>Back to home</button><p>&copy; {new Date().getFullYear()} Gebauer Watches</p></footer>
       </div>
     )

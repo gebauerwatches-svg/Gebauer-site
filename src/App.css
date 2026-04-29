@@ -885,6 +885,22 @@
 .l2-tree-node.unlocked .l2-tree-unlock { opacity: 0.75; color: var(--text-warm); }
 .l2-tree-node.current .l2-tree-unlock { opacity: 0.85; color: var(--text-dark); }
 .l2-tree-spots { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-muted); background: rgba(212, 166, 42, 0.06); padding: 2px 8px; margin-top: 4px; display: inline-block; }
+
+/* Insider access sections */
+.l2-insider, .l2-insider-locked { width: 100%; max-width: 440px; padding: 24px; margin-bottom: 28px; }
+.l2-insider { background: rgba(42, 107, 82, 0.04); border: 1px solid rgba(42, 107, 82, 0.12); }
+.l2-insider-locked { background: rgba(42, 34, 53, 0.03); border: 1px solid rgba(42, 34, 53, 0.08); }
+.l2-insider-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 20px; color: var(--text-dark); margin-bottom: 8px; }
+.l2-insider-locked .l2-insider-title { color: var(--text-muted); }
+.l2-insider-text { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 300; line-height: 1.6; color: var(--text-warm); }
+.l2-insider-locked .l2-insider-text { color: var(--text-muted); }
+.l2-insider-note { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gold-muted); margin-top: 12px; }
+
+/* Next rank tease */
+.l2-next-rank-tease { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 15px; color: var(--gold-muted); margin-top: 6px; }
+
+/* Igdrasil subtitle */
+.l2-igdrasil-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 16px; color: var(--gold-muted); text-align: center; margin-bottom: 20px; }
 .l2-tree-node:not(.unlocked):not(.current) { opacity: 0.35; }
 .l2-leaderboard { width: 100%; max-width: 500px; padding: 32px 28px; border: 1px solid rgba(42, 34, 53, 0.04); background: var(--white); margin-bottom: 40px; }
 .l2-leaderboard-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 26px; color: var(--text-dark); text-align: center; margin-bottom: 4px; }
