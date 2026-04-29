@@ -1,35 +1,36 @@
 /*
   GEBAUER WATCHES — Brand Color Palette
-  Purple & Gold with warm off-white foundations.
-  Feels like discovering a story, not browsing a tech site.
+  Deep charcoal, warm amber, ivory.
+  Feels like the watch itself: warm wood against dark steel.
+  "A Gebauer is just the beginning."
 */
 
 :root {
   /* ─── PRIMARY ─── */
-  --purple:         #2D1B4E;
-  --purple-mid:     #4A2D7A;
-  --purple-light:   #6B42A8;
-  --purple-soft:    #8B6BBF;
-  --purple-glow:    #9D7ADB;
+  --purple:         #1E1A2E;     /* deep midnight, barely purple */
+  --purple-mid:     #2A2440;
+  --purple-light:   #3D3558;
+  --purple-soft:    #5C5478;
+  --purple-glow:    #7A7098;
 
-  --gold:           #D4A62A;
-  --gold-light:     #E8C04A;
-  --gold-muted:     #B8922A;
-  --gold-pale:      #F0D878;
+  --gold:           #C4952A;     /* warmer, more amber than bright gold */
+  --gold-light:     #D4A63A;
+  --gold-muted:     #A07828;
+  --gold-pale:      #E8C060;
 
-  /* ─── BACKGROUNDS (warmer, off-white foundation) ─── */
-  --bg-dark:        #1A1128;
-  --bg-deep:        #221638;
-  --bg-card:        #2A1D42;
-  --bg-light:       #FAF8F5;   /* warm off-white, not lavender */
-  --bg-cream:       #F5F2ED;   /* warmer cream for alternating sections */
-  --bg-warm:        #EFECE6;   /* slightly deeper warm tone */
+  /* ─── BACKGROUNDS ─── */
+  --bg-dark:        #0F0D14;     /* almost black, warm undertone */
+  --bg-deep:        #161420;
+  --bg-card:        #1C1928;
+  --bg-light:       #FAF8F5;     /* warm off-white */
+  --bg-cream:       #F5F2ED;     /* warm cream */
+  --bg-warm:        #EFECE6;     /* deeper warm tone */
 
   /* ─── NEUTRALS ─── */
-  --white:          #FEFCFA;   /* warm white */
-  --text-primary:   #F0ECF5;
-  --text-secondary: #B8AFCA;
-  --text-dark:      #2A2235;   /* softer than pure black */
-  --text-muted:     #7A7086;
-  --text-warm:      #5C5466;   /* warm mid-tone for body text on light bg */
+  --white:          #FEFCFA;     /* warm white */
+  --text-primary:   #F0ECE5;     /* warm light text */
+  --text-secondary: #A09888;     /* warm mid-tone */
+  --text-dark:      #1A1714;     /* almost black, warm */
+  --text-muted:     #6B6358;     /* warm grey */
+  --text-warm:      #4A443C;     /* warm body text */
 }

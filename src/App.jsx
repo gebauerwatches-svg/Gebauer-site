@@ -334,6 +334,14 @@ function App() {
     )
   }
 
+  // Slideshow state for hero
+  const [heroSlide, setHeroSlide] = useState(0)
+  const heroImages = [padaukAged, watchEbony, watchHinoki, watchPadauk]
+  useEffect(() => {
+    const interval = setInterval(() => setHeroSlide(s => (s + 1) % heroImages.length), 4000)
+    return () => clearInterval(interval)
+  }, [])
+
   // ---- LAYER 1 ----
   return (
     <>
@@ -359,305 +367,150 @@ function App() {
         )}
       </nav>
 
-      {/* 1. HERO */}
+      {/* 1. HERO — the chorus */}
       <section className="hero">
-        <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
+        <div className="hero-slideshow">
+          {heroImages.map((img, i) => (
+            <img key={i} src={img} alt="" className={`hero-slide ${i === heroSlide ? 'active' : ''}`} />
+          ))}
+        </div>
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Milestone watches you
-            <span className="hero-accent"> actually want to wear.</span>
+            A Gebauer is just
+            <span className="hero-accent"> the beginning.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">Real wood dials. Made in Japan. 300 ever made. First drop December 2026.</p>
-          <div className="hero-cta fade-in-delay-1">
-            <button className="hero-join-btn" onClick={() => setShowSignup(true)}>Get In</button>
-            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
-            <p className="hero-proof">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
-          </div>
+          <p className="hero-sub fade-in-delay-1">The watch that becomes part of you.</p>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THE STORY (light) */}
-      <Reveal className="founder" id="story">
-        <div className="founder-inner">
-          <h2 className="founder-headline">
-            Class rings end up in drawers. Yearbooks collect dust.
-            <em> We wanted something better.</em>
-          </h2>
-          <p className="founder-text">
-            Bought my first real watch in Milan at 13. Spent a year studying movements and materials. Realized nobody was making milestone gifts that young men actually wanted to wear. Found a manufacturer in Japan. Now 300 watches are on the way. This is just the first chapter.
-          </p>
-          <p className="founder-signoff">— Liam, 14</p>
-          <div className="founder-stats">
-            <div className="founder-stat"><span className="founder-stat-num">2hrs/day</span><span className="founder-stat-label">after school, every day</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">60+</span><span className="founder-stat-label">teens interviewed</span></div>
-            <div className="founder-stat"><span className="founder-stat-num">Japan</span><span className="founder-stat-label">manufacturing partner</span></div>
+      {/* 2. THE MOMENT */}
+      <Reveal className="story-beat story-dark" id="story">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">Every young man hits a moment that changes everything.</h2>
+          <p className="story-beat-text">Graduation. Sixteenth birthday. The day something clicks and you realize you're becoming someone new. Those moments deserve more than a memory that fades.</p>
+        </div>
+      </Reveal>
+
+      {/* 3. THE PROBLEM */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">But nothing marks it.</h2>
+          <p className="story-beat-text">No object that lasts. No proof it happened. No anchor for the moment you started becoming who you are.</p>
+        </div>
+      </Reveal>
+
+      {/* 4. THE ANSWER — product reveal */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-product">
+          <div className="story-product-img">
+            <img src={padaukAged} alt="Gebauer watch with aged Padauk wood dial" />
+          </div>
+          <div className="story-product-text">
+            <h2 className="story-beat-headline">A watch with a real wood dial that ages with whoever wears it.</h2>
+            <p className="story-beat-text">African Padauk that shifts from fiery orange to deep burgundy over years. Scratches that map your memories. Grain that deepens with time. The watch you put on today won't look the same in five years. Neither will you.</p>
+            <p className="story-beat-accent">No two have ever been the same.</p>
           </div>
         </div>
       </Reveal>
 
-      {/* MANIFESTO */}
-      <Reveal className="manifesto">
-        <div className="manifesto-inner">
-          <div className="manifesto-text">
-            <h2 className="manifesto-headline">The Gebauer Manifesto.</h2>
-            <div className="manifesto-points">
-              <div className="manifesto-point">
-                <h3>The beauty is already in the wood.</h3>
-                <p>We don't add to it, cover it, or customize it. The grain is the design. Nature did the work.</p>
+      {/* 5. THE ORIGIN */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">It started with a watch shop in Milan and a question nobody was asking.</h2>
+          <p className="story-beat-text">A 14 year old bought his first real watch, came home, and spent a year learning how they're made. He noticed something nobody else did: there was no meaningful object for the moments that shape who a young man becomes. So he found a manufacturer in Japan and started building the answer.</p>
+          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
+        </div>
+      </Reveal>
+
+      {/* 6. THE PROOF — three woods */}
+      <Reveal className="story-beat story-dark" id="watches">
+        <div className="story-beat-inner" style={{maxWidth: '100%'}}>
+          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 48}}>Three woods. Each one tells a different story.</h2>
+          <div className="wood-grid">
+            {[
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Rarer than gold in ancient Egypt. Nearly black. Razor-thin grain. Permanent.' },
+              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Sacred Japanese wood. Built temples for a thousand years. Soft golden grain.' },
+            ].map(w => (
+              <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
+                <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
+                <h3>{w.name}</h3>
+                <p>{w.desc}</p>
+                {!woodSubmitted && (
+                  <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
+                    {woodVote === w.id ? 'Your pick' : 'This one'}
+                  </button>
+                )}
               </div>
-              <div className="manifesto-point">
-                <h3>It's meant to be worn, not preserved.</h3>
-                <p>Scratches, patina, darkening grain. That's not damage. That's your story showing up.</p>
-              </div>
-              <div className="manifesto-point">
-                <h3>Crafted in Japan by hand.</h3>
-                <p>Not assembled. Crafted. By people who've been doing this for decades.</p>
-              </div>
-              <div className="manifesto-point">
-                <h3>Every one is different.</h3>
-                <p>Not because we engineered variation. Because wood is wood. No two pieces have ever looked the same.</p>
-              </div>
-            </div>
+            ))}
           </div>
-          <div className="manifesto-img">
-            <img src={padaukAged} alt="Gebauer Padauk watch, worn and aged" />
+          {!woodSubmitted && woodVote && (
+            <button className="wood-submit-btn" onClick={handleWoodSubmit}>Lock In My Pick</button>
+          )}
+          {woodSubmitted && (
+            <div className="wood-vote-confirmed">
+              {woodVote === 'padauk' && <p>Padauk. A watch that tells a different story every year. Respect.</p>}
+              {woodVote === 'ebony' && <p>Ebony. The rarest one. You know exactly what you want.</p>}
+              {woodVote === 'hinoki' && <p>Hinoki. Sacred Japanese wood on your wrist. That's a quiet flex nobody else would think of.</p>}
+              <span className="wood-vote-check">Vote recorded</span>
+            </div>
+          )}
+        </div>
+      </Reveal>
+
+      {/* 7. THE RAVEN */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <img src={ravenMinimal} alt="Raven caseback" style={{width: 100, opacity: 0.6, marginBottom: 24}} />
+          <h2 className="story-beat-headline story-beat-italic">A Gebauer never forgets.</h2>
+          <p className="story-beat-text">A raven engraved on every caseback. Huginn, from Norse mythology, who fought forgetfulness. Only the wearer knows it's there.</p>
+        </div>
+      </Reveal>
+
+      {/* 8. THE MANIFESTO */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">The Gebauer Manifesto.</h2>
+          <div className="manifesto-list">
+            <div className="manifesto-item">
+              <h3>The beauty is already in the wood.</h3>
+              <p>We don't add to it, cover it, or customize it. The grain is the design. Nature did the work.</p>
+            </div>
+            <div className="manifesto-item">
+              <h3>It's meant to be worn, not preserved.</h3>
+              <p>Scratches, patina, darkening grain. That's not damage. That's your story showing up.</p>
+            </div>
+            <div className="manifesto-item">
+              <h3>Crafted in Japan by hand.</h3>
+              <p>Not assembled. Crafted. By people who've been doing this for decades.</p>
+            </div>
+            <div className="manifesto-item">
+              <h3>Every one is different.</h3>
+              <p>Not because we engineered variation. Because wood is wood. No two pieces have ever looked the same.</p>
+            </div>
           </div>
         </div>
       </Reveal>
 
-      {/* 3. THE WATCHES + VOTE (cream) */}
-      <Reveal className="wood" id="watches">
-        <h2 className="wood-headline">Three woods. <em>Which one's yours?</em></h2>
-        <div className="wood-grid">
-          {[
-            { id: 'padauk', img: watchPadauk, name: 'African Padauk', tagline: 'Ages in real time.', fact: 'Starts orange. Darkens to burgundy over years. The only watch that changes color with time.' },
-            { id: 'ebony', img: watchEbony, name: 'Black Ebony', tagline: 'Rarer than gold. Once.', fact: 'Nearly black. Razor-thin grain. Rarer than gold in ancient Egypt. The flex is quiet.' },
-            { id: 'hinoki', img: watchHinoki, name: 'Hinoki', tagline: 'Sacred wood.', fact: 'Built Japanese temples for 1,000+ years. Forests protected by law. Soft golden grain.' },
-          ].map(w => (
-            <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
-              <div className="wood-img-wrap"><img src={w.img} alt={w.name} /></div>
-              <h3>{w.name}</h3>
-              <p className="wood-tagline">{w.tagline}</p>
-              <p className="wood-fact">{w.fact}</p>
-              <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
-                {woodVote === w.id ? 'Your pick' : 'This one'}
-              </button>
-            </div>
-          ))}
-        </div>
-        {!woodSubmitted && woodVote && (
-          <button className="wood-submit-btn" onClick={handleWoodSubmit}>Submit My Pick</button>
-        )}
-        {woodSubmitted && (
-          <div className="wood-vote-confirmed">
-            {woodVote === 'padauk' && <p>Padauk. You want a watch that tells a different story every year. Respect.</p>}
-            {woodVote === 'ebony' && <p>Ebony. The rarest one. You know exactly what you want.</p>}
-            {woodVote === 'hinoki' && <p>Hinoki. Sacred Japanese wood on your wrist. That's a quiet flex nobody else would think of.</p>}
-            <span className="wood-vote-check">Vote recorded</span>
-          </div>
-        )}
-      </Reveal>
-
-      {/* 4. WHAT YOU GET (dark) */}
-      <Reveal className="perks" id="perks">
-        <div className="perks-inner">
-          <h2 className="perks-headline">What you get for being early.</h2>
-          <div className="perks-grid">
-            <div className="perks-item">
-              <span className="perks-icon">&#9670;</span>
-              <h3>Behind the Scenes</h3>
-              <p>Factory footage, design decisions, wood sourcing. Before anyone else.</p>
-            </div>
-            <div className="perks-item">
-              <span className="perks-icon">&#9670;</span>
-              <h3>First Look at Samples</h3>
-              <p>When they arrive this summer, you see them first.</p>
-            </div>
-            <div className="perks-item">
-              <span className="perks-icon">&#9670;</span>
-              <h3>Pick Your Number</h3>
-              <p>Top referrers choose their edition. 001, 042, 300.</p>
-            </div>
-            <div className="perks-item">
-              <span className="perks-icon">&#9670;</span>
-              <h3>Founders Wall</h3>
-              <p>Your name. Permanent. Before anyone knew.</p>
-            </div>
-          </div>
-          <button className="perks-cta" onClick={() => setShowSignup(true)}>Get In</button>
-        </div>
-      </Reveal>
-
-      {/* COMMUNITY VOTE — auto-rotating weekly polls */}
-      {(() => {
-        const POLLS = [
-          {
-            id: 'raven-caseback',
-            question: "Which raven belongs on the caseback?",
-            context: "Every Gebauer has a raven engraved on the back. Huginn, from Norse mythology. We're deciding the style.",
-            options: [
-              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable.', img: ravenSimple },
-              { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle.', img: ravenMinimal },
-            ],
-          },
-          {
-            id: 'clasp-style',
-            question: "Butterfly clasp or deployant?",
-            context: "The clasp is what you touch every time you put the watch on. We're choosing between two styles.",
-            options: [
-              { id: 'butterfly', label: 'Butterfly', desc: 'Folds from both sides. Clean when closed.', img: claspButterfly },
-              { id: 'deployant', label: 'Deployant', desc: 'Single fold with push button release.', img: claspDeployed },
-            ],
-          },
-          {
-            id: 'box-design',
-            question: "Which box do you want to open?",
-            context: "The unboxing is the first impression. Two directions we're considering.",
-            options: [
-              { id: 'debossed', label: 'Debossed', desc: 'Pressed logo, no color. Understated.', img: boxDebossed },
-              { id: 'gold-logo', label: 'Gold Logo', desc: 'Gold G on green. Bolder presence.', img: boxGoldLogo },
-            ],
-          },
-          {
-            id: 'interior-material',
-            question: "Suede or microfiber inside the box?",
-            context: "The interior is what touches the watch. Two materials, very different feel.",
-            options: [
-              { id: 'suede', label: 'Suede', desc: 'Warm, textured, classic luxury feel.', img: interiorSuede },
-              { id: 'microfiber', label: 'Microfiber', desc: 'Smooth, modern, protects the crystal.', img: interiorMicrofiber },
-            ],
-          },
-        ]
-
-        // Auto-rotate: pick poll based on the week number
-        const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
-        const poll = POLLS[weekNum % POLLS.length]
-        const voteKey = `gebauer_vote_${poll.id}`
-        const resultsKey = `gebauer_results_${poll.id}`
-        const voted = localStorage.getItem(voteKey) || ''
-        const results = JSON.parse(localStorage.getItem(resultsKey) || '{}')
-        const total = Object.values(results).reduce((a, b) => a + b, 0)
-
-        return (
-          <Reveal className="vote-section" id="vote">
-            <div className="vote-section-inner">
-              <p className="vote-section-label">Design Input</p>
-              <h2 className="vote-section-title">{poll.question}</h2>
-              <p className="vote-section-context">{poll.context}</p>
-              <div className="vote-section-options">
-                {poll.options.map(opt => {
-                  const isSelected = voted === opt.id
-                  return (
-                    <button
-                      key={opt.id}
-                      className={`vote-section-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
-                      onClick={() => {
-                        if (voted) return
-                        localStorage.setItem(voteKey, opt.id)
-                        window.location.hash = 'vote'
-                        window.location.reload()
-                      }}
-                      disabled={!!voted}
-                    >
-                      <div className="vote-section-img-wrap">
-                        <img src={opt.img} alt={opt.label} className="vote-section-img" />
-                      </div>
-                      <div>
-                        <h3>{opt.label}</h3>
-                        <p>{opt.desc}</p>
-                      </div>
-                      {voted && isSelected && (
-                        <p className="vote-section-picked">Your pick</p>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-              {voted && <p className="vote-section-thanks">Your vote is in. New poll drops next week.</p>}
-              {!voted && <p className="vote-section-hint">Your vote shapes the final design. Pick one.</p>}
-            </div>
-          </Reveal>
-        )
-      })()}
-
-      {/* 5. YOUR PATH (light) — compact Igdrasil, personal focus */}
-      <Reveal className="path-section" id="path">
-        <div className="path-inner">
-          {countdown && <p className="path-countdown">{countdown} until the first drop</p>}
-          <h2 className="path-headline">Your path. <em>The Raven Path.</em></h2>
-          <p className="path-sub">Refer friends. Climb the ranks. Each one unlocks something real.</p>
-
-          <div className="mini-tree">
-            <svg className="mini-tree-svg" viewBox="0 0 160 520" fill="none" preserveAspectRatio="xMidYMid meet">
-              <path d="M80 520 Q65 510 50 515 Q35 520 20 518" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M80 520 Q95 510 110 515 Q125 520 140 518" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M80 520 Q78 430 80 340 Q82 250 80 160 Q78 80 80 10" stroke="url(#mt-grad)" strokeWidth="3" strokeLinecap="round" />
-              <path d="M80 455 Q55 450 40 447" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M80 390 Q105 385 125 382" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.2" />
-              <path d="M80 325 Q50 318 38 313" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
-              <path d="M80 260 Q110 253 128 248" stroke="var(--purple-mid)" strokeWidth="1.5" opacity="0.15" />
-              <path d="M80 195 Q48 186 35 180" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.12" />
-              <path d="M80 130 Q112 123 128 118" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.12" />
-              <path d="M80 70 Q50 62 40 58" stroke="var(--purple-mid)" strokeWidth="1" opacity="0.1" />
-              <path d="M80 10 Q65 0 50 4" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
-              <path d="M80 10 Q95 0 110 4" stroke="var(--gold-muted)" strokeWidth="1" opacity="0.15" />
-              <defs>
-                <linearGradient id="mt-grad" x1="80" y1="520" x2="80" y2="10" gradientUnits="userSpaceOnUse">
-                  <stop offset="0%" stopColor="var(--gold)" stopOpacity="0.4" />
-                  <stop offset="50%" stopColor="var(--purple-glow)" stopOpacity="0.2" />
-                  <stop offset="100%" stopColor="var(--purple-mid)" stopOpacity="0.1" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <div className="mini-tree-nodes">
-              {[...RAVEN_PATH].reverse().map((rank, i) => {
-                const oi = RAVEN_PATH.length - 1 - i
-                const isReached = oi <= currentRankIndex
-                const isActive = oi === currentRankIndex
-                const side = oi % 2 === 0 ? 'left' : 'right'
-                return (
-                  <div key={rank.name} className={`mt-node ${isReached ? 'reached' : 'locked'} ${isActive ? 'active' : ''} ${side}`}>
-                    <div className="mt-orb"><span>{rank.symbol}</span>{isActive && <div className="mt-pulse" />}</div>
-                    <div className="mt-info">
-                      <h3>{rank.name}</h3>
-                      <span className="mt-refs">{rank.referrals === 0 ? 'Start' : rank.referrals}</span>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-
-          <p className="path-deadline">Leaderboard closes June 30. Watch 001 goes to #1.</p>
-
-          <div className="path-actions">
-            <button className="path-cta" onClick={() => setShowSignup(true)}>Get In</button>
-            <button className="path-stats-btn" onClick={() => setShowStats(true)}>Check My Stats</button>
-          </div>
-          <button className="share-btn" onClick={() => {
-            if (navigator.share) {
-              navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Made in Japan. Built by a 14 year old. The first drop is December 2026.', url: 'https://gebauerwatches.com' })
-            } else {
-              navigator.clipboard.writeText('https://gebauerwatches.com')
-              const btn = document.querySelector('.share-btn')
-              btn.textContent = 'Link Copied'
-              setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
-            }
-          }}>Share Gebauer</button>
+      {/* 9. THE INVITATION */}
+      <Reveal className="story-beat story-cream" style={{textAlign: 'center'}}>
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
+          <p className="story-beat-text">They believed before they could see it. Before they could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
+          <button className="story-cta" onClick={() => setShowSignup(true)}>Get In</button>
         </div>
       </Reveal>
 
       {/* FOOTER */}
       <footer className="site-footer">
-        <RavenIcon className="footer-raven" size={24} />
         <img src={logo} alt="Gebauer" className="footer-logo" />
-        <p className="footer-raven-line">The raven is on the back. You see it when it's on your wrist.</p>
-        <p className="footer-tagline">Built by a 14 year old. Made in Japan. First drop December 2026.</p>
+        <p className="footer-tagline">Crafted in Japan. Built to age with you.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
         <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
       </footer>
+
 
       {/* SIGNUP MODAL */}
       {showSignup && (
