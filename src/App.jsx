@@ -388,7 +388,8 @@ function App() {
       </section>
 
       {/* 2. THE STORY — Milan */}
-      <Reveal className="story-beat story-milan" id="story" style={{backgroundImage: `url(${milanBg})`}}>
+      <Reveal className="story-beat story-milan" id="story">
+        <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I walked into a watch shop in Milan at 13 and spent 310 euros on a Seiko I couldn't afford.</h2>
