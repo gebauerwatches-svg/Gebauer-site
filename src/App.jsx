@@ -13,6 +13,7 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 import watchHinoki from './assets/image0.jpeg'
 import watchPadauk from './assets/image1-1.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
+import milanBg from './assets/milan.jpeg'
 import './App.css'
 
 const RAVEN_PATH = [
@@ -387,7 +388,7 @@ function App() {
       </section>
 
       {/* 2. THE STORY — Milan */}
-      <Reveal className="story-beat story-milan" id="story">
+      <Reveal className="story-beat story-milan" id="story" style={{backgroundImage: `url(${milanBg})`}}>
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I walked into a watch shop in Milan at 13 and spent 310 euros on a Seiko I couldn't afford.</h2>
