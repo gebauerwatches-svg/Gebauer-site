@@ -20,7 +20,7 @@ const posts = [
     excerpt: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.`,
     content: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.
 
-Hans Wilsdorf figured this out in 1908. Back then, wristwatches were toys. Pocket watches were serious business. But Wilsdorf saw something different. He thought wristwatches could actually work properly, not just look pretty on someone's wrist.
+Hans Wilsdorf figured this out in 1905. Back then, wristwatches were toys. Pocket watches were serious business. But Wilsdorf saw something different. He thought wristwatches could actually work properly, not just look pretty on someone's wrist.
 
 Then in 1926, Wilsdorf launched the Oyster. First waterproof wristwatch with a completely sealed case. He didn't just make another watch. He solved a problem most people didn't even know they had.
 
@@ -28,21 +28,19 @@ This pattern shows up everywhere. Yvon Chouinard started Patagonia because he wa
 
 The best brands don't chase trends. They fill gaps.
 
-At Gebauer, we started with our own gap. The watch market felt split between cheap fashion pieces and luxury status symbols. Where were the watches for people who cared about quality but didn't need a gold case to prove it? Where were the pieces built to last decades without costing a down payment on a house?
+At Gebauer, we started with our own gap. The watch market felt split between cheap fashion pieces and luxury status symbols. Where were the watches for people who actually cared about quality but didn't need to flash a logo worth more than their car?
 
-We found our answer in German manufacturing principles. Precision without pretense. Function over flash. Every component serves a purpose. Nothing added just for show.
+We found ourselves in watch shops looking at $50 pieces that would break in six months, then at $5,000 pieces that screamed "look at me" from across the room. Nothing in between made sense. Good materials, solid movements, clean designs that wouldn't embarrass you in five years. That middle ground barely existed.
 
-Our first collection took two years to develop. We tested movements until we found ones that could handle daily wear for decades. We sourced steel that wouldn't scratch at the first bump against a doorframe. We designed cases that felt substantial without weighing down your wrist.
+So we built it. Started with movements we could trust. Swiss quartz that keeps time without drama. Cases machined from solid steel, not plated mystery metal. Sapphire crystal because plastic scratches if you look at it wrong. Details that matter when you're wearing something every day.
 
-The gap we filled wasn't technical. It was philosophical. We made watches for people who understand the difference between price and value. Who appreciate craftsmanship but don't need everyone else to notice their watch from across the room.
+The logo stays small. The marketing stays honest. We're not trying to convince anyone they need our watches to feel successful. We just think good watches shouldn't require trust funds.
 
-Finding your gap requires honest observation. What frustrates you about existing options? What do you wish existed but doesn't? What problem do people accept because they think it's just how things are?
+Most people don't wake up thinking about watch gaps in the market. They just know something feels off when they're shopping. Too cheap or too expensive. Too flashy or too boring. Too many compromises.
 
-The answers aren't always obvious. Wilsdorf's waterproof watch seemed unnecessary until people realized they wanted to wear their timepieces while washing dishes or caught in the rain. Chouinard's climbing gear looked overengineered until climbers understood how much better equipment could save their lives.
+The missing piece isn't always obvious until someone points it out. Wilsdorf saw wristwatches that could actually work. Chouinard saw climbing gear that wouldn't fail. Dyson saw vacuums that kept sucking.
 
-Sometimes the missing piece isn't a product. It's an approach. A different way of thinking about what people actually need versus what they think they want.
-
-Great brands start with gaps. They end with solutions people didn't know they were waiting for.`
+We saw watches that made sense. Not revolutionary. Just right.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
