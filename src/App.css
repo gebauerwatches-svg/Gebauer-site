@@ -143,7 +143,8 @@
   gap: 56px; align-items: center;
 }
 @media (max-width: 768px) { .story-product { grid-template-columns: 1fr; gap: 36px; max-width: 480px; } }
-.story-product-img img { width: 100%; height: auto; display: block; }
+.story-product-img { overflow: hidden; }
+.story-product-img img { width: 115%; height: auto; display: block; margin: -5% -7.5%; }
 
 /* Manifesto list */
 .manifesto-list { display: flex; flex-direction: column; gap: 28px; margin-top: 32px; }
@@ -629,7 +630,7 @@
 .wood-card { background: var(--bg-card); overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; border: 1px solid rgba(240, 236, 229, 0.06); text-align: center; }
 .wood-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3); }
 .wood-card-img { aspect-ratio: 1; overflow: hidden; background: var(--bg-deep); }
-.wood-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; }
+.wood-card-img img { width: 115%; height: 115%; object-fit: cover; display: block; transition: transform 0.6s; margin: -7.5%; }
 .wood-card:hover .wood-card-img img { transform: scale(1.05); }
 .wood-card h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 22px; color: var(--text-primary); padding: 20px 20px 6px; }
 .wood-card p { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 300; line-height: 1.6; color: var(--text-secondary); opacity: 0.6; padding: 0 20px 20px; }
