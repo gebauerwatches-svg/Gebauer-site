@@ -79,18 +79,41 @@ function App() {
   const [leaderboard, setLeaderboard] = useState([])
   const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
 
-  // Wood voting (localStorage only, fun interaction)
+  // Voting system — saves to Supabase via API
   const [woodVote, setWoodVote] = useState(() => localStorage.getItem('gebauer_wood_vote') || '')
   const [woodSubmitted, setWoodSubmitted] = useState(() => localStorage.getItem('gebauer_wood_submitted') === 'true')
+  const [woodResults, setWoodResults] = useState({})
+  const [pollResults, setPollResults] = useState({})
+
+  // Generate a voter ID for preventing double votes
+  const getVoterId = () => {
+    let id = localStorage.getItem('gebauer_voter_id')
+    if (!id) { id = Math.random().toString(36).slice(2); localStorage.setItem('gebauer_voter_id', id) }
+    return id
+  }
+
+  // Fetch wood vote results on mount
+  useEffect(() => {
+    fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
+  }, [])
+
   const handleWoodVote = (wood) => {
     if (woodSubmitted) return
     setWoodVote(wood === woodVote ? '' : wood)
   }
-  const handleWoodSubmit = () => {
+  const handleWoodSubmit = async () => {
     if (!woodVote) return
     localStorage.setItem('gebauer_wood_vote', woodVote)
     localStorage.setItem('gebauer_wood_submitted', 'true')
     setWoodSubmitted(true)
+    try {
+      const resp = await fetch('/api/vote', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ poll_id: 'wood', option: woodVote, voter_id: getVoterId() }),
+      })
+      const data = await resp.json()
+      if (data.results) setWoodResults(data.results)
+    } catch {}
   }
 
   // Countdown to December 2026 drop
@@ -437,14 +460,25 @@ function App() {
           {!woodSubmitted && woodVote && (
             <button className="wood-submit-btn" onClick={handleWoodSubmit}>Lock In My Pick</button>
           )}
-          {woodSubmitted && (
-            <div className="wood-vote-confirmed">
-              {woodVote === 'padauk' && <p>Padauk. A watch that tells a different story every year. Respect.</p>}
-              {woodVote === 'ebony' && <p>Ebony. The rarest one. You know exactly what you want.</p>}
-              {woodVote === 'hinoki' && <p>Hinoki. Sacred Japanese wood on your wrist. That's a quiet flex nobody else would think of.</p>}
-              <span className="wood-vote-check">Vote recorded</span>
-            </div>
-          )}
+          {woodSubmitted && (() => {
+            const total = Object.values(woodResults).reduce((a, b) => a + b, 0) || 1
+            return (
+              <div className="wood-results">
+                {['padauk', 'ebony', 'hinoki'].map(w => {
+                  const count = woodResults[w] || 0
+                  const pct = Math.round((count / total) * 100)
+                  return (
+                    <div key={w} className={`wood-result-bar ${woodVote === w ? 'voted' : ''}`}>
+                      <span className="wood-result-name">{w === 'padauk' ? 'Padauk' : w === 'ebony' ? 'Ebony' : 'Hinoki'}</span>
+                      <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                      <span className="wood-result-pct">{pct}%</span>
+                    </div>
+                  )
+                })}
+                <p className="wood-result-total">{total} vote{total !== 1 ? 's' : ''}</p>
+              </div>
+            )
+          })()}
         </div>
       </Reveal>
 
@@ -528,6 +562,29 @@ function App() {
         const voteKey = `gebauer_vote_${poll.id}`
         const voted = localStorage.getItem(voteKey) || ''
 
+        // Fetch poll results on mount
+        const [localPollResults, setLocalPollResults] = useState({})
+        useEffect(() => {
+          fetch(`/api/vote?poll=${poll.id}`).then(r => r.json()).then(d => { if (d.results) setLocalPollResults(d.results) }).catch(() => {})
+        }, [poll.id])
+
+        const castDesignVote = async (optId) => {
+          if (voted) return
+          localStorage.setItem(voteKey, optId)
+          try {
+            const resp = await fetch('/api/vote', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ poll_id: poll.id, option: optId, voter_id: getVoterId() }),
+            })
+            const data = await resp.json()
+            if (data.results) setLocalPollResults(data.results)
+          } catch {}
+          window.location.hash = 'vote'
+          window.location.reload()
+        }
+
+        const pollTotal = Object.values(localPollResults).reduce((a, b) => a + b, 0) || 0
+
         return (
           <Reveal className="story-beat story-cream" id="vote">
             <div className="story-beat-inner" style={{maxWidth: 520}}>
@@ -537,16 +594,13 @@ function App() {
               <div className="vote-options">
                 {poll.options.map(opt => {
                   const isSelected = voted === opt.id
+                  const optCount = localPollResults[opt.id] || 0
+                  const optPct = pollTotal > 0 ? Math.round((optCount / pollTotal) * 100) : 0
                   return (
                     <button
                       key={opt.id}
                       className={`vote-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
-                      onClick={() => {
-                        if (voted) return
-                        localStorage.setItem(voteKey, opt.id)
-                        window.location.hash = 'vote'
-                        window.location.reload()
-                      }}
+                      onClick={() => castDesignVote(opt.id)}
                       disabled={!!voted}
                     >
                       <div className="vote-opt-img">
@@ -556,14 +610,17 @@ function App() {
                         <h3>{opt.label}</h3>
                         <p>{opt.desc}</p>
                       </div>
-                      {voted && isSelected && (
-                        <p className="vote-picked">Your pick</p>
+                      {voted && (
+                        <div className="vote-result-bar">
+                          <div className="vote-result-fill" style={{width: `${optPct}%`}} />
+                          <span>{optPct}%</span>
+                        </div>
                       )}
                     </button>
                   )
                 })}
               </div>
-              {voted && <p className="vote-thanks">Your vote is in. New poll drops next week.</p>}
+              {voted && <p className="vote-thanks">Your vote is in. {pollTotal} vote{pollTotal !== 1 ? 's' : ''} so far. New poll drops next week.</p>}
               {!voted && <p className="vote-hint">Your vote shapes the final design.</p>}
             </div>
           </Reveal>
