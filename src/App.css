@@ -166,6 +166,27 @@
 }
 .story-cta:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196, 149, 42, 0.25); }
 
+/* Design polls */
+.vote-label { font-family: 'Inter', sans-serif; font-size: 10px; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-muted); margin-bottom: 12px; }
+.vote-options { display: flex; flex-direction: column; gap: 12px; margin: 28px 0 20px; }
+.vote-opt {
+  display: flex; flex-direction: column; gap: 10px; padding: 20px;
+  background: var(--white); border: 1px solid rgba(26, 23, 20, 0.06);
+  cursor: pointer; width: 100%; text-align: left; font-family: inherit;
+  transition: border-color 0.3s, transform 0.2s;
+}
+.vote-opt:hover:not(:disabled) { border-color: var(--gold-muted); transform: translateY(-2px); }
+.vote-opt:disabled { cursor: default; }
+.vote-opt:disabled:hover { transform: none; }
+.vote-opt.selected { border-color: var(--gold); background: rgba(196, 149, 42, 0.04); }
+.vote-opt-img { width: 100%; max-height: 200px; overflow: hidden; display: flex; justify-content: center; align-items: center; background: var(--bg-cream); margin-bottom: 8px; }
+.vote-opt-img img { width: 100%; max-height: 200px; object-fit: contain; padding: 12px; }
+.vote-opt h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 18px; color: var(--text-dark); margin-bottom: 2px; }
+.vote-opt p { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 13px; color: var(--text-warm); }
+.vote-picked { font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-top: 4px; }
+.vote-thanks { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold-muted); text-align: center; }
+.vote-hint { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--text-muted); text-align: center; font-style: italic; }
+
 .invitation-buttons { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .story-share {
   font-family: 'Inter', sans-serif; font-weight: 400;

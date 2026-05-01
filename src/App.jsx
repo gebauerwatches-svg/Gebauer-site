@@ -482,7 +482,95 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 9. THE INVITATION */}
+      {/* 9. DESIGN INPUT — help us decide */}
+      {(() => {
+        const POLLS = [
+          {
+            id: 'raven-caseback',
+            question: "Which raven belongs on the caseback?",
+            context: "Every Gebauer has a raven engraved on the back. We're deciding the style.",
+            options: [
+              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable.', img: ravenSimple },
+              { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle.', img: ravenMinimal },
+            ],
+          },
+          {
+            id: 'clasp-style',
+            question: "Butterfly clasp or deployant?",
+            context: "The clasp is what you touch every time you put the watch on.",
+            options: [
+              { id: 'butterfly', label: 'Butterfly', desc: 'Folds from both sides. Clean when closed.', img: claspButterfly },
+              { id: 'deployant', label: 'Deployant', desc: 'Single fold with push button release.', img: claspDeployed },
+            ],
+          },
+          {
+            id: 'box-design',
+            question: "Which box do you want to open?",
+            context: "The unboxing is the first impression.",
+            options: [
+              { id: 'debossed', label: 'Debossed', desc: 'Pressed logo, no color. Understated.', img: boxDebossed },
+              { id: 'gold-logo', label: 'Gold Logo', desc: 'Gold G on green. Bolder.', img: boxGoldLogo },
+            ],
+          },
+          {
+            id: 'interior-material',
+            question: "Suede or microfiber inside the box?",
+            context: "The interior is what touches the watch.",
+            options: [
+              { id: 'suede', label: 'Suede', desc: 'Warm, textured, classic luxury feel.', img: interiorSuede },
+              { id: 'microfiber', label: 'Microfiber', desc: 'Smooth, modern, protects the crystal.', img: interiorMicrofiber },
+            ],
+          },
+        ]
+
+        const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
+        const poll = POLLS[weekNum % POLLS.length]
+        const voteKey = `gebauer_vote_${poll.id}`
+        const voted = localStorage.getItem(voteKey) || ''
+
+        return (
+          <Reveal className="story-beat story-cream" id="vote">
+            <div className="story-beat-inner" style={{maxWidth: 520}}>
+              <p className="vote-label">Help Us Decide</p>
+              <h2 className="story-beat-headline">{poll.question}</h2>
+              <p className="story-beat-text">{poll.context}</p>
+              <div className="vote-options">
+                {poll.options.map(opt => {
+                  const isSelected = voted === opt.id
+                  return (
+                    <button
+                      key={opt.id}
+                      className={`vote-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
+                      onClick={() => {
+                        if (voted) return
+                        localStorage.setItem(voteKey, opt.id)
+                        window.location.hash = 'vote'
+                        window.location.reload()
+                      }}
+                      disabled={!!voted}
+                    >
+                      <div className="vote-opt-img">
+                        <img src={opt.img} alt={opt.label} />
+                      </div>
+                      <div>
+                        <h3>{opt.label}</h3>
+                        <p>{opt.desc}</p>
+                      </div>
+                      {voted && isSelected && (
+                        <p className="vote-picked">Your pick</p>
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+              {voted && <p className="vote-thanks">Your vote is in. New poll drops next week.</p>}
+              {!voted && <p className="vote-hint">Your vote shapes the final design.</p>}
+            </div>
+          </Reveal>
+        )
+      })()}
+
+      {/* 10. THE INVITATION */}
       <Reveal className="story-beat story-cream story-center">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
