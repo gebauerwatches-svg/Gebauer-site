@@ -99,6 +99,12 @@ function App() {
 
   const handleWoodVote = (wood) => {
     if (woodSubmitted) return
+    // Must be signed up to vote
+    const savedEmail = localStorage.getItem('gebauer_email')
+    if (!savedEmail) {
+      setShowSignup(true)
+      return
+    }
     setWoodVote(wood === woodVote ? '' : wood)
   }
   const handleWoodSubmit = async () => {
@@ -570,6 +576,11 @@ function App() {
 
         const castDesignVote = async (optId) => {
           if (voted) return
+          const savedEmail = localStorage.getItem('gebauer_email')
+          if (!savedEmail) {
+            setShowSignup(true)
+            return
+          }
           localStorage.setItem(voteKey, optId)
           try {
             const resp = await fetch('/api/vote', {
