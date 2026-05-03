@@ -1,9 +1,35 @@
 /**
  * POST /api/vote — cast a vote
  * GET /api/vote?poll=wood — get results for a poll
+ *
+ * Uses SUPABASE_VOTES_URL and SUPABASE_VOTES_KEY (separate project for votes)
  */
 
-import { json, supabaseQuery } from './_shared.js'
+import { json } from './_shared.js'
+
+async function votesQuery(env, path, options = {}) {
+  const url = env.SUPABASE_VOTES_URL || env.SUPABASE_URL
+  const key = env.SUPABASE_VOTES_KEY || env.SUPABASE_KEY
+
+  const headers = {
+    'apikey': key,
+    'Authorization': `Bearer ${key}`,
+    'Content-Type': 'application/json',
+  }
+
+  if (options.method === 'POST') {
+    headers['Prefer'] = 'return=representation'
+  }
+
+  const resp = await fetch(`${url}/rest/v1/${path}`, {
+    method: options.method || 'GET',
+    headers,
+    body: options.body ? JSON.stringify(options.body) : undefined,
+  })
+
+  const data = await resp.json().catch(() => null)
+  return { status: resp.status, data }
+}
 
 export async function onRequestGet(context) {
   const { env } = context
@@ -13,7 +39,7 @@ export async function onRequestGet(context) {
   if (!poll) return json({ error: 'Missing poll parameter' }, 400)
 
   try {
-    const resp = await supabaseQuery(env,
+    const resp = await votesQuery(env,
       `votes?select=option&poll_id=eq.${encodeURIComponent(poll)}`
     )
 
@@ -21,7 +47,6 @@ export async function onRequestGet(context) {
       return json({ results: {}, total: 0 })
     }
 
-    // Count votes per option
     const counts = {}
     for (const row of resp.data) {
       counts[row.option] = (counts[row.option] || 0) + 1
@@ -43,12 +68,11 @@ export async function onRequestPost(context) {
 
   if (!poll_id || !option) return json({ error: 'Missing poll_id or option' }, 400)
 
-  // Use voter_id (from localStorage) to prevent double voting
   const voterId = voter_id || 'anonymous'
 
   try {
     // Check if already voted
-    const existing = await supabaseQuery(env,
+    const existing = await votesQuery(env,
       `votes?poll_id=eq.${encodeURIComponent(poll_id)}&voter_id=eq.${encodeURIComponent(voterId)}&select=id`
     )
 
@@ -57,17 +81,13 @@ export async function onRequestPost(context) {
     }
 
     // Cast vote
-    await supabaseQuery(env, 'votes', {
+    await votesQuery(env, 'votes', {
       method: 'POST',
-      body: {
-        poll_id: poll_id,
-        option: option,
-        voter_id: voterId,
-      },
+      body: { poll_id, option, voter_id: voterId },
     })
 
     // Return updated results
-    const resp = await supabaseQuery(env,
+    const resp = await votesQuery(env,
       `votes?select=option&poll_id=eq.${encodeURIComponent(poll_id)}`
     )
 
