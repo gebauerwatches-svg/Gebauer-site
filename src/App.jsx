@@ -367,9 +367,18 @@ function App() {
   // ---- LAYER 1 ----
   return (
     <>
-      {/* NAV */}
+      {/* NAV — always visible */}
       <nav className="site-nav">
         <a href="/" className="nav-logo"><img src={logo} alt="Gebauer" /></a>
+        <div className="nav-links">
+          <a href="#story" className="nav-link">Story</a>
+          <a href="#watches" className="nav-link">Watches</a>
+          <a href="#vote" className="nav-link">Vote</a>
+          <a href="/blog" className="nav-link" onClick={() => window.location.href = '/blog'}>Blog</a>
+          <button className="nav-link" onClick={() => setShowStats(true)}>My Stats</button>
+          <button className="nav-link nav-link-primary" onClick={() => setShowSignup(true)}>Get In</button>
+        </div>
+        {/* Mobile hamburger */}
         <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
           <span className={`nav-bar ${menuOpen ? 'open' : ''}`} />
           <span className={`nav-bar ${menuOpen ? 'open' : ''}`} />
@@ -377,14 +386,12 @@ function App() {
         </button>
         {menuOpen && (
           <div className="nav-dropdown" onClick={() => setMenuOpen(false)}>
-            <a href="#story" className="nav-link">The Story</a>
-            <a href="#watches" className="nav-link">The Watches</a>
-            <a href="#perks" className="nav-link">Perks</a>
-            <a href="#path" className="nav-link">Raven Path</a>
+            <a href="#story" className="nav-link">Story</a>
+            <a href="#watches" className="nav-link">Watches</a>
             <a href="#vote" className="nav-link">Vote</a>
             <a href="/blog" className="nav-link" onClick={() => window.location.href = '/blog'}>Blog</a>
-            <button className="nav-link nav-link-cta" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
-            <button className="nav-link nav-link-cta nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
+            <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
+            <button className="nav-link nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
           </div>
         )}
       </nav>
