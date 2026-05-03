@@ -8,8 +8,8 @@
 import { json } from './_shared.js'
 
 async function votesQuery(env, path, options = {}) {
-  const url = env.SUPABASE_VOTES_URL || env.SUPABASE_URL
-  const key = env.SUPABASE_VOTES_KEY || env.SUPABASE_KEY
+  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL || env.SUPABASE_URL
+  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY || env.SUPABASE_KEY
 
   const headers = {
     'apikey': key,
