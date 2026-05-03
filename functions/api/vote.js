@@ -81,10 +81,14 @@ export async function onRequestPost(context) {
     }
 
     // Cast vote
-    await votesQuery(env, 'votes', {
+    const insert = await votesQuery(env, 'votes', {
       method: 'POST',
       body: { poll_id, option, voter_id: voterId },
     })
+
+    if (insert.status >= 400) {
+      return json({ error: 'Insert failed', status: insert.status, detail: insert.data }, 500)
+    }
 
     // Return updated results
     const resp = await votesQuery(env,
@@ -98,6 +102,6 @@ export async function onRequestPost(context) {
 
     return json({ ok: true, results: counts, total: (resp.data || []).length })
   } catch (err) {
-    return json({ error: 'Could not save vote' }, 500)
+    return json({ error: 'Could not save vote', message: err.message }, 500)
   }
 }
