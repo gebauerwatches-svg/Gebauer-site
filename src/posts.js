@@ -20,29 +20,31 @@ const posts = [
     excerpt: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.`,
     content: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.
 
-Hans Wilsdorf figured this out in 1908 when he founded Rolex. Back then, wristwatches were toys. Pocket watches were serious business. But Wilsdorf saw something different. He thought wristwatches could actually work properly, not just look pretty on someone's wrist.
+Hans Wilsdorf figured this out in 1905 when he founded Rolex. Back then, wristwatches were toys. Pocket watches were serious business. But Wilsdorf saw something different. He thought wristwatches could actually work properly, not just look pretty on someone's wrist.
 
-Then in 1926, Wilsdorf launched the Oyster. First waterproof wristwatch with a completely sealed case. He didn't just make another watch. He solved a problem most people didn't even know they had.
+Then in 1926, Wilsdorf launched the Oyster. A fully sealed case that could handle water and dust. He didn't just make another watch. He solved a problem most people didn't even know they had.
 
 This pattern shows up everywhere. Yvon Chouinard started Patagonia because he was frustrated with climbing gear. He couldn't find what he needed, so he made it. James Dyson spent years perfecting his vacuum because he was tired of machines that lost suction.
 
 The best brands don't chase trends. They fill gaps.
 
-At Gebauer, we started with our own gap. The watch market felt split between cheap fashion pieces and luxury status symbols. Where were the watches for people who wanted real quality without the pretense? Where was the craftsmanship that didn't come with a story about Swiss mountains and family traditions stretching back centuries?
+At Gebauer, we started with our own gap. The watch market felt split between cheap fashion pieces and luxury status symbols that cost more than most people's cars. We kept asking ourselves: where are the watches for people who want quality craftsmanship without the brand premium?
 
-We found our answer in honest manufacturing. No marketing fluff about heritage we don't have. Just solid movements, clean cases, and straps that actually last. We build watches for people who care about what's inside the case, not just what others think of the name on the dial.
+That question led us to Swiss movements housed in cases designed for daily wear. Not jewelry that sits in a safe. Not disposable accessories that break after six months. Just honest watchmaking that respects both your wrist and your wallet.
 
-The gap was real. People kept asking us where they could find a watch that felt substantial without the luxury markup. They wanted something their grandfather might have worn, but built with today's precision. Not a fashion statement. Not a status symbol. Just a good watch.
+We source our movements from the same suppliers that luxury brands use. Same accuracy, same reliability. But we skip the marketing budgets and celebrity endorsements. We skip the flagship stores in Manhattan. Instead, we focus on the details that actually matter when you're checking the time at 7 AM on a Tuesday.
 
-That's where innovation starts. Not in a lab trying to reinvent the wheel. In the space between what exists and what people actually need.
+The leather straps come from a tannery in Tuscany that's been operating since 1963. The cases get brushed by hand, one at a time. Each watch gets tested for water resistance, not because we expect you to go diving, but because rain happens.
 
-Look around your own world. What frustrates you that you just accept as normal? What do you wish existed but doesn't? Those gaps are everywhere once you start looking.
+Finding your gap takes patience. You have to resist the urge to copy what's already working. You have to sit with the frustration long enough to understand what's really missing.
 
-The trick is having the patience to fill them properly. Wilsdorf spent years getting the Oyster case right. Chouinard climbed for decades before he started making gear. They understood their problems deeply before they tried to solve them.
+For us, that missing piece was simple: watches that treat customers like adults. No artificial scarcity. No waiting lists for the privilege of spending your money. No marketing speak about heritage we don't actually have.
 
-We're still learning our gap at Gebauer. Every conversation with someone wearing one of our watches teaches us something new about what we got right and what we missed. The gap keeps shifting as we fill parts of it.
+Just watches that work, built to last, priced honestly.
 
-But that's the point. Great brands aren't built by filling a gap once. They're built by staying curious about what's still missing.`
+The gap we found wasn't technical. It was cultural. It was the space between hype and quality, between fashion and function. That's where Gebauer lives.
+
+Sometimes the most obvious missing pieces are the hardest ones to see.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
