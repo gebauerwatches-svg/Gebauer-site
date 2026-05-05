@@ -221,6 +221,14 @@ function App() {
 
       const data = await resp.json()
       if (!resp.ok || data.error) {
+        // If already on waitlist, just log them in instead of showing error
+        if (data.error && data.error.includes('already on the waitlist')) {
+          localStorage.setItem('gebauer_email', email.trim().toLowerCase())
+          localStorage.setItem('gebauer_name', firstName.trim())
+          fetchStats(email.trim().toLowerCase())
+          setShowSignup(false)
+          return
+        }
         setError(data.error || 'Something went wrong.')
       } else {
         // Instant signup — no verification needed. Go straight to inside.
