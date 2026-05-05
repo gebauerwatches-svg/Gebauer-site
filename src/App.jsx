@@ -407,10 +407,8 @@ function App() {
           </h1>
           <p className="hero-sub fade-in-delay-1">Real wood. Japanese craft. 300 ever made. The watch that becomes part of you.</p>
           <div className="hero-buttons fade-in-delay-2">
-            <button className="hero-cta-btn" onClick={() => setShowSignup(true)}>Get In</button>
-            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
+            <a href="#watches" className="hero-cta-btn">Vote For Your Watch</a>
           </div>
-          <p className="hero-count fade-in-delay-2">{waitlistCount} already in. {300 - waitlistCount} spots left.</p>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
