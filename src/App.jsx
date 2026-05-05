@@ -97,11 +97,13 @@ function App() {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
   }, [])
 
+  const [pendingVote, setPendingVote] = useState('')
+
   const handleWoodVote = (wood) => {
     if (woodSubmitted) return
-    // Must be signed up to vote
     const savedEmail = localStorage.getItem('gebauer_email')
     if (!savedEmail) {
+      setPendingVote(wood)
       setShowSignup(true)
       return
     }
@@ -227,14 +229,16 @@ function App() {
           localStorage.setItem('gebauer_name', firstName.trim())
           fetchStats(email.trim().toLowerCase())
           setShowSignup(false)
+          if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
           return
         }
         setError(data.error || 'Something went wrong.')
       } else {
-        // Instant signup — no verification needed. Go straight to inside.
+        // Instant signup — no verification needed.
         localStorage.setItem('gebauer_email', email.trim().toLowerCase())
         localStorage.setItem('gebauer_name', firstName.trim())
         fetchStats(email.trim().toLowerCase())
+        if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
         setLayer('inside')
         setShowSignup(false)
       }
