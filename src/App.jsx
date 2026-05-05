@@ -430,8 +430,8 @@ function App() {
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I walked into a watch shop in Milan at 13 and spent 310 euros on a Seiko I couldn't afford.</h2>
-          <p className="story-beat-text">Most expensive thing I'd ever bought. But the second it was on my wrist I knew every cent was worth it. I went home and spent the next year learning everything about how watches are made, who makes the best ones, and why nothing like this existed for people my age.</p>
+          <h2 className="story-beat-headline">I bought a watch in Milan at 13 because I wanted to stop checking my phone every time I needed the time.</h2>
+          <p className="story-beat-text">A brand new Seiko. 310 euros. Most expensive thing I'd ever bought. But the second it was on my wrist, something changed. I stopped reaching for my phone. I started noticing things. And I went home and spent the next six months learning everything about how watches are made, who makes the best ones, and why nothing like this existed for people my age.</p>
         </div>
       </Reveal>
 
@@ -439,7 +439,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">Then I noticed something nobody else did.</h2>
-          <p className="story-beat-text">There's no watch for people my age that actually means something. Nothing that marks the moments that matter. Nothing that ages with you, changes with you, becomes yours in a way that nothing else can. So I found a manufacturer in Japan and started building one.</p>
+          <p className="story-beat-text">There's no watch for people my age that actually means something. Graduating middle school, turning 16, your first real achievement. Those moments happen and then they're gone. Nothing marks them. Nothing ages with you, changes with you, becomes yours. So I found a manufacturer in Japan and started building one.</p>
           <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
