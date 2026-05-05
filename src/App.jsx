@@ -92,12 +92,18 @@ function App() {
     return id
   }
 
-  // Fetch wood vote results on mount
+  // Fetch vote results on mount
   useEffect(() => {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
+    // Fetch current design poll results
+    const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
+    const pollIds = ['raven-caseback', 'clasp-style', 'box-design', 'interior-material']
+    const currentPoll = pollIds[weekNum % pollIds.length]
+    fetch(`/api/vote?poll=${currentPoll}`).then(r => r.json()).then(d => { if (d.results) setDesignPollResults(d.results) }).catch(() => {})
   }, [])
 
   const [pendingVote, setPendingVote] = useState('')
+  const [designPollResults, setDesignPollResults] = useState({})
 
   const handleWoodVote = (wood) => {
     if (woodSubmitted) return
@@ -585,11 +591,7 @@ function App() {
         const voteKey = `gebauer_vote_${poll.id}`
         const voted = localStorage.getItem(voteKey) || ''
 
-        // Fetch poll results on mount
-        const [localPollResults, setLocalPollResults] = useState({})
-        useEffect(() => {
-          fetch(`/api/vote?poll=${poll.id}`).then(r => r.json()).then(d => { if (d.results) setLocalPollResults(d.results) }).catch(() => {})
-        }, [poll.id])
+        // Poll results fetched on mount via top-level state
 
         const castDesignVote = async (optId) => {
           if (voted) return
@@ -605,13 +607,13 @@ function App() {
               body: JSON.stringify({ poll_id: poll.id, option: optId, voter_id: getVoterId() }),
             })
             const data = await resp.json()
-            if (data.results) setLocalPollResults(data.results)
+            if (data.results) setDesignPollResults(data.results)
           } catch {}
           window.location.hash = 'vote'
           window.location.reload()
         }
 
-        const pollTotal = Object.values(localPollResults).reduce((a, b) => a + b, 0) || 0
+        const pollTotal = Object.values(designPollResults).reduce((a, b) => a + b, 0) || 0
 
         return (
           <Reveal className="story-beat story-cream" id="vote">
@@ -622,7 +624,7 @@ function App() {
               <div className="vote-options">
                 {poll.options.map(opt => {
                   const isSelected = voted === opt.id
-                  const optCount = localPollResults[opt.id] || 0
+                  const optCount = designPollResults[opt.id] || 0
                   const optPct = pollTotal > 0 ? Math.round((optCount / pollTotal) * 100) : 0
                   return (
                     <button
