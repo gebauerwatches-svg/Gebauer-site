@@ -421,10 +421,10 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            A Gebauer is just
-            <span className="hero-accent"> the beginning.</span>
+            No two have ever
+            <span className="hero-accent"> been the same.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">Real wood. Japanese craft. 300 ever made. The watch that becomes part of you.</p>
+          <p className="hero-sub fade-in-delay-1">Because the moments they mark aren't either.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#watches" className="hero-cta-btn">Vote For Your Watch</a>
           </div>
