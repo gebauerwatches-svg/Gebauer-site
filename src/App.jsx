@@ -393,7 +393,6 @@ function App() {
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
           <a href="#vote" className="nav-link">Vote</a>
-          <a href="/blog/" className="nav-link">Blog</a>
           <button className="nav-link" onClick={() => setShowStats(true)}>My Stats</button>
           <button className="nav-link nav-link-primary" onClick={() => setShowSignup(true)}>Get In</button>
         </div>
@@ -408,8 +407,7 @@ function App() {
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
             <a href="#vote" className="nav-link">Vote</a>
-            <a href="/blog/" className="nav-link">Blog</a>
-            <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
+              <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
             <button className="nav-link nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
           </div>
         )}
