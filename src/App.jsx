@@ -432,16 +432,8 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THE STAT — hooks instantly */}
-      <Reveal className="story-beat story-dark" id="story">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
-          <p className="story-beat-text">The milestone gift market is broken. Parents spend $461 on average, and most of it gets forgotten. Class rings sit in drawers. Gift cards disappear. There's a gap between what adults want to give and what teens actually want to receive.</p>
-        </div>
-      </Reveal>
-
-      {/* 3. THE ORIGIN — Milan, short */}
-      <Reveal className="story-beat story-milan">
+      {/* 2. THE ORIGIN — story first, people connect with people */}
+      <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
@@ -451,29 +443,29 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 4. ANOTHER STAT */}
-      <Reveal className="story-beat story-cream">
+      {/* 3. THE STATS — sets the stage after the story hooks you */}
+      <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline story-stat">63% of Gen Z is choosing screen-free habits. 26 states have banned phones in schools.</h2>
-          <p className="story-beat-text">Teens want something on their wrist that isn't a screen. Parents want to give something that lasts. Gebauer is the answer for both.</p>
+          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
+          <p className="story-beat-text">Parents spend $461 on average for milestone gifts, and most of it gets forgotten. 63% of Gen Z is choosing screen-free habits. 26 states have banned phones in schools. Teens want something on their wrist that isn't a screen. Parents want to give something that lasts.</p>
         </div>
       </Reveal>
 
-      {/* 5. THE WATCH — side by side new vs aged */}
-      <Reveal className="story-beat story-dark">
+      {/* 4. THE WATCH — side by side, "No two have ever been the same" */}
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Every dial is cut from a real tree. It ages with whoever wears it.</h2>
           <div className="watch-compare">
             <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk watch, day one" />
+              <img src={watchPadauk} alt="Padauk, day one" />
               <p>Day one</p>
             </div>
             <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk watch, years later" />
+              <img src={padaukDeep} alt="Padauk, years later" />
               <p>Years later</p>
             </div>
           </div>
-          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy. The grain deepens. The wood tells your story. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered.</p>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered.</p>
           <p className="story-beat-accent">No two have ever been the same.</p>
         </div>
       </Reveal>
@@ -481,7 +473,8 @@ function App() {
       {/* 6. THE PROOF — three woods */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
-          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 48}}>Three woods. Each one tells a different story.</h2>
+          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two ever will.</h2>
+          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Choose yours.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
@@ -549,118 +542,6 @@ function App() {
           </div>
         </div>
       </Reveal>
-
-      {/* 9. DESIGN INPUT — help us decide */}
-      {(() => {
-        const POLLS = [
-          {
-            id: 'raven-caseback',
-            question: "Which raven belongs on the caseback?",
-            context: "Every Gebauer has a raven engraved on the back. We're deciding the style.",
-            options: [
-              { id: 'simple', label: 'Simple', desc: 'Clean outline with talons. Bold and readable.', img: ravenSimple },
-              { id: 'minimal', label: 'Minimal', desc: 'Streamlined, no talons. Subtle.', img: ravenMinimal },
-            ],
-          },
-          {
-            id: 'clasp-style',
-            question: "Butterfly clasp or deployant?",
-            context: "The clasp is what you touch every time you put the watch on.",
-            options: [
-              { id: 'butterfly', label: 'Butterfly', desc: 'Folds from both sides. Clean when closed.', img: claspButterfly },
-              { id: 'deployant', label: 'Deployant', desc: 'Single fold with push button release.', img: claspDeployed },
-            ],
-          },
-          {
-            id: 'box-design',
-            question: "Which box do you want to open?",
-            context: "The unboxing is the first impression.",
-            options: [
-              { id: 'debossed', label: 'Debossed', desc: 'Pressed logo, no color. Understated.', img: boxDebossed },
-              { id: 'gold-logo', label: 'Gold Logo', desc: 'Gold G on green. Bolder.', img: boxGoldLogo },
-            ],
-          },
-          {
-            id: 'interior-material',
-            question: "Suede or microfiber inside the box?",
-            context: "The interior is what touches the watch.",
-            options: [
-              { id: 'suede', label: 'Suede', desc: 'Warm, textured, classic luxury feel.', img: interiorSuede },
-              { id: 'microfiber', label: 'Microfiber', desc: 'Smooth, modern, protects the crystal.', img: interiorMicrofiber },
-            ],
-          },
-        ]
-
-        const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
-        const poll = POLLS[weekNum % POLLS.length]
-        const voteKey = `gebauer_vote_${poll.id}`
-        const voted = localStorage.getItem(voteKey) || ''
-
-        // Poll results fetched on mount via top-level state
-
-        const castDesignVote = async (optId) => {
-          if (voted) return
-          const savedEmail = localStorage.getItem('gebauer_email')
-          if (!savedEmail) {
-            setShowSignup(true)
-            return
-          }
-          localStorage.setItem(voteKey, optId)
-          try {
-            const resp = await fetch('/api/vote', {
-              method: 'POST', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ poll_id: poll.id, option: optId, voter_id: getVoterId() }),
-            })
-            const data = await resp.json()
-            if (data.results) setDesignPollResults(data.results)
-          } catch {}
-          window.location.hash = 'vote'
-          window.location.reload()
-        }
-
-        const pollTotal = Object.values(designPollResults).reduce((a, b) => a + b, 0) || 0
-
-        return (
-          <Reveal className="story-beat story-cream" id="vote">
-            <div className="story-beat-inner" style={{maxWidth: 520}}>
-              <p className="vote-label">Help Us Decide</p>
-              <h2 className="story-beat-headline">{poll.question}</h2>
-              <p className="story-beat-text">{poll.context}</p>
-              <div className="vote-options">
-                {poll.options.map(opt => {
-                  const isSelected = voted === opt.id
-                  const optCount = designPollResults[opt.id] || 0
-                  const optPct = pollTotal > 0 ? Math.round((optCount / pollTotal) * 100) : 0
-                  return (
-                    <button
-                      key={opt.id}
-                      className={`vote-opt ${isSelected ? 'selected' : ''} ${voted ? 'revealed' : ''}`}
-                      onClick={() => castDesignVote(opt.id)}
-                      disabled={!!voted}
-                    >
-                      <div className="vote-opt-img">
-                        <img src={opt.img} alt={opt.label} />
-                      </div>
-                      <div>
-                        <h3>{opt.label}</h3>
-                        <p>{opt.desc}</p>
-                      </div>
-                      {voted && (
-                        <div className="vote-result-bar">
-                          <div className="vote-result-fill" style={{width: `${optPct}%`}} />
-                          <span>{optPct}%</span>
-                        </div>
-                      )}
-                    </button>
-                  )
-                })}
-              </div>
-              {voted && <p className="vote-thanks">Your vote is in. {pollTotal} vote{pollTotal !== 1 ? 's' : ''} so far. New poll drops next week.</p>}
-              {!voted && <p className="vote-hint">Your vote shapes the final design.</p>}
-            </div>
-          </Reveal>
-        )
-      })()}
 
       {/* 10. THE INVITATION */}
       <Reveal className="story-beat story-cream story-center">
