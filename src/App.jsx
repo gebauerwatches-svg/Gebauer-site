@@ -13,6 +13,7 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 import watchHinoki from './assets/image0.jpeg'
 import watchPadauk from './assets/image1-1.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
+import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
 import './App.css'
 
@@ -431,53 +432,49 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. SET THE SCENE — Milan origin */}
-      <Reveal className="story-beat story-milan" id="story">
+      {/* 2. THE STAT — hooks instantly */}
+      <Reveal className="story-beat story-dark" id="story">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
+          <p className="story-beat-text">The milestone gift market is broken. Parents spend $461 on average, and most of it gets forgotten. Class rings sit in drawers. Gift cards disappear. There's a gap between what adults want to give and what teens actually want to receive.</p>
+        </div>
+      </Reveal>
+
+      {/* 3. THE ORIGIN — Milan, short */}
+      <Reveal className="story-beat story-milan">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I fell in love with watches while travelling in Europe. I wanted something that helped me tell the time without pulling me back into a screen.</h2>
-          <p className="story-beat-text">I was 13. My family has traveled to 56 countries over the last four years, and on one of those trips I walked into a Seiko store in Milan and spent 310 euros on my first real watch. Most expensive thing I'd ever bought. But the second it was on my wrist, I stopped reaching for my phone. I started noticing things.</p>
-        </div>
-      </Reveal>
-
-      {/* 3. THE CHALLENGE — nothing exists */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">When I looked for a watch made for someone my age, I couldn't find one.</h2>
-          <p className="story-beat-text">Everything felt either too cheap, too expensive, or not made for teens at all. At the same time, the adults in my life were still buying milestone gifts for graduations and birthdays, but nothing was landing. Class rings sit in drawers. Gift cards get forgotten. Money gets spent on things that don't get worn, don't get kept, and don't mean anything.</p>
-        </div>
-      </Reveal>
-
-      {/* 4. THE PROBLEM — bigger than me */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner story-beat-problem">
-          <h2 className="story-beat-headline">It's not just me.</h2>
-          <p className="story-beat-text">I talked to more than 60 teens at my school. They wanted watches, but they wanted something that actually felt like it was made for them. And parents, grandparents, aunts and uncles are spending hundreds on milestone gifts every year that don't stick. There's a gap between what adults want to give and what teens actually want to receive.</p>
-          <p className="story-beat-accent">That gap is where Gebauer lives.</p>
-        </div>
-      </Reveal>
-
-      {/* 5. THE ANSWER — what I built */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">So I built a watch brand around the moments that matter.</h2>
-          <p className="story-beat-text">Gebauer Watches. Japanese-crafted. Real wood dials where every grain pattern is naturally one of one. Limited to 300 per edition, each one numbered. A gift that feels grown up, personal, and lasting. Something a teen actually wants to wear, and an adult feels proud to give.</p>
+          <h2 className="story-beat-headline">I bought my first watch to get off my phone. It changed everything.</h2>
+          <p className="story-beat-text">Milan. Age 13. 310 euros on a Seiko. After talking to 60+ teens at my school, I realized I wasn't the only one who wanted something real on my wrist. So I found a manufacturer in Japan and started building the answer.</p>
           <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
-      {/* 6. THE WATCH — product reveal */}
+      {/* 4. ANOTHER STAT */}
       <Reveal className="story-beat story-cream">
-        <div className="story-product">
-          <div className="story-product-img">
-            <img src={padaukAged} alt="Gebauer watch with Padauk wood dial" />
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline story-stat">63% of Gen Z is choosing screen-free habits. 26 states have banned phones in schools.</h2>
+          <p className="story-beat-text">Teens want something on their wrist that isn't a screen. Parents want to give something that lasts. Gebauer is the answer for both.</p>
+        </div>
+      </Reveal>
+
+      {/* 5. THE WATCH — side by side new vs aged */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Every dial is cut from a real tree. It ages with whoever wears it.</h2>
+          <div className="watch-compare">
+            <div className="watch-compare-item">
+              <img src={watchPadauk} alt="Padauk watch, day one" />
+              <p>Day one</p>
+            </div>
+            <div className="watch-compare-item">
+              <img src={padaukDeep} alt="Padauk watch, years later" />
+              <p>Years later</p>
+            </div>
           </div>
-          <div className="story-product-text">
-            <h2 className="story-beat-headline">Every watch starts as a piece of a real tree.</h2>
-            <p className="story-beat-text">The dial carries a unique grain pattern that has never existed before and will never exist again. African Padauk deepens from fiery orange to rich burgundy over the years. The wood grows with whoever wears it. Sapphire crystal. Japanese movement. 316L stainless steel. A raven engraved on the caseback. 300 ever made per edition, each one individually numbered.</p>
-            <p className="story-beat-accent">No two Gebauer watches have ever been the same. No two ever will be.</p>
-          </div>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy. The grain deepens. The wood tells your story. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered.</p>
+          <p className="story-beat-accent">No two have ever been the same.</p>
         </div>
       </Reveal>
 
@@ -528,16 +525,7 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 7. THE RAVEN */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <img src={ravenMinimal} alt="Raven caseback" style={{width: 100, opacity: 0.6, marginBottom: 24}} />
-          <h2 className="story-beat-headline story-beat-italic">A Gebauer never forgets.</h2>
-          <p className="story-beat-text">A raven engraved on every caseback. Huginn, from Norse mythology, who fought forgetfulness. Only the wearer knows it's there.</p>
-        </div>
-      </Reveal>
-
-      {/* 8. THE MANIFESTO */}
+      {/* THE MANIFESTO */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">The Gebauer Manifesto.</h2>
