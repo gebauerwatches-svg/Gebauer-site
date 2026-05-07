@@ -460,7 +460,7 @@ function App() {
       {/* 5. THE WISE MENTOR — Gebauer is the answer */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">So I built a watch for the moments that change everything.</h2>
+          <h2 className="story-beat-headline">So I'm building a watch for the moments that change everything.</h2>
           <p className="story-beat-text">Middle school graduation. Turning 16. Confirmation. Eagle Scout. The moments that don't have a gift yet. 300 ever made, each one numbered.</p>
         </div>
       </Reveal>
