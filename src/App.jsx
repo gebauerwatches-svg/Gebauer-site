@@ -442,7 +442,7 @@ function App() {
       </Reveal>
 
       {/* 3. THE CHALLENGE — no milestone gift that lands */}
-      <Reveal className="story-beat story-dark">
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Then I realized there's no milestone gift that actually lands for guys.</h2>
           <p className="story-beat-text">Girls have Pandora, Tiffany, jewelry that marks the moment. For guys? Class rings no one wears. Gift cards that get spent and forgotten. Nothing that says "this moment mattered." I talked to 60+ teens at my school. They all felt the same way.</p>
@@ -458,7 +458,7 @@ function App() {
       </Reveal>
 
       {/* 5. THE WISE MENTOR — Gebauer is the answer */}
-      <Reveal className="story-beat story-dark">
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">So I'm building a watch for the moments that change everything.</h2>
           <p className="story-beat-text">Middle school graduation. Turning 16. Confirmation. Eagle Scout. The moments that don't have a gift yet. 300 ever made, each one numbered.</p>
@@ -466,7 +466,7 @@ function App() {
       </Reveal>
 
       {/* 6. THE RESOLUTION — the gift that works for everyone */}
-      <Reveal className="story-beat story-dark">
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Teens get something they want. Adults get to give something that lasts.</h2>
           <p className="story-beat-text">The moment gets marked by a gift that grows with the person who received it. Not a gift card. Not a class ring. Something real, on their wrist, every day.</p>
