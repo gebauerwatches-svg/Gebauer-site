@@ -419,10 +419,10 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            No two have ever
-            <span className="hero-accent"> been the same.</span>
+            Every milestone deserves
+            <span className="hero-accent"> a gift worth keeping.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">Because the moments they mark aren't either.</p>
+          <p className="hero-sub fade-in-delay-1">Most don't make it past the drawer.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#watches" className="hero-cta-btn">Vote For Your Watch</a>
           </div>
