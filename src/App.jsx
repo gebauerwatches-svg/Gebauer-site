@@ -419,10 +419,10 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Every milestone deserves
-            <span className="hero-accent"> a gift worth keeping.</span>
+            Moments don't wait.
+            <span className="hero-accent"> Most gifts don't last.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">Most don't make it past the drawer.</p>
+          <p className="hero-sub fade-in-delay-1">This one does.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#watches" className="hero-cta-btn">Vote For Your Watch</a>
           </div>
@@ -452,8 +452,8 @@ function App() {
       {/* 4. THE PIT — the stat that proves it */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
-          <p className="story-beat-text">Parents still spend $461 on average for milestone gifts. The money is there. The intention is there. The right gift isn't. Parents, grandparents, aunts and uncles want to give something that lasts. Teens want something they'll actually wear.</p>
+          <h2 className="story-beat-headline story-stat">65% of parents used to buy class rings. Today it's under 30%.</h2>
+          <p className="story-beat-text">Parents, grandparents, aunts and uncles still spend $461 on average for milestone gifts. The money is there. The intention is there. The right gift isn't. They want to give something that lasts. Teens want something they'll actually wear.</p>
         </div>
       </Reveal>
 
