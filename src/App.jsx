@@ -450,7 +450,7 @@ function App() {
       </Reveal>
 
       {/* 4. THE PIT — the stat that proves it */}
-      <Reveal className="story-beat story-cream">
+      <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
           <p className="story-beat-text">Parents still spend $461 on average for milestone gifts. The money is there. The intention is there. The right gift isn't. Parents, grandparents, aunts and uncles want to give something that lasts. Teens want something they'll actually wear.</p>
