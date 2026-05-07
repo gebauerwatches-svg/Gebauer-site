@@ -462,13 +462,40 @@ function App() {
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">So I found a manufacturer in Japan and started building the answer.</h2>
           <p className="story-beat-text">Every Gebauer watch has a dial cut from real wood. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered. A watch built for the moments that change everything.</p>
+          <p className="story-beat-accent">No two have ever been the same.</p>
         </div>
       </Reveal>
 
-      {/* 6. THE PRODUCT — clean watches first, aging story second */}
+      {/* 6. THE AGING STORY — the watch grows with you */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">It becomes part of you.</h2>
+          <div className="watch-compare">
+            <div className="watch-compare-item">
+              <img src={watchPadauk} alt="Padauk, day one" />
+              <p>Day one</p>
+            </div>
+            <div className="watch-compare-item">
+              <img src={padaukDeep} alt="Padauk, years later" />
+              <p>Years later</p>
+            </div>
+          </div>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. The wood deepens, the grain evolves, and every mark it picks up along the way is yours. Your watch at graduation won't look like your watch at 25.</p>
+        </div>
+      </Reveal>
+
+      {/* 7. THE RESOLUTION — the gift that works for everyone */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Teens get something they actually want to wear. Adults get to give something that lasts.</h2>
+          <p className="story-beat-text">The moment gets marked by a gift that grows with the person who received it. Not a gift card. Not a class ring. Something real, on their wrist, every day.</p>
+        </div>
+      </Reveal>
+
+      {/* 8. VOTE — story is done, now act */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
-          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two ever will.</h2>
+          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>And no two ever will.</h2>
           <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Choose yours.</p>
           <div className="wood-grid">
             {[
@@ -510,32 +537,6 @@ function App() {
               </div>
             )
           })()}
-        </div>
-      </Reveal>
-
-      {/* 7. THE AGING STORY — after they've seen the clean product */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">It becomes part of you.</h2>
-          <div className="watch-compare">
-            <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk, day one" />
-              <p>Day one</p>
-            </div>
-            <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk, years later" />
-              <p>Years later</p>
-            </div>
-          </div>
-          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. The wood deepens, the grain evolves, and every mark it picks up along the way is yours. Your watch at graduation won't look like your watch at 25.</p>
-        </div>
-      </Reveal>
-
-      {/* 8. THE RESOLUTION — the gift that works for everyone */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">The milestone gift that doesn't end up in a drawer.</h2>
-          <p className="story-beat-text">Teens get something they actually want to wear. Parents, grandparents, aunts and uncles get to give something that lasts. The moment gets marked by a gift that grows with the person who received it.</p>
         </div>
       </Reveal>
 
