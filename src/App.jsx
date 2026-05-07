@@ -476,8 +476,8 @@ function App() {
       {/* 7. VOTE — first time seeing the clean watches */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
-          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two have ever been the same. Because the moments they mark aren't either.</h2>
-          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Choose yours.</p>
+          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two Gebauers have ever been the same. And no two ever will.</h2>
+          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Find yours.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
