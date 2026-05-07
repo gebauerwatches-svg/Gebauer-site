@@ -444,7 +444,7 @@ function App() {
       {/* 3. THE CHALLENGE — no milestone gift that lands */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">There's no milestone gift that lands anymore.</h2>
+          <h2 className="story-beat-headline">Then I realized there's no milestone gift that actually lands for guys.</h2>
           <p className="story-beat-text">Girls have Pandora, Tiffany, jewelry that marks the moment. For guys? Class rings no one wears. Gift cards that get spent and forgotten. Nothing that says "this moment mattered." I talked to 60+ teens at my school. They all felt the same way.</p>
         </div>
       </Reveal>
@@ -460,16 +460,15 @@ function App() {
       {/* 5. THE WISE MENTOR — Gebauer is the answer */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">So I found a manufacturer in Japan and started building the answer.</h2>
-          <p className="story-beat-text">Every Gebauer watch has a dial cut from real wood. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered. A watch built for the moments that change everything.</p>
-          <p className="story-beat-accent">No two have ever been the same.</p>
+          <h2 className="story-beat-headline">So I built a watch for the moments that change everything.</h2>
+          <p className="story-beat-text">Every Gebauer watch has a dial cut from real wood. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered.</p>
         </div>
       </Reveal>
 
       {/* 6. THE AGING STORY — the watch grows with you */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">It becomes part of you.</h2>
+          <h2 className="story-beat-headline">Every dial is cut from real wood. It becomes part of you.</h2>
           <div className="watch-compare">
             <div className="watch-compare-item">
               <img src={watchPadauk} alt="Padauk, day one" />
@@ -487,7 +486,7 @@ function App() {
       {/* 7. THE RESOLUTION — the gift that works for everyone */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Teens get something they actually want to wear. Adults get to give something that lasts.</h2>
+          <h2 className="story-beat-headline">Teens get something they want. Adults get to give something that lasts.</h2>
           <p className="story-beat-text">The moment gets marked by a gift that grows with the person who received it. Not a gift card. Not a class ring. Something real, on their wrist, every day.</p>
         </div>
       </Reveal>
@@ -495,7 +494,7 @@ function App() {
       {/* 8. VOTE — story is done, now act */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
-          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>And no two ever will.</h2>
+          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two have ever been the same. Because the moments they mark aren't either.</h2>
           <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Choose yours.</p>
           <div className="wood-grid">
             {[
