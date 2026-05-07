@@ -413,7 +413,7 @@ function App() {
         )}
       </nav>
 
-      {/* 1. HERO — video background */}
+      {/* 1. HERO — emotional hook */}
       <section className="hero">
         <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
         <div className="hero-overlay" />
@@ -430,45 +430,42 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THE ORIGIN — story first, people connect with people */}
+      {/* 2. SET THE SCENE — Liam's origin */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I bought my first watch to get off my phone. It changed everything.</h2>
-          <p className="story-beat-text">Milan. Age 13. 310 euros on a Seiko. After talking to 60+ teens at my school, I realized I wasn't the only one who wanted something real on my wrist. So I found a manufacturer in Japan and started building the answer.</p>
+          <h2 className="story-beat-headline">I bought my first watch to get off my phone.</h2>
+          <p className="story-beat-text">Milan. Age 13. I walked into a Seiko store and spent 310 euros on a watch I'd saved up for. For the first time, I could check the time without getting pulled into a screen. It changed everything.</p>
           <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
-      {/* 3. THE STATS — sets the stage after the story hooks you */}
+      {/* 3. THE CHALLENGE — no milestone gift that lands */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
-          <p className="story-beat-text">Parents spend $461 on average for milestone gifts, and most of it gets forgotten. 63% of Gen Z is choosing screen-free habits. 26 states have banned phones in schools. Teens want something on their wrist that isn't a screen. Parents want to give something that lasts.</p>
+          <h2 className="story-beat-headline">There's no milestone gift that lands anymore.</h2>
+          <p className="story-beat-text">Girls have Pandora, Tiffany, jewelry that marks the moment. For guys? Class rings no one wears. Gift cards that get spent and forgotten. Nothing that says "this moment mattered." I talked to 60+ teens at my school. They all felt the same way.</p>
         </div>
       </Reveal>
 
-      {/* 4. THE WATCH — side by side, "No two have ever been the same" */}
+      {/* 4. THE PIT — the stat that proves it */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Every dial is cut from a real tree. It ages with whoever wears it.</h2>
-          <div className="watch-compare">
-            <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk, day one" />
-              <p>Day one</p>
-            </div>
-            <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk, years later" />
-              <p>Years later</p>
-            </div>
-          </div>
-          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered.</p>
-          <p className="story-beat-accent">No two have ever been the same.</p>
+          <h2 className="story-beat-headline story-stat">65% of teens used to buy class rings. Today it's under 30%.</h2>
+          <p className="story-beat-text">Parents still spend $461 on average for milestone gifts. The money is there. The intention is there. The right gift isn't. Parents, grandparents, aunts and uncles want to give something that lasts. Teens want something they'll actually wear.</p>
         </div>
       </Reveal>
 
-      {/* 6. THE PROOF — three woods */}
+      {/* 5. THE WISE MENTOR — Gebauer is the answer */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">So I found a manufacturer in Japan and started building the answer.</h2>
+          <p className="story-beat-text">Every Gebauer watch has a dial cut from real wood. Sapphire crystal. Japanese movement. 316L stainless steel. 300 ever made, each one numbered. A watch built for the moments that change everything.</p>
+        </div>
+      </Reveal>
+
+      {/* 6. THE PRODUCT — clean watches first, aging story second */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
           <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two ever will.</h2>
@@ -516,32 +513,33 @@ function App() {
         </div>
       </Reveal>
 
-      {/* THE MANIFESTO */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">The Gebauer Manifesto.</h2>
-          <div className="manifesto-list">
-            <div className="manifesto-item">
-              <h3>The beauty is already in the wood.</h3>
-              <p>We don't add to it, cover it, or customize it. The grain is the design. Nature did the work.</p>
+      {/* 7. THE AGING STORY — after they've seen the clean product */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">It becomes part of you.</h2>
+          <div className="watch-compare">
+            <div className="watch-compare-item">
+              <img src={watchPadauk} alt="Padauk, day one" />
+              <p>Day one</p>
             </div>
-            <div className="manifesto-item">
-              <h3>It's meant to be worn, not preserved.</h3>
-              <p>Scratches, patina, darkening grain. That's not damage. That's your story showing up.</p>
-            </div>
-            <div className="manifesto-item">
-              <h3>Crafted in Japan by hand.</h3>
-              <p>Not assembled. Crafted. By people who've been doing this for decades.</p>
-            </div>
-            <div className="manifesto-item">
-              <h3>Every one is different.</h3>
-              <p>Not because we engineered variation. Because wood is wood. No two pieces have ever looked the same.</p>
+            <div className="watch-compare-item">
+              <img src={padaukDeep} alt="Padauk, years later" />
+              <p>Years later</p>
             </div>
           </div>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. The wood deepens, the grain evolves, and every mark it picks up along the way is yours. Your watch at graduation won't look like your watch at 25.</p>
         </div>
       </Reveal>
 
-      {/* 10. THE INVITATION */}
+      {/* 8. THE RESOLUTION — the gift that works for everyone */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">The milestone gift that doesn't end up in a drawer.</h2>
+          <p className="story-beat-text">Teens get something they actually want to wear. Parents, grandparents, aunts and uncles get to give something that lasts. The moment gets marked by a gift that grows with the person who received it.</p>
+        </div>
+      </Reveal>
+
+      {/* 9. THE INVITATION */}
       <Reveal className="story-beat story-cream story-center">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
