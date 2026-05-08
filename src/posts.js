@@ -20,31 +20,19 @@ const posts = [
     excerpt: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.`,
     content: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.
 
-Hans Wilsdorf figured this out in 1905 when he founded Rolex. Back then, wristwatches were toys. Pocket watches were serious business. But Wilsdorf saw something different. He thought wristwatches could actually work properly, not just look pretty on someone's wrist.
+Hans Wilsdorf figured this out in 1905 when he founded Rolex. Back then, wristwatches were fragile accessories. Pocket watches ruled the serious timekeeping world. But Wilsdorf saw something different. He believed wristwatches could be precise, reliable tools for everyday use.
 
-Then in 1926, Wilsdorf launched the Oyster. A fully sealed case that could handle water and dust. He didn't just make another watch. He solved a problem most people didn't even know they had.
+In 1926, Wilsdorf launched the Oyster, a groundbreaking watch with a fully sealed case that protected against water and dust. He didn't just make another timepiece. He solved a problem most people didn't realize they had: keeping precision instruments safe from the elements.
 
-This pattern shows up everywhere. Yvon Chouinard started Patagonia because he was frustrated with climbing gear. He couldn't find what he needed, so he made it. James Dyson spent years perfecting his vacuum because he was tired of machines that lost suction.
+This pattern shows up across industries. Yvon Chouinard started Patagonia because climbing gear frustrated him. He couldn't find equipment that met his standards, so he created his own. James Dyson spent years developing his vacuum because existing machines lost suction too quickly.
 
-The best brands don't chase trends. They fill gaps.
+The best brands don't chase trends. They identify and solve real problems.
 
-At Gebauer, we started with our own gap. The watch market felt split between cheap fashion pieces and luxury status symbols priced like small cars. Where was the middle ground for people who wanted quality without the markup for brand prestige alone.
+At Gebauer, we understand this principle. We saw gaps in the watch market. Timepieces were either disposable fashion accessories or unattainable luxury items. We wanted to create something different. A watch that combines precision engineering, thoughtful design, and genuine value.
 
-We wanted mechanical movements you could actually see working. Cases that felt substantial but didn't weigh down your wrist. Designs that looked good in boardrooms and coffee shops alike. The kind of watch you'd reach for every morning without thinking about it.
+Our approach isn't about chasing status. It's about creating tools that work beautifully. Watches that tell more than time. Watches that tell a story.
 
-The gap we found wasn't technical. Other companies could build what we're building. It was philosophical. Most brands either chase the bottom with disposable fashion or aim for the top with exclusivity as the main selling point.
-
-We chose a different path. Make something that lasts. Price it fairly. Let the work speak for itself.
-
-This approach shows up in small details. Our GMT hands actually function for travelers, not just for looks. Our case backs are exhibition style because we think you should see what you're paying for. Our straps use full-grain leather because it ages better than the corrected grain most companies use.
-
-Finding your gap means understanding what people actually need versus what they think they want. Most watch buyers don't need a diving bezel rated for 300 meters. They need something reliable that fits their daily routine.
-
-The missing piece isn't always obvious. Sometimes it's hiding in plain sight, disguised as the way things have always been done. Wilsdorf saw past the assumption that wristwatches couldn't be serious timepieces. Chouinard saw past gear that prioritized appearance over function.
-
-Great brands start when someone notices the gap and decides to fill it themselves. They don't wait for permission or market research. They build what they wish existed and hope others feel the same way.
-
-The gap becomes the foundation. Everything else builds from there.`
+Innovation starts with observation. With understanding what people truly need, not just what they're told they want.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
