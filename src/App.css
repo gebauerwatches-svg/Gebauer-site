@@ -113,11 +113,11 @@
 }
 .story-milan-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(15,13,20,0.7) 0%, rgba(15,13,20,0.85) 100%);
+  background: linear-gradient(180deg, rgba(15,13,20,0.75) 0%, rgba(15,13,20,0.9) 100%);
 }
 .story-beat-over { position: relative; z-index: 1; }
-.story-milan .story-beat-headline { color: var(--text-primary); }
-.story-milan .story-beat-text { color: var(--text-secondary); opacity: 0.75; }
+.story-milan .story-beat-headline { color: #ffffff; }
+.story-milan .story-beat-text { color: rgba(255,255,255,0.85); }
 
 .story-beat-inner { max-width: 560px; margin: 0 auto; }
 
