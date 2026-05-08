@@ -515,11 +515,14 @@ function App() {
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
                 <p className="poll-urgency">This vote closes in 3 days.</p>
                 <div className="poll-options">
-                  {(activePoll.options || []).map(opt => (
-                    <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
-                      {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
-                      <span>{opt}</span>
-                    </button>
+                  {(activePoll.options || []).map((opt, i) => (
+                    <>
+                      {i > 0 && (activePoll.options || []).length === 2 && <span className="poll-vs">vs</span>}
+                      <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
+                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
+                        <span>{opt}</span>
+                      </button>
+                    </>
                   ))}
                 </div>
               </>
@@ -528,11 +531,14 @@ function App() {
                 <p className="poll-label">Locked</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
                 <div className="poll-options">
-                  {(activePoll.options || []).map(opt => (
-                    <div key={opt} className={`poll-option-btn locked ${POLL_IMAGES[opt] ? 'has-img' : ''}`}>
-                      {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
-                      <span>{opt}</span>
-                    </div>
+                  {(activePoll.options || []).map((opt, i) => (
+                    <>
+                      {i > 0 && (activePoll.options || []).length === 2 && <span className="poll-vs">vs</span>}
+                      <div key={opt} className={`poll-option-btn locked ${POLL_IMAGES[opt] ? 'has-img' : ''}`}>
+                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
+                        <span>{opt}</span>
+                      </div>
+                    </>
                   ))}
                 </div>
                 <p className="poll-gate-msg">Bring one person in to unlock your vote. Share your link, get them to sign up, and this opens.</p>
