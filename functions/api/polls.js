@@ -25,7 +25,7 @@ async function pollsQuery(env, path, options = {}) {
     'Content-Type': 'application/json',
   }
 
-  if (options.method === 'POST') {
+  if (options.method === 'POST' || options.method === 'PATCH') {
     headers['Prefer'] = 'return=representation'
   }
 
@@ -43,8 +43,59 @@ export async function onRequestGet(context) {
   const { env } = context
 
   try {
-    // Get active poll
+    // Auto-rotate: if active poll is older than 3 days, close it and activate next queued
     const active = await pollsQuery(env,
+      'polls?status=eq.active&order=created_at.desc&limit=1'
+    )
+
+    if (active.data && active.data.length > 0) {
+      const poll = active.data[0]
+      const ageMs = Date.now() - new Date(poll.created_at).getTime()
+      const threeDays = 3 * 24 * 60 * 60 * 1000
+
+      if (ageMs > threeDays) {
+        // Find the winner
+        const votes = await pollsQuery(env,
+          `poll_votes?poll_id=eq.${poll.id}&select=choice`
+        )
+        const counts = {}
+        for (const row of votes.data || []) {
+          counts[row.choice] = (counts[row.choice] || 0) + 1
+        }
+        const winner = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0] || null
+
+        // Close the active poll
+        await pollsQuery(env, `polls?id=eq.${poll.id}`, {
+          method: 'PATCH',
+          body: { status: 'closed', closed_at: new Date().toISOString(), winner },
+        })
+
+        // Activate the next queued poll
+        const nextQueued = await pollsQuery(env,
+          'polls?status=eq.queued&order=created_at.asc&limit=1'
+        )
+        if (nextQueued.data && nextQueued.data.length > 0) {
+          await pollsQuery(env, `polls?id=eq.${nextQueued.data[0].id}`, {
+            method: 'PATCH',
+            body: { status: 'active', created_at: new Date().toISOString() },
+          })
+        }
+      }
+    } else {
+      // No active poll — activate the next queued one
+      const nextQueued = await pollsQuery(env,
+        'polls?status=eq.queued&order=created_at.asc&limit=1'
+      )
+      if (nextQueued.data && nextQueued.data.length > 0) {
+        await pollsQuery(env, `polls?id=eq.${nextQueued.data[0].id}`, {
+          method: 'PATCH',
+          body: { status: 'active', created_at: new Date().toISOString() },
+        })
+      }
+    }
+
+    // Now fetch the (possibly new) active poll
+    const currentActive = await pollsQuery(env,
       'polls?status=eq.active&order=created_at.desc&limit=1'
     )
 
@@ -56,8 +107,8 @@ export async function onRequestGet(context) {
     let activePoll = null
     let lastResult = null
 
-    if (active.data && active.data.length > 0) {
-      activePoll = active.data[0]
+    if (currentActive.data && currentActive.data.length > 0) {
+      activePoll = currentActive.data[0]
       // Get vote counts for active poll
       const votes = await pollsQuery(env,
         `poll_votes?poll_id=eq.${activePoll.id}&select=choice`
