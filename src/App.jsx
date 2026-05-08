@@ -404,7 +404,6 @@ function App() {
         <div className="nav-links">
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
-          <a href="#vote" className="nav-link">Vote</a>
           <button className="nav-link" onClick={() => setShowStats(true)}>My Stats</button>
           <button className="nav-link nav-link-primary" onClick={() => setShowSignup(true)}>Get In</button>
         </div>
@@ -418,8 +417,7 @@ function App() {
           <div className="nav-dropdown" onClick={() => setMenuOpen(false)}>
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
-            <a href="#vote" className="nav-link">Vote</a>
-              <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
+            <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
             <button className="nav-link nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
           </div>
         )}
@@ -687,7 +685,7 @@ function App() {
           </div>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
-            {localStorage.getItem('gebauer_email') && (
+            {email && (
               <button className="story-share" onClick={() => setShowStats(true)}>Check My Status</button>
             )}
             <button className="story-share" onClick={() => {
