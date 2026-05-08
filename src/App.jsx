@@ -436,6 +436,7 @@ function App() {
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Join the OGs</a>
+            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
