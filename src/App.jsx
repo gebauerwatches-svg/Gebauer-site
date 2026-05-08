@@ -448,7 +448,7 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. This started with a trip to Milan.</h2>
-          <p className="story-beat-text">I walked into a watch store and spent everything I'd saved. 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time. My three siblings got interested. And from there it just snowballed.</p>
+          <p className="story-beat-text">I walked into a watch store and bought a watch for 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time. My three siblings got interested. And from there it just snowballed.</p>
         </div>
       </Reveal>
 
