@@ -326,33 +326,23 @@ function App() {
     const displayName = userData?.first_name || firstName || 'there'
     const refCode = userData?.referral_code || ''
 
+    const OG_TIERS = [
+      { friends: 0, label: 'You\'re an OG', reward: 'You\'re in. You found this before anyone.', unlocked: true },
+      { friends: 1, label: '1 friend', reward: 'Vote on every design decision' },
+      { friends: 3, label: '3 friends', reward: 'See sample photos before anyone' },
+      { friends: 5, label: '5 friends', reward: 'Pick your edition number (001-300)' },
+      { friends: 10, label: '10 friends', reward: 'Hand-signed card from Liam in your box' },
+    ]
+
     return (
       <div className="l2">
-        {/* Challenge banner */}
-        <div className="l2-challenge fade-in">
-          <p>No group chats. No mass shares. Tell one person at a time.</p>
-        </div>
-
-        {/* Identity */}
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />
           <h1 className="l2-rank-hero fade-in">
-            {userReferrals === 0
-              ? <>You signed up.<br /><em>But you're not in yet.</em></>
-              : <>You are <em>{currentRank.name}</em></>
-            }
+            {displayName}, you're OG #{userData?.current_position || '—'}
           </h1>
           <p className="l2-rank-detail fade-in-delay-1">
-            {userReferrals === 0
-              ? 'Bring 1 person to get inside.'
-              : `${userReferrals} referral${userReferrals !== 1 ? 's' : ''}`
-            }
-          </p>
-          <p className="l2-welcome-sub fade-in-delay-1">
-            {userReferrals === 0
-              ? `${displayName}, you're one of ${waitlistCount} people who found this. But the movement starts when you bring someone with you.`
-              : `${displayName}, you're one of the first ${waitlistCount}. You're inside.`
-            }
+            {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
           </p>
         </header>
 
@@ -367,64 +357,32 @@ function App() {
               {copied ? 'Copied' : 'Copy'}
             </button>
           </div>
-          <p className="l2-referral-hint">
-            {userReferrals === 0
-              ? 'Tell one person. That\'s all it takes to get in.'
-              : `Every person you bring in takes you deeper.`
-            }
-          </p>
+          <p className="l2-referral-hint">Tell one person face to face. Then give them the link.</p>
         </section>
 
-        {/* Gated content: insider access at 2+ referrals */}
-        {userReferrals >= 2 && (
-          <section className="l2-insider fade-in-delay-2">
-            <p className="l2-section-label">Insider Access</p>
-            <h3 className="l2-insider-title">Behind the scenes.</h3>
-            <p className="l2-insider-text">Real emails between Liam and the manufacturers in Japan and Italy. What's actually being built and how.</p>
-            <p className="l2-insider-note">Content drops when there's something real to show. You'll be first to see it.</p>
-          </section>
-        )}
-
-        {userReferrals < 2 && userReferrals > 0 && (
-          <section className="l2-insider-locked fade-in-delay-2">
-            <p className="l2-section-label">Insider Access</p>
-            <h3 className="l2-insider-title">Locked.</h3>
-            <p className="l2-insider-text">Bring {2 - userReferrals} more {2 - userReferrals === 1 ? 'person' : 'people'} to see the real emails between Liam and the manufacturers in Japan and Italy.</p>
-          </section>
-        )}
-
-        {/* Next rank */}
-        {nextRank && (
-          <section className="l2-next-rank fade-in-delay-2">
-            <p className="l2-next-rank-text">
-              {nextRank.referrals - userReferrals} more to become <strong>{nextRank.name}</strong>
-            </p>
-            <p className="l2-next-rank-tease">{nextRank.tease}</p>
-          </section>
-        )}
-
-        {/* The Igdrasil — depth, not competition */}
+        {/* OG Unlock Ladder */}
         <section className="l2-igdrasil fade-in-delay-2">
-          <h2 className="l2-igdrasil-title">The Igdrasil</h2>
-          <p className="l2-igdrasil-sub">Go deeper.</p>
+          <h2 className="l2-igdrasil-title">Your OG Status</h2>
+          <p className="l2-igdrasil-sub">Bring people in. Unlock more.</p>
           <div className="l2-tree">
-            {[...RAVEN_PATH].reverse().map((rank, i) => {
-              const oi = RAVEN_PATH.length - 1 - i
-              const isUnlocked = userReferrals >= rank.referrals
-              const isCurrent = oi === currentRankIndex
-              const isTop = oi === RAVEN_PATH.length - 1
-              const isNextRank = oi === currentRankIndex + 1
+            {OG_TIERS.map((tier, i) => {
+              const isUnlocked = userReferrals >= tier.friends
+              const isNext = !isUnlocked && (i === 0 || userReferrals >= OG_TIERS[i - 1].friends)
               return (
-                <div key={rank.name} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isCurrent ? 'current' : ''}`}>
-                  {!isTop && <div className={`l2-tree-branch ${isUnlocked ? 'unlocked' : ''}`} />}
-                  <div className="l2-tree-circle">{isUnlocked ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg> : <span className="l2-tree-dot" />}</div>
+                <div key={tier.friends} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isNext ? 'current' : ''}`}>
+                  {i > 0 && <div className={`l2-tree-branch ${isUnlocked ? 'unlocked' : ''}`} />}
+                  <div className="l2-tree-circle">
+                    {isUnlocked
+                      ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
+                      : <span className="l2-tree-dot" />
+                    }
+                  </div>
                   <div className="l2-tree-info">
                     <div className="l2-tree-rank-row">
-                      <h3 className="l2-tree-rank-name">{(isUnlocked || isCurrent || isNextRank) ? rank.name : '???'}</h3>
-                      <span className="l2-tree-referrals">{(isUnlocked || isCurrent) ? (rank.referrals === 0 ? 'Start' : `${rank.referrals}`) : isNextRank ? rank.referrals : ''}</span>
+                      <h3 className="l2-tree-rank-name">{tier.label}</h3>
+                      {isNext && <span className="l2-tree-referrals">{tier.friends - userReferrals} more</span>}
                     </div>
-                    <p className="l2-tree-unlock">{(isUnlocked || isCurrent) ? rank.unlock : isNextRank ? rank.tease : 'Something awaits...'}</p>
-                    {rank.spots && (isUnlocked || isCurrent || isNextRank) && <span className="l2-tree-spots">{rank.spots} spots</span>}
+                    <p className="l2-tree-unlock">{isUnlocked || isNext ? tier.reward : '???'}</p>
                   </div>
                 </div>
               )
