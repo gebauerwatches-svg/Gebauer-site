@@ -456,25 +456,24 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Moments don't wait.
-            <span className="hero-accent"> Most gifts don't last.</span>
+            Welcome to Gebauer.
+            <span className="hero-accent"> Help me build this from my kitchen table.</span>
           </h1>
-          <p className="hero-sub fade-in-delay-1">This one does.</p>
           <div className="hero-buttons fade-in-delay-2">
-            <a href="#watches" className="hero-cta-btn">Vote For Your Watch</a>
+            <a href="#story" className="hero-cta-btn">Come In</a>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THIS IS ME — Liam's origin */}
+      {/* 2. THIS IS ME — Liam's intro */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I bought my first watch to get off my phone.</h2>
-          <p className="story-beat-text">Milan. Age 13. I walked into a Seiko store and spent 310 euros on a watch I'd saved up for. For the first time, I could check the time without getting pulled into a screen. Then I realized there's no milestone gift that actually lands for guys. So I'm building one from my kitchen table in Colorado.</p>
-          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs.</p>
+          <h2 className="story-beat-headline">My name is Liam Gebauer. I'm 14.</h2>
+          <p className="story-beat-text">Last year I walked into a Seiko store in Milan and spent 310 euros on a watch. I wanted to check the time without pulling out my phone. It changed everything. Then I realized something: there's no milestone gift that actually lands for guys. Girls have Pandora and Tiffany. Guys get gift cards and class rings no one wears. So I found a manufacturer in Japan and started building the answer. Right now it's just me, a kitchen table in Colorado, and {waitlistCount} people who got in early. They're helping me decide everything — the wood, the box, the clasp. If you want in, you're not buying a watch. You're building one with me.</p>
+          <p className="story-beat-signoff">— Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
