@@ -15,6 +15,7 @@ import watchPadauk from './assets/padauk-new-matched.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
 import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
+import tokijiEmail from './assets/tokiji-email-1.jpeg'
 import './App.css'
 
 const RAVEN_PATH = [
@@ -466,22 +467,117 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THIS IS ME — Liam's intro */}
+      {/* 2. THIS IS ME */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14.</h2>
-          <p className="story-beat-text">I bought a watch in Milan to get off my phone. Then I realized there's no milestone gift that lands for guys. So I found a manufacturer in Japan and started building one. Right now it's me, a kitchen table in Colorado, and {waitlistCount} people helping me decide everything. You're not buying a watch. You're building one with me.</p>
+          <p className="story-beat-text">I bought a watch in Milan to get off my phone. It changed everything. Then I realized there's no milestone gift that actually lands for guys. So I found a manufacturer in Japan and started building one.</p>
           <p className="story-beat-signoff">— Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
-      {/* 3. THIS IS WHAT I'M BUILDING — the watches */}
-      <Reveal className="story-beat story-dark" id="watches">
-        <div className="story-beat-inner" style={{maxWidth: 960}}>
-          <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two Gebauers have ever been the same. And no two ever will.</h2>
-          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Real wood dials. Japanese movement. 300 ever made, each one numbered. Find yours.</p>
+      {/* 3. THE PROBLEM */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Girls have Pandora and Tiffany. Guys get gift cards.</h2>
+          <p className="story-beat-text">65% of parents used to buy class rings. Today it's under 30%. The milestone gift for guys doesn't exist yet. I talked to 60+ teens at my school. They all said the same thing.</p>
+        </div>
+      </Reveal>
+
+      {/* 4. THE WORKSHOP — where we are, with real photos */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">This is where we are right now.</h2>
+          <p className="story-beat-text">Working with a manufacturer in Japan. Every detail is being decided by the people who showed up first.</p>
+          <div className="workshop-photos">
+            <img src={tokijiEmail} alt="Real email from our manufacturer in Japan" className="workshop-photo" />
+          </div>
+          <div className="workshop-progress">
+            <div className="progress-step done">Design</div>
+            <div className="progress-line done" />
+            <div className="progress-step done">Manufacturer</div>
+            <div className="progress-line active" />
+            <div className="progress-step active">Samples</div>
+            <div className="progress-line" />
+            <div className="progress-step">Production</div>
+            <div className="progress-line" />
+            <div className="progress-step">Ship</div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* 5. ROTATING POLL — urgency */}
+      {(activePoll || lastPollResult) && (
+        <Reveal className="story-beat story-dark">
+          <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
+            {activePoll && !pollSubmitted ? (
+              <>
+                <p className="poll-label">Live right now</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <p className="poll-urgency">This vote closes in 3 days. If you're not in, you don't get a say.</p>
+                <div className="poll-options">
+                  {(activePoll.options || []).map(opt => (
+                    <button key={opt} className="poll-option-btn" onClick={() => handlePollVote(opt)}>
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : activePoll && pollSubmitted ? (
+              <>
+                <p className="poll-label">You voted</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <div className="poll-results-list">
+                  {(activePoll.options || []).map(opt => {
+                    const total = activePoll.total || 1
+                    const count = (activePoll.votes || {})[opt] || 0
+                    const pct = Math.round((count / total) * 100)
+                    return (
+                      <div key={opt} className={`wood-result-bar ${pollVote === opt ? 'voted' : ''}`}>
+                        <span className="wood-result-name">{opt}</span>
+                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                        <span className="wood-result-pct">{pct}%</span>
+                      </div>
+                    )
+                  })}
+                  <p className="wood-result-total">{activePoll.total || 0} vote{(activePoll.total || 0) !== 1 ? 's' : ''}</p>
+                </div>
+                <p className="poll-urgency">Next decision drops in a few days. Come back.</p>
+              </>
+            ) : lastPollResult ? (
+              <>
+                <p className="poll-label">Last decision</p>
+                <h2 className="story-beat-headline">{lastPollResult.question}</h2>
+                <div className="poll-results-list">
+                  {(lastPollResult.options || []).map(opt => {
+                    const total = lastPollResult.total || 1
+                    const count = (lastPollResult.votes || {})[opt] || 0
+                    const pct = Math.round((count / total) * 100)
+                    return (
+                      <div key={opt} className={`wood-result-bar ${opt === lastPollResult.winner ? 'voted' : ''}`}>
+                        <span className="wood-result-name">{opt}</span>
+                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                        <span className="wood-result-pct">{pct}%</span>
+                      </div>
+                    )
+                  })}
+                  <p className="wood-result-total">{lastPollResult.total || 0} vote{(lastPollResult.total || 0) !== 1 ? 's' : ''}</p>
+                  {lastPollResult.winner && <p className="poll-winner">The OGs decided: {lastPollResult.winner}</p>}
+                </div>
+                <p className="poll-urgency">You missed this one. Next vote drops soon. Get in so you don't miss the next.</p>
+              </>
+            ) : null}
+          </div>
+        </Reveal>
+      )}
+
+      {/* 6. THE REVEAL — watches shown after you've earned it */}
+      <Reveal className="story-beat story-cream" id="watches">
+        <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
+          <h2 className="story-beat-headline">This is what we're building.</h2>
+          <p className="story-beat-text" style={{marginBottom: 48}}>Real wood dials. Japanese movement. 300 ever made, each one numbered. No two have ever been the same.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
@@ -525,89 +621,8 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 4. THE WORKSHOP — where we are right now */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">You're watching this get built in real time.</h2>
-          <p className="story-beat-text">We're working with a manufacturer in Japan. Every few days, the OGs help decide something — box design, caseback, clasp. If you're in, you shape what this becomes.</p>
-          <div className="workshop-progress">
-            <div className="progress-step done">Design</div>
-            <div className="progress-line done" />
-            <div className="progress-step done">Manufacturer</div>
-            <div className="progress-line active" />
-            <div className="progress-step active">Samples</div>
-            <div className="progress-line" />
-            <div className="progress-step">Production</div>
-            <div className="progress-line" />
-            <div className="progress-step">Ship</div>
-          </div>
-        </div>
-      </Reveal>
-
-      {/* 5. ROTATING POLL — new decision every few days */}
-      {(activePoll || lastPollResult) && (
-        <Reveal className="story-beat story-dark">
-          <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
-            {activePoll && !pollSubmitted ? (
-              <>
-                <p className="poll-label">Help us decide</p>
-                <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <div className="poll-options">
-                  {(activePoll.options || []).map(opt => (
-                    <button key={opt} className="poll-option-btn" onClick={() => handlePollVote(opt)}>
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </>
-            ) : activePoll && pollSubmitted ? (
-              <>
-                <p className="poll-label">You voted</p>
-                <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <div className="poll-results-list">
-                  {(activePoll.options || []).map(opt => {
-                    const total = activePoll.total || 1
-                    const count = (activePoll.votes || {})[opt] || 0
-                    const pct = Math.round((count / total) * 100)
-                    return (
-                      <div key={opt} className={`wood-result-bar ${pollVote === opt ? 'voted' : ''}`}>
-                        <span className="wood-result-name">{opt}</span>
-                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
-                        <span className="wood-result-pct">{pct}%</span>
-                      </div>
-                    )
-                  })}
-                  <p className="wood-result-total">{activePoll.total || 0} vote{(activePoll.total || 0) !== 1 ? 's' : ''}</p>
-                </div>
-              </>
-            ) : lastPollResult ? (
-              <>
-                <p className="poll-label">Last decision</p>
-                <h2 className="story-beat-headline">{lastPollResult.question}</h2>
-                <div className="poll-results-list">
-                  {(lastPollResult.options || []).map(opt => {
-                    const total = lastPollResult.total || 1
-                    const count = (lastPollResult.votes || {})[opt] || 0
-                    const pct = Math.round((count / total) * 100)
-                    return (
-                      <div key={opt} className={`wood-result-bar ${opt === lastPollResult.winner ? 'voted' : ''}`}>
-                        <span className="wood-result-name">{opt}</span>
-                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
-                        <span className="wood-result-pct">{pct}%</span>
-                      </div>
-                    )
-                  })}
-                  <p className="wood-result-total">{lastPollResult.total || 0} vote{(lastPollResult.total || 0) !== 1 ? 's' : ''}</p>
-                  {lastPollResult.winner && <p className="poll-winner">Winner: {lastPollResult.winner}</p>}
-                </div>
-              </>
-            ) : null}
-          </div>
-        </Reveal>
-      )}
-
-      {/* 6. THE AGING STORY — the discovery */}
-      <Reveal className="story-beat story-cream">
+      {/* 7. THE AGING STORY */}
+      <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">The wood ages with whoever wears it.</h2>
           <div className="watch-compare">
@@ -620,15 +635,22 @@ function App() {
               <p>Years later</p>
             </div>
           </div>
-          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy. The grain deepens. Every mark it picks up is yours. Your watch at graduation won't look like your watch at 25.</p>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy. Every mark it picks up is yours. Your watch at graduation won't look like your watch at 25.</p>
         </div>
       </Reveal>
 
-      {/* 7. THE OG INVITATION */}
-      <Reveal className="story-beat story-dark story-center">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">{waitlistCount} OGs. 300 watches. You're early.</h2>
-          <p className="story-beat-text">Get in now and you help decide what this becomes. Box design. Caseback. Clasp. Every decision is made by the people who showed up first. When it ships in December 2026, your number is yours.</p>
+      {/* 8. THE OG INVITATION — scarcity + hype */}
+      <Reveal className="story-beat story-cream story-center">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <div className="og-counter">
+            <span className="og-number">{waitlistCount}</span>
+            <span className="og-label">OGs</span>
+            <span className="og-divider">/</span>
+            <span className="og-number">300</span>
+            <span className="og-label">watches</span>
+          </div>
+          <h2 className="story-beat-headline">You're early. Don't waste it.</h2>
+          <p className="story-beat-text">The OGs are the ones building this with me. They vote on every detail. They see the emails from Japan. They get their number when it ships. Once 300 is hit, the door closes.</p>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
             <button className="story-share" onClick={() => {

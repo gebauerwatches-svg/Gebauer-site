@@ -234,6 +234,19 @@
 .wood-result-pct { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: var(--gold); min-width: 36px; text-align: right; }
 .wood-result-total { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; }
 
+/* Workshop photos */
+.workshop-photos { margin: 32px auto; max-width: 500px; }
+.workshop-photo { width: 100%; border-radius: 4px; opacity: 0.9; }
+
+/* OG counter */
+.og-counter { display: flex; align-items: baseline; justify-content: center; gap: 8px; margin-bottom: 24px; }
+.og-number { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(48px, 8vw, 72px); font-weight: 400; color: var(--bg-dark); line-height: 1; }
+.og-label { font-family: 'Inter', sans-serif; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(15, 13, 20, 0.5); }
+.og-divider { font-family: 'Cormorant Garamond', Georgia, serif; font-size: clamp(32px, 5vw, 48px); color: rgba(15, 13, 20, 0.2); }
+
+/* Poll urgency */
+.poll-urgency { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold); margin-top: 16px; margin-bottom: 24px; letter-spacing: 0.02em; }
+
 /* Workshop progress bar */
 .workshop-progress {
   display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 40px; flex-wrap: wrap;
