@@ -513,7 +513,7 @@ function App() {
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <p className="poll-urgency">This vote closes in 3 days.</p>
+                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'soon'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map((opt, i) => (
                     <>
@@ -592,9 +592,9 @@ function App() {
             ) : null}
             <div className="poll-upcoming">
               <p className="poll-label">Coming up next</p>
-              <p className="poll-upcoming-item">Interior material: Suede or Microfiber?</p>
-              <p className="poll-upcoming-item">Crown design: G, Raven, or Plain?</p>
-              <p className="poll-upcoming-item">Caseback engraving style</p>
+              <p className="poll-upcoming-item">Crown design</p>
+              <p className="poll-upcoming-item">Clasp engraving</p>
+              <p className="poll-upcoming-item">Caseback raven style</p>
             </div>
             <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 32}}>See the Watches</a>
           </div>
