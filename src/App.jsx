@@ -17,6 +17,16 @@ import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
 import './App.css'
 
+// Map poll option text to images
+const POLL_IMAGES = {
+  'Matte Black with Debossed Logo': boxDebossed,
+  'Matte Black with Gold Logo': boxGoldLogo,
+  'Suede': interiorSuede,
+  'Microfiber': interiorMicrofiber,
+  'Butterfly Clasp': claspButterfly,
+  'Deployant Clasp': claspDeployed,
+}
+
 const RAVEN_PATH = [
   { name: 'Villager', referrals: 0, unlock: 'You signed up. But you\'re not in the movement yet.', tease: '', spots: null, symbol: '\u2302' },
   { name: 'Kindling', referrals: 2, unlock: 'You\'re in. Welcome to the movement.', tease: 'Bring 2 people and the door opens...', spots: null, symbol: '\u2740' },
@@ -538,8 +548,9 @@ function App() {
                 <p className="poll-urgency">This vote closes in 3 days. If you're not in, you don't get a say.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map(opt => (
-                    <button key={opt} className="poll-option-btn" onClick={() => handlePollVote(opt)}>
-                      {opt}
+                    <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
+                      {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
+                      <span>{opt}</span>
                     </button>
                   ))}
                 </div>

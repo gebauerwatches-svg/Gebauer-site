@@ -283,6 +283,9 @@
   padding: 16px 36px; cursor: pointer; transition: all 0.3s;
 }
 .poll-option-btn:hover { border-color: var(--gold); color: var(--gold); }
+.poll-option-btn.has-img { flex-direction: column; padding: 0; overflow: hidden; max-width: 280px; }
+.poll-option-img { width: 100%; height: 200px; object-fit: cover; }
+.poll-option-btn.has-img span { padding: 14px 24px; display: block; }
 .poll-results-list { margin-top: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
 .poll-winner { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold); margin-top: 16px; letter-spacing: 0.1em; }
 
