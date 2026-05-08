@@ -529,11 +529,11 @@ function App() {
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
-            {activePoll && !pollSubmitted && !pollGated ? (
+            {activePoll && !pollSubmitted && !pollGated && (userData?.referral_count || 0) >= 1 ? (
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <p className="poll-urgency">This vote closes in 3 days. Bring one friend to unlock your vote.</p>
+                <p className="poll-urgency">This vote closes in 3 days.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map(opt => (
                     <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
@@ -543,7 +543,7 @@ function App() {
                   ))}
                 </div>
               </>
-            ) : activePoll && pollGated ? (
+            ) : activePoll && !pollSubmitted && (pollGated || localStorage.getItem('gebauer_email')) && (userData?.referral_count || 0) < 1 ? (
               <>
                 <p className="poll-label">Locked</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
