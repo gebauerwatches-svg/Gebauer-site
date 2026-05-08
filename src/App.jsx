@@ -476,53 +476,38 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. THIS IS ME */}
+      {/* 2. WHO AM I — the hook */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14.</h2>
-          <p className="story-beat-text">I bought a watch in Milan to get off my phone. It changed everything. Then I realized there's no milestone gift that actually lands for guys. So I found a manufacturer in Japan and started building one.</p>
+          <p className="story-beat-text">Last year I walked into a watch store in Milan and spent everything I'd saved. I just wanted to check the time without pulling out my phone.</p>
           <p className="story-beat-signoff">— Steamboat Springs, Colorado.</p>
         </div>
       </Reveal>
 
-      {/* 3. THE PROBLEM */}
+      {/* 3. WHY — the realization */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">There's no milestone gift that actually lands anymore.</h2>
-          <p className="story-beat-text">65% of parents used to buy class rings. Today it's under 30%. The money is there. The intention is there. The right gift isn't. I talked to 60+ teens at my school. They all said the same thing.</p>
+          <h2 className="story-beat-headline">That watch changed everything for me. But when I looked around, there was nothing like it for anyone my age.</h2>
+          <p className="story-beat-text">No milestone gift that people actually keep. 65% of parents used to buy class rings. Today it's under 30%. The money is there. The intention is there. The right gift isn't.</p>
         </div>
       </Reveal>
 
-      {/* 3b. WHAT WE STAND FOR */}
-      <Reveal className="story-beat story-dark">
+      {/* 4. SO WHAT AM I DOING ABOUT IT */}
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">This is what Gebauer stands against.</h2>
-          <div className="stands-grid">
-            <div className="stands-col">
-              <p className="stands-label">Not this</p>
-              <p className="stands-item">Disposable gifts</p>
-              <p className="stands-item">Mass-produced everything</p>
-              <p className="stands-item">Another screen on your wrist</p>
-              <p className="stands-item">Gifts that get forgotten by next week</p>
-            </div>
-            <div className="stands-col">
-              <p className="stands-label">This</p>
-              <p className="stands-item">One watch that ages with you</p>
-              <p className="stands-item">300 ever made, each one different</p>
-              <p className="stands-item">Something real on your wrist</p>
-              <p className="stands-item">A gift you still wear in 10 years</p>
-            </div>
-          </div>
+          <h2 className="story-beat-headline">So I found a watch manufacturer in Japan. And I started building the answer.</h2>
+          <p className="story-beat-text">A watch with a real wood dial that ages with whoever wears it. Not mass-produced. Not disposable. Not another screen. 300 ever made, each one numbered. Something you still wear in 10 years.</p>
         </div>
       </Reveal>
 
-      {/* 4. THE WORKSHOP — where we are, with real photos */}
+      {/* 5. WITH WHO — the community */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">This is where we are right now.</h2>
-          <p className="story-beat-text">Working with a manufacturer in Japan. Every detail is being decided by the people who showed up first.</p>
+          <h2 className="story-beat-headline">Right now it's me, a kitchen table, and {waitlistCount} people who got in early.</h2>
+          <p className="story-beat-text">They're called the OGs. They vote on every detail. Box design. Clasp. Caseback. They're not waiting for a product. They're building one with me.</p>
           <div className="workshop-progress">
             <div className="progress-step done">Design</div>
             <div className="progress-line done" />
@@ -537,9 +522,9 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 5. ROTATING POLL — urgency */}
+      {/* 6. WHY COME BACK — live poll with urgency */}
       {(activePoll || lastPollResult) && (
-        <Reveal className="story-beat story-dark">
+        <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
             {activePoll && !pollSubmitted ? (
               <>
@@ -596,18 +581,18 @@ function App() {
                   <p className="wood-result-total">{lastPollResult.total || 0} vote{(lastPollResult.total || 0) !== 1 ? 's' : ''}</p>
                   {lastPollResult.winner && <p className="poll-winner">The OGs decided: {lastPollResult.winner}</p>}
                 </div>
-                <p className="poll-urgency">You missed this one. Next vote drops soon. Get in so you don't miss the next.</p>
+                <p className="poll-urgency">You missed this one. Next vote drops soon.</p>
               </>
             ) : null}
           </div>
         </Reveal>
       )}
 
-      {/* 6. THE REVEAL — watches shown after you've earned it */}
-      <Reveal className="story-beat story-cream" id="watches">
+      {/* 7. THE REVEAL — you earned the product */}
+      <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <h2 className="story-beat-headline">This is what we're building.</h2>
-          <p className="story-beat-text" style={{marginBottom: 48}}>Real wood dials. Japanese movement. 300 ever made, each one numbered. No two have ever been the same.</p>
+          <p className="story-beat-text" style={{marginBottom: 48}}>No two Gebauers have ever been the same. And no two ever will.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
@@ -651,8 +636,8 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 7. THE AGING STORY */}
-      <Reveal className="story-beat story-dark">
+      {/* 8. WHY IT LASTS — the aging story */}
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">The wood ages with whoever wears it.</h2>
           <div className="watch-compare">
@@ -669,8 +654,8 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 8. THE OG INVITATION — scarcity + hype */}
-      <Reveal className="story-beat story-cream story-center">
+      {/* 9. WHY NOW — the OG invitation */}
+      <Reveal className="story-beat story-dark story-center">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <div className="og-counter">
             <span className="og-number">{waitlistCount}</span>
