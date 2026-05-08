@@ -444,17 +444,11 @@ function App() {
 
       {/* The story — Liam telling you at the kitchen table */}
       <Reveal className="story-beat story-milan" id="story">
-        <img src={milanBg} alt="" className="story-milan-bg" />
+        <img src={seikoWrist} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
-        <div className="story-beat-inner story-beat-over story-split">
-          <div className="story-split-text">
-            <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-            <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
-          </div>
-          <div className="story-split-img">
-            <img src={seikoWrist} alt="The watch that started it all" />
-            <p className="story-img-caption">The watch that started it all.</p>
-          </div>
+        <div className="story-beat-inner story-beat-over">
+          <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
         </div>
       </Reveal>
 
