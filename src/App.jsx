@@ -436,6 +436,7 @@ function App() {
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Join the OGs</a>
+            <a href="#watches" className="hero-stats-btn">See the Watches</a>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
           </div>
         </div>
@@ -587,6 +588,7 @@ function App() {
               <p className="poll-upcoming-item">Crown design: G, Raven, or Plain?</p>
               <p className="poll-upcoming-item">Caseback engraving style</p>
             </div>
+            <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 32}}>See the Watches</a>
           </div>
         </Reveal>
       )}
