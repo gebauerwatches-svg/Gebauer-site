@@ -100,6 +100,7 @@ function App() {
   const [lastPollResult, setLastPollResult] = useState(null)
   const [pollVote, setPollVote] = useState('')
   const [pollSubmitted, setPollSubmitted] = useState(false)
+  const [pollGated, setPollGated] = useState(false)
 
   // Generate a voter ID for preventing double votes
   const getVoterId = () => {
@@ -134,6 +135,12 @@ function App() {
     const savedEmail = localStorage.getItem('gebauer_email')
     if (!savedEmail) {
       setShowSignup(true)
+      return
+    }
+    // Require at least 1 referral to vote on design polls
+    const referrals = userData?.referral_count || 0
+    if (referrals < 1) {
+      setPollGated(true)
       return
     }
     setPollVote(choice)
@@ -470,7 +477,7 @@ function App() {
           </h1>
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
-            <a href="#story" className="hero-cta-btn">Come In</a>
+            <a href="#story" className="hero-cta-btn">Join the OGs</a>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
@@ -522,11 +529,11 @@ function App() {
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
-            {activePoll && !pollSubmitted ? (
+            {activePoll && !pollSubmitted && !pollGated ? (
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <p className="poll-urgency">This vote closes in 3 days. If you're not in, you don't get a say.</p>
+                <p className="poll-urgency">This vote closes in 3 days. Bring one friend to unlock your vote.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map(opt => (
                     <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
@@ -535,6 +542,21 @@ function App() {
                     </button>
                   ))}
                 </div>
+              </>
+            ) : activePoll && pollGated ? (
+              <>
+                <p className="poll-label">Locked</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <div className="poll-options">
+                  {(activePoll.options || []).map(opt => (
+                    <div key={opt} className={`poll-option-btn locked ${POLL_IMAGES[opt] ? 'has-img' : ''}`}>
+                      {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
+                      <span>{opt}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="poll-gate-msg">Bring one person in to unlock your vote. Share your link, get them to sign up, and this opens.</p>
+                <button className="story-cta" onClick={() => setShowStats(true)}>Get My Link</button>
               </>
             ) : activePoll && pollSubmitted ? (
               <>
@@ -580,6 +602,12 @@ function App() {
                 <p className="poll-urgency">You missed this one. Next vote drops soon.</p>
               </>
             ) : null}
+            <div className="poll-upcoming">
+              <p className="poll-label">Coming up next</p>
+              <p className="poll-upcoming-item">Interior material: Suede or Microfiber?</p>
+              <p className="poll-upcoming-item">Crown design: G, Raven, or Plain?</p>
+              <p className="poll-upcoming-item">Caseback engraving style</p>
+            </div>
           </div>
         </Reveal>
       )}
