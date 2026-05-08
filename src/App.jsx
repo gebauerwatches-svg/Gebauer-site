@@ -442,34 +442,34 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* The story — one continuous thread, like Liam is talking to you */}
+      {/* The story — Liam telling you at the kitchen table */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. This started with a trip to Milan.</h2>
-          <p className="story-beat-text">I walked into a watch store and spent everything I'd saved. 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time.</p>
+          <p className="story-beat-text">I walked into a watch store and spent everything I'd saved. 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time. My three siblings got interested. And from there it just snowballed.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">When I got home, I couldn't stop thinking about it.</h2>
-          <p className="story-beat-text">Not the watch itself. The fact that nothing like it existed for people my age. Graduation comes around, a birthday hits, and the options are gift cards, class rings no one wears, or something that gets forgotten by next month. 65% of parents used to buy class rings. Today it's under 30%. The moment matters. The gift doesn't.</p>
+          <h2 className="story-beat-headline">I started visiting watch stores every chance I got.</h2>
+          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me. I'd graduated middle school about five months earlier, and there was nothing that really brought it all together. I got a pat on the back and went to a restaurant. That was the celebration. Something was missing.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">So I started asking around. And it turns out I wasn't the only one who felt this way.</h2>
-          <p className="story-beat-text">I talked to over 60 people at my school. Same answer every time. They wanted something real. Something that meant something. Something they'd actually wear. So I found a manufacturer in Japan who makes watches by hand, and I started building the answer from my kitchen table.</p>
+          <h2 className="story-beat-headline">Then I put the two pieces together.</h2>
+          <p className="story-beat-text">Watches and milestones. I started asking my friends, other teens, even teachers what they did to celebrate milestone moments. Most of them travelled for the really big ones like graduation. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That was months ago. Now there are {waitlistCount} of us.</h2>
-          <p className="story-beat-text">They're called the OGs. They got in before the watch existed. And they're helping me decide every detail: the box, the clasp, the caseback. Every few days a new vote drops. This isn't a store. It's a workshop, and the door is open.</p>
+          <h2 className="story-beat-headline">Since November 2025, I've spent two hours every day after school and homework building this.</h2>
+          <p className="story-beat-text">I've emailed manufacturers from five countries. Interviewed around 60 people. Built a waitlist of {waitlistCount}. And found a manufacturer in Japan who builds exactly what I had in mind. The OGs are the ones who got in before any of it existed. They vote on every detail. This isn't a store. It's a workshop, and the door is open.</p>
           <div className="workshop-progress">
             <div className="progress-step done">Design</div>
             <div className="progress-line done" />
