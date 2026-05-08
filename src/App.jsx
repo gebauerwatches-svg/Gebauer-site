@@ -481,8 +481,31 @@ function App() {
       {/* 3. THE PROBLEM */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Girls have Pandora and Tiffany. Guys get gift cards.</h2>
-          <p className="story-beat-text">65% of parents used to buy class rings. Today it's under 30%. The milestone gift for guys doesn't exist yet. I talked to 60+ teens at my school. They all said the same thing.</p>
+          <h2 className="story-beat-headline">There's no milestone gift that actually lands anymore.</h2>
+          <p className="story-beat-text">65% of parents used to buy class rings. Today it's under 30%. The money is there. The intention is there. The right gift isn't. I talked to 60+ teens at my school. They all said the same thing.</p>
+        </div>
+      </Reveal>
+
+      {/* 3b. WHAT WE STAND FOR */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">This is what Gebauer stands against.</h2>
+          <div className="stands-grid">
+            <div className="stands-col">
+              <p className="stands-label">Not this</p>
+              <p className="stands-item">Disposable gifts</p>
+              <p className="stands-item">Mass-produced everything</p>
+              <p className="stands-item">Another screen on your wrist</p>
+              <p className="stands-item">Gifts that get forgotten by next week</p>
+            </div>
+            <div className="stands-col">
+              <p className="stands-label">This</p>
+              <p className="stands-item">One watch that ages with you</p>
+              <p className="stands-item">300 ever made, each one different</p>
+              <p className="stands-item">Something real on your wrist</p>
+              <p className="stands-item">A gift you still wear in 10 years</p>
+            </div>
+          </div>
         </div>
       </Reveal>
 
