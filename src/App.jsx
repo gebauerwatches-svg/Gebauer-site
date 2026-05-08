@@ -446,10 +446,15 @@ function App() {
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
-        <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. I'm 14. This started with a trip to Milan.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So I walked into a watch store and bought one for 310 euros. For the first time, I could check the time without getting pulled into a screen. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
-          <img src={seikoWrist} alt="The watch that started it all" className="story-inline-img" />
+        <div className="story-beat-inner story-beat-over story-split">
+          <div className="story-split-text">
+            <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
+            <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
+          </div>
+          <div className="story-split-img">
+            <img src={seikoWrist} alt="The watch that started it all" />
+            <p className="story-img-caption">The watch that started it all.</p>
+          </div>
         </div>
       </Reveal>
 
@@ -470,7 +475,8 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Watches and milestones. That's when Gebauer was born.</h2>
-          <p className="story-beat-text">Watches and milestones. I started asking my friends, other teens, even teachers what they did to celebrate milestone moments. Most of them travelled for the really big ones like graduation. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
+          <p className="story-beat-text">I started asking my friends, other teens, even teachers what they did to celebrate milestone moments. Most of them travelled for the really big ones like graduation. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
+          <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Watches</a>
         </div>
       </Reveal>
 
