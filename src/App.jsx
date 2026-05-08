@@ -690,8 +690,29 @@ function App() {
           </div>
           <h2 className="story-beat-headline">That's the story so far. The rest hasn't been written yet.</h2>
           <p className="story-beat-text">The first 300 people in are the ones who get to write it with me. When it ships in December 2026, your number is yours. But only if you're in before the door closes.</p>
+          <div className="unlock-tiers">
+            <div className="unlock-tier">
+              <span className="unlock-count">1 friend</span>
+              <span className="unlock-reward">Vote on every design decision</span>
+            </div>
+            <div className="unlock-tier">
+              <span className="unlock-count">3 friends</span>
+              <span className="unlock-reward">See sample photos before anyone</span>
+            </div>
+            <div className="unlock-tier">
+              <span className="unlock-count">5 friends</span>
+              <span className="unlock-reward">Pick your edition number</span>
+            </div>
+            <div className="unlock-tier">
+              <span className="unlock-count">10 friends</span>
+              <span className="unlock-reward">Hand-signed card from Liam in your box</span>
+            </div>
+          </div>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
+            {localStorage.getItem('gebauer_email') && (
+              <button className="story-share" onClick={() => setShowStats(true)}>Check My Status</button>
+            )}
             <button className="story-share" onClick={() => {
               if (navigator.share) {
                 navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built from a kitchen table. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
