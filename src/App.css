@@ -233,6 +233,18 @@
 .wood-result-pct { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: var(--gold); min-width: 36px; text-align: right; }
 .wood-result-total { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; }
 
+/* Rotating polls */
+.poll-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+.poll-options { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
+.poll-option-btn {
+  font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.1em;
+  color: var(--text-primary); background: none; border: 1px solid rgba(240, 236, 229, 0.2);
+  padding: 16px 36px; cursor: pointer; transition: all 0.3s;
+}
+.poll-option-btn:hover { border-color: var(--gold); color: var(--gold); }
+.poll-results-list { margin-top: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
+.poll-winner { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold); margin-top: 16px; letter-spacing: 0.1em; }
+
 .invitation-buttons { display: flex; flex-direction: column; align-items: center; gap: 12px; }
 .story-share {
   font-family: 'Inter', sans-serif; font-weight: 400;

@@ -84,7 +84,12 @@ function App() {
   const [woodVote, setWoodVote] = useState(() => localStorage.getItem('gebauer_wood_vote') || '')
   const [woodSubmitted, setWoodSubmitted] = useState(() => localStorage.getItem('gebauer_wood_submitted') === 'true')
   const [woodResults, setWoodResults] = useState({})
-  const [pollResults, setPollResults] = useState({})
+
+  // Rotating polls system
+  const [activePoll, setActivePoll] = useState(null)
+  const [lastPollResult, setLastPollResult] = useState(null)
+  const [pollVote, setPollVote] = useState('')
+  const [pollSubmitted, setPollSubmitted] = useState(false)
 
   // Generate a voter ID for preventing double votes
   const getVoterId = () => {
@@ -93,18 +98,50 @@ function App() {
     return id
   }
 
-  // Fetch vote results on mount
+  // Fetch vote results and active poll on mount
   useEffect(() => {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
-    // Fetch current design poll results
-    const weekNum = Math.floor((Date.now() - new Date('2026-04-14').getTime()) / (7 * 24 * 60 * 60 * 1000))
-    const pollIds = ['raven-caseback', 'clasp-style', 'box-design', 'interior-material']
-    const currentPoll = pollIds[weekNum % pollIds.length]
-    fetch(`/api/vote?poll=${currentPoll}`).then(r => r.json()).then(d => { if (d.results) setDesignPollResults(d.results) }).catch(() => {})
+    // Fetch rotating polls
+    fetch('/api/polls').then(r => r.json()).then(d => {
+      if (d.active) {
+        setActivePoll(d.active)
+        // Check if user already voted on this poll
+        const votedPolls = JSON.parse(localStorage.getItem('gebauer_poll_votes') || '{}')
+        if (votedPolls[d.active.id]) {
+          setPollSubmitted(true)
+          setPollVote(votedPolls[d.active.id])
+        }
+      }
+      if (d.lastResult) setLastPollResult(d.lastResult)
+    }).catch(() => {})
   }, [])
 
   const [pendingVote, setPendingVote] = useState('')
   const [designPollResults, setDesignPollResults] = useState({})
+
+  const handlePollVote = async (choice) => {
+    if (pollSubmitted || !activePoll) return
+    const savedEmail = localStorage.getItem('gebauer_email')
+    if (!savedEmail) {
+      setShowSignup(true)
+      return
+    }
+    setPollVote(choice)
+    setPollSubmitted(true)
+    // Save locally
+    const votedPolls = JSON.parse(localStorage.getItem('gebauer_poll_votes') || '{}')
+    votedPolls[activePoll.id] = choice
+    localStorage.setItem('gebauer_poll_votes', JSON.stringify(votedPolls))
+    // Save to server
+    try {
+      const resp = await fetch('/api/polls', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ poll_id: activePoll.id, choice, email: savedEmail }),
+      })
+      const data = await resp.json()
+      if (data.votes) setActivePoll(prev => ({ ...prev, votes: data.votes, total: data.total }))
+    } catch {}
+  }
 
   const handleWoodVote = (wood) => {
     if (woodSubmitted) return
@@ -521,6 +558,68 @@ function App() {
         </div>
       </Reveal>
 
+      {/* 7b. ROTATING POLL — new decision every few days */}
+      {(activePoll || lastPollResult) && (
+        <Reveal className="story-beat story-dark">
+          <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
+            {activePoll && !pollSubmitted ? (
+              <>
+                <p className="poll-label">Help us decide</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <div className="poll-options">
+                  {(activePoll.options || []).map(opt => (
+                    <button key={opt} className="poll-option-btn" onClick={() => handlePollVote(opt)}>
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </>
+            ) : activePoll && pollSubmitted ? (
+              <>
+                <p className="poll-label">You voted</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <div className="poll-results-list">
+                  {(activePoll.options || []).map(opt => {
+                    const total = activePoll.total || 1
+                    const count = (activePoll.votes || {})[opt] || 0
+                    const pct = Math.round((count / total) * 100)
+                    return (
+                      <div key={opt} className={`wood-result-bar ${pollVote === opt ? 'voted' : ''}`}>
+                        <span className="wood-result-name">{opt}</span>
+                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                        <span className="wood-result-pct">{pct}%</span>
+                      </div>
+                    )
+                  })}
+                  <p className="wood-result-total">{activePoll.total || 0} vote{(activePoll.total || 0) !== 1 ? 's' : ''}</p>
+                </div>
+              </>
+            ) : lastPollResult ? (
+              <>
+                <p className="poll-label">Last decision</p>
+                <h2 className="story-beat-headline">{lastPollResult.question}</h2>
+                <div className="poll-results-list">
+                  {(lastPollResult.options || []).map(opt => {
+                    const total = lastPollResult.total || 1
+                    const count = (lastPollResult.votes || {})[opt] || 0
+                    const pct = Math.round((count / total) * 100)
+                    return (
+                      <div key={opt} className={`wood-result-bar ${opt === lastPollResult.winner ? 'voted' : ''}`}>
+                        <span className="wood-result-name">{opt}</span>
+                        <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                        <span className="wood-result-pct">{pct}%</span>
+                      </div>
+                    )
+                  })}
+                  <p className="wood-result-total">{lastPollResult.total || 0} vote{(lastPollResult.total || 0) !== 1 ? 's' : ''}</p>
+                  {lastPollResult.winner && <p className="poll-winner">Winner: {lastPollResult.winner}</p>}
+                </div>
+              </>
+            ) : null}
+          </div>
+        </Reveal>
+      )}
+
       {/* 8. THE AGING STORY — the discovery after seeing the clean product */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
@@ -542,8 +641,8 @@ function App() {
       {/* 9. THE INVITATION */}
       <Reveal className="story-beat story-cream story-center">
         <div className="story-beat-inner">
-          <h2 className="story-beat-headline">{waitlistCount} people are already in.</h2>
-          <p className="story-beat-text">They believed before they could see it. Before they could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
+          <h2 className="story-beat-headline">{waitlistCount} OGs. 300 watches.</h2>
+          <p className="story-beat-text">They got in before it existed. Before anyone could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Get In</button>
             <button className="story-share" onClick={() => {
