@@ -311,7 +311,8 @@
 .story-dark .poll-vs { color: rgba(240, 236, 229, 0.3); }
 .poll-option-btn.has-img { flex-direction: column; padding: 0; overflow: hidden; max-width: 280px; }
 .poll-option-img { width: 100%; height: 200px; object-fit: cover; }
-.poll-option-btn.has-img span { padding: 14px 24px; display: block; }
+.poll-option-btn.has-img .poll-option-name { padding: 14px 24px 4px; display: block; font-weight: 500; }
+.poll-option-btn.has-img .poll-option-desc { padding: 0 24px 14px; display: block; font-size: 12px; font-weight: 300; opacity: 0.7; line-height: 1.5; }
 .poll-results-list { margin-top: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
 .poll-winner { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold); margin-top: 16px; letter-spacing: 0.1em; }
 

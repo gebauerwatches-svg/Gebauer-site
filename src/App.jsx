@@ -20,12 +20,12 @@ import './App.css'
 
 // Map poll option text to images
 const POLL_IMAGES = {
-  'Matte Black with Debossed Logo': boxDebossed,
-  'Matte Black with Gold Logo': boxGoldLogo,
-  'Suede': interiorSuede,
-  'Microfiber': interiorMicrofiber,
-  'Butterfly Clasp': claspButterfly,
-  'Deployant Clasp': claspDeployed,
+  'Matte Black with Debossed Logo': { img: boxDebossed, desc: 'Clean, subtle. The logo is pressed into the material.' },
+  'Matte Black with Gold Logo': { img: boxGoldLogo, desc: 'Bold. Gold foil on matte black.' },
+  'Suede': { img: interiorSuede, desc: 'Soft, textured, premium feel. Used in high-end jewelry boxes.' },
+  'Microfiber': { img: interiorMicrofiber, desc: 'Smooth, modern, easy to clean. Common in watch boxes.' },
+  'Butterfly Clasp': { img: claspButterfly, desc: 'Folds flat. Sleek and secure.' },
+  'Deployant Clasp': { img: claspDeployed, desc: 'Opens wider. Easy on, easy off.' },
 }
 
 const RAVEN_PATH = [
@@ -519,8 +519,9 @@ function App() {
                     <>
                       {i > 0 && (activePoll.options || []).length === 2 && <span className="poll-vs">vs</span>}
                       <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => handlePollVote(opt)}>
-                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
-                        <span>{opt}</span>
+                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt].img} alt={opt} className="poll-option-img" />}
+                        <span className="poll-option-name">{opt}</span>
+                        {POLL_IMAGES[opt] && <span className="poll-option-desc">{POLL_IMAGES[opt].desc}</span>}
                       </button>
                     </>
                   ))}
@@ -535,8 +536,9 @@ function App() {
                     <>
                       {i > 0 && (activePoll.options || []).length === 2 && <span className="poll-vs">vs</span>}
                       <div key={opt} className={`poll-option-btn locked ${POLL_IMAGES[opt] ? 'has-img' : ''}`}>
-                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt]} alt={opt} className="poll-option-img" />}
-                        <span>{opt}</span>
+                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt].img} alt={opt} className="poll-option-img" />}
+                        <span className="poll-option-name">{opt}</span>
+                        {POLL_IMAGES[opt] && <span className="poll-option-desc">{POLL_IMAGES[opt].desc}</span>}
                       </div>
                     </>
                   ))}
