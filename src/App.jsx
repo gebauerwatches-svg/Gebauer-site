@@ -509,7 +509,25 @@ function App() {
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
-            {activePoll && !pollSubmitted && !pollGated && (userData?.referral_count || 0) >= 1 ? (
+            {activePoll && !pollSubmitted && !localStorage.getItem('gebauer_email') ? (
+              <>
+                <p className="poll-label">Live right now</p>
+                <h2 className="story-beat-headline">{activePoll.question}</h2>
+                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'less than an hour'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}. Sign up to vote.</p>
+                <div className="poll-options">
+                  {(activePoll.options || []).map((opt, i) => (
+                    <>
+                      {i > 0 && (activePoll.options || []).length === 2 && <span className="poll-vs">vs</span>}
+                      <button key={opt} className={`poll-option-btn ${POLL_IMAGES[opt] ? 'has-img' : ''}`} onClick={() => { setShowSignup(true) }}>
+                        {POLL_IMAGES[opt] && <img src={POLL_IMAGES[opt].img} alt={opt} className="poll-option-img" />}
+                        <span className="poll-option-name">{opt}</span>
+                        {POLL_IMAGES[opt] && <span className="poll-option-desc">{POLL_IMAGES[opt].desc}</span>}
+                      </button>
+                    </>
+                  ))}
+                </div>
+              </>
+            ) : activePoll && !pollSubmitted && !pollGated && (userData?.referral_count || 0) >= 1 ? (
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
