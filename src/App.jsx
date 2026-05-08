@@ -15,7 +15,6 @@ import watchPadauk from './assets/padauk-new-matched.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
 import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
-import tokijiEmail from './assets/tokiji-email-1.jpeg'
 import './App.css'
 
 const RAVEN_PATH = [
@@ -514,9 +513,6 @@ function App() {
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">This is where we are right now.</h2>
           <p className="story-beat-text">Working with a manufacturer in Japan. Every detail is being decided by the people who showed up first.</p>
-          <div className="workshop-photos">
-            <img src={tokijiEmail} alt="Real email from our manufacturer in Japan" className="workshop-photo" />
-          </div>
           <div className="workshop-progress">
             <div className="progress-step done">Design</div>
             <div className="progress-line done" />
