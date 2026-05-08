@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
-import heroVideo from './assets/gebauer-hero-video.mp4'
+import kitchenTable from './assets/kitchen-table.jpeg'
 import watchEbony from './assets/gebauer-ebony-watch.jpeg'
 import ravenSimple from './assets/raven-simple.png'
 import ravenMinimal from './assets/raven-minimal.png'
@@ -452,7 +452,7 @@ function App() {
 
       {/* 1. HERO — emotional hook */}
       <section className="hero">
-        <video className="hero-video" src={heroVideo} autoPlay muted loop playsInline />
+        <img className="hero-img" src={kitchenTable} alt="Liam's kitchen table — where Gebauer is being built" />
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
