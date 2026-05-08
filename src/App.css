@@ -76,10 +76,11 @@
 .hero { position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-dark); }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-.hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.2) 0%, rgba(15, 13, 20, 0.6) 60%, rgba(15, 13, 20, 0.9) 100%); }
+.hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.45) 0%, rgba(15, 13, 20, 0.75) 60%, rgba(15, 13, 20, 0.95) 100%); }
 .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 28px; max-width: 700px; }
 .hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(44px, 10vw, 88px); line-height: 1.08; color: var(--text-primary); margin-bottom: 24px; letter-spacing: -0.02em; }
 .hero-accent { color: var(--gold); font-style: italic; font-weight: 400; display: block; }
+.hero-tagline { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin: 0 auto 16px; }
 .hero-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-style: italic; font-size: clamp(20px, 3.5vw, 28px); line-height: 1.5; color: #ffffff; opacity: 0.9; max-width: 550px; margin: 0 auto 32px; }
 
 .hero-buttons { display: flex; gap: 12px; align-items: center; justify-content: center; margin-bottom: 16px; }
@@ -136,6 +137,8 @@
 }
 .story-dark .story-beat-text { color: var(--text-secondary); opacity: 0.8; }
 .story-cream .story-beat-text { color: var(--text-warm); }
+
+.story-inline-img { display: block; max-width: 320px; margin: 28px auto 0; border-radius: 4px; opacity: 0.9; }
 
 .story-beat-accent {
   font-family: 'Cormorant Garamond', Georgia, serif;

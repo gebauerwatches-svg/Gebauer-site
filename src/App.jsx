@@ -15,6 +15,7 @@ import watchPadauk from './assets/padauk-new-matched.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
 import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
+import seikoWrist from './assets/seiko-wrist.jpeg'
 import './App.css'
 
 // Map poll option text to images
@@ -404,7 +405,7 @@ function App() {
         <div className="nav-links">
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
-          <button className="nav-link" onClick={() => setShowStats(true)}>My Stats</button>
+          <button className="nav-link" onClick={() => setShowStats(true)}>My Spot</button>
           <button className="nav-link nav-link-primary" onClick={() => setShowSignup(true)}>Get In</button>
         </div>
         {/* Mobile hamburger */}
@@ -417,7 +418,7 @@ function App() {
           <div className="nav-dropdown" onClick={() => setMenuOpen(false)}>
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
-            <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Stats</button>
+            <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Spot</button>
             <button className="nav-link nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
           </div>
         )}
@@ -431,10 +432,11 @@ function App() {
           <h1 className="hero-headline fade-in">
             Welcome to Gebauer.
           </h1>
+          <p className="hero-tagline fade-in-delay-1">Watches for the moments that matter.</p>
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Join the OGs</a>
-            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Stats</button>
+            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
@@ -446,7 +448,8 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. This started with a trip to Milan.</h2>
-          <p className="story-beat-text">I walked into a watch store and bought a watch for 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time. My three siblings got interested. And from there it just snowballed.</p>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So I walked into a watch store and bought one for 310 euros. For the first time, I could check the time without getting pulled into a screen. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
+          <img src={seikoWrist} alt="The watch that started it all" className="story-inline-img" />
         </div>
       </Reveal>
 
@@ -496,6 +499,7 @@ function App() {
           <p className="story-beat-text">The first 300 people in help build this with me. You vote on the details, and when it ships, yours has a wood grain no one else has and a number that's yours forever. Keep scrolling to see the watches. Or just get in now.</p>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
+            <a href="#watches" className="story-share">See the Watches</a>
           </div>
         </div>
       </Reveal>
@@ -758,7 +762,7 @@ function App() {
               <>
                 <h2>Welcome back, {userData.first_name}.</h2>
                 <p className="signup-sub">Your stats are ready.</p>
-                <button className="signup-submit" onClick={() => { setShowStats(false); setLayer('inside') }}>View My Stats</button>
+                <button className="signup-submit" onClick={() => { setShowStats(false); setLayer('inside') }}>View My Spot</button>
               </>
             ) : (
               <>
@@ -792,7 +796,7 @@ function App() {
                     <input id="statsEmail" type="email" placeholder="Your email" value={statsEmail} onChange={(e) => setStatsEmail(e.target.value)} required maxLength={255} />
                   </div>
                   {statsError && <p className="signup-error">{statsError}</p>}
-                  <button type="submit" className="signup-submit" disabled={statsLoading}>{statsLoading ? 'Looking up...' : 'View My Stats'}</button>
+                  <button type="submit" className="signup-submit" disabled={statsLoading}>{statsLoading ? 'Looking up...' : 'View My Spot'}</button>
                 </form>
               </>
             )}
