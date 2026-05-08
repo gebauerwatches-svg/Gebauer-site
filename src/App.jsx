@@ -484,6 +484,17 @@ function App() {
         </div>
       </Reveal>
 
+      {/* The ask — right after the story hooks them */}
+      <Reveal className="story-beat story-cream story-center">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">That's what's happening. And you're here.</h2>
+          <p className="story-beat-text">The first 300 people in help build this with me. You get a number, you vote on the details, and when it ships, yours has your name on it. Keep scrolling to see the watches. Or just get in now.</p>
+          <div className="invitation-buttons">
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
+          </div>
+        </div>
+      </Reveal>
+
       {/* The latest decision */}
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
