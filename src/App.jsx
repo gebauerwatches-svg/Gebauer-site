@@ -382,7 +382,7 @@ function App() {
                       <h3 className="l2-tree-rank-name">{tier.label}</h3>
                       {isNext && <span className="l2-tree-referrals">{tier.friends - userReferrals} more</span>}
                     </div>
-                    <p className="l2-tree-unlock">{isUnlocked || isNext ? tier.reward : '???'}</p>
+                    <p className="l2-tree-unlock">{tier.reward}</p>
                   </div>
                 </div>
               )
@@ -442,34 +442,34 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* The story — one continuous thread */}
+      {/* The story — one continuous thread, like Liam is talking to you */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. I'm 14.</h2>
-          <p className="story-beat-text">Last year I walked into a watch store in Milan and spent everything I'd saved. I just wanted to check the time without pulling out my phone.</p>
+          <h2 className="story-beat-headline">I'm Liam. I'm 14. This started with a trip to Milan.</h2>
+          <p className="story-beat-text">I walked into a watch store and spent everything I'd saved. 310 euros. I just wanted something on my wrist so I could stop reaching for my phone every time I needed the time.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That watch changed how I move through my day.</h2>
-          <p className="story-beat-text">But when I got home and looked around, there was nothing like it for anyone my age. No gift that says "this moment mattered." 65% of parents used to buy class rings. Today it's under 30%. The intention is there. The right gift isn't.</p>
+          <h2 className="story-beat-headline">When I got home, I couldn't stop thinking about it.</h2>
+          <p className="story-beat-text">Not the watch itself. The fact that nothing like it existed for people my age. Graduation comes around, a birthday hits, and the options are gift cards, class rings no one wears, or something that gets forgotten by next month. 65% of parents used to buy class rings. Today it's under 30%. The moment matters. The gift doesn't.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">So I found a manufacturer in Japan and started building one.</h2>
-          <p className="story-beat-text">A watch with a real wood dial that ages with whoever wears it. Not mass-produced. Not disposable. Not another screen on your wrist. 300 ever made, each one numbered.</p>
+          <h2 className="story-beat-headline">So I started asking around. And it turns out I wasn't the only one who felt this way.</h2>
+          <p className="story-beat-text">I talked to over 60 people at my school. Same answer every time. They wanted something real. Something that meant something. Something they'd actually wear. So I found a manufacturer in Japan who makes watches by hand, and I started building the answer from my kitchen table.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">{waitlistCount} people got in before it existed. They're helping me build every detail.</h2>
-          <p className="story-beat-text">Box design. Clasp. Caseback. Every few days a new decision drops and the OGs vote on it. This isn't a store. It's a workshop with the door open.</p>
+          <h2 className="story-beat-headline">That was months ago. Now there are {waitlistCount} of us.</h2>
+          <p className="story-beat-text">They're called the OGs. They got in before the watch existed. And they're helping me decide every detail: the box, the clasp, the caseback. Every few days a new vote drops. This isn't a store. It's a workshop, and the door is open.</p>
           <div className="workshop-progress">
             <div className="progress-step done">Design</div>
             <div className="progress-line done" />
