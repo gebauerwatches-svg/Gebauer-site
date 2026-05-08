@@ -303,7 +303,7 @@
 .poll-options { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }
 .poll-option-btn {
   font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px; letter-spacing: 0.1em;
-  color: var(--text-primary); background: none; border: 1px solid rgba(240, 236, 229, 0.2);
+  color: var(--bg-dark); background: none; border: 1px solid rgba(15, 13, 20, 0.2);
   padding: 16px 36px; cursor: pointer; transition: all 0.3s;
 }
 .poll-option-btn:hover { border-color: var(--gold); color: var(--gold); }
@@ -311,8 +311,10 @@
 .story-dark .poll-vs { color: rgba(240, 236, 229, 0.3); }
 .poll-option-btn.has-img { flex-direction: column; padding: 0; overflow: hidden; max-width: 280px; }
 .poll-option-img { width: 100%; height: 200px; object-fit: cover; }
-.poll-option-btn.has-img .poll-option-name { padding: 14px 24px 4px; display: block; font-weight: 500; }
-.poll-option-btn.has-img .poll-option-desc { padding: 0 24px 14px; display: block; font-size: 12px; font-weight: 300; opacity: 0.7; line-height: 1.5; }
+.poll-option-btn.has-img .poll-option-name { padding: 14px 24px 4px; display: block; font-weight: 500; color: var(--bg-dark); }
+.poll-option-btn.has-img .poll-option-desc { padding: 0 24px 14px; display: block; font-size: 12px; font-weight: 300; opacity: 0.7; line-height: 1.5; color: var(--bg-dark); }
+.story-dark .poll-option-btn.has-img .poll-option-name { color: var(--text-primary); }
+.story-dark .poll-option-btn.has-img .poll-option-desc { color: var(--text-secondary); }
 .poll-results-list { margin-top: 32px; max-width: 400px; margin-left: auto; margin-right: auto; }
 .poll-winner { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--gold); margin-top: 16px; letter-spacing: 0.1em; }
 
