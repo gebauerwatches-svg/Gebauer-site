@@ -339,7 +339,7 @@ function App() {
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />
           <h1 className="l2-rank-hero fade-in">
-            {displayName}, you're OG #{userData?.current_position || '—'}
+            {userData?.current_position || '—'} is yours, {displayName}.
           </h1>
           <p className="l2-rank-detail fade-in-delay-1">
             {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
