@@ -513,7 +513,7 @@ function App() {
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'soon'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}.</p>
+                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'less than an hour'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map((opt, i) => (
                     <>
