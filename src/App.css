@@ -233,6 +233,26 @@
 .wood-result-pct { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 18px; color: var(--gold); min-width: 36px; text-align: right; }
 .wood-result-total { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; }
 
+/* Workshop progress bar */
+.workshop-progress {
+  display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 40px; flex-wrap: wrap;
+}
+.progress-step {
+  font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(15, 13, 20, 0.3); padding: 8px 16px; position: relative;
+}
+.progress-step.done { color: var(--bg-dark); font-weight: 500; }
+.progress-step.active { color: var(--gold); font-weight: 500; }
+.progress-line { width: 32px; height: 2px; background: rgba(15, 13, 20, 0.1); }
+.progress-line.done { background: var(--bg-dark); }
+.progress-line.active { background: linear-gradient(90deg, var(--bg-dark), var(--gold)); }
+
+@media (max-width: 600px) {
+  .workshop-progress { gap: 0; }
+  .progress-step { font-size: 9px; padding: 6px 8px; }
+  .progress-line { width: 16px; }
+}
+
 /* Rotating polls */
 .poll-label { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
 .poll-options { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 32px; }

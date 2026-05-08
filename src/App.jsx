@@ -467,54 +467,22 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* 2. SET THE SCENE — Liam's origin */}
+      {/* 2. THIS IS ME — Liam's origin */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={milanBg} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I bought my first watch to get off my phone.</h2>
-          <p className="story-beat-text">Milan. Age 13. I walked into a Seiko store and spent 310 euros on a watch I'd saved up for. For the first time, I could check the time without getting pulled into a screen. It changed everything.</p>
-          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs, Colorado.</p>
+          <p className="story-beat-text">Milan. Age 13. I walked into a Seiko store and spent 310 euros on a watch I'd saved up for. For the first time, I could check the time without getting pulled into a screen. Then I realized there's no milestone gift that actually lands for guys. So I'm building one from my kitchen table in Colorado.</p>
+          <p className="story-beat-signoff">— Liam, 14. Steamboat Springs.</p>
         </div>
       </Reveal>
 
-      {/* 3. THE CHALLENGE — no milestone gift that lands */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I realized there's no milestone gift that actually lands for guys.</h2>
-          <p className="story-beat-text">Girls have Pandora, Tiffany, jewelry that marks the moment. For guys? Class rings no one wears. Gift cards that get spent and forgotten. Nothing that says "this moment mattered." I talked to 60+ teens at my school. They all felt the same way.</p>
-        </div>
-      </Reveal>
-
-      {/* 4. THE PIT — the stat that proves it */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline story-stat">65% of parents used to buy class rings. Today it's under 30%.</h2>
-          <p className="story-beat-text">Parents, grandparents, aunts and uncles still spend $461 on average for milestone gifts. The money is there. The intention is there. The right gift isn't. They want to give something that lasts. Teens want something they'll actually wear.</p>
-        </div>
-      </Reveal>
-
-      {/* 5. THE WISE MENTOR — Gebauer is the answer */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">So I'm building a watch for the moments that change everything.</h2>
-          <p className="story-beat-text">Middle school graduation. Turning 16. Confirmation. Eagle Scout. The moments that don't have a gift yet. 300 ever made, each one numbered.</p>
-        </div>
-      </Reveal>
-
-      {/* 6. THE RESOLUTION — the gift that works for everyone */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Teens get something they want. Adults get to give something that lasts.</h2>
-          <p className="story-beat-text">The moment gets marked by a gift that grows with the person who received it. Not a gift card. Not a class ring. Something real, on their wrist, every day.</p>
-        </div>
-      </Reveal>
-
-      {/* 7. VOTE — first time seeing the clean watches */}
+      {/* 3. THIS IS WHAT I'M BUILDING — the watches */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960}}>
           <h2 className="story-beat-headline" style={{textAlign: 'center', marginBottom: 16}}>No two Gebauers have ever been the same. And no two ever will.</h2>
-          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Find yours.</p>
+          <p className="story-beat-text" style={{textAlign: 'center', marginBottom: 48}}>Real wood dials. Japanese movement. 300 ever made, each one numbered. Find yours.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
@@ -558,7 +526,26 @@ function App() {
         </div>
       </Reveal>
 
-      {/* 7b. ROTATING POLL — new decision every few days */}
+      {/* 4. THE WORKSHOP — where we are right now */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">You're watching this get built in real time.</h2>
+          <p className="story-beat-text">We're working with a manufacturer in Japan. Every few days, the OGs help decide something — box design, caseback, clasp. If you're in, you shape what this becomes.</p>
+          <div className="workshop-progress">
+            <div className="progress-step done">Design</div>
+            <div className="progress-line done" />
+            <div className="progress-step done">Manufacturer</div>
+            <div className="progress-line active" />
+            <div className="progress-step active">Samples</div>
+            <div className="progress-line" />
+            <div className="progress-step">Production</div>
+            <div className="progress-line" />
+            <div className="progress-step">Ship</div>
+          </div>
+        </div>
+      </Reveal>
+
+      {/* 5. ROTATING POLL — new decision every few days */}
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-dark">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
@@ -620,10 +607,10 @@ function App() {
         </Reveal>
       )}
 
-      {/* 8. THE AGING STORY — the discovery after seeing the clean product */}
+      {/* 6. THE AGING STORY — the discovery */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Every dial is cut from real wood. It becomes part of you.</h2>
+          <h2 className="story-beat-headline">The wood ages with whoever wears it.</h2>
           <div className="watch-compare">
             <div className="watch-compare-item">
               <img src={watchPadauk} alt="Padauk, day one" />
@@ -634,20 +621,20 @@ function App() {
               <p>Years later</p>
             </div>
           </div>
-          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy over years. The wood deepens, the grain evolves, and every mark it picks up along the way is yours. Your watch at graduation won't look like your watch at 25.</p>
+          <p className="story-beat-text">African Padauk shifts from fiery orange to deep burgundy. The grain deepens. Every mark it picks up is yours. Your watch at graduation won't look like your watch at 25.</p>
         </div>
       </Reveal>
 
-      {/* 9. THE INVITATION */}
-      <Reveal className="story-beat story-cream story-center">
+      {/* 7. THE OG INVITATION */}
+      <Reveal className="story-beat story-dark story-center">
         <div className="story-beat-inner">
-          <h2 className="story-beat-headline">{waitlistCount} OGs. 300 watches.</h2>
-          <p className="story-beat-text">They got in before it existed. Before anyone could hold it. First drop ships December 2026. Every watch numbered. Once they're gone, they're gone.</p>
+          <h2 className="story-beat-headline">{waitlistCount} OGs. 300 watches. You're early.</h2>
+          <p className="story-beat-text">Get in now and you help decide what this becomes. Box design. Caseback. Clasp. Every decision is made by the people who showed up first. When it ships in December 2026, your number is yours.</p>
           <div className="invitation-buttons">
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Get In</button>
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
             <button className="story-share" onClick={() => {
               if (navigator.share) {
-                navigator.share({ title: 'Gebauer Watches', text: 'Real wood dials. Japanese craft. 300 ever made. A Gebauer is just the beginning.', url: 'https://gebauerwatches.com' })
+                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built from a kitchen table. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
               } else {
                 navigator.clipboard.writeText('https://gebauerwatches.com')
                 const btn = document.querySelector('.story-share')
