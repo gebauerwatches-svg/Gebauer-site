@@ -688,14 +688,14 @@ function App() {
             {email && (
               <button className="story-share" onClick={() => setShowStats(true)}>Check My Status</button>
             )}
-            <button className="story-share" onClick={() => {
+            <button className="story-share" onClick={(e) => {
               if (navigator.share) {
                 navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built from a kitchen table. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
               } else {
                 navigator.clipboard.writeText('https://gebauerwatches.com')
-                const btn = document.querySelector('.story-share')
-                btn.textContent = 'Link Copied'
-                setTimeout(() => { btn.textContent = 'Share Gebauer' }, 2000)
+                e.currentTarget.textContent = 'Link Copied'
+                const target = e.currentTarget
+                setTimeout(() => { target.textContent = 'Share Gebauer' }, 2000)
               }
             }}>Share Gebauer</button>
           </div>
