@@ -455,13 +455,20 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">I started visiting watch stores every chance I got.</h2>
-          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me. I'd graduated middle school about five months earlier, and there was nothing that really brought it all together. I got a pat on the back and went to a restaurant. That was the celebration. Something was missing.</p>
+          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I put the two pieces together.</h2>
+          <h2 className="story-beat-headline">I'd graduated middle school five months earlier. And something was missing.</h2>
+          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. No gift that marked the moment. Nothing I could look at in 10 years and remember how it felt. That's when I put the two pieces together.</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Watches and milestones. That's when Gebauer was born.</h2>
           <p className="story-beat-text">Watches and milestones. I started asking my friends, other teens, even teachers what they did to celebrate milestone moments. Most of them travelled for the really big ones like graduation. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
         </div>
       </Reveal>
