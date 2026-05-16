@@ -117,7 +117,15 @@ function App() {
   // Fetch vote results and active poll on mount
   useEffect(() => {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
-    fetch('/api/stories').then(r => r.json()).then(d => { if (d.stories) setCommunityStories(d.stories); if (d.count) setStoryCount(d.count) }).catch(() => {})
+    fetch('/api/stories').then(r => r.json()).then(d => {
+      if (d.stories) setCommunityStories(d.stories)
+      if (d.count) setStoryCount(d.count)
+      // Check if current user has a story
+      const savedEmail = localStorage.getItem('gebauer_email')
+      if (savedEmail && d.stories && d.stories.length > 0) {
+        // Stories API doesn't expose emails, so rely on localStorage flag
+      }
+    }).catch(() => {})
     // Fetch rotating polls
     fetch('/api/polls').then(r => r.json()).then(d => {
       if (d.active) {
@@ -294,6 +302,15 @@ function App() {
         if (data.error && data.error.includes('already on the waitlist')) {
           localStorage.setItem('gebauer_email', email.trim().toLowerCase())
           localStorage.setItem('gebauer_name', firstName.trim())
+          if (milestoneStory.trim()) {
+            // Save story separately for existing users
+            fetch('/api/submit-story', {
+              method: 'POST', headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), story: milestoneStory.trim() }),
+            }).catch(() => {})
+            localStorage.setItem('gebauer_story_submitted', 'true')
+            setHasSubmittedStory(true)
+          }
           fetchStats(email.trim().toLowerCase())
           setShowSignup(false)
           if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
