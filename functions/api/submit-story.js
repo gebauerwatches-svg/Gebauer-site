@@ -1,9 +1,24 @@
 /**
  * POST /api/submit-story — save a milestone story for an existing user
- * Uses the votes Supabase project
+ * Uses the votes Supabase project. Filters inappropriate content.
  */
 
 import { json } from './_shared.js'
+
+const BAD_WORDS = [
+  'fuck', 'shit', 'ass', 'bitch', 'damn', 'hell', 'dick', 'cock', 'pussy',
+  'cunt', 'fag', 'nigger', 'nigga', 'retard', 'slut', 'whore', 'porn',
+  'sex', 'kill', 'die', 'rape', 'nazi', 'hitler', 'terrorist', 'bomb',
+  'drugs', 'weed', 'cocaine', 'heroin', 'meth',
+]
+
+function containsBadWords(text) {
+  const lower = text.toLowerCase()
+  return BAD_WORDS.some(w => {
+    const regex = new RegExp(`\\b${w}\\b`, 'i')
+    return regex.test(lower)
+  })
+}
 
 export async function onRequestPost(context) {
   const { env } = context
@@ -15,6 +30,11 @@ export async function onRequestPost(context) {
 
   const { email, first_name, story } = body || {}
   if (!email || !story) return json({ error: 'Missing email or story' }, 400)
+
+  // Content moderation
+  if (containsBadWords(story) || containsBadWords(first_name || '')) {
+    return json({ error: 'Please keep your submission appropriate.' }, 400)
+  }
 
   try {
     // Check if they already submitted a story

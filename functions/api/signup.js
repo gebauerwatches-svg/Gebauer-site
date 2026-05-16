@@ -115,16 +115,21 @@ export async function onRequestPost(context) {
       }
     }
 
-    // Save milestone story to votes project if provided
+    // Save milestone story to votes project if provided (with content filter)
     if (milestone_story && milestone_story.trim()) {
-      await votesQuery(env, 'milestone_stories', {
-        method: 'POST',
-        body: {
-          email: cleanEmail,
-          first_name: cleanName,
-          story: milestone_story.trim().slice(0, 500),
-        },
-      })
+      const badWords = ['fuck','shit','ass','bitch','damn','hell','dick','cock','pussy','cunt','fag','nigger','nigga','retard','slut','whore','porn','sex','kill','die','rape','nazi','hitler','terrorist','bomb','drugs','weed','cocaine','heroin','meth']
+      const storyLower = milestone_story.toLowerCase()
+      const isBad = badWords.some(w => new RegExp(`\\b${w}\\b`, 'i').test(storyLower))
+      if (!isBad) {
+        await votesQuery(env, 'milestone_stories', {
+          method: 'POST',
+          body: {
+            email: cleanEmail,
+            first_name: cleanName,
+            story: milestone_story.trim().slice(0, 500),
+          },
+        })
+      }
     }
 
     // No verification email. They're in.
