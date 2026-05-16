@@ -253,6 +253,14 @@
 .stands-col:first-child .stands-item { text-decoration: line-through; opacity: 0.5; }
 @media (max-width: 500px) { .stands-grid { grid-template-columns: 1fr; gap: 32px; } }
 
+/* Community stories */
+.community-stories { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 700px; margin: 36px auto 32px; text-align: left; }
+.community-story { padding: 20px 24px; background: rgba(15, 13, 20, 0.03); border-left: 2px solid var(--gold); }
+.community-story-text { font-family: 'Georgia', serif; font-size: 16px; color: var(--bg-dark); line-height: 1.6; font-style: italic; margin: 0; }
+.community-story-name { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--gold); margin-top: 8px; letter-spacing: 0.1em; }
+.story-count-line { font-family: 'Inter', sans-serif; font-size: 15px; color: rgba(15, 13, 20, 0.5); margin-top: 8px; }
+@media (max-width: 600px) { .community-stories { grid-template-columns: 1fr; } }
+
 /* Workshop photos */
 .workshop-photos { margin: 32px auto; max-width: 500px; }
 .workshop-photo { width: 100%; border-radius: 4px; opacity: 0.9; }

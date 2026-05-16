@@ -104,6 +104,8 @@ function App() {
   const [pollGated, setPollGated] = useState(false)
   const [milestoneStory, setMilestoneStory] = useState('')
   const [hasSubmittedStory, setHasSubmittedStory] = useState(() => localStorage.getItem('gebauer_story_submitted') === 'true')
+  const [communityStories, setCommunityStories] = useState([])
+  const [storyCount, setStoryCount] = useState(0)
 
   // Generate a voter ID for preventing double votes
   const getVoterId = () => {
@@ -115,6 +117,7 @@ function App() {
   // Fetch vote results and active poll on mount
   useEffect(() => {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
+    fetch('/api/stories').then(r => r.json()).then(d => { if (d.stories) setCommunityStories(d.stories); if (d.count) setStoryCount(d.count) }).catch(() => {})
     // Fetch rotating polls
     fetch('/api/polls').then(r => r.json()).then(d => {
       if (d.active) {
@@ -499,15 +502,30 @@ function App() {
         </div>
       </Reveal>
 
-      {/* The ask — right after the story hooks them */}
-      <Reveal className="story-beat story-cream story-center">
+      {/* The moments — community stories + signup */}
+      <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's what's happening. And you're here.</h2>
-          <p className="story-beat-text">The first 300 people in help build this with me. You vote on the details, and when it ships, yours has a wood grain no one else has and a number that's yours forever. Keep scrolling to see the watches. Or just get in now.</p>
-          <div className="invitation-buttons">
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
-            <a href="#watches" className="story-share">See the Watches</a>
-          </div>
+          <h2 className="story-beat-headline">These are the moments people are holding onto.</h2>
+          {communityStories.length > 0 && (
+            <div className="community-stories">
+              {communityStories.slice(0, 6).map((s, i) => (
+                <div key={i} className="community-story">
+                  <p className="community-story-text">"{s.story}"</p>
+                  <p className="community-story-name">{s.name}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="story-count-line">{storyCount > 0 ? `${storyCount} moments submitted` : 'Be the first to share yours'}. 300 watches.</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="story-beat story-dark story-center">
+        <div className="story-beat-inner" style={{textAlign: 'center', maxWidth: 500}}>
+          <h2 className="story-beat-headline" style={{color: '#fff'}}>If you could relive one moment, which one?</h2>
+          <p className="story-beat-text" style={{color: 'rgba(255,255,255,0.7)', marginBottom: 28}}>The people shaping this watch are the ones who answered. Your moment gets printed on a card inside your box when it ships. But only if you share it.</p>
+          <button className="story-cta" onClick={() => setShowSignup(true)} style={{width: '100%'}}>Share My Moment</button>
+          <a href="#watches" className="story-share" style={{display: 'inline-block', marginTop: 16}}>See the Watches</a>
         </div>
       </Reveal>
 

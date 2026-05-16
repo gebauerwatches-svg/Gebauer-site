@@ -25,7 +25,7 @@ export async function onRequestPost(context) {
   let body
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request.' }, 400) }
 
-  const { first_name, email, referred_by, honeypot } = body || {}
+  const { first_name, email, referred_by, honeypot, milestone_story } = body || {}
 
   if (honeypot) return json({ ok: true })
   if (!email || !first_name) return json({ error: 'Name and email are required.' }, 400)
@@ -72,6 +72,7 @@ export async function onRequestPost(context) {
         referral_count: 0,
         referral_code: referralCode,
         referred_by: referred_by || null,
+        milestone_story: milestone_story ? milestone_story.trim().slice(0, 500) : null,
         current_position: 9999,
         verified_at: new Date().toISOString(),
       },
