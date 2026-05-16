@@ -11,6 +11,20 @@
 
 import { json, supabaseQuery, randomHex } from './_shared.js'
 
+async function votesQuery(env, path, options = {}) {
+  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL || env.SUPABASE_URL
+  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY || env.SUPABASE_KEY
+  const headers = {
+    'apikey': key, 'Authorization': `Bearer ${key}`,
+    'Content-Type': 'application/json', 'Prefer': 'return=representation',
+  }
+  const resp = await fetch(`${url}/rest/v1/${path}`, {
+    method: options.method || 'GET', headers,
+    body: options.body ? JSON.stringify(options.body) : undefined,
+  })
+  return { status: resp.status, data: await resp.json().catch(() => null) }
+}
+
 export async function onRequestOptions() {
   return json({}, 200)
 }
@@ -99,6 +113,18 @@ export async function onRequestPost(context) {
           { method: 'PATCH', body: { referral_count: (referrer.referral_count || 0) + 1 } }
         )
       }
+    }
+
+    // Save milestone story to votes project if provided
+    if (milestone_story && milestone_story.trim()) {
+      await votesQuery(env, 'milestone_stories', {
+        method: 'POST',
+        body: {
+          email: cleanEmail,
+          first_name: cleanName,
+          story: milestone_story.trim().slice(0, 500),
+        },
+      })
     }
 
     // No verification email. They're in.
