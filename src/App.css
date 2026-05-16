@@ -1080,6 +1080,9 @@
 .signup-form input { width: 100%; font-family: 'Inter', sans-serif; font-size: 15px; padding: 14px 16px; border: 1px solid var(--bg-warm); background: var(--white); color: var(--text-dark); outline: none; transition: border-color 0.2s; }
 .signup-form input::placeholder { color: var(--text-muted); opacity: 0.5; }
 .signup-form input:focus { border-color: var(--purple-soft); }
+.signup-story { width: 100%; font-family: 'Inter', sans-serif; font-size: 15px; padding: 14px 16px; border: 1px solid var(--bg-warm); background: var(--white); color: var(--text-dark); outline: none; transition: border-color 0.2s; resize: vertical; min-height: 60px; }
+.signup-story::placeholder { color: var(--text-muted); opacity: 0.5; }
+.signup-story:focus { border-color: var(--purple-soft); }
 .signup-form .honeypot { position: absolute; opacity: 0; pointer-events: none; height: 0; overflow: hidden; }
 .signup-submit { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--white); background: var(--purple); border: none; padding: 16px; cursor: pointer; transition: background 0.3s; margin-top: 6px; width: 100%; }
 .signup-submit:hover { background: var(--purple-mid); }

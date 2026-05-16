@@ -102,6 +102,8 @@ function App() {
   const [pollVote, setPollVote] = useState('')
   const [pollSubmitted, setPollSubmitted] = useState(false)
   const [pollGated, setPollGated] = useState(false)
+  const [milestoneStory, setMilestoneStory] = useState('')
+  const [hasSubmittedStory, setHasSubmittedStory] = useState(() => localStorage.getItem('gebauer_story_submitted') === 'true')
 
   // Generate a voter ID for preventing double votes
   const getVoterId = () => {
@@ -138,9 +140,8 @@ function App() {
       setShowSignup(true)
       return
     }
-    // Require at least 1 referral to vote on design polls
-    const referrals = userData?.referral_count || 0
-    if (referrals < 1) {
+    // Must have submitted a story to vote
+    if (!hasSubmittedStory) {
       setPollGated(true)
       return
     }
@@ -271,6 +272,7 @@ function App() {
           email,
           referred_by: referralFrom || undefined,
           honeypot,
+          milestone_story: milestoneStory || undefined,
         }),
       })
 
@@ -299,6 +301,10 @@ function App() {
         // Instant signup — no verification needed.
         localStorage.setItem('gebauer_email', email.trim().toLowerCase())
         localStorage.setItem('gebauer_name', firstName.trim())
+        if (milestoneStory.trim()) {
+          localStorage.setItem('gebauer_story_submitted', 'true')
+          setHasSubmittedStory(true)
+        }
         fetchStats(email.trim().toLowerCase())
         if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
         setLayer('inside')
@@ -435,7 +441,7 @@ function App() {
           <p className="hero-tagline fade-in-delay-1">Watches for the moments that matter.</p>
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
-            <a href="#story" className="hero-cta-btn">Join the OGs</a>
+            <a href="#story" className="hero-cta-btn">Hear the Story</a>
             <a href="#watches" className="hero-stats-btn">See the Watches</a>
             <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
           </div>
@@ -499,7 +505,7 @@ function App() {
           <h2 className="story-beat-headline">That's what's happening. And you're here.</h2>
           <p className="story-beat-text">The first 300 people in help build this with me. You vote on the details, and when it ships, yours has a wood grain no one else has and a number that's yours forever. Keep scrolling to see the watches. Or just get in now.</p>
           <div className="invitation-buttons">
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
             <a href="#watches" className="story-share">See the Watches</a>
           </div>
         </div>
@@ -527,7 +533,7 @@ function App() {
                   ))}
                 </div>
               </>
-            ) : activePoll && !pollSubmitted && !pollGated && (userData?.referral_count || 0) >= 1 ? (
+            ) : activePoll && !pollSubmitted && !pollGated && hasSubmittedStory ? (
               <>
                 <p className="poll-label">Live right now</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
@@ -545,11 +551,11 @@ function App() {
                   ))}
                 </div>
               </>
-            ) : activePoll && !pollSubmitted && (pollGated || localStorage.getItem('gebauer_email')) && (userData?.referral_count || 0) < 1 ? (
+            ) : activePoll && !pollSubmitted && (pollGated || (localStorage.getItem('gebauer_email') && !hasSubmittedStory)) ? (
               <>
                 <p className="poll-label">Locked</p>
                 <h2 className="story-beat-headline">{activePoll.question}</h2>
-                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'less than an hour'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}. Bring one friend to unlock your vote.</p>
+                <p className="poll-urgency">This vote closes in {(() => { const ms = (3 * 24 * 60 * 60 * 1000) - (Date.now() - new Date(activePoll.created_at).getTime()); if (ms <= 0) return 'less than an hour'; const h = Math.floor(ms / 3600000); if (h >= 24) return `${Math.floor(h / 24)} day${Math.floor(h / 24) !== 1 ? 's' : ''}`; return `${h} hour${h !== 1 ? 's' : ''}`; })()}.</p>
                 <div className="poll-options">
                   {(activePoll.options || []).map((opt, i) => (
                     <>
@@ -562,8 +568,8 @@ function App() {
                     </>
                   ))}
                 </div>
-                <p className="poll-gate-msg">Bring one person in to unlock your vote. Share your link, get them to sign up, and this opens.</p>
-                <button className="story-cta" onClick={() => setShowStats(true)}>Get My Link</button>
+                <p className="poll-gate-msg">Submit your moment to unlock your vote. The people shaping this watch are the ones who gave something real.</p>
+                <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
               </>
             ) : activePoll && pollSubmitted ? (
               <>
@@ -697,27 +703,9 @@ function App() {
             <span className="og-label">watches</span>
           </div>
           <h2 className="story-beat-headline">That's the story so far. The rest hasn't been written yet.</h2>
-          <p className="story-beat-text">The first 300 people in are the ones who get to write it with me. When it ships in December 2026, your number is yours. But only if you're in before the door closes.</p>
-          <div className="unlock-tiers">
-            <div className="unlock-tier">
-              <span className="unlock-count">1 friend</span>
-              <span className="unlock-reward">Vote on every design decision</span>
-            </div>
-            <div className="unlock-tier">
-              <span className="unlock-count">3 friends</span>
-              <span className="unlock-reward">See sample photos before anyone</span>
-            </div>
-            <div className="unlock-tier">
-              <span className="unlock-count">5 friends</span>
-              <span className="unlock-reward">Pick your edition number</span>
-            </div>
-            <div className="unlock-tier">
-              <span className="unlock-count">10 friends</span>
-              <span className="unlock-reward">Hand-signed card from Liam in your box</span>
-            </div>
-          </div>
+          <p className="story-beat-text">300 watches. Each one ships with a card inside the box. On it is the moment you submitted when you joined. Your moment, printed, permanent. But only if you share it.</p>
           <div className="invitation-buttons">
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Become an OG</button>
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
             {email && (
               <button className="story-share" onClick={() => setShowStats(true)}>Check My Status</button>
             )}
@@ -764,16 +752,17 @@ function App() {
               </>
             ) : (
               <>
-                <h2>Get In</h2>
-                <p className="signup-sub">You're early. That's the point.</p>
+                <h2>If you could relive one moment, which one?</h2>
+                <p className="signup-sub">That's what Gebauer is for. The moments worth holding onto.</p>
                 <form className="signup-form" onSubmit={handleSubmit}>
                   <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
-                  <div><label htmlFor="firstName">Full Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
+                  <div><label htmlFor="milestoneStory">Your moment</label><textarea id="milestoneStory" placeholder="One sentence is enough." value={milestoneStory} onChange={(e) => setMilestoneStory(e.target.value)} maxLength={500} rows={2} className="signup-story" /></div>
+                  <div><label htmlFor="firstName">Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
                   <div><label htmlFor="email">Email</label><input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} /></div>
                   {error && <p className="signup-error">{error}</p>}
-                  <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the Movement'}</button>
+                  <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Submit My Moment'}</button>
                 </form>
-                <p className="signup-count">{waitlistCount} people are already in.</p>
+                <p className="signup-count">You don't have to share. But those who do get deeper access.</p>
               </>
             )}
           </div>
