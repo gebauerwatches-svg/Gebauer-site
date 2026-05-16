@@ -120,12 +120,17 @@ function App() {
     fetch('/api/stories').then(r => r.json()).then(d => {
       if (d.stories) setCommunityStories(d.stories)
       if (d.count) setStoryCount(d.count)
-      // Check if current user has a story
-      const savedEmail = localStorage.getItem('gebauer_email')
-      if (savedEmail && d.stories && d.stories.length > 0) {
-        // Stories API doesn't expose emails, so rely on localStorage flag
-      }
     }).catch(() => {})
+    // Check if current user has submitted a story (persists across devices)
+    const savedEmail = localStorage.getItem('gebauer_email')
+    if (savedEmail && !localStorage.getItem('gebauer_story_submitted')) {
+      fetch(`/api/check-story?email=${encodeURIComponent(savedEmail)}`).then(r => r.json()).then(d => {
+        if (d.has_story) {
+          localStorage.setItem('gebauer_story_submitted', 'true')
+          setHasSubmittedStory(true)
+        }
+      }).catch(() => {})
+    }
     // Fetch rotating polls
     fetch('/api/polls').then(r => r.json()).then(d => {
       if (d.active) {
