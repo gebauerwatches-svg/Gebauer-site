@@ -12,7 +12,7 @@ export async function onRequestGet(context) {
 
   try {
     const resp = await fetch(
-      `${url}/rest/v1/milestone_stories?select=first_name,story&order=created_at.desc&limit=20`,
+      `${url}/rest/v1/milestone_stories?select=first_name,story&status=eq.approved&order=created_at.desc&limit=20`,
       { headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' } }
     )
 
