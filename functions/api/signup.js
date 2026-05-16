@@ -127,6 +127,7 @@ export async function onRequestPost(context) {
             email: cleanEmail,
             first_name: cleanName,
             story: milestone_story.trim().slice(0, 500),
+            status: 'approved',
           },
         })
       }

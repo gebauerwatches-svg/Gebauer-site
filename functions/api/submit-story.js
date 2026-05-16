@@ -47,7 +47,7 @@ export async function onRequestPost(context) {
       return json({ ok: true, already_submitted: true })
     }
 
-    // Insert story
+    // Insert story as approved (bad words already filtered above)
     const resp = await fetch(`${url}/rest/v1/milestone_stories`, {
       method: 'POST',
       headers: {
@@ -58,6 +58,7 @@ export async function onRequestPost(context) {
         email: email.trim().toLowerCase(),
         first_name: (first_name || 'Anonymous').trim(),
         story: story.trim().slice(0, 500),
+        status: 'approved',
       }),
     })
 
