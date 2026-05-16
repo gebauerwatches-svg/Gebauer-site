@@ -315,6 +315,8 @@ function App() {
             }).catch(() => {})
             localStorage.setItem('gebauer_story_submitted', 'true')
             setHasSubmittedStory(true)
+            setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
+            setStoryCount(prev => prev + 1)
           }
           fetchStats(email.trim().toLowerCase())
           setShowSignup(false)
@@ -329,6 +331,8 @@ function App() {
         if (milestoneStory.trim()) {
           localStorage.setItem('gebauer_story_submitted', 'true')
           setHasSubmittedStory(true)
+          setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
+          setStoryCount(prev => prev + 1)
         }
         fetchStats(email.trim().toLowerCase())
         if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
