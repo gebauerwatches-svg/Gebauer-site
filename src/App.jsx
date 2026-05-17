@@ -674,7 +674,8 @@ function App() {
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <h2 className="story-beat-headline">Three woods. Three stories. No two have ever been the same.</h2>
-          <p className="story-beat-text" style={{marginBottom: 48}}>Each dial is cut from a real tree. The grain is the design.</p>
+          <p className="story-beat-text">Each dial is cut from a real tree. The grain is the design.</p>
+          <p className="story-beat-origins">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</p>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Starts orange. Darkens to deep burgundy over years. The only watch dial that changes color with time.' },
