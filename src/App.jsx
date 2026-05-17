@@ -678,9 +678,9 @@ function App() {
           <p className="story-beat-origins">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</p>
           <div className="wood-grid">
             {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', price: '$375', desc: 'When you cut Padauk, it bleeds orange. Over years on your wrist, it darkens to a deep burgundy. No finish can stop it. The wood decides what it becomes. Your watch at graduation will not look like your watch at 25.' },
-              { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Ancient Egyptians imported Ebony from hundreds of miles south of the Sahara. They used it for Tutankhamun\'s chair and the doors of his shrine. Nearly black with razor-thin grain lines. It doesn\'t change. It doesn\'t fade. Permanent.' },
-              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', price: '$299', desc: 'Japan\'s sacred cypress. The wood used to build the Ise Jingu shrine, one of the most sacred sites in Japan, rebuilt every 20 years for over 1,300 years. Hinoki gets stronger for 200 years after it\'s cut. It resists rot, insects, and time. Soft golden grain with a clean, forest-like scent.' },
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'When you cut Padauk, it bleeds orange. Over years on your wrist, it darkens to a deep burgundy. No finish can stop it. The wood decides what it becomes. Your watch at graduation will not look like your watch at 25.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Ancient Egyptians imported Ebony from hundreds of miles south of the Sahara. They used it for Tutankhamun\'s chair and the doors of his shrine. Nearly black with razor-thin grain lines. It doesn\'t change. It doesn\'t fade. Permanent.' },
+              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. The wood used to build the Ise Jingu shrine, one of the most sacred sites in Japan, rebuilt every 20 years for over 1,300 years. Hinoki gets stronger for 200 years after it\'s cut. It resists rot, insects, and time. Soft golden grain with a clean, forest-like scent.' },
             ].map(w => (
               <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
