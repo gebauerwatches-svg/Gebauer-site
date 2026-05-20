@@ -104,6 +104,7 @@ function App() {
   const [pollGated, setPollGated] = useState(false)
   const [milestoneStory, setMilestoneStory] = useState('')
   const [hasSubmittedStory, setHasSubmittedStory] = useState(() => localStorage.getItem('gebauer_story_submitted') === 'true')
+  const [myMoment, setMyMoment] = useState(() => localStorage.getItem('gebauer_my_moment') || '')
   const [communityStories, setCommunityStories] = useState([])
   const [storyCount, setStoryCount] = useState(0)
 
@@ -128,6 +129,10 @@ function App() {
         if (d.has_story) {
           localStorage.setItem('gebauer_story_submitted', 'true')
           setHasSubmittedStory(true)
+          if (d.story && !localStorage.getItem('gebauer_my_moment')) {
+            localStorage.setItem('gebauer_my_moment', d.story)
+            setMyMoment(d.story)
+          }
         }
       }).catch(() => {})
     }
@@ -314,7 +319,9 @@ function App() {
               body: JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), story: milestoneStory.trim() }),
             }).catch(() => {})
             localStorage.setItem('gebauer_story_submitted', 'true')
+            localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
             setHasSubmittedStory(true)
+            setMyMoment(milestoneStory.trim())
             setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
             setStoryCount(prev => prev + 1)
           }
@@ -330,7 +337,9 @@ function App() {
         localStorage.setItem('gebauer_name', firstName.trim())
         if (milestoneStory.trim()) {
           localStorage.setItem('gebauer_story_submitted', 'true')
+          localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
           setHasSubmittedStory(true)
+          setMyMoment(milestoneStory.trim())
           setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
           setStoryCount(prev => prev + 1)
         }
@@ -532,17 +541,34 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">These are the moments people are holding onto.</h2>
-          {communityStories.length > 0 && (
-            <div className="community-stories">
-              {communityStories.slice(0, 6).map((s, i) => (
-                <div key={i} className="community-story">
-                  <p className="community-story-text">"{s.story}"</p>
-                  <p className="community-story-name">{s.name}</p>
+          {hasSubmittedStory ? (
+            <>
+              {myMoment && (
+                <div className="my-moment-card">
+                  <p className="my-moment-label">YOUR MOMENT</p>
+                  <p className="my-moment-text">"{myMoment}"</p>
+                  <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
                 </div>
-              ))}
+              )}
+              {communityStories.length > 0 && (
+                <div className="community-stories">
+                  {communityStories.slice(0, 6).map((s, i) => (
+                    <div key={i} className="community-story">
+                      <p className="community-story-text">"{s.story}"</p>
+                      <p className="community-story-name">{s.name}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="story-count-line">{storyCount} moments submitted. 300 watches.</p>
+            </>
+          ) : (
+            <div className="moments-locked">
+              <p className="moments-locked-count">{storyCount > 0 ? `${storyCount} moments shared so far.` : 'Be the first to share yours.'}</p>
+              <p className="moments-locked-msg">Share your moment to read theirs.</p>
+              <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
             </div>
           )}
-          <p className="story-count-line">{storyCount > 0 ? `${storyCount} moments submitted` : 'Be the first to share yours'}. 300 watches.</p>
         </div>
       </Reveal>
 

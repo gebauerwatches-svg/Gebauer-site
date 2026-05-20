@@ -14,12 +14,13 @@ export async function onRequestGet(context) {
 
   try {
     const resp = await fetch(
-      `${url}/rest/v1/milestone_stories?email=eq.${encodeURIComponent(email.trim().toLowerCase())}&select=id&limit=1`,
+      `${url}/rest/v1/milestone_stories?email=eq.${encodeURIComponent(email.trim().toLowerCase())}&select=id,story&order=created_at.desc&limit=1`,
       { headers: { 'apikey': key, 'Authorization': `Bearer ${key}` } }
     )
     const data = await resp.json().catch(() => [])
-    return json({ has_story: Array.isArray(data) && data.length > 0 })
+    const has = Array.isArray(data) && data.length > 0
+    return json({ has_story: has, story: has ? data[0].story : '' })
   } catch {
-    return json({ has_story: false })
+    return json({ has_story: false, story: '' })
   }
 }
