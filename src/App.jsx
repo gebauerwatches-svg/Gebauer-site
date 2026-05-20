@@ -467,7 +467,7 @@ function App() {
           <h1 className="hero-headline fade-in">
             Welcome to Gebauer.
           </h1>
-          <p className="hero-tagline fade-in-delay-1">Watches for the moments that matter.</p>
+          <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
           <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Hear the Story</a>
@@ -772,7 +772,7 @@ function App() {
       {/* FOOTER */}
       <footer className="site-footer">
         <img src={logo} alt="Gebauer" className="footer-logo" />
-        <p className="footer-tagline">Crafted in Japan. Built to age with you.</p>
+        <p className="footer-tagline">Made in Minamisoma, Japan. Boxed in Bergamo, Italy.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
         <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
       </footer>
