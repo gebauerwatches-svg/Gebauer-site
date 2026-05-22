@@ -606,7 +606,7 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">But I had no idea where to start.</h2>
-          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed manufacturers in five countries. Most ignored me. Then Tokiji in Japan replied. Then To Be Packaging in Italy.</p>
+          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed manufacturers in five countries. Most ignored me. Then one in Japan replied. Then one in Italy.</p>
         </div>
       </Reveal>
 
