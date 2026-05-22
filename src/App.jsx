@@ -513,36 +513,38 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. From there it snowballed. Watch stores in every city. Watches from $30 to $30,000. But something else was nagging at me.</p>
         </div>
       </Reveal>
 
+      {/* Direct-address beat — flips from Liam's experience to the reader's. The phone problem is universal. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I started visiting watch stores every chance I got.</h2>
-          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me.</p>
+          <h2 className="story-beat-headline">You probably do the same thing.</h2>
+          <p className="story-beat-text">Pick up the phone to check the time. Twenty minutes later you don't even remember what you were doing. The phone wins. Every time. And the more we lose to a screen, the more the things that aren't a screen start to feel like the real thing.</p>
         </div>
       </Reveal>
 
+      {/* Universal milestone pain — every reader has experienced this. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I'd graduated middle school five months earlier. And something was missing.</h2>
-          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. So I started asking around. Friends, parents, even teachers. Almost everyone said the same thing. A card. A gift card. A new phone. Nothing that actually marked the moment. Nothing you'd still want at 25.</p>
+          <h2 className="story-beat-headline">Then there are the moments that actually matter.</h2>
+          <p className="story-beat-text">Graduations. Sixteenth birthdays. The first apartment. The first big move. What marks them? A pat on the back. A card. A gift card. Maybe another phone, which is half the problem. Nothing you'll still want at 25. Nothing that knows you.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's when Gebauer was born.</h2>
-          <p className="story-beat-text">A watch for the moments that matter but don't have a gift yet. Graduations. Sixteenth birthdays. The first big move. The wins nobody else notices but you'll remember for the rest of your life.</p>
+          <h2 className="story-beat-headline">That's why Gebauer exists.</h2>
+          <p className="story-beat-text">A watch for the moments that matter but don't have a gift yet. Built to last a wedding, a trip, a life. The wood remembers what you did with it. The scratches are yours. So is the patina. So is the number on the caseback.</p>
         </div>
       </Reveal>
 
       {/* Co-design beat — surfaces community/co-design BEFORE the watches reveal so people land on the product knowing this is something they help shape, not just buy */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">This isn't a store. It's a workshop with the door open.</h2>
-          <p className="story-beat-text">The OGs aren't waiting in line. They're voting on every detail. Box material. Clasp style. Caseback engraving. Crown shape. The watch you're about to see has been shaped by {waitlistCount} people already. The wood grain is yours. The design is ours.</p>
+          <h2 className="story-beat-headline">And you don't just buy it. You help build it.</h2>
+          <p className="story-beat-text">{waitlistCount} people are already inside, voting every three days on real design decisions. Box material. Clasp style. Caseback engraving. Crown shape. The watch you're about to see has been shaped by them. The wood grain will be yours. The design is ours.</p>
           <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
         </div>
       </Reveal>
