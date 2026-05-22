@@ -560,9 +560,9 @@ function App() {
           </div>
           <div className="wood-grid">
             {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Bleeds orange when cut. A wood that lives. And it doesn\'t stop changing.' },
-              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
-              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', price: '$375', desc: 'Bleeds orange when cut. A wood that lives. And it doesn\'t stop changing.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
+              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', price: '$299', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
             ].map(w => (
               <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
