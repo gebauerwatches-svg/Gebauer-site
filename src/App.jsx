@@ -560,7 +560,7 @@ function App() {
           </div>
           <div className="wood-grid">
             {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Bleeds orange when cut. A wood that lives. Something else about Padauk we\'ll show you in a second.' },
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Bleeds orange when cut. A wood that lives. And it doesn\'t stop changing.' },
               { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
               { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
             ].map(w => (
@@ -599,6 +599,22 @@ function App() {
               </div>
             )
           })()}
+
+          {/* Padauk transformation moved inside the watches section so all product info lives in one place. */}
+          <div className="padauk-transform">
+            <p className="padauk-transform-label">And one more thing about Padauk</p>
+            <div className="watch-compare">
+              <div className="watch-compare-item">
+                <img src={watchPadauk} alt="Padauk, day one" />
+                <p>Day one</p>
+              </div>
+              <div className="watch-compare-item">
+                <img src={padaukDeep} alt="Padauk, years later" />
+                <p>Years later</p>
+              </div>
+            </div>
+            <p className="padauk-transform-text">It shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+          </div>
         </div>
       </Reveal>
 
@@ -618,30 +634,11 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 7 — "we" not "me". This is what makes the Padauk reveal land — the community made these calls. */}
+      {/* SCENE 7 — "we" not "me". Sets up the workshop / live poll. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. Every detail of what you just saw was shaped by them. Including the wood that surprises everyone.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 8 — the Padauk surprise. Reframed back to genuine surprise (not "almost killed"). */}
-      <Reveal className="story-beat story-cream story-twist">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <p className="twist-pre-label">About Padauk</p>
-          <h2 className="story-beat-headline">Wait until you see what it does.</h2>
-          <div className="watch-compare">
-            <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk, day one" />
-              <p>Day one</p>
-            </div>
-            <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk, years later" />
-              <p>Years later</p>
-            </div>
-          </div>
-          <p className="story-beat-text">It shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. Every detail of what you just saw was shaped by them. And the next decision is open right now.</p>
         </div>
       </Reveal>
 
