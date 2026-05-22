@@ -600,9 +600,10 @@ function App() {
             )
           })()}
 
-          {/* Padauk transformation moved inside the watches section so all product info lives in one place. */}
+          {/* Padauk transformation — small label, BIG reveal headline that pops on the dark background */}
           <div className="padauk-transform">
-            <p className="padauk-transform-label">And one more thing about Padauk</p>
+            <p className="padauk-transform-label">About Padauk</p>
+            <h3 className="padauk-transform-headline">Here's the crazy part.</h3>
             <div className="watch-compare">
               <div className="watch-compare-item">
                 <img src={watchPadauk} alt="Padauk, day one" />
@@ -613,7 +614,7 @@ function App() {
                 <p>Years later</p>
               </div>
             </div>
-            <p className="padauk-transform-text">It shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+            <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
           </div>
         </div>
       </Reveal>
