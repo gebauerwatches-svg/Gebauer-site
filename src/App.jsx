@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react'
-import TechnicalDrawing from './TechnicalDrawing'
 import logo from './assets/gebauer-logo.svg'
 import kitchenTable from './assets/kitchen-table.jpeg'
 import watchEbony from './assets/gebauer-ebony-watch.jpeg'
@@ -509,15 +508,34 @@ function App() {
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
       </Reveal>
 
-      {/* The story — compressed to one beat with a technical drawing of the Gebauer (not the Seiko) */}
+      {/* The story — the part people loved. Kept the original Milan beat with the Seiko photo. */}
       <Reveal className="story-beat story-milan" id="story">
-        <div className="story-milan-drawing">
-          <TechnicalDrawing />
-        </div>
+        <img src={seikoWrist} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">Your milestone doesn't have a gift yet.</h2>
-          <p className="story-beat-text">Graduations. Sixteenth birthdays. The first big move. Right now they're marked with a card and a gift card. We're building the one thing that lasts. A watch designed for the moments worth remembering, with a real wood dial that ages with you. Built by a 14-year-old who got tired of his phone in Milan and started paying attention to what was missing.</p>
+          <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I started visiting watch stores every chance I got.</h2>
+          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me.</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I'd graduated middle school five months earlier. And something was missing.</h2>
+          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. No gift that marked the moment. Nothing I could look at in 10 years and remember how it felt. That's when I put the two pieces together.</p>
+        </div>
+      </Reveal>
+
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Watches and milestones. That's when Gebauer was born.</h2>
+          <p className="story-beat-text">I asked my friends, other teens, even teachers what they did to celebrate milestones. For the really big ones like graduation, most travelled. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
           <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
         </div>
       </Reveal>
