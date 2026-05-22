@@ -544,7 +544,7 @@ function App() {
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
-          <h2 className="story-beat-headline">Made in Minamisoma, Japan. Boxed in Bergamo, Italy.</h2>
+          <h2 className="story-beat-headline">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</h2>
           <p className="story-beat-text">Three woods. Three stories. No two have ever been the same. Each dial is cut from a real tree. The grain is the design.</p>
           <div className="wood-grid">
             {[
