@@ -527,14 +527,22 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">I'd graduated middle school five months earlier. And something was missing.</h2>
-          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. No gift that marked the moment. Nothing I could look at in 10 years and remember how it felt. That's when I put the two pieces together.</p>
+          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. So I started asking around. Friends, parents, even teachers. Almost everyone said the same thing. A card. A gift card. A new phone. Nothing that actually marked the moment. Nothing you'd still want at 25.</p>
         </div>
       </Reveal>
 
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Watches and milestones. That's when Gebauer was born.</h2>
-          <p className="story-beat-text">I asked my friends, other teens, even teachers what they did to celebrate milestones. For the really big ones like graduation, most travelled. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
+          <h2 className="story-beat-headline">That's when Gebauer was born.</h2>
+          <p className="story-beat-text">A watch for the moments that matter but don't have a gift yet. Graduations. Sixteenth birthdays. The first big move. The wins nobody else notices but you'll remember for the rest of your life.</p>
+        </div>
+      </Reveal>
+
+      {/* Co-design beat — surfaces community/co-design BEFORE the watches reveal so people land on the product knowing this is something they help shape, not just buy */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">This isn't a store. It's a workshop with the door open.</h2>
+          <p className="story-beat-text">The OGs aren't waiting in line. They're voting on every detail. Box material. Clasp style. Caseback engraving. Crown shape. The watch you're about to see has been shaped by {waitlistCount} people already. The wood grain is yours. The design is ours.</p>
           <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
         </div>
       </Reveal>
@@ -543,8 +551,25 @@ function App() {
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
-          <h2 className="story-beat-headline">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</h2>
-          <p className="story-beat-text">Three woods. Three stories. No two have ever been the same. Each dial is cut from a real tree. The grain is the design.</p>
+          <h2 className="story-beat-headline">Three woods. Three stories. No two have ever been the same.</h2>
+          <p className="story-beat-text">Each dial is cut from a real tree. The grain is the design.</p>
+          <div className="origin-badge">
+            <div className="origin-col">
+              <p className="origin-label">Assembled in</p>
+              <p className="origin-place">Minamisoma</p>
+              <p className="origin-country">Japan</p>
+            </div>
+            <div className="origin-col">
+              <p className="origin-label">Boxed in</p>
+              <p className="origin-place">Bergamo</p>
+              <p className="origin-country">Italy</p>
+            </div>
+            <div className="origin-col">
+              <p className="origin-label">Designed in</p>
+              <p className="origin-place">Steamboat Springs</p>
+              <p className="origin-country">Colorado</p>
+            </div>
+          </div>
           <div className="wood-grid">
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'When you cut Padauk, it bleeds orange. A wood that lives. The grain catches the light differently than anything else on the wrist. There\'s something else about Padauk too. We\'ll show you in a second.' },

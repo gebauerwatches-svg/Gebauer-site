@@ -78,7 +78,7 @@
 .hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
 .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.45) 0%, rgba(15, 13, 20, 0.75) 60%, rgba(15, 13, 20, 0.95) 100%); }
 .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 28px; max-width: 700px; }
-.hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(44px, 10vw, 88px); line-height: 1.08; color: var(--text-primary); margin-bottom: 24px; letter-spacing: -0.02em; }
+.hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(32px, 6vw, 56px); line-height: 1.12; color: var(--text-primary); margin-bottom: 24px; letter-spacing: -0.01em; max-width: 640px; }
 .hero-accent { color: var(--gold); font-style: italic; font-weight: 400; display: block; }
 .hero-tagline { font-family: 'Inter', sans-serif; font-weight: 500; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: #ffffff; margin: 0 auto 16px; }
 .hero-sub { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-style: italic; font-size: clamp(20px, 3.5vw, 28px); line-height: 1.5; color: #ffffff; opacity: 0.9; max-width: 550px; margin: 0 auto 32px; }
@@ -170,6 +170,38 @@
   font-family: 'Inter', sans-serif; font-size: 12px;
   letter-spacing: 0.28em; text-transform: uppercase;
   color: var(--gold); margin: 0 0 18px;
+}
+
+/* Three-column origin badge — replaces the wall-of-text "Assembled in..." line.
+   Visually distinctive, scannable in a glance, more memorable than a paragraph. */
+.origin-badge {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px; max-width: 600px; margin: 32px auto 40px;
+  padding: 22px 24px; border-top: 1px solid rgba(196,149,42,0.3);
+  border-bottom: 1px solid rgba(196,149,42,0.3);
+}
+.origin-col { text-align: center; }
+.origin-label {
+  font-family: 'Inter', sans-serif; font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: rgba(196,149,42,0.75); margin: 0 0 6px;
+}
+.origin-place {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(15px, 2.6vw, 20px); font-weight: 500;
+  color: var(--text-primary); margin: 0; line-height: 1.2;
+}
+.origin-country {
+  font-family: 'Inter', sans-serif; font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55); margin: 4px 0 0;
+}
+.story-cream .origin-place { color: var(--text-dark); }
+.story-cream .origin-country { color: rgba(15,13,20,0.55); }
+@media (max-width: 600px) {
+  .origin-badge { grid-template-columns: 1fr; gap: 16px; padding: 20px 16px; }
+  .origin-col { padding-bottom: 12px; border-bottom: 1px solid rgba(196,149,42,0.15); }
+  .origin-col:last-child { border-bottom: none; padding-bottom: 0; }
 }
 
 /* Padauk transformation surprise reveal — different visual treatment from regular story beats so it FEELS like a reveal */
