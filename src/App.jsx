@@ -509,33 +509,55 @@ function App() {
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
       </Reveal>
 
-      {/* The story — the part people loved. Kept the original Milan beat with the Seiko photo. */}
+      {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
       <Reveal className="story-beat story-milan" id="story">
         <img src={seikoWrist} alt="" className="story-milan-bg" />
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. But something else was on my mind. Five months earlier I'd graduated middle school. Got a pat on the back. Went to a restaurant. That was it. Every milestone, every birthday, every graduation — they all ended the same way.</p>
+          <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch in Milan.</h2>
+          <p className="story-beat-text">Walked into a Seiko store with 310 euros. No notifications. No swipes. Just the time. My three siblings saw it. They wanted one too.</p>
         </div>
       </Reveal>
 
-      {/* The gift card problem — every parent has given one. Every kid has received one. Universal. */}
+      {/* SCENE 2 — Liam's own gift card pain. Specific, embarrassing, relatable. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Look. We get it. Gift cards are the standard.</h2>
-          <p className="story-beat-text">The thinking goes: let the kid spend it on something they actually want. Here's the thing. They don't. Hot chocolate. Candy. A new soccer ball. That's it. A milestone that should mean something, spent on nothing memorable. A beautiful moment, gone.</p>
+          <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
+          <p className="story-beat-text">I spent one on pants I grew out of. A plant that sits in my room doing nothing. The graduation one bought a snack at the airport. None of it stuck. None of it marked anything.</p>
         </div>
       </Reveal>
 
-      {/* The solution beat — frames Gebauer as the literal opposite of a gift card. */}
+      {/* SCENE 3 — the insight. Punchy. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Then I put it together.</h2>
+          <p className="story-beat-text">A watch doesn't beep. Doesn't go out of style. Made from a tree, not plastic. It ages with you. The literal opposite of a gift card.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 4 — vulnerability. The kid had no clue what he was doing. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Your kid deserves more than a gift card. They deserve a Gebauer.</h2>
-          <p className="story-beat-text">The opposite of a gift card. Made from a tree, not plastic. Doesn't expire. Doesn't go out of style like pants. The watch they put on at 16 is the watch they'll wear at 60. The wood remembers what they did with it.</p>
+          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
+          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed watch manufacturers in five countries. Most ignored me. Then Tokiji in Japan replied. Then To Be Packaging in Italy.</p>
         </div>
       </Reveal>
 
-      {/* Co-design beat was here — moved AFTER the Padauk reveal so it reads "you've seen the watch, now help finish it" instead of vague pre-reveal setup */}
+      {/* SCENE 5 — community emerges as a natural consequence, not a marketing beat. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
+          <p className="story-beat-text">{waitlistCount} people signed up before I even had a watch to show. They started asking what I was actually making. So I asked them back.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 6 — "we" not "me". Sets up the watches reveal as something they helped build. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
+          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. What you're about to see was shaped by them. The watch in production right now is the watch we picked, together.</p>
+        </div>
+      </Reveal>
 
       {/* The watch — comes right after "they deserve a Gebauer" so the reveal lands as the emotional payoff */}
       <Reveal className="story-beat story-dark" id="watches">
@@ -604,11 +626,11 @@ function App() {
         </div>
       </Reveal>
 
-      {/* The surprise — Padauk transforms. The "what no way" moment. Stays close to the watches reveal so the visual punch lands while Padauk is fresh in mind. */}
+      {/* SCENE 8 — the surprise reframed as a community decision: the OGs almost cut Padauk before realizing what it does. */}
       <Reveal className="story-beat story-cream story-twist">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <p className="twist-pre-label">About Padauk</p>
-          <h2 className="story-beat-headline">Wait. It does what?</h2>
+          <h2 className="story-beat-headline">The OGs almost killed Padauk. Then they saw this.</h2>
           <div className="watch-compare">
             <div className="watch-compare-item">
               <img src={watchPadauk} alt="Padauk, day one" />
@@ -619,15 +641,15 @@ function App() {
               <p>Years later</p>
             </div>
           </div>
-          <p className="story-beat-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. Every mark it picks up is yours. The wood remembers what you did with it.</p>
+          <p className="story-beat-text">It shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
         </div>
       </Reveal>
 
-      {/* Co-design beat — placed AFTER the watch reveal so it lands as "you've seen it, now help finish it" instead of a vague pre-reveal promise. Leads directly into the live polls below. */}
+      {/* SCENE 9 — the workshop is still open. The next decision is live. You're not joining a finished thing. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">This watch isn't finished. You finish it.</h2>
-          <p className="story-beat-text">Every detail still gets a vote. The box material. The clasp. The caseback engraving. The crown shape. Every three days, {waitlistCount} people inside pick what comes next. The wood grain will be yours. The design is ours, together.</p>
+          <h2 className="story-beat-headline">The workshop is still open.</h2>
+          <p className="story-beat-text">There's a vote happening right now. The next one drops in days. You're not joining a finished thing. You're walking in mid-build.</p>
         </div>
       </Reveal>
 
@@ -745,10 +767,10 @@ function App() {
         </Reveal>
       )}
 
-      {/* The moments — community stories + signup */}
+      {/* SCENE 11 — the workshop wall. Pinned moments from OGs. Yours could be next. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">These are the moments people are holding onto.</h2>
+          <h2 className="story-beat-headline">These are pinned on the workshop wall.</h2>
           {hasSubmittedStory ? (
             <>
               {myMoment && (
@@ -790,8 +812,8 @@ function App() {
             <span className="og-number">300</span>
             <span className="og-label">watches</span>
           </div>
-          <h2 className="story-beat-headline">That's the story so far. The rest hasn't been written yet.</h2>
-          <p className="story-beat-text">300 watches. Each one ships with a card inside the box. On it is the moment you submitted when you joined. Your moment, printed, permanent. But only if you share it.</p>
+          <h2 className="story-beat-headline">This is the door.</h2>
+          <p className="story-beat-text">Beyond it: the next vote, the next drop, the card that ships in your box with the moment you submitted. 300 watches. Numbered in the order people joined. Once 300 is gone, it's gone.</p>
           <div className="invitation-buttons">
             <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
             {email && (
