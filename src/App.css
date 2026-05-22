@@ -215,27 +215,25 @@
   color: var(--gold); margin: 0 0 16px;
 }
 
-/* Padauk transformation rendered INSIDE the watches section. Small label + BIG reveal headline so it POPS off the dark background — this is the "wait what" moment. */
-.padauk-transform {
-  margin-top: 72px; padding-top: 56px;
-  border-top: 1px solid rgba(196,149,42,0.25);
-}
+/* Padauk reveal — full cream-background beat right after the dark watches section.
+   The dark → cream jump creates the "holy moley" visual punch. */
+.padauk-reveal { padding: 110px 28px; }
 .padauk-transform-label {
   font-family: 'Inter', sans-serif; font-size: 11px;
   letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold); margin: 0 0 12px;
+  color: var(--gold); margin: 0 0 16px;
 }
 .padauk-transform-headline {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-weight: 400; font-size: clamp(32px, 6vw, 52px);
-  line-height: 1.1; color: #ffffff; margin: 0 0 36px;
+  font-weight: 400; font-size: clamp(36px, 7vw, 64px);
+  line-height: 1.05; color: var(--text-dark); margin: 0 0 44px;
   letter-spacing: -0.01em;
 }
 .padauk-transform-text {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: clamp(17px, 2.4vw, 21px); line-height: 1.55;
-  color: rgba(255,255,255,0.85); max-width: 600px;
-  margin: 32px auto 0;
+  color: rgba(15,13,20,0.78); max-width: 600px;
+  margin: 36px auto 0;
 }
 .story-beat-over { position: relative; z-index: 1; }
 .story-milan .story-beat-headline { color: #ffffff; }

@@ -600,22 +600,25 @@ function App() {
             )
           })()}
 
-          {/* Padauk transformation — small label, BIG reveal headline that pops on the dark background */}
-          <div className="padauk-transform">
-            <p className="padauk-transform-label">About Padauk</p>
-            <h3 className="padauk-transform-headline">Here's the crazy part.</h3>
-            <div className="watch-compare">
-              <div className="watch-compare-item">
-                <img src={watchPadauk} alt="Padauk, day one" />
-                <p>Day one</p>
-              </div>
-              <div className="watch-compare-item">
-                <img src={padaukDeep} alt="Padauk, years later" />
-                <p>Years later</p>
-              </div>
+        </div>
+      </Reveal>
+
+      {/* Padauk transformation — pulled OUT of the watches section onto its own cream-background beat so the visual jump from dark watches → cream reveal creates the "holy moley" moment. Sits immediately after the watches so all product info is still adjacent. */}
+      <Reveal className="story-beat story-cream padauk-reveal">
+        <div className="story-beat-inner" style={{textAlign: 'center', maxWidth: 760}}>
+          <p className="padauk-transform-label">About Padauk</p>
+          <h3 className="padauk-transform-headline">Here's the crazy part.</h3>
+          <div className="watch-compare">
+            <div className="watch-compare-item">
+              <img src={watchPadauk} alt="Padauk, day one" />
+              <p>Day one</p>
             </div>
-            <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+            <div className="watch-compare-item">
+              <img src={padaukDeep} alt="Padauk, years later" />
+              <p>Years later</p>
+            </div>
           </div>
+          <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
         </div>
       </Reveal>
 
