@@ -525,18 +525,19 @@ function App() {
         </div>
       </Reveal>
 
-      {/* Universal milestone pain — every reader has experienced this. */}
+      {/* The gift card problem — every parent has given one. Every kid has received one. Universal. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then there are the moments that actually matter.</h2>
-          <p className="story-beat-text">Graduations. Sixteenth birthdays. The first apartment. The first big move. What marks them? A pat on the back. A card. A gift card. Maybe another phone, which is half the problem. Nothing you'll still want at 25. Nothing that knows you.</p>
+          <h2 className="story-beat-headline">Look. We get it. Gift cards are the standard.</h2>
+          <p className="story-beat-text">The thinking goes: let the kid spend it on something they actually want. Here's the thing. They don't. Hot chocolate. Candy. A new soccer ball. That's it. A milestone that should mean something, spent on nothing memorable. A beautiful moment, gone.</p>
         </div>
       </Reveal>
 
+      {/* The solution beat — frames Gebauer as the literal opposite of a gift card. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's why Gebauer exists.</h2>
-          <p className="story-beat-text">A watch for the moments that matter but don't have a gift yet. Built to last a wedding, a trip, a life. The wood remembers what you did with it. The scratches are yours. So is the patina. So is the number on the caseback.</p>
+          <h2 className="story-beat-headline">Your kid deserves more than a gift card. They deserve a Gebauer.</h2>
+          <p className="story-beat-text">A one-of-one wood dial that changes with them. Made from a tree, not plastic. The opposite of a gift card. Watches don't go in and out of style like pants. They're timeless. The watch they put on at 16 is the watch they'll wear at 60.</p>
         </div>
       </Reveal>
 
