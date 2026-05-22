@@ -480,7 +480,9 @@ function App() {
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Hear the Story</a>
             <a href="#watches" className="hero-stats-btn">See the Watches</a>
-            <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
+            {email && (
+              <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
+            )}
           </div>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
@@ -513,7 +515,7 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. From there it snowballed. Watch stores in every city. Watches from $30 to $30,000. But something else was on my mind. Every milestone, every birthday, every graduation — they all ended the same way.</p>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. But something else was on my mind. Every milestone, every birthday, every graduation — they all ended the same way.</p>
         </div>
       </Reveal>
 
@@ -529,7 +531,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Your kid deserves more than a gift card. They deserve a Gebauer.</h2>
-          <p className="story-beat-text">A one-of-one wood dial that changes with them. Made from a tree, not plastic. The opposite of a gift card. Watches don't go in and out of style like pants. They're timeless. The watch they put on at 16 is the watch they'll wear at 60.</p>
+          <p className="story-beat-text">The opposite of a gift card. Made from a tree, not plastic. Doesn't expire. Doesn't go out of style like pants. The watch they put on at 16 is the watch they'll wear at 60. The wood remembers what they did with it.</p>
         </div>
       </Reveal>
 
@@ -537,7 +539,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">And you don't just buy it. You help build it.</h2>
-          <p className="story-beat-text">{waitlistCount} people are already inside, voting every three days on real design decisions. Box material. Clasp style. Caseback engraving. Crown shape. The watch you're about to see has been shaped by them. The wood grain will be yours. The design is ours.</p>
+          <p className="story-beat-text">Box material. Clasp style. Caseback engraving. Crown shape. Every detail is voted on by {waitlistCount} people inside. The wood grain will be yours. The rest is ours, together.</p>
           <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
         </div>
       </Reveal>
@@ -567,9 +569,9 @@ function App() {
           </div>
           <div className="wood-grid">
             {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'When you cut Padauk, it bleeds orange. A wood that lives. The grain catches the light differently than anything else on the wrist. There\'s something else about Padauk too. We\'ll show you in a second.' },
-              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Ancient Egyptians imported Ebony from hundreds of miles south of the Sahara. They used it for Tutankhamun\'s chair and the doors of his shrine. Nearly black with razor-thin grain lines. It doesn\'t change. It doesn\'t fade. Permanent.' },
-              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. The wood used to build the Ise Jingu shrine, one of the most sacred sites in Japan, rebuilt every 20 years for over 1,300 years. Hinoki gets stronger for 200 years after it\'s cut. It resists rot, insects, and time. Soft golden grain with a clean, forest-like scent.' },
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'Bleeds orange when cut. A wood that lives. Something else about Padauk we\'ll show you in a second.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
+              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
             ].map(w => (
               <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
@@ -660,15 +662,6 @@ function App() {
               <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
             </div>
           )}
-        </div>
-      </Reveal>
-
-      <Reveal className="story-beat story-dark story-center">
-        <div className="story-beat-inner" style={{textAlign: 'center', maxWidth: 500}}>
-          <h2 className="story-beat-headline" style={{color: '#fff'}}>If you could relive one moment, which one?</h2>
-          <p className="story-beat-text" style={{color: 'rgba(255,255,255,0.7)', marginBottom: 28}}>The people shaping this watch are the ones who answered. Your moment gets printed on a card inside your box when it ships. But only if you share it.</p>
-          <button className="story-cta" onClick={() => setShowSignup(true)} style={{width: '100%'}}>Share My Moment</button>
-          <a href="#watches" className="story-share" style={{display: 'inline-block', marginTop: 16}}>See the Watches</a>
         </div>
       </Reveal>
 
