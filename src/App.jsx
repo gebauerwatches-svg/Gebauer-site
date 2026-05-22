@@ -519,43 +519,19 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 2 — Liam's own gift card pain. Specific, embarrassing, relatable. */}
+      {/* SCENE 2 — Liam's own gift card pain. Specific (middle school grad), embarrassing, relatable. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
-          <p className="story-beat-text">I spent one on pants I grew out of. A plant that sits in my room doing nothing. The graduation one bought a snack at the airport. None of it stuck. None of it marked anything.</p>
+          <p className="story-beat-text">I spent one on pants I grew out of. A plant that sits in my room doing nothing. My middle school graduation gift card bought a snack at the airport. None of it stuck. None of it marked anything.</p>
         </div>
       </Reveal>
 
-      {/* SCENE 3 — the insight. Punchy. */}
+      {/* SCENE 3 — the insight. Tees up the watches reveal that comes immediately after. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Then I put it together.</h2>
-          <p className="story-beat-text">A watch doesn't beep. Doesn't go out of style. Made from a tree, not plastic. It ages with you. The literal opposite of a gift card.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 4 — vulnerability. The kid had no clue what he was doing. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
-          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed watch manufacturers in five countries. Most ignored me. Then Tokiji in Japan replied. Then To Be Packaging in Italy.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 5 — community emerges as a natural consequence, not a marketing beat. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
-          <p className="story-beat-text">{waitlistCount} people signed up before I even had a watch to show. They started asking what I was actually making. So I asked them back.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 6 — "we" not "me". Sets up the watches reveal as something they helped build. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. What you're about to see was shaped by them. The watch in production right now is the watch we picked, together.</p>
+          <p className="story-beat-text">A watch. Made from wood, not plastic. Doesn't beep. Doesn't expire. Ages with you. The literal opposite of a gift card. So I started designing it.</p>
         </div>
       </Reveal>
 
@@ -626,11 +602,35 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 8 — the surprise reframed as a community decision: the OGs almost cut Padauk before realizing what it does. */}
+      {/* SCENE 5 — vulnerability. The kid had no clue. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
+          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed manufacturers in five countries. Most ignored me. Then Tokiji in Japan replied. Then To Be Packaging in Italy.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
+          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 7 — "we" not "me". This is what makes the Padauk reveal land — the community made these calls. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
+          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. Every detail of what you just saw was shaped by them. Including the wood that surprises everyone.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 8 — the Padauk surprise. Reframed back to genuine surprise (not "almost killed"). */}
       <Reveal className="story-beat story-cream story-twist">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <p className="twist-pre-label">About Padauk</p>
-          <h2 className="story-beat-headline">The OGs almost killed Padauk. Then they saw this.</h2>
+          <h2 className="story-beat-headline">Wait until you see what it does.</h2>
           <div className="watch-compare">
             <div className="watch-compare-item">
               <img src={watchPadauk} alt="Padauk, day one" />
