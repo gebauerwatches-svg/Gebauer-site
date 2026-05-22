@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import TechnicalDrawing from './TechnicalDrawing'
 import logo from './assets/gebauer-logo.svg'
 import kitchenTable from './assets/kitchen-table.jpeg'
 import watchEbony from './assets/gebauer-ebony-watch.jpeg'
@@ -487,53 +488,107 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* The story — Liam telling you at the kitchen table */}
+      {/* Social proof + 300 FOMO strip — right under hero so every visitor sees scarcity early */}
+      <Reveal className="proof-strip" as="section">
+        <div className="proof-strip-inner">
+          <div className="proof-stat">
+            <span className="proof-stat-num">{300 - Math.min(waitlistCount, 299)}</span>
+            <span className="proof-stat-label">spots left of 300</span>
+          </div>
+          <div className="proof-divider" />
+          <div className="proof-stat">
+            <span className="proof-stat-num">{waitlistCount}</span>
+            <span className="proof-stat-label">OGs already in</span>
+          </div>
+          <div className="proof-divider" />
+          <div className="proof-stat">
+            <span className="proof-stat-num">{storyCount > 0 ? storyCount : '—'}</span>
+            <span className="proof-stat-label">moments shared</span>
+          </div>
+        </div>
+        <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
+      </Reveal>
+
+      {/* The story — compressed to one beat with a technical drawing of the Gebauer (not the Seiko) */}
       <Reveal className="story-beat story-milan" id="story">
-        <img src={seikoWrist} alt="" className="story-milan-bg" />
+        <div className="story-milan-drawing">
+          <TechnicalDrawing />
+        </div>
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a watch store and bought one for 310 euros. No notifications. No distractions. Just the time. My three siblings got interested. And from there it just snowballed.</p>
+          <h2 className="story-beat-headline">Your milestone doesn't have a gift yet.</h2>
+          <p className="story-beat-text">Graduations. Sixteenth birthdays. The first big move. Right now they're marked with a card and a gift card. We're building the one thing that lasts. A watch designed for the moments worth remembering, with a real wood dial that ages with you. Built by a 14-year-old who got tired of his phone in Milan and started paying attention to what was missing.</p>
+          <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
         </div>
       </Reveal>
 
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I started visiting watch stores every chance I got.</h2>
-          <p className="story-beat-text">I held watches from $30 to $30,000 made by dozens of brands. I couldn't get enough. But around the same time, something else was bugging me.</p>
-        </div>
-      </Reveal>
-
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I'd graduated middle school five months earlier. And something was missing.</h2>
-          <p className="story-beat-text">I got a pat on the back and went to a restaurant. That was it. No gift that marked the moment. Nothing I could look at in 10 years and remember how it felt. That's when I put the two pieces together.</p>
-        </div>
-      </Reveal>
-
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Watches and milestones. That's when Gebauer was born.</h2>
-          <p className="story-beat-text">I started asking my friends, other teens, even teachers what they did to celebrate milestone moments. Most of them travelled for the really big ones like graduation. For the smaller ones, they went out or had a party. But for the stuff in between? Nothing. That's who this is for. The moments that matter but don't have a gift yet.</p>
-          <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Watches</a>
-        </div>
-      </Reveal>
-
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Since November 2025, I've spent two hours every day after school and homework building this.</h2>
-          <p className="story-beat-text">I've emailed manufacturers from five countries. Interviewed around 60 people. Built a waitlist of {waitlistCount}. And found a manufacturer in Japan who builds exactly what I had in mind. The OGs are the ones who got in before any of it existed. They vote on every detail. This isn't a store. It's a workshop, and the door is open.</p>
-          <div className="workshop-progress">
-            <div className="progress-step done">Design</div>
-            <div className="progress-line done" />
-            <div className="progress-step done">Manufacturer</div>
-            <div className="progress-line active" />
-            <div className="progress-step active">Samples</div>
-            <div className="progress-line" />
-            <div className="progress-step">Production</div>
-            <div className="progress-line" />
-            <div className="progress-step">Ship</div>
+      {/* The watch — moved up early so visitors see the product before scrolling deep */}
+      <Reveal className="story-beat story-dark" id="watches">
+        <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
+          <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
+          <h2 className="story-beat-headline">Three woods. Three stories. No two have ever been the same.</h2>
+          <p className="story-beat-text">Each dial is cut from a real tree. The grain is the design. The wood you pick becomes the watch only you own.</p>
+          <p className="story-beat-origins">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</p>
+          <div className="wood-grid">
+            {[
+              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'When you cut Padauk, it bleeds orange. A wood that lives. The grain catches the light differently than anything else on the wrist. There\'s something else about Padauk too. We\'ll show you in a second.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Ancient Egyptians imported Ebony from hundreds of miles south of the Sahara. They used it for Tutankhamun\'s chair and the doors of his shrine. Nearly black with razor-thin grain lines. It doesn\'t change. It doesn\'t fade. Permanent.' },
+              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. The wood used to build the Ise Jingu shrine, one of the most sacred sites in Japan, rebuilt every 20 years for over 1,300 years. Hinoki gets stronger for 200 years after it\'s cut. It resists rot, insects, and time. Soft golden grain with a clean, forest-like scent.' },
+            ].map(w => (
+              <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
+                <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
+                <h3>{w.name}</h3>
+                {w.price && <p className="wood-price">{w.price}</p>}
+                <p>{w.desc}</p>
+                {!woodSubmitted && (
+                  <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
+                    {woodVote === w.id ? 'Your pick' : 'This one'}
+                  </button>
+                )}
+              </div>
+            ))}
           </div>
+          {!woodSubmitted && woodVote && (
+            <button className="wood-submit-btn" onClick={handleWoodSubmit}>Lock In My Pick</button>
+          )}
+          {woodSubmitted && (() => {
+            const total = Object.values(woodResults).reduce((a, b) => a + b, 0) || 1
+            return (
+              <div className="wood-results">
+                {['padauk', 'ebony', 'hinoki'].map(w => {
+                  const count = woodResults[w] || 0
+                  const pct = Math.round((count / total) * 100)
+                  return (
+                    <div key={w} className={`wood-result-bar ${woodVote === w ? 'voted' : ''}`}>
+                      <span className="wood-result-name">{w === 'padauk' ? 'Padauk' : w === 'ebony' ? 'Ebony' : 'Hinoki'}</span>
+                      <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
+                      <span className="wood-result-pct">{pct}%</span>
+                    </div>
+                  )
+                })}
+                <p className="wood-result-total">{total} vote{total !== 1 ? 's' : ''}</p>
+              </div>
+            )
+          })()}
+        </div>
+      </Reveal>
+
+      {/* The surprise — Padauk transforms. The "what no way" moment. Stays close to the watches reveal so the visual punch lands while Padauk is fresh in mind. */}
+      <Reveal className="story-beat story-cream story-twist">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <p className="twist-pre-label">About Padauk</p>
+          <h2 className="story-beat-headline">Wait. It does what?</h2>
+          <div className="watch-compare">
+            <div className="watch-compare-item">
+              <img src={watchPadauk} alt="Padauk, day one" />
+              <p>Day one</p>
+            </div>
+            <div className="watch-compare-item">
+              <img src={padaukDeep} alt="Padauk, years later" />
+              <p>Years later</p>
+            </div>
+          </div>
+          <p className="story-beat-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. Every mark it picks up is yours. The wood remembers what you did with it.</p>
         </div>
       </Reveal>
 
@@ -695,74 +750,6 @@ function App() {
           </div>
         </Reveal>
       )}
-
-      {/* The watch — you've earned the reveal */}
-      <Reveal className="story-beat story-dark" id="watches">
-        <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Three woods. Three stories. No two have ever been the same.</h2>
-          <p className="story-beat-text">Each dial is cut from a real tree. The grain is the design.</p>
-          <p className="story-beat-origins">Assembled in Minamisoma, Japan. Boxed in Bergamo, Italy. Designed in Steamboat Springs, Colorado.</p>
-          <div className="wood-grid">
-            {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', desc: 'When you cut Padauk, it bleeds orange. Over years on your wrist, it darkens to a deep burgundy. No finish can stop it. The wood decides what it becomes. Your watch at graduation will not look like your watch at 25.' },
-              { id: 'ebony', img: watchEbony, name: 'Black Ebony', desc: 'Ancient Egyptians imported Ebony from hundreds of miles south of the Sahara. They used it for Tutankhamun\'s chair and the doors of his shrine. Nearly black with razor-thin grain lines. It doesn\'t change. It doesn\'t fade. Permanent.' },
-              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', desc: 'Japan\'s sacred cypress. The wood used to build the Ise Jingu shrine, one of the most sacred sites in Japan, rebuilt every 20 years for over 1,300 years. Hinoki gets stronger for 200 years after it\'s cut. It resists rot, insects, and time. Soft golden grain with a clean, forest-like scent.' },
-            ].map(w => (
-              <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
-                <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
-                <h3>{w.name}</h3>
-                {w.price && <p className="wood-price">{w.price}</p>}
-                <p>{w.desc}</p>
-                {!woodSubmitted && (
-                  <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
-                    {woodVote === w.id ? 'Your pick' : 'This one'}
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
-          {!woodSubmitted && woodVote && (
-            <button className="wood-submit-btn" onClick={handleWoodSubmit}>Lock In My Pick</button>
-          )}
-          {woodSubmitted && (() => {
-            const total = Object.values(woodResults).reduce((a, b) => a + b, 0) || 1
-            return (
-              <div className="wood-results">
-                {['padauk', 'ebony', 'hinoki'].map(w => {
-                  const count = woodResults[w] || 0
-                  const pct = Math.round((count / total) * 100)
-                  return (
-                    <div key={w} className={`wood-result-bar ${woodVote === w ? 'voted' : ''}`}>
-                      <span className="wood-result-name">{w === 'padauk' ? 'Padauk' : w === 'ebony' ? 'Ebony' : 'Hinoki'}</span>
-                      <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
-                      <span className="wood-result-pct">{pct}%</span>
-                    </div>
-                  )
-                })}
-                <p className="wood-result-total">{total} vote{total !== 1 ? 's' : ''}</p>
-              </div>
-            )
-          })()}
-        </div>
-      </Reveal>
-
-      {/* The twist — it changes */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">And here's the part no one expects.</h2>
-          <div className="watch-compare">
-            <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk, day one" />
-              <p>Day one</p>
-            </div>
-            <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk, years later" />
-              <p>Years later</p>
-            </div>
-          </div>
-          <p className="story-beat-text">The wood changes color over time. African Padauk shifts from fiery orange to deep burgundy. Every mark it picks up is yours. The watch you wear at graduation won't look like the watch you wear at 25.</p>
-        </div>
-      </Reveal>
 
       {/* The door */}
       <Reveal className="story-beat story-dark story-center">
