@@ -515,7 +515,7 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. But something else was on my mind. Every milestone, every birthday, every graduation — they all ended the same way.</p>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. But something else was on my mind. Five months earlier I'd graduated middle school. Got a pat on the back. Went to a restaurant. That was it. Every milestone, every birthday, every graduation — they all ended the same way.</p>
         </div>
       </Reveal>
 
@@ -535,16 +535,9 @@ function App() {
         </div>
       </Reveal>
 
-      {/* Co-design beat — surfaces community/co-design BEFORE the watches reveal so people land on the product knowing this is something they help shape, not just buy */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">And you don't just buy it. You help build it.</h2>
-          <p className="story-beat-text">Box material. Clasp style. Caseback engraving. Crown shape. Every detail is voted on by {waitlistCount} people inside. The wood grain will be yours. The rest is ours, together.</p>
-          <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 24}}>See the Three</a>
-        </div>
-      </Reveal>
+      {/* Co-design beat was here — moved AFTER the Padauk reveal so it reads "you've seen the watch, now help finish it" instead of vague pre-reveal setup */}
 
-      {/* The watch — moved up early so visitors see the product before scrolling deep */}
+      {/* The watch — comes right after "they deserve a Gebauer" so the reveal lands as the emotional payoff */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
@@ -630,42 +623,15 @@ function App() {
         </div>
       </Reveal>
 
-      {/* The moments — community stories + signup */}
-      <Reveal className="story-beat story-cream">
+      {/* Co-design beat — placed AFTER the watch reveal so it lands as "you've seen it, now help finish it" instead of a vague pre-reveal promise. Leads directly into the live polls below. */}
+      <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">These are the moments people are holding onto.</h2>
-          {hasSubmittedStory ? (
-            <>
-              {myMoment && (
-                <div className="my-moment-card">
-                  <p className="my-moment-label">YOUR MOMENT</p>
-                  <p className="my-moment-text">"{myMoment}"</p>
-                  <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
-                </div>
-              )}
-              {communityStories.length > 0 && (
-                <div className="community-stories">
-                  {communityStories.slice(0, 6).map((s, i) => (
-                    <div key={i} className="community-story">
-                      <p className="community-story-text">"{s.story}"</p>
-                      <p className="community-story-name">{s.name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p className="story-count-line">{storyCount} moments submitted. 300 watches.</p>
-            </>
-          ) : (
-            <div className="moments-locked">
-              <p className="moments-locked-count">{storyCount > 0 ? `${storyCount} moments shared so far.` : 'Be the first to share yours.'}</p>
-              <p className="moments-locked-msg">Share your moment to read theirs.</p>
-              <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
-            </div>
-          )}
+          <h2 className="story-beat-headline">This watch isn't finished. You finish it.</h2>
+          <p className="story-beat-text">Every detail still gets a vote. The box material. The clasp. The caseback engraving. The crown shape. Every three days, {waitlistCount} people inside pick what comes next. The wood grain will be yours. The design is ours, together.</p>
         </div>
       </Reveal>
 
-      {/* The latest decision */}
+      {/* The live decision — placed RIGHT after the co-design beat so the promise immediately becomes the action: "you finish it" → here's what's live, vote now */}
       {(activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
@@ -775,10 +741,44 @@ function App() {
               <p className="poll-upcoming-item">Clasp engraving</p>
               <p className="poll-upcoming-item">Caseback raven style</p>
             </div>
-            <a href="#watches" className="story-cta" style={{display: 'inline-block', marginTop: 32}}>See the Watches</a>
           </div>
         </Reveal>
       )}
+
+      {/* The moments — community stories + signup */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">These are the moments people are holding onto.</h2>
+          {hasSubmittedStory ? (
+            <>
+              {myMoment && (
+                <div className="my-moment-card">
+                  <p className="my-moment-label">YOUR MOMENT</p>
+                  <p className="my-moment-text">"{myMoment}"</p>
+                  <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
+                </div>
+              )}
+              {communityStories.length > 0 && (
+                <div className="community-stories">
+                  {communityStories.slice(0, 6).map((s, i) => (
+                    <div key={i} className="community-story">
+                      <p className="community-story-text">"{s.story}"</p>
+                      <p className="community-story-name">{s.name}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              <p className="story-count-line">{storyCount} moments submitted. 300 watches.</p>
+            </>
+          ) : (
+            <div className="moments-locked">
+              <p className="moments-locked-count">{storyCount > 0 ? `${storyCount} moments shared so far.` : 'Be the first to share yours.'}</p>
+              <p className="moments-locked-msg">Share your moment to read theirs.</p>
+              <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
+            </div>
+          )}
+        </div>
+      </Reveal>
 
       {/* The door */}
       <Reveal className="story-beat story-dark story-center">
