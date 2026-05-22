@@ -474,10 +474,9 @@ function App() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Welcome to Gebauer.
+            Help me build this from my kitchen table.
           </h1>
           <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
-          <p className="hero-sub fade-in-delay-1">Help me build this from my kitchen table.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="#story" className="hero-cta-btn">Hear the Story</a>
             <a href="#watches" className="hero-stats-btn">See the Watches</a>
