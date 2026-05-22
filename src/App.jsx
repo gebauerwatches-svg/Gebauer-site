@@ -513,15 +513,7 @@ function App() {
         <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch to get off my phone.</h2>
-          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. From there it snowballed. Watch stores in every city. Watches from $30 to $30,000. But something else was nagging at me.</p>
-        </div>
-      </Reveal>
-
-      {/* Direct-address beat — flips from Liam's experience to the reader's. The phone problem is universal. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">You probably do the same thing.</h2>
-          <p className="story-beat-text">Pick up the phone to check the time. Twenty minutes later you don't even remember what you were doing. The phone wins. Every time. And the more we lose to a screen, the more the things that aren't a screen start to feel like the real thing.</p>
+          <p className="story-beat-text">I was tired of reaching for my phone every time I needed the time. So on a trip to Milan, I walked into a Seiko store and bought one for 310 euros. No notifications. Just the time. From there it snowballed. Watch stores in every city. Watches from $30 to $30,000. But something else was on my mind. Every milestone, every birthday, every graduation — they all ended the same way.</p>
         </div>
       </Reveal>
 
