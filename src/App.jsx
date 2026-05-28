@@ -488,14 +488,12 @@ function App() {
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
 
-      {/* Social proof + 300 FOMO strip — right under hero so every visitor sees scarcity early */}
+      {/* Social proof strip — separated from production scarcity. The 300 is a watch count,
+          not a waitlist cap. Conflating them was making people think the WAITLIST was about
+          to close, which hurt signups. Now: real waitlist growth on the left, real edition
+          scarcity on the right, no math that subtracts one from the other. */}
       <Reveal className="proof-strip" as="section">
         <div className="proof-strip-inner">
-          <div className="proof-stat">
-            <span className="proof-stat-num">{300 - Math.min(waitlistCount, 299)}</span>
-            <span className="proof-stat-label">spots left of 300</span>
-          </div>
-          <div className="proof-divider" />
           <div className="proof-stat">
             <span className="proof-stat-num">{waitlistCount}</span>
             <span className="proof-stat-label">OGs already in</span>
@@ -504,6 +502,11 @@ function App() {
           <div className="proof-stat">
             <span className="proof-stat-num">{storyCount > 0 ? storyCount : '—'}</span>
             <span className="proof-stat-label">moments shared</span>
+          </div>
+          <div className="proof-divider" />
+          <div className="proof-stat">
+            <span className="proof-stat-num">300</span>
+            <span className="proof-stat-label">first edition watches</span>
           </div>
         </div>
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
