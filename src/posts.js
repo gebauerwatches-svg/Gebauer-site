@@ -26,15 +26,17 @@ In 1926, Wilsdorf launched the Oyster, a groundbreaking watch with a fully seale
 
 This pattern shows up everywhere. Yvon Chouinard started Patagonia because climbing gear frustrated him. He couldn't find equipment that met his standards, so he made his own. James Dyson spent years developing his vacuum because existing machines lost suction too quickly.
 
-The best brands don't chase trends. They identify gaps and fill them with something better. They start with a specific frustration, then work backward to a solution.
+The best brands don't chase trends. They identify gaps and fill them with something better.
 
-At Gebauer, we noticed something missing too. Most watches today are either disposable fashion accessories or luxury status symbols that cost more than a car. The middle ground has disappeared. Quality mechanical movements in honest cases, priced for people who appreciate craftsmanship but don't need Swiss prestige.
+When I started thinking about Gebauer Watches, I kept running into the same problem. The watch world had split into two camps: luxury pieces that cost more than most people's cars, and fashion watches that looked good but fell apart after a year. Where was the middle ground? Where were the watches built like tools but priced for people who actually use tools?
 
-We're not trying to reinvent the wheel. We're making the wheel round again. Simple movements that keep time. Clean designs that age well. Materials chosen for durability, not marketing stories.
+That gap became our target. We're not trying to compete with Rolex or reinvent timekeeping. We're building watches for people who need something reliable without the luxury markup. Proper movements, solid cases, honest pricing.
 
-The gap we saw was real. Mechanical watches shouldn't require a trust fund. Good design shouldn't come with apologies about corners cut to hit a price point. And buying a watch shouldn't feel like you're choosing between cheap and overpriced.
+The Swiss have their heritage. The fashion brands have their marketing budgets. We have something different: we're building exactly what we wanted to wear ourselves. No compromises on quality, no inflated prices for brand prestige.
 
-Every successful brand starts by solving a problem that matters to someone. The trick is making sure that someone is you first. If you wouldn't buy your own product, why would anyone else?`
+Every Gebauer watch starts with a simple question: what would we actually want strapped to our wrist for the next decade? The answer shapes everything from movement selection to case finishing. It's not about following formulas or copying what works elsewhere. It's about filling that specific gap we kept noticing.
+
+The missing piece isn't always the most obvious one. Sometimes it's the thing nobody talks about because everyone assumes it can't be done differently. Until someone does it differently.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
