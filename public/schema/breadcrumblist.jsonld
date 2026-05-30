@@ -1,0 +1,24 @@
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Gebauer Watches",
+            "item": "https://gebauerwatches.com"
+        },
+        {
+            "@type": "ListItem", 
+            "position": 2,
+            "name": "Collections",
+            "item": "https://gebauerwatches.com/collections"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Wood Watches",
+            "item": "https://gebauerwatches.com/collections/wood-watches"
+        }
+    ]
+}

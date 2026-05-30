@@ -1,0 +1,48 @@
+{
+    "@context": "https://schema.org",
+    "@type": "ProductGroup",
+    "name": "Gebauer Watches Collection",
+    "brand": {
+        "@type": "Brand",
+        "name": "Gebauer Watches",
+        "founder": [
+            {
+                "@type": "Person",
+                "name": "Liam Gebauer"
+            },
+            {
+                "@type": "Person", 
+                "name": "Sarah Gebauer"
+            }
+        ],
+        "location": {
+            "@type": "Place",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Steamboat Springs",
+                "addressRegion": "Colorado"
+            }
+        }
+    },
+    "url": "https://gebauerwatches.com",
+    "hasVariant": [
+        {
+            "@type": "Product",
+            "name": "Hinoki Watch",
+            "price": 299.00,
+            "priceCurrency": "USD"
+        },
+        {
+            "@type": "Product", 
+            "name": "Black Ebony Watch",
+            "price": 339.00,
+            "priceCurrency": "USD"
+        },
+        {
+            "@type": "Product",
+            "name": "African Padauk Watch", 
+            "price": 375.00,
+            "priceCurrency": "USD"
+        }
+    ]
+}

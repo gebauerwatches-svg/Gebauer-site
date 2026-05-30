@@ -1,0 +1,53 @@
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Gebauer Watches",
+    "url": "https://gebauerwatches.com",
+    "description": "Handcrafted wooden watches from Steamboat Springs, Colorado",
+    "founder": [
+        {
+            "@type": "Person",
+            "name": "Liam Gebauer"
+        },
+        {
+            "@type": "Person", 
+            "name": "Sarah Gebauer"
+        }
+    ],
+    "location": {
+        "@type": "Place",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Steamboat Springs",
+            "addressRegion": "Colorado"
+        }
+    },
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://gebauerwatches.com/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+    },
+    "offers": {
+        "@type": "AggregateOffer",
+        "highPrice": 375,
+        "lowPrice": 299,
+        "offerCount": 3,
+        "offers": [
+            {
+                "@type": "Offer",
+                "name": "Hinoki Watch",
+                "price": 299
+            },
+            {
+                "@type": "Offer", 
+                "name": "Black Ebony Watch",
+                "price": 339
+            },
+            {
+                "@type": "Offer",
+                "name": "African Padauk Watch", 
+                "price": 375
+            }
+        ]
+    }
+}
