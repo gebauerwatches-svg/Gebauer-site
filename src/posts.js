@@ -18,25 +18,23 @@ const posts = [
     date: 'April 24, 2026',
     author: 'Liam',
     excerpt: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.`,
-    content: `Sometimes innovation isn't about inventing something entirely new. It's about noticing what's missing.
+    content: `When Hans Wilsdorf started working with watches in London in 1905, wristwatches were jewelry. Fragile, decorative things that women wore to parties. Men carried pocket watches because they actually worked.
 
-Hans Wilsdorf figured this out in 1905 when he founded Rolex. Back then, wristwatches were fragile accessories. Pocket watches ruled the serious timekeeping world. But Wilsdorf saw something different. He believed wristwatches could be precise, reliable tools for everyday use.
+Wilsdorf saw the gap. A wristwatch you could wear every day. One that kept time like a pocket watch but lived on your arm. The watch industry thought he was wrong. Wristwatches were too exposed, too vulnerable to dust and moisture. How could something strapped to your wrist survive daily life?
 
-In 1926, Wilsdorf launched the Oyster, a groundbreaking watch with a fully sealed case that protected against water and dust. He didn't just make another timepiece. He solved a problem most people didn't realize they had: keeping precision instruments safe from the elements.
+In 1926, Wilsdorf proved them wrong with the Rolex Oyster. The case sealed completely. Water couldn't get in. Dust couldn't get in. Mercedes Gleitze wore one swimming across the English Channel, and it kept perfect time. The watch survived where others would have died in minutes.
 
-This pattern shows up everywhere. Yvon Chouinard started Patagonia because climbing gear frustrated him. He couldn't find equipment that met his standards, so he made his own. James Dyson spent years developing his vacuum because existing machines lost suction too quickly.
+This pattern repeats. Yvon Chouinard made his own climbing pitons because the soft iron ones on the market damaged rock faces. His hard steel versions could be removed and reused. Climbers bought them because they solved a real problem. Patagonia grew from that single insight: make gear that works better.
 
-The best brands don't chase trends. They identify gaps and fill them with something real.
+James Dyson spent five years and built 5,127 prototypes because vacuum cleaners lost suction as their bags filled. Everyone accepted this as normal. Dyson didn't. His cyclonic separation technology fixed a problem people had learned to live with.
 
-When I started thinking about Gebauer Watches, I kept running into the same problem. Quality timepieces either cost thousands of dollars or felt like disposable accessories. The middle ground barely existed. You could buy a $50 watch that would break in six months, or save for years to afford something truly well-made.
+The best brands start here. They notice what everyone else ignores. They see the compromises we've accepted and refuse to accept them. They don't follow market research or chase demographics. They fix something broken.
 
-That gap became our opportunity. We're building watches that bridge the space between throwaway fashion and luxury pricing. Swiss movements, sapphire crystal, cases designed to last decades. But accessible to people who appreciate craftsmanship without needing trust fund money.
+At Gebauer, we started because vintage watches were becoming untouchable. Beautiful pieces locked away in safes, too valuable to wear. We wanted to make watches inspired by those classics but built for daily life. Not replicas trying to fool anyone. New watches that capture what made the originals special.
 
-The watch industry talks about heritage and tradition constantly. Most of that is marketing. Real heritage comes from solving actual problems for actual people. Wilsdorf didn't revolutionize timekeeping by accident. He saw what the market was missing and built it.
+The gap was simple: people wanted to wear these designs without worrying about destroying a piece of history. So we build watches that honor the past but belong to the present. Swiss movements, sapphire crystals, cases that take a beating. You can wear them to work, to dinner, to the beach.
 
-We're doing the same thing, just ninety years later. The gap we're filling isn't technical anymore. It's about value. About making quality accessible without compromising on the details that matter.
-
-Every brand starts with someone noticing something missing. The successful ones figure out how to fill that space authentically. They don't just identify the gap. They become the bridge.`
+Great brands don't predict what people will want. They notice what people already need but can't find. Then they build it.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
