@@ -22,19 +22,19 @@ const posts = [
 
 Wilsdorf saw the gap. A wristwatch you could wear every day. One that kept time like a pocket watch but lived on your arm. The watch industry thought he was wrong. Wristwatches were too exposed, too vulnerable to dust and moisture. How could something strapped to your wrist survive daily life?
 
-In 1926, Wilsdorf proved them wrong with the Rolex Oyster. The case sealed completely. Water couldn't get in. Dust couldn't get in. Mercedes Gleitze wore one swimming across the English Channel, and it kept perfect time. The watch survived where others would have died in minutes.
+In 1926, Wilsdorf proved them wrong with the Rolex Oyster. The case sealed completely. Water couldn't get in. Dust couldn't get in. Mercedes Gleitze wore one swimming across the English Channel in 1927, and it kept perfect time. The watch survived where others would have died in minutes.
 
-This pattern repeats. Yvon Chouinard made his own climbing pitons because the soft iron ones on the market damaged rock faces. His hard steel versions could be removed and reused. Climbers bought them because they solved a real problem. Patagonia grew from that single insight: make gear that works better.
+This pattern repeats. Yvon Chouinard made his own climbing pitons because the soft iron ones on the market damaged rock faces. His hard steel versions could be removed and reused. Climbers bought them because they solved a real problem, not because Chouinard ran ads. Patagonia grew from that same principle: make gear that works better, and the people who need it will find you.
 
-James Dyson spent five years and built 5,127 prototypes because vacuum cleaners lost suction as their bags filled. Everyone accepted this as normal. Dyson didn't. His cyclonic separation technology fixed a problem people had learned to live with.
+The best brands don't start with marketing strategies. They start with someone annoyed by what exists. Wilsdorf was tired of watches that broke. Chouinard was tired of pitons that ruined the rock. They built what they wished existed.
 
-The best brands start here. They notice what everyone else ignores. They see the compromises we've accepted and refuse to accept them. They don't follow market research or chase demographics. They fix something broken.
+I started Gebauer because I couldn't find the watch I wanted. Something between a dress watch and a tool watch. Clean enough for a dinner, tough enough for real life. Water resistant to 100 meters because why not. Sapphire crystal because who wants scratches. Swiss movement because accuracy matters. But not trying to be a dive watch or a pilot's watch or any other category. Just a watch that works everywhere.
 
-At Gebauer, we started because vintage watches were becoming untouchable. Beautiful pieces locked away in safes, too valuable to wear. We wanted to make watches inspired by those classics but built for daily life. Not replicas trying to fool anyone. New watches that capture what made the originals special.
+The gap was simple: most affordable watches pick a lane. Sport watches look sporty. Dress watches look dressy. The ones that try to do both usually fail at both. Too chunky for a suit, too delicate for the weekend.
 
-The gap was simple: people wanted to wear these designs without worrying about destroying a piece of history. So we build watches that honor the past but belong to the present. Swiss movements, sapphire crystals, cases that take a beating. You can wear them to work, to dinner, to the beach.
+Every email I get confirms the gap was real. "Finally, a watch I don't have to think about." "I wear it to meetings and hiking." "Forgot I was wearing it in the shower, still perfect."
 
-Great brands don't predict what people will want. They notice what people already need but can't find. Then they build it.`
+Great brands fill gaps that matter. Not gaps in marketing demographics or price segments. Gaps in what people actually need. Find a real problem. Build a real solution. The brand follows.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
