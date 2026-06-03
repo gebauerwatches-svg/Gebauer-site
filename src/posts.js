@@ -13,6 +13,30 @@
 
 const posts = [
   {
+    slug: 'how-a-teenager-cold-emails-a-watch-manufacturer-in-japan',
+    title: 'How a Teenager Cold-Emails a Watch Manufacturer in Japan',
+    date: 'June 03, 2026',
+    author: 'Liam',
+    excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
+    content: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.
+
+Three months ago, I sent an email to a watch manufacturer in Japan that would change everything for Gebauer. I'd spent weeks researching manufacturers, understanding how watches are actually made, not just how they're marketed. My criteria were simple: precision engineering, wood dial experience, and a willingness to work with someone who was 15 years old.
+
+The first five manufacturers didn't respond. Or they responded with polite templates that basically said "no." But Tokiji was different. Their website showed watches that looked like they were carved from living trees, not just assembled. Each dial seemed to have its own story, its own grain pattern.
+
+I wrote my email at midnight. No templates. No fancy language. Just direct: Here's who I am. Here's what I want to build. Here's why I think we could work together. I included sketches I'd made, specific questions about wood grain preservation, and my exact vision for what a watch could be.
+
+Two days later, a response arrived from Kenji Nakamura, their lead designer. And this wasn't a dismissal. This was curiosity.
+
+Nakamura-san wanted to understand why a teenager in Colorado was thinking about watch manufacturing with the same precision Japanese engineers use. We traded emails for weeks. He asked about my design philosophy. I asked about their wood sourcing. Each email peeled back another layer.
+
+By the time we signed our first manufacturing agreement, I realized something important: authenticity travels faster than any marketing campaign. Nakamura didn't see a kid. He saw someone who cared about craft.
+
+The watches we're building aren't just objects. They're conversations between continents, between generations. A raven engraved on the back. Wood that changes color with time. Precision that comes from generations of engineering.
+
+Sometimes a single email is how revolutions start.`
+  },
+  {
     slug: 'the-missing-piece-how-great-brands-are-born',
     title: 'The Missing Piece: How Great Brands Are Born',
     date: 'April 24, 2026',
