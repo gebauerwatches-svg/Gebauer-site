@@ -48,17 +48,15 @@ Wilsdorf saw the gap. A wristwatch you could wear every day. One that kept time 
 
 In 1926, Wilsdorf proved them wrong with the Rolex Oyster. The case sealed completely. Water couldn't get in. Dust couldn't get in. Mercedes Gleitze wore one swimming across the English Channel in 1927, and it kept perfect time. The watch survived where others would have died in minutes.
 
-This pattern repeats. Yvon Chouinard made his own climbing pitons because the soft iron ones on the market damaged rock faces. His hard steel versions could be removed and reused. Climbers bought them because they solved a real problem, not because Chouinard ran ads. Patagonia grew from that same principle: make gear that works better, and the people who need it will find you.
+This pattern repeats. Yvon Chouinard made his own climbing pitons because the soft iron ones on the market damaged rock faces. His hard steel versions could be removed and reused. Climbers bought them because they solved a real problem, not because Chouinard ran ads.
 
-The best brands don't start with marketing strategies. They start with someone annoyed by what exists. Wilsdorf was tired of watches that broke. Chouinard was tired of pitons that ruined the rock. They built what they wished existed.
+The missing piece isn't marketing genius or venture funding. It's seeing what everyone else ignores. Wilsdorf saw men checking pocket watches constantly. Chouinard saw pristine granite faces scarred by equipment. They built what was missing.
 
-I started Gebauer because I couldn't find the watch I wanted. Something between a dress watch and a tool watch. Clean enough for a dinner, tough enough for real life. Water resistant to 100 meters because why not. Sapphire crystal because who wants scratches. Swiss movement because accuracy matters. But not trying to be a dive watch or a pilot's watch or any other category. Just a watch that works everywhere.
+At Gebauer, we see something missing too. Young professionals checking their phones for the time, even with a watch on their wrist. Not because they forgot they're wearing one, but because their watch doesn't feel like theirs. It's either a smartwatch buzzing with notifications or a fashion watch that says nothing about who they are.
 
-The gap was simple: most affordable watches pick a lane. Sport watches look sporty. Dress watches look dressy. The ones that try to do both usually fail at both. Too chunky for a suit, too delicate for the weekend.
+What's missing is a mechanical watch that feels personal from day one. Not after decades of wear. Not after it becomes your grandfather's watch. But right now, at 25 or 30, when you're building something and want a watch that reflects that. A watch that marks your milestones, not someone else's history.
 
-Every email I get confirms the gap was real. "Finally, a watch I don't have to think about." "I wear it to meetings and hiking." "Forgot I was wearing it in the shower, still perfect."
-
-Great brands fill gaps that matter. Not gaps in marketing demographics or price segments. Gaps in what people actually need. Find a real problem. Build a real solution. The brand follows.`
+That's the gap we're building for. Not because the market research says so, but because we're living it.`
   },
   {
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
