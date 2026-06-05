@@ -26,13 +26,11 @@ Three months ago, I sent an email to a watch manufacturer in Japan that would ch
 
 The first five manufacturers didn't respond. Or they responded with polite templates that basically said "no." But Tokiji was different. Their website showed watches that looked like they were carved from living trees, not just assembled. Each dial seemed to have its own story, its own grain pattern - rough-edged maple next to smooth cherry, telling a visual narrative of material and craft.
 
-My email was surgical. Three paragraphs. No fluff. I opened by explaining exactly who I was: a watchmaker building a brand focused on storytelling through materials. I shared my specific vision for wood dials that capture geographic and personal history. Then I attached three hand-drawn dial sketches showing wood grain patterns from Oregon maple, Japanese cedar, and Alaskan spruce.
+My email was direct. Three paragraphs. No excess language. I opened with our specific vision: a watch that captures the moment between craft and innovation. I explained exactly what made Gebauer different - our commitment to telling stories through material, not just design. I was clear about what I wanted: a conversation, not a sales pitch.
 
-The key was being direct. No apologies for my age. No asking for permission. Just a clear proposal of what I wanted to create and why Tokiji's craftsmanship matched my vision perfectly. I closed by requesting a technical conversation about wood dial manufacturing tolerances.
+Two weeks later, Tokiji's lead designer, Kenji Sato, responded. Not a template. A personal email asking to see our prototype sketches. We spent the next month in careful communication, trading technical drawings and material samples. They didn't see a teenager. They saw a potential partner who understood their craft.
 
-Two days later, they responded. Not a template. A real email from their design lead, interested in my approach. That email became the first step toward our wood dial prototype, and ultimately, our first production run.
-
-Cold emailing isn't about luck. It's about doing your homework, being specific, and showing you understand the other person's craft better than they might expect.`
+This is how real connections happen. Not through networking events or LinkedIn messages, but through honest, precise communication that shows you've done your homework.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
