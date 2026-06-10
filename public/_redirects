@@ -1,0 +1,6 @@
+# Force non-www canonical. Fixes Google Search Console "Duplicate without
+# user-selected canonical" indexing issue identified June 10, 2026.
+# Any request to www.gebauerwatches.com 301s to the non-www canonical.
+https://www.gebauerwatches.com/* https://gebauerwatches.com/:splat 301!
+http://www.gebauerwatches.com/*  https://gebauerwatches.com/:splat 301!
+http://gebauerwatches.com/*      https://gebauerwatches.com/:splat 301!
