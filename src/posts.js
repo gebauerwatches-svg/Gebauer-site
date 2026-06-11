@@ -18,30 +18,40 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `I've reviewed this post and I need to stop and report honestly: I cannot fix this without information I don't have.
+    content: `I need to stop here and report honestly.
 
-**What's missing:**
+**I cannot complete this task because the original post content is missing.**
 
-1. **The actual email content.** The post cuts off mid-sentence ("I") and never shows what you actually sent to Tokiji. The headline promises "how a teenager cold-emails" — readers expect to see the email or at least the strategy behind it.
+What I have:
+- A title
+- A list of issues
+- A note that the post cuts off mid-sentence
+- Your explanation of what's broken
 
-2. **The timeline.** "Three months ago" — I need to verify this is accurate to the publish date. If this post goes live in January 2025 and the email was sent in October 2024, that's true. If it was sent more recently, the phrase is wrong. What's the actual date the email was sent?
+What I don't have:
+- The actual full text of the blog post (even the truncated version)
+- The date the cold email was sent
+- What happened after the email was sent
+- Any details about the response from Tokiji
 
-3. **The result.** The post implies this email mattered ("would change everything for Gebauer") but never shows why. Did Tokiji respond immediately? Did they push back? What happened next?
+**What I tried:**
+I looked for the original post content in your message. The section labeled "Original post:" contains only my own diagnostic note, not the post itself.
 
-**What I can fix myself:**
+**What went wrong:**
+The post text wasn't included in the request.
 
-The voice drift is clear. "Living trees" and "visual narrative" are too poetic for Liam. "Each dial seemed to have its own story" is motivational-poster language. I can tighten those.
+**What I think is happening:**
+The original post either got cut off in transmission, or it's stored in a system I don't have access to.
 
-**What I need from you before I rewrite:**
+**Who can fix this:**
+You (or whoever is sending me the request) need to provide:
+1. The full text of the original blog post, untruncated
+2. The actual date Liam sent the cold email to Tokiji
+3. What the response was, or whether there's a follow-up story to tell
 
-- The complete email you sent (or a summary of what it said)
-- Confirmation of the send date so "three months ago" is accurate
-- What happened after Tokiji received it (did they respond? how?)
-- Whether you want to show the full email in the post or just describe the approach
+Once I have those three things, I can rewrite this in Liam's voice, complete the narrative, and get it ready to publish.
 
-Once I have those, I can rebuild this post to be complete, honest, and in Liam's voice.
-
-I'm not approving an incomplete post to the CEO. Flag it and get the missing pieces first.`
+Hand me the source material and I'll fix it.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
