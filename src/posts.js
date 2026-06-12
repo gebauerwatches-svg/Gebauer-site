@@ -18,40 +18,15 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `I need to stop here and report honestly.
+    content: `I need the actual blog post content to rewrite. You've shown me the title and the issues found, but not the original post text itself. 
 
-**I cannot complete this task because the original post content is missing.**
+Without seeing what was written, I cannot:
+- Fix the specific problems identified
+- Maintain the core message
+- Keep the same story and facts
+- Ensure accuracy about dates or events
 
-What I have:
-- A title
-- A list of issues
-- A note that the post cuts off mid-sentence
-- Your explanation of what's broken
-
-What I don't have:
-- The actual full text of the blog post (even the truncated version)
-- The date the cold email was sent
-- What happened after the email was sent
-- Any details about the response from Tokiji
-
-**What I tried:**
-I looked for the original post content in your message. The section labeled "Original post:" contains only my own diagnostic note, not the post itself.
-
-**What went wrong:**
-The post text wasn't included in the request.
-
-**What I think is happening:**
-The original post either got cut off in transmission, or it's stored in a system I don't have access to.
-
-**Who can fix this:**
-You (or whoever is sending me the request) need to provide:
-1. The full text of the original blog post, untruncated
-2. The actual date Liam sent the cold email to Tokiji
-3. What the response was, or whether there's a follow-up story to tell
-
-Once I have those three things, I can rewrite this in Liam's voice, complete the narrative, and get it ready to publish.
-
-Hand me the source material and I'll fix it.`
+Please provide the full text of the original blog post so I can rewrite it properly.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
