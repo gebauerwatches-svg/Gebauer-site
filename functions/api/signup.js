@@ -119,12 +119,18 @@ export async function onRequestPost(context) {
   const { env } = context
 
   if (!env.MAILERLITE_API_KEY || !env.WAITLIST_GROUP_ID) {
-    // Diagnostic — tells us which env var is missing in the runtime.
-    // Strip after debugging.
-    const missing = []
-    if (!env.MAILERLITE_API_KEY) missing.push('MAILERLITE_API_KEY')
-    if (!env.WAITLIST_GROUP_ID) missing.push('WAITLIST_GROUP_ID')
-    return json({ error: `Server configuration error. Missing: ${missing.join(', ')}` }, 500)
+    // Diagnostic — strip after debugging.
+    const mlType = typeof env.MAILERLITE_API_KEY
+    const mlLen = env.MAILERLITE_API_KEY ? env.MAILERLITE_API_KEY.length : 0
+    const grpType = typeof env.WAITLIST_GROUP_ID
+    const grpLen = env.WAITLIST_GROUP_ID ? env.WAITLIST_GROUP_ID.length : 0
+    return json({
+      error: 'Server configuration error.',
+      diag: {
+        MAILERLITE_API_KEY: { type: mlType, length: mlLen },
+        WAITLIST_GROUP_ID:  { type: grpType, length: grpLen },
+      }
+    }, 500)
   }
 
   let body
