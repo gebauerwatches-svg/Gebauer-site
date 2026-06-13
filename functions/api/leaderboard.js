@@ -2,35 +2,62 @@
  * GET /api/leaderboard
  *
  * Cloudflare Pages Function.
- * Returns top 10 referrers and total verified subscriber count.
+ * Returns top 10 referrers and total subscriber count.
+ *
+ * Phase 2 migration (June 13 2026): reads from MailerLite, not Supabase.
+ *
+ * Performance note: MailerLite doesn't sort by custom field server-side,
+ * so we pull the group's subscribers and sort client-side. With ~135-300
+ * subscribers this is fine. If the list grows past 1000, add Cloudflare KV
+ * cache with ~60s TTL.
  */
 
-import { json, supabaseQuery } from './_shared.js'
+import { json } from './_shared.js'
+
+const ML_BASE = 'https://connect.mailerlite.com/api'
+
+async function listGroupSubscribers(key, groupId, limit = 1000) {
+  const subscribers = []
+  let cursor = null
+  while (subscribers.length < limit) {
+    const params = new URLSearchParams({ limit: String(Math.min(100, limit - subscribers.length)) })
+    if (cursor) params.set('cursor', cursor)
+    const resp = await fetch(`${ML_BASE}/groups/${groupId}/subscribers?${params}`, {
+      headers: { 'Authorization': `Bearer ${key}`, 'Accept': 'application/json' },
+    })
+    if (!resp.ok) break
+    const body = await resp.json()
+    subscribers.push(...(body.data || []))
+    cursor = body.meta?.next_cursor
+    if (!cursor) break
+  }
+  return subscribers
+}
 
 export async function onRequestGet(context) {
   const { env } = context
 
-  if (!env.SUPABASE_URL || !env.SUPABASE_KEY) return json({ error: 'Server configuration error.' }, 500)
+  if (!env.ML_KEY || !env.WAITLIST_GROUP_ID) {
+    return json({ error: 'Server configuration error.' }, 500)
+  }
 
   try {
-    const resp = await supabaseQuery(env,
-      `waitlist_signups?select=first_name,referral_count&email_verified=eq.true&referral_count=gt.0&order=referral_count.desc&limit=100`
-    )
+    const subs = await listGroupSubscribers(env.ML_KEY, env.WAITLIST_GROUP_ID, 1000)
 
-    const leaderboard = (resp.data || []).map(r => ({
-      name: r.first_name || 'Anonymous',
-      referrals: r.referral_count || 0,
-    }))
+    // Build the leaderboard from referral_count custom field
+    const ranked = subs
+      .map(s => ({
+        name: s.fields?.name || 'Anonymous',
+        referrals: parseInt(s.fields?.referral_count || 0, 10),
+      }))
+      .filter(r => r.referrals > 0)
+      .sort((a, b) => b.referrals - a.referrals)
+      .slice(0, 100)
 
-    // Get total verified count
-    const countResp = await supabaseQuery(env,
-      `waitlist_signups?select=id&email_verified=eq.true`,
-      { prefer: 'count=exact' }
-    )
-    const countHeader = countResp.headers.get('content-range') || ''
-    const total = parseInt(countHeader.split('/')[1]) || 0
-
-    return json({ leaderboard, total })
+    return json({
+      leaderboard: ranked,
+      total: subs.length,
+    })
   } catch (err) {
     console.error('Leaderboard error:', err.message)
     return json({ error: 'Something went wrong.' }, 500)
