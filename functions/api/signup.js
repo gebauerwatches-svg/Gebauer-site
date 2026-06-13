@@ -6,8 +6,9 @@
  * No more Supabase dependency for the waitlist.
  *
  * Environment variables (set in Cloudflare Pages dashboard):
- *   MAILERLITE_API_KEY  — already exists
- *   WAITLIST_GROUP_ID   — MUST be added (MailerLite group ID for "Gebauer Waitlist")
+ *   ML_KEY              — MailerLite API key (named ML_KEY in Cloudflare to avoid
+ *                          a copy-paste hidden-character bug that blocked MAILERLITE_API_KEY)
+ *   WAITLIST_GROUP_ID   — MailerLite group ID for "Gebauer Pre Launch"
  *
  * Optional (for milestone story write to the votes Supabase project):
  *   SUPABASE_VOTES_URL, SUPABASE_VOTES_KEY  — already exist for the polls/stories system
@@ -118,19 +119,8 @@ export async function onRequestOptions() {
 export async function onRequestPost(context) {
   const { env } = context
 
-  if (!env.MAILERLITE_API_KEY || !env.WAITLIST_GROUP_ID) {
-    // Diagnostic — strip after debugging.
-    const mlType = typeof env.MAILERLITE_API_KEY
-    const mlLen = env.MAILERLITE_API_KEY ? env.MAILERLITE_API_KEY.length : 0
-    const grpType = typeof env.WAITLIST_GROUP_ID
-    const grpLen = env.WAITLIST_GROUP_ID ? env.WAITLIST_GROUP_ID.length : 0
-    return json({
-      error: 'Server configuration error.',
-      diag: {
-        MAILERLITE_API_KEY: { type: mlType, length: mlLen },
-        WAITLIST_GROUP_ID:  { type: grpType, length: grpLen },
-      }
-    }, 500)
+  if (!env.ML_KEY || !env.WAITLIST_GROUP_ID) {
+    return json({ error: 'Server configuration error. Contact hello@gebauerwatches.com.' }, 500)
   }
 
   let body
@@ -156,7 +146,7 @@ export async function onRequestPost(context) {
     return json({ error: 'Please use a real email address.' }, 400)
   }
 
-  const mlKey = env.MAILERLITE_API_KEY
+  const mlKey = env.ML_KEY
   const groupId = env.WAITLIST_GROUP_ID
 
   try {
