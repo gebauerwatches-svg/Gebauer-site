@@ -2,28 +2,114 @@
  * POST /api/signup
  *
  * Cloudflare Pages Function.
- * Saves to Supabase as VERIFIED immediately. No verification email.
- * Credits referrer on signup. Health agent cleans fakes later.
+ * Phase 1 migration (June 13 2026): writes signups directly to MailerLite.
+ * No more Supabase dependency for the waitlist.
  *
  * Environment variables (set in Cloudflare Pages dashboard):
- *   SUPABASE_URL, SUPABASE_KEY
+ *   MAILERLITE_API_KEY  — already exists
+ *   WAITLIST_GROUP_ID   — MUST be added (MailerLite group ID for "Gebauer Waitlist")
+ *
+ * Optional (for milestone story write to the votes Supabase project):
+ *   SUPABASE_VOTES_URL, SUPABASE_VOTES_KEY  — already exist for the polls/stories system
  */
 
-import { json, supabaseQuery, randomHex } from './_shared.js'
+import { json, randomHex } from './_shared.js'
 
-async function votesQuery(env, path, options = {}) {
-  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL || env.SUPABASE_URL
-  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY || env.SUPABASE_KEY
-  const headers = {
-    'apikey': key, 'Authorization': `Bearer ${key}`,
-    'Content-Type': 'application/json', 'Prefer': 'return=representation',
+const ML_BASE = 'https://connect.mailerlite.com/api'
+
+function mlHeaders(key) {
+  return {
+    'Authorization': `Bearer ${key}`,
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
   }
-  const resp = await fetch(`${url}/rest/v1/${path}`, {
-    method: options.method || 'GET', headers,
-    body: options.body ? JSON.stringify(options.body) : undefined,
+}
+
+// Look up a MailerLite subscriber by email. Returns null if not found.
+async function findSubscriber(key, email) {
+  const resp = await fetch(`${ML_BASE}/subscribers/${encodeURIComponent(email)}`, {
+    method: 'GET',
+    headers: mlHeaders(key),
+  })
+  if (resp.status === 404) return null
+  if (!resp.ok) return null
+  const body = await resp.json().catch(() => null)
+  return body?.data || null
+}
+
+// Create or upsert a MailerLite subscriber with our custom fields.
+async function upsertSubscriber(key, payload) {
+  const resp = await fetch(`${ML_BASE}/subscribers`, {
+    method: 'POST',
+    headers: mlHeaders(key),
+    body: JSON.stringify(payload),
   })
   return { status: resp.status, data: await resp.json().catch(() => null) }
 }
+
+// Assign a subscriber to a MailerLite group.
+async function assignToGroup(key, subscriberId, groupId) {
+  await fetch(`${ML_BASE}/subscribers/${subscriberId}/groups/${groupId}`, {
+    method: 'POST',
+    headers: mlHeaders(key),
+  })
+}
+
+// Increment the referrer's referral_count by 1.
+async function creditReferrer(key, referralCode) {
+  // Find the subscriber whose referral_code custom field matches.
+  // MailerLite doesn't expose a search-by-custom-field endpoint cleanly,
+  // so we use the filter param on the subscribers list.
+  const search = await fetch(
+    `${ML_BASE}/subscribers?filter[search]=${encodeURIComponent(referralCode)}&limit=10`,
+    { method: 'GET', headers: mlHeaders(key) },
+  )
+  if (!search.ok) return
+  const body = await search.json().catch(() => null)
+  const matches = (body?.data || []).filter(
+    s => s.fields?.referral_code === referralCode
+  )
+  if (matches.length === 0) return
+
+  const referrer = matches[0]
+  const currentCount = parseInt(referrer.fields?.referral_count || 0, 10)
+  await fetch(`${ML_BASE}/subscribers/${referrer.id}`, {
+    method: 'PUT',
+    headers: mlHeaders(key),
+    body: JSON.stringify({
+      fields: { referral_count: currentCount + 1 },
+    }),
+  })
+}
+
+// Save the milestone story to the votes Supabase project (separate from waitlist).
+async function saveMilestoneStory(env, email, firstName, story) {
+  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL
+  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY
+  if (!url || !key) return
+
+  // Cheap profanity guard. Same list as before.
+  const badWords = ['fuck','shit','bitch','damn','dick','cock','pussy','cunt','fag','nigger','nigga','retard','slut','whore','porn','rape','nazi','hitler','terrorist','bomb']
+  const lower = story.toLowerCase()
+  if (badWords.some(w => new RegExp(`\\b${w}\\b`, 'i').test(lower))) return
+
+  await fetch(`${url}/rest/v1/milestone_stories`, {
+    method: 'POST',
+    headers: {
+      'apikey': key,
+      'Authorization': `Bearer ${key}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+    },
+    body: JSON.stringify({
+      email,
+      first_name: firstName,
+      story: story.slice(0, 500),
+      status: 'approved',
+    }),
+  })
+}
+
 
 export async function onRequestOptions() {
   return json({}, 200)
@@ -32,7 +118,7 @@ export async function onRequestOptions() {
 export async function onRequestPost(context) {
   const { env } = context
 
-  if (!env.SUPABASE_URL || !env.SUPABASE_KEY) {
+  if (!env.MAILERLITE_API_KEY || !env.WAITLIST_GROUP_ID) {
     return json({ error: 'Server configuration error. Contact hello@gebauerwatches.com.' }, 500)
   }
 
@@ -50,92 +136,61 @@ export async function onRequestPost(context) {
   if (cleanName.length < 1 || cleanName.length > 100) {
     return json({ error: 'Name must be between 1 and 100 characters.' }, 400)
   }
-
-  // Basic email validation
   if (!cleanEmail.includes('@') || !cleanEmail.includes('.')) {
     return json({ error: 'Please enter a valid email.' }, 400)
   }
 
-  // Block obvious disposable email domains
   const disposable = ['tempmail', 'throwaway', 'guerrilla', 'sharklasers', 'mailinator', 'yopmail', 'trashmail', 'fakeinbox', 'grr.la']
   if (disposable.some(d => cleanEmail.includes(d))) {
     return json({ error: 'Please use a real email address.' }, 400)
   }
 
-  try {
-    // Check for existing signup
-    const existing = await supabaseQuery(env,
-      `waitlist_signups?email=eq.${encodeURIComponent(cleanEmail)}&select=email,email_verified,first_name`
-    )
+  const mlKey = env.MAILERLITE_API_KEY
+  const groupId = env.WAITLIST_GROUP_ID
 
-    if (existing.data && Array.isArray(existing.data) && existing.data.length > 0) {
+  try {
+    // Already on the waitlist?
+    const existing = await findSubscriber(mlKey, cleanEmail)
+    if (existing) {
       return json({ error: "You're already on the waitlist." }, 400)
     }
 
-    // Generate referral code
+    // Generate the referral code in the same format the old function used.
     const referralCode = cleanName.split(' ')[0].toUpperCase().slice(0, 6) + '-' + randomHex(3).toUpperCase()
 
-    // Insert into Supabase — VERIFIED IMMEDIATELY
-    // milestone_story is NOT a column on this table — it lives in the votes
-    // project's `milestone_stories` table (handled below at line ~120).
-    // Including it here breaks the entire INSERT. Removed June 13 2026.
-    const insert = await supabaseQuery(env, 'waitlist_signups', {
-      method: 'POST',
-      body: {
-        first_name: cleanName,
-        email: cleanEmail,
-        email_verified: true,
-        flagged: false,
-        referral_count: 0,
+    // Create the subscriber in MailerLite with custom fields.
+    const upsertPayload = {
+      email: cleanEmail,
+      fields: {
+        name: cleanName,
         referral_code: referralCode,
-        referred_by: referred_by || null,
-        current_position: 9999,
-        verified_at: new Date().toISOString(),
+        referral_count: 0,
+        waitlist_position: 9999,
+        referred_by: referred_by || '',
       },
-    })
-
-    if (insert.status >= 400) {
-      console.error('Supabase insert error:', JSON.stringify(insert.data))
-      if (typeof insert.data === 'object' && insert.data?.message?.includes('unique')) {
-        return json({ error: "You're already on the waitlist." }, 400)
-      }
+      status: 'active',
+    }
+    const result = await upsertSubscriber(mlKey, upsertPayload)
+    if (result.status >= 400) {
+      console.error('MailerLite upsert error:', JSON.stringify(result.data))
       return json({ error: 'Could not save your signup. Try again in a moment.' }, 500)
     }
 
-    // Credit referrer immediately
+    const subscriberId = result.data?.data?.id
+    if (subscriberId) {
+      await assignToGroup(mlKey, subscriberId, groupId)
+    }
+
+    // Credit the referrer if there was one.
     if (referred_by) {
-      const referrerLookup = await supabaseQuery(env,
-        `waitlist_signups?referral_code=eq.${encodeURIComponent(referred_by)}&select=email,referral_count`
-      )
-
-      if (referrerLookup.data && referrerLookup.data.length > 0) {
-        const referrer = referrerLookup.data[0]
-        await supabaseQuery(env,
-          `waitlist_signups?email=eq.${encodeURIComponent(referrer.email)}`,
-          { method: 'PATCH', body: { referral_count: (referrer.referral_count || 0) + 1 } }
-        )
-      }
+      try { await creditReferrer(mlKey, referred_by) } catch (e) { console.error('Referrer credit failed:', e.message) }
     }
 
-    // Save milestone story to votes project if provided (with content filter)
+    // Save milestone story (still in the votes Supabase project — independent system).
     if (milestone_story && milestone_story.trim()) {
-      const badWords = ['fuck','shit','ass','bitch','damn','hell','dick','cock','pussy','cunt','fag','nigger','nigga','retard','slut','whore','porn','sex','kill','die','rape','nazi','hitler','terrorist','bomb','drugs','weed','cocaine','heroin','meth']
-      const storyLower = milestone_story.toLowerCase()
-      const isBad = badWords.some(w => new RegExp(`\\b${w}\\b`, 'i').test(storyLower))
-      if (!isBad) {
-        await votesQuery(env, 'milestone_stories', {
-          method: 'POST',
-          body: {
-            email: cleanEmail,
-            first_name: cleanName,
-            story: milestone_story.trim().slice(0, 500),
-            status: 'approved',
-          },
-        })
-      }
+      try { await saveMilestoneStory(env, cleanEmail, cleanName, milestone_story.trim()) } catch (e) { console.error('Story save failed:', e.message) }
     }
 
-    // No verification email. They're in.
     return json({ ok: true, verified: true })
 
   } catch (err) {
