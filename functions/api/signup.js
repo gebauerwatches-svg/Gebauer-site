@@ -119,7 +119,12 @@ export async function onRequestPost(context) {
   const { env } = context
 
   if (!env.MAILERLITE_API_KEY || !env.WAITLIST_GROUP_ID) {
-    return json({ error: 'Server configuration error. Contact hello@gebauerwatches.com.' }, 500)
+    // Diagnostic — tells us which env var is missing in the runtime.
+    // Strip after debugging.
+    const missing = []
+    if (!env.MAILERLITE_API_KEY) missing.push('MAILERLITE_API_KEY')
+    if (!env.WAITLIST_GROUP_ID) missing.push('WAITLIST_GROUP_ID')
+    return json({ error: `Server configuration error. Missing: ${missing.join(', ')}` }, 500)
   }
 
   let body
