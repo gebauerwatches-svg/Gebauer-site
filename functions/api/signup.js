@@ -76,6 +76,9 @@ export async function onRequestPost(context) {
     const referralCode = cleanName.split(' ')[0].toUpperCase().slice(0, 6) + '-' + randomHex(3).toUpperCase()
 
     // Insert into Supabase — VERIFIED IMMEDIATELY
+    // milestone_story is NOT a column on this table — it lives in the votes
+    // project's `milestone_stories` table (handled below at line ~120).
+    // Including it here breaks the entire INSERT. Removed June 13 2026.
     const insert = await supabaseQuery(env, 'waitlist_signups', {
       method: 'POST',
       body: {
@@ -86,7 +89,6 @@ export async function onRequestPost(context) {
         referral_count: 0,
         referral_code: referralCode,
         referred_by: referred_by || null,
-        milestone_story: milestone_story ? milestone_story.trim().slice(0, 500) : null,
         current_position: 9999,
         verified_at: new Date().toISOString(),
       },
