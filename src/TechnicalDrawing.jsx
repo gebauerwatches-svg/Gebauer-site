@@ -79,7 +79,7 @@ export default function TechnicalDrawing({ className = '', style = {} }) {
       <text x="300" y="380" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="9" fontFamily="monospace" letterSpacing="3">001 / 300</text>
 
       {/* Bottom caption */}
-      <text x="300" y="572" textAnchor="middle" fill="rgba(196,149,42,0.7)" fontSize="10" fontFamily="monospace" letterSpacing="3">REV. 04  ·  TOKIJI / MINAMISOMA</text>
+      <text x="300" y="572" textAnchor="middle" fill="rgba(196,149,42,0.7)" fontSize="10" fontFamily="monospace" letterSpacing="3">REV. 04  ·  MADE IN JAPAN</text>
     </svg>
   )
 }

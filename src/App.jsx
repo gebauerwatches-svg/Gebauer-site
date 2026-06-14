@@ -547,7 +547,7 @@ function App() {
           <div className="origin-badge">
             <div className="origin-col">
               <p className="origin-label">Assembled in</p>
-              <p className="origin-place">Minamisoma</p>
+              <p className="origin-place">Fukushima</p>
               <p className="origin-country">Japan</p>
             </div>
             <div className="origin-col">
@@ -840,7 +840,7 @@ function App() {
       {/* FOOTER */}
       <footer className="site-footer">
         <img src={logo} alt="Gebauer" className="footer-logo" />
-        <p className="footer-tagline">Made in Minamisoma, Japan. Boxed in Bergamo, Italy.</p>
+        <p className="footer-tagline">Made in Japan. Boxed in Italy.</p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
         <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
       </footer>
