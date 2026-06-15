@@ -18,15 +18,7 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `I need the actual blog post content to rewrite. You've shown me the title and the issues found, but not the original post text itself. 
-
-Without seeing what was written, I cannot:
-- Fix the specific problems identified
-- Maintain the core message
-- Keep the same story and facts
-- Ensure accuracy about dates or events
-
-Please provide the full text of the original blog post so I can rewrite it properly.`
+    content: `I cannot rewrite the blog post as I do not have the actual content. Please provide the full text of the original blog post, and I will fix the identified issues while maintaining Liam's voice and the core message.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
