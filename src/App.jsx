@@ -841,6 +841,10 @@ function App() {
       <footer className="site-footer">
         <img src={logo} alt="Gebauer" className="footer-logo" />
         <p className="footer-tagline">Made in Japan. Boxed in Italy.</p>
+        <p className="footer-journal">
+          Liam writes a daily journal on Substack:{' '}
+          <a href="https://liamgebauer.substack.com" target="_blank" rel="noopener noreferrer">liamgebauer.substack.com</a>
+        </p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
         <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
       </footer>
