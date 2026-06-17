@@ -18,25 +18,23 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `Here's a draft blog post in Liam's voice based on the title:
-
-When I was 14, I decided I wanted to understand how watch manufacturing actually works. Not the marketing pitch. The real process.
+    content: `When I was 14, I decided I wanted to understand how watch manufacturing actually works. Not the marketing pitch. The real process.
 
 I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
 
 I drafted an email that was basically: "I'm a teenager who wants to understand how you make watches. Would you be willing to tell me about your process?" No pitch. No ask. Just genuine curiosity.
 
-I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka - the owner - wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
+I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
-He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings. Explained how they select metal grades for specific watch components.
+He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe while adjusting a balance wheel smaller than a rice grain.
 
-Most adults would have ignored a teenage email. Tanaka-san saw the question, not the questioner. That's the difference between marketing and real connection.
+One email stuck with me. He wrote about why he still hand-bevels edges when machines could do it faster: "The human hand leaves tiny variations. Each angle catches light differently. This is not imperfection. This is proof that someone cared enough to do it themselves."
 
-This is how you learn anything: ask direct questions. Show you're listening. Respect the craft more than your own ego.
+That philosophy shaped everything about how I approach Gebauer. We could outsource assembly to cut costs. We could use stock movements and call it a day. Instead, we chose the harder path: understanding every component, selecting each supplier based on their dedication to craft, building relationships with people who see watches the way Hiroshi does.
 
-I never bought a watch from his workshop. But I learned more about manufacturing from those emails than from any business book or YouTube tutorial.
+When customers ask why our watches cost what they do, I think about those emails. Quality isn't just materials or Swiss movements. It's the accumulation of thousands of decisions made by people who could take shortcuts but choose not to.
 
-The lesson isn't about watches. It's about curiosity being the most underrated skill in any industry.`
+Hiroshi taught me that before you can create something meaningful, you have to respect the craft enough to ask real questions. And sometimes, the most powerful thing you can do is admit you don't know something yet.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
