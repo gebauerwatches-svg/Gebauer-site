@@ -18,7 +18,7 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `When I was 14, I decided I wanted to understand how watch manufacturing actually works. Not the marketing pitch. The real process.
+    content: `When I was 15, I decided I wanted to understand how watch manufacturing actually works. Not the marketing pitch. The real process.
 
 I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
 
@@ -26,15 +26,15 @@ I drafted an email that was basically: "I'm a teenager who wants to understand h
 
 I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
-He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe while adjusting a balance wheel smaller than a rice grain.
+He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe while inspecting a balance wheel smaller than a shirt button.
 
-One email stuck with me. He wrote about why he still hand-bevels edges when machines could do it faster: "The human hand leaves tiny variations. Each angle catches light differently. This is not imperfection. This is proof that someone cared enough to do it themselves."
+One email changed everything. He wrote about how modern manufacturing had pushed traditional watchmakers to choose between mass production or extinction. His workshop made 200 watches per year. Each one took six weeks. The math didn't work, but he kept going because someone had to preserve these techniques.
 
-That philosophy shaped everything about how I approach Gebauer. We could outsource assembly to cut costs. We could use stock movements and call it a day. Instead, we chose the harder path: understanding every component, selecting each supplier based on their dedication to craft, building relationships with people who see watches the way Hiroshi does.
+That's when I understood what was missing in the watch world. Not another luxury brand. Not another tech disruption. What we needed was someone who could connect these master craftspeople with people who actually care about the craft.
 
-When customers ask why our watches cost what they do, I think about those emails. Quality isn't just materials or Swiss movements. It's the accumulation of thousands of decisions made by people who could take shortcuts but choose not to.
+Tanaka-san taught me that real expertise responds to real curiosity. You don't need credentials or connections. You need to ask the right questions and mean it. Every Gebauer watch we make now carries that lesson. We work with independent craftspeople who choose quality over quantity, who see each watch as a chance to preserve something worth saving.
 
-Hiroshi taught me that before you can create something meaningful, you have to respect the craft enough to ask real questions. And sometimes, the most powerful thing you can do is admit you don't know something yet.`
+The best business education doesn't come from case studies. It comes from cold-emailing someone on the other side of the world and discovering they've been waiting for someone to ask.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
