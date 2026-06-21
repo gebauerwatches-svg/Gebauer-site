@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Gebauer Admin</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <style>
+    :root {
+      --ink: #14111c;
+      --gold: #d4a62a;
+      --gold-soft: rgba(212, 166, 42, 0.12);
+      --bg: #f5f3ef;
+      --card: #ffffff;
+      --border: #e8e2d6;
+      --text: #1a1a1a;
+      --muted: #888;
+      --danger: #b03030;
+      --ok: #2a6b52;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Inter', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.5; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    button {
+      font-family: inherit; font-size: 13px; padding: 8px 16px; border: 1px solid var(--border);
+      background: var(--card); color: var(--text); cursor: pointer; transition: all 0.15s;
+    }
+    button:hover { border-color: var(--gold); }
+    button.primary { background: var(--ink); color: white; border-color: var(--ink); }
+    button.primary:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+    button.danger { color: var(--danger); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    input, textarea, select {
+      font-family: inherit; font-size: 14px; padding: 10px 12px;
+      border: 1px solid var(--border); background: var(--card); color: var(--text); width: 100%;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--gold); }
+    textarea { resize: vertical; min-height: 120px; font-family: 'Georgia', serif; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .field { margin-bottom: 12px; }
+
+    /* Login screen */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .login-card { background: var(--card); padding: 32px; max-width: 380px; width: 100%; border: 1px solid var(--border); }
+    .login-card h1 { font-family: 'Georgia', serif; font-weight: normal; font-size: 24px; color: var(--ink); margin-bottom: 8px; }
+    .login-card p { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+
+    /* App layout */
+    .app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+    .sidebar { background: var(--ink); color: white; padding: 24px 0; }
+    .sidebar h2 { font-family: 'Georgia', serif; font-weight: normal; font-size: 18px; padding: 0 24px 24px; color: var(--gold); letter-spacing: 0.05em; }
+    .sidebar nav { display: flex; flex-direction: column; }
+    .sidebar a {
+      color: rgba(255,255,255,0.7); padding: 10px 24px; font-size: 14px;
+      border-left: 3px solid transparent; transition: all 0.15s; text-decoration: none;
+    }
+    .sidebar a:hover { color: white; background: rgba(255,255,255,0.05); }
+    .sidebar a.active { color: var(--gold); border-left-color: var(--gold); background: rgba(212,166,42,0.05); }
+    .sidebar .logout { margin-top: 32px; padding: 10px 24px; color: var(--muted); font-size: 12px; background: none; border: none; cursor: pointer; text-align: left; }
+
+    main { padding: 32px; max-width: 1100px; }
+    .page-title { font-family: 'Georgia', serif; font-weight: normal; font-size: 28px; color: var(--ink); margin-bottom: 4px; }
+    .page-sub { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+    /* Stats row */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat { background: var(--card); padding: 16px; border: 1px solid var(--border); }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-family: 'Georgia', serif; font-size: 28px; color: var(--ink); margin-top: 4px; }
+
+    /* Subscriber table */
+    .toolbar { display: flex; gap: 12px; margin-bottom: 16px; align-items: center; }
+    .toolbar input { flex: 1; }
+    table { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); }
+    th { background: var(--bg); padding: 10px 12px; text-align: left; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    td { padding: 10px 12px; border-top: 1px solid var(--border); font-size: 13px; }
+    tbody tr:hover { background: var(--gold-soft); }
+    .status-pill { display: inline-block; padding: 2px 8px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .status-active { background: rgba(42,107,82,0.1); color: var(--ok); }
+    .status-unsubscribed { background: rgba(176,48,48,0.1); color: var(--danger); }
+
+    /* Modal */
+    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
+    .modal { background: var(--card); padding: 24px; max-width: 480px; width: 100%; max-height: 90vh; overflow: auto; }
+    .modal h3 { font-family: 'Georgia', serif; font-weight: normal; font-size: 20px; margin-bottom: 16px; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 20px; }
+
+    /* Broadcast composer */
+    .composer { background: var(--card); padding: 24px; border: 1px solid var(--border); margin-bottom: 24px; }
+    .preview-pane { background: var(--bg); padding: 24px; border: 1px solid var(--border); }
+    .preview-pane iframe { width: 100%; min-height: 500px; border: none; background: white; }
+
+    /* Story card */
+    .story-card { background: var(--card); padding: 16px; border: 1px solid var(--border); margin-bottom: 10px; }
+    .story-meta { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .story-text { font-family: 'Georgia', serif; font-size: 14px; color: var(--text); margin-bottom: 8px; }
+    .story-actions { display: flex; gap: 6px; }
+
+    .error { color: var(--danger); font-size: 13px; margin-top: 8px; }
+    .ok { color: var(--ok); font-size: 13px; margin-top: 8px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div id="app"><p style="padding:24px;color:var(--muted);">Loading...</p></div>
+
+  <script>
+    // ---- API helpers ----
+    async function api(path, opts = {}) {
+      const resp = await fetch(`/admin/api${path}`, {
+        ...opts,
+        headers: { 'Content-Type': 'application/json', ...(opts.headers || {}) },
+        credentials: 'same-origin',
+      })
+      const ct = resp.headers.get('content-type') || ''
+      if (!ct.includes('application/json')) {
+        return { error: `Non-JSON response (${resp.status})` }
+      }
+      const data = await resp.json()
+      if (resp.status === 401) { showLogin('Session expired. Sign in again.'); throw new Error('unauth') }
+      return data
+    }
+    const $ = (q, p = document) => p.querySelector(q)
+    const $$ = (q, p = document) => Array.from(p.querySelectorAll(q))
+    const el = (tag, attrs = {}, ...children) => {
+      const e = document.createElement(tag)
+      for (const [k, v] of Object.entries(attrs)) {
+        if (k === 'class') e.className = v
+        else if (k === 'html') e.innerHTML = v
+        else if (k.startsWith('on') && typeof v === 'function') e.addEventListener(k.slice(2), v)
+        else e.setAttribute(k, v)
+      }
+      for (const c of children) {
+        if (c == null || c === false) continue
+        e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c)
+      }
+      return e
+    }
+
+    // ---- Router ----
+    const VIEWS = ['subscribers', 'broadcasts', 'stories', 'votes']
+    let currentView = 'subscribers'
+
+    function navigate(view) {
+      currentView = view
+      window.location.hash = view
+      render()
+    }
+    window.addEventListener('hashchange', () => {
+      const v = window.location.hash.replace('#', '')
+      if (VIEWS.includes(v)) { currentView = v; render() }
+    })
+
+    // ---- Auth ----
+    async function showLogin(message = '') {
+      const app = $('#app')
+      app.innerHTML = ''
+      app.appendChild(el('div', { class: 'login-wrap' },
+        el('form', { class: 'login-card', onsubmit: handleLogin },
+          el('h1', {}, 'Gebauer Admin'),
+          el('p', {}, message || 'Sign in to manage subscribers, broadcasts, stories, and votes.'),
+          el('div', { class: 'field' },
+            el('label', {}, 'Password'),
+            el('input', { type: 'password', id: 'admin-pass', autofocus: 'true', required: 'true' }),
+          ),
+          el('button', { type: 'submit', class: 'primary' }, 'Sign in'),
+          el('p', { class: 'error hidden', id: 'login-error' }, ''),
+        )
+      ))
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault()
+      const pass = $('#admin-pass').value
+      const errEl = $('#login-error')
+      errEl.classList.add('hidden')
+      const data = await api('/login', { method: 'POST', body: JSON.stringify({ password: pass }) }).catch(() => null)
+      if (data && data.ok) {
+        currentView = window.location.hash.replace('#', '') || 'subscribers'
+        if (!VIEWS.includes(currentView)) currentView = 'subscribers'
+        render()
+      } else {
+        errEl.textContent = (data && data.error) || 'Login failed.'
+        errEl.classList.remove('hidden')
+      }
+    }
+
+    async function handleLogout() {
+      await fetch('/admin/api/logout', { method: 'POST', credentials: 'same-origin' })
+      showLogin('Signed out.')
+    }
+
+    // ---- Layout shell ----
+    function renderShell(contentNode) {
+      const app = $('#app')
+      app.innerHTML = ''
+      const navItem = (id, label) => el('a', {
+        href: `#${id}`,
+        class: currentView === id ? 'active' : '',
+        onclick: (e) => { e.preventDefault(); navigate(id) },
+      }, label)
+      app.appendChild(el('div', { class: 'app' },
+        el('aside', { class: 'sidebar' },
+          el('h2', {}, 'GEBAUER'),
+          el('nav', {},
+            navItem('subscribers', 'Subscribers'),
+            navItem('broadcasts', 'Broadcasts'),
+            navItem('stories', 'Stories'),
+            navItem('votes', 'Wood votes'),
+          ),
+          el('button', { class: 'logout', onclick: handleLogout }, 'Sign out'),
+        ),
+        el('main', {}, contentNode),
+      ))
+    }
+
+    // ---- Subscribers view ----
+    async function renderSubscribers() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/subscribers?limit=300').catch(() => ({ subscribers: [], total: 0, active: 0 }))
+      const subs = data.subscribers || []
+
+      const searchInput = el('input', {
+        type: 'text', placeholder: 'Search email or name...', id: 'subs-search',
+        oninput: debounce(async (e) => {
+          const q = e.target.value
+          const d = await api(`/subscribers?q=${encodeURIComponent(q)}&limit=300`)
+          renderSubsTable(d.subscribers || [])
+        }, 200),
+      })
+
+      const tableWrap = el('div', { id: 'subs-table-wrap' })
+      const addBtn = el('button', { class: 'primary', onclick: showAddSubscriberModal }, '+ Add')
+
+      function renderSubsTable(rows) {
+        const tableEl = el('table', {},
+          el('thead', {}, el('tr', {},
+            el('th', {}, 'Name'),
+            el('th', {}, 'Email'),
+            el('th', {}, 'Position'),
+            el('th', {}, 'Status'),
+            el('th', {}, 'Joined'),
+            el('th', {}, ''),
+          )),
+          el('tbody', {}, ...rows.map(s => el('tr', {},
+            el('td', {}, s.first_name || ''),
+            el('td', {}, s.email),
+            el('td', {}, s.waitlist_position === 9999 ? '—' : `#${s.waitlist_position}`),
+            el('td', {}, el('span', { class: `status-pill status-${s.status}` }, s.status)),
+            el('td', {}, (s.subscribed_at || '').slice(0, 10)),
+            el('td', {}, el('button', { onclick: () => showEditSubscriberModal(s) }, 'Edit')),
+          ))),
+        )
+        tableWrap.innerHTML = ''
+        tableWrap.appendChild(rows.length === 0 ? el('p', { class: 'page-sub' }, 'No subscribers match.') : tableEl)
+      }
+      renderSubsTable(subs)
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Subscribers'),
+        el('p', { class: 'page-sub' }, `${data.active} active, ${data.total} total`),
+        el('div', { class: 'stats-row' },
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Total'), el('div', { class: 'stat-value' }, String(data.total))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Active'), el('div', { class: 'stat-value' }, String(data.active))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Reserved positions'), el('div', { class: 'stat-value' }, String(subs.filter(s => s.waitlist_position !== 9999).length))),
+        ),
+        el('div', { class: 'toolbar' }, searchInput, addBtn),
+        tableWrap,
+      ))
+    }
+
+    function showAddSubscriberModal() {
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('form', { class: 'modal', onsubmit: async (e) => {
+          e.preventDefault()
+          const errEl = $('#add-err', modal)
+          errEl.classList.add('hidden')
+          const data = await api('/subscribers', {
+            method: 'POST',
+            body: JSON.stringify({
+              email: $('#add-email', modal).value,
+              first_name: $('#add-name', modal).value,
+              notes: $('#add-notes', modal).value,
+            }),
+          })
+          if (data.ok) { modal.remove(); renderSubscribers() }
+          else { errEl.textContent = data.error || 'Could not add.'; errEl.classList.remove('hidden') }
+        } },
+          el('h3', {}, 'Add subscriber'),
+          el('div', { class: 'field' }, el('label', {}, 'Email'), el('input', { type: 'email', id: 'add-email', required: 'true' })),
+          el('div', { class: 'field' }, el('label', {}, 'First name'), el('input', { type: 'text', id: 'add-name', required: 'true' })),
+          el('div', { class: 'field' }, el('label', {}, 'Notes (optional)'), el('input', { type: 'text', id: 'add-notes' })),
+          el('p', { class: 'error hidden', id: 'add-err' }, ''),
+          el('div', { class: 'modal-actions' },
+            el('button', { type: 'button', onclick: () => modal.remove() }, 'Cancel'),
+            el('button', { type: 'submit', class: 'primary' }, 'Add'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
+    }
+
+    function showEditSubscriberModal(s) {
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('form', { class: 'modal', onsubmit: async (e) => {
+          e.preventDefault()
+          const errEl = $('#edit-err', modal)
+          errEl.classList.add('hidden')
+          const data = await api(`/subscriber/${s.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              first_name: $('#edit-name', modal).value,
+              waitlist_position: parseInt($('#edit-pos', modal).value, 10) || 9999,
+              status: $('#edit-status', modal).value,
+              notes: $('#edit-notes', modal).value,
+            }),
+          })
+          if (data.ok) { modal.remove(); renderSubscribers() }
+          else { errEl.textContent = data.error || 'Could not save.'; errEl.classList.remove('hidden') }
+        } },
+          el('h3', {}, `Edit ${s.email}`),
+          el('div', { class: 'field' }, el('label', {}, 'First name'), el('input', { type: 'text', id: 'edit-name', value: s.first_name || '' })),
+          el('div', { class: 'field' }, el('label', {}, 'Position (1-300, blank = 9999)'), el('input', { type: 'number', id: 'edit-pos', value: s.waitlist_position === 9999 ? '' : s.waitlist_position })),
+          el('div', { class: 'field' }, el('label', {}, 'Status'),
+            el('select', { id: 'edit-status' },
+              el('option', { value: 'active', selected: s.status === 'active' ? 'true' : null }, 'active'),
+              el('option', { value: 'unsubscribed', selected: s.status === 'unsubscribed' ? 'true' : null }, 'unsubscribed'),
+              el('option', { value: 'bounced', selected: s.status === 'bounced' ? 'true' : null }, 'bounced'),
+            ),
+          ),
+          el('div', { class: 'field' }, el('label', {}, 'Notes'), el('input', { type: 'text', id: 'edit-notes', value: s.notes || '' })),
+          el('p', { class: 'error hidden', id: 'edit-err' }, ''),
+          el('div', { class: 'modal-actions' },
+            el('button', { type: 'button', class: 'danger', onclick: async () => {
+              if (!confirm(`Permanently delete ${s.email}? This cannot be undone.`)) return
+              await api(`/subscriber/${s.id}`, { method: 'DELETE' })
+              modal.remove(); renderSubscribers()
+            } }, 'Delete'),
+            el('button', { type: 'button', onclick: () => modal.remove() }, 'Cancel'),
+            el('button', { type: 'submit', class: 'primary' }, 'Save'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
+    }
+
+    // ---- Broadcasts view ----
+    async function renderBroadcasts() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/broadcasts').catch(() => ({ broadcasts: [] }))
+      const history = data.broadcasts || []
+
+      const composer = el('div', { class: 'composer' },
+        el('h3', { class: 'page-title', style: 'font-size:20px;margin-bottom:12px;' }, 'New broadcast'),
+        el('div', { class: 'field' },
+          el('label', {}, 'Subject'),
+          el('input', { type: 'text', id: 'bc-subject', placeholder: 'e.g. June 22 update' }),
+        ),
+        el('div', { class: 'field' },
+          el('label', {}, 'Body (markdown). No em dashes — voice guard blocks them.'),
+          el('textarea', { id: 'bc-body', placeholder: 'Hi guys,\n\nQuick update...\n\nRock on.\n-Liam' }),
+        ),
+        el('div', { class: 'toolbar' },
+          el('button', { onclick: async () => {
+            const subject = $('#bc-subject').value
+            const body = $('#bc-body').value
+            if (!subject || !body) return alert('Subject and body required.')
+            const data = await api('/broadcasts/preview', { method: 'POST', body: JSON.stringify({ subject, body }) })
+            if (data.error) { alert(data.error); return }
+            const previewEl = $('#bc-preview')
+            previewEl.innerHTML = ''
+            const iframe = el('iframe', {})
+            previewEl.appendChild(iframe)
+            iframe.contentDocument.open(); iframe.contentDocument.write(data.html); iframe.contentDocument.close()
+          } }, 'Preview'),
+          el('button', { class: 'primary', onclick: async () => {
+            const subject = $('#bc-subject').value
+            const body = $('#bc-body').value
+            if (!subject || !body) return alert('Subject and body required.')
+            const conf = prompt(`Send "${subject}" to all active subscribers? Type SEND to confirm.`)
+            if (conf !== 'SEND') return
+            const sendBtn = event.target
+            sendBtn.disabled = true; sendBtn.textContent = 'Sending...'
+            const data = await api('/broadcasts/send', { method: 'POST', body: JSON.stringify({ subject, body }) })
+            sendBtn.disabled = false; sendBtn.textContent = 'Send'
+            if (data.error) { alert('Error: ' + data.error); return }
+            alert(`Done. Sent: ${data.sent}, Failed: ${data.failed}.`)
+            renderBroadcasts()
+          } }, 'Send'),
+        ),
+        el('p', { class: 'page-sub', style: 'margin-top:12px;' }, 'Voice guard refuses em/en dashes. Replace with periods or commas.'),
+      )
+
+      const preview = el('div', { class: 'preview-pane', id: 'bc-preview' },
+        el('p', { class: 'page-sub' }, 'Preview will appear here after you click Preview.'),
+      )
+
+      const historyTable = history.length === 0
+        ? el('p', { class: 'page-sub' }, 'No broadcasts sent yet.')
+        : el('table', {},
+            el('thead', {}, el('tr', {}, el('th', {}, 'Subject'), el('th', {}, 'Recipients'), el('th', {}, 'Sent'))),
+            el('tbody', {}, ...history.map(b => el('tr', {},
+              el('td', {}, b.subject),
+              el('td', {}, String(b.recipients_count)),
+              el('td', {}, (b.sent_at || '').replace('T', ' ').slice(0, 16)),
+            ))),
+          )
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Broadcasts'),
+        el('p', { class: 'page-sub' }, 'Compose and send emails to all active subscribers.'),
+        composer,
+        preview,
+        el('h2', { class: 'page-title', style: 'font-size:20px;margin:32px 0 12px;' }, 'History'),
+        historyTable,
+      ))
+    }
+
+    // ---- Stories view ----
+    async function renderStories() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/stories').catch(() => ({ stories: [] }))
+      const all = data.stories || []
+
+      const list = el('div', {}, ...all.map(s => el('div', { class: 'story-card' },
+        el('div', { class: 'story-meta' },
+          el('span', {}, `${s.first_name} <${s.email}>`),
+          el('span', {}, s.status),
+        ),
+        el('p', { class: 'story-text' }, s.story),
+        el('div', { class: 'story-actions' },
+          el('button', { onclick: async () => {
+            await api(`/story/${s.id}`, { method: 'PUT', body: JSON.stringify({ status: 'approved' }) })
+            renderStories()
+          } }, 'Approve'),
+          el('button', { onclick: async () => {
+            await api(`/story/${s.id}`, { method: 'PUT', body: JSON.stringify({ status: 'rejected' }) })
+            renderStories()
+          } }, 'Reject'),
+          el('button', { class: 'danger', onclick: async () => {
+            if (!confirm('Permanently delete this story?')) return
+            await api(`/story/${s.id}`, { method: 'DELETE' })
+            renderStories()
+          } }, 'Delete'),
+        ),
+      )))
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Milestone stories'),
+        el('p', { class: 'page-sub' }, `${all.length} stories total.`),
+        all.length === 0 ? el('p', { class: 'page-sub' }, 'No stories yet.') : list,
+      ))
+    }
+
+    // ---- Votes view ----
+    async function renderVotes() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await fetch('/api/vote?poll=wood').then(r => r.json()).catch(() => ({ results: {}, total: 0 }))
+      const results = data.results || {}
+      const total = data.total || 0
+      const woods = ['padauk', 'ebony', 'hinoki']
+      const rows = woods.map(w => {
+        const n = results[w] || 0
+        const pct = total > 0 ? Math.round((n / total) * 100) : 0
+        return el('tr', {},
+          el('td', {}, w[0].toUpperCase() + w.slice(1)),
+          el('td', {}, String(n)),
+          el('td', {}, `${pct}%`),
+        )
+      })
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Wood votes'),
+        el('p', { class: 'page-sub' }, `${total} total votes`),
+        el('table', {},
+          el('thead', {}, el('tr', {}, el('th', {}, 'Wood'), el('th', {}, 'Votes'), el('th', {}, 'Share'))),
+          el('tbody', {}, ...rows),
+        ),
+      ))
+    }
+
+    // ---- Render dispatch ----
+    function render() {
+      if (currentView === 'subscribers') renderSubscribers()
+      else if (currentView === 'broadcasts') renderBroadcasts()
+      else if (currentView === 'stories') renderStories()
+      else if (currentView === 'votes') renderVotes()
+    }
+
+    // ---- Utils ----
+    function debounce(fn, ms) {
+      let t
+      return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms) }
+    }
+
+    // ---- Boot ----
+    ;(async () => {
+      const session = await api('/session').catch(() => ({ authenticated: false }))
+      if (session && session.authenticated) {
+        const hash = window.location.hash.replace('#', '')
+        if (VIEWS.includes(hash)) currentView = hash
+        render()
+      } else {
+        showLogin()
+      }
+    })()
+  </script>
+</body>
+</html>
