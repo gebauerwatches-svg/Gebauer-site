@@ -66,7 +66,7 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
  * Three cards: greeting + timeline, active poll, latest journal posts.
  * Built to feel like an insider page, not a confirmation screen.
  */
-function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVote, onBack }) {
+function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVote, woodVote, woodSubmitted, woodResults, onWoodVote, onWoodSubmit, onBack }) {
   const [posts, setPosts] = useState([])
   const [postsLoading, setPostsLoading] = useState(true)
 
@@ -79,6 +79,15 @@ function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVot
       .catch(() => {})
       .finally(() => setPostsLoading(false))
   }, [])
+
+  // Timeline milestones. "done", "current", or "upcoming" determines the visual state.
+  // Update this manually as each milestone hits.
+  const timeline = [
+    { id: 'design', label: 'Design locked', when: 'June 2026', status: 'done' },
+    { id: 'samples', label: 'Samples arrive', when: 'August 2026', status: 'current' },
+    { id: 'kickstarter', label: 'Kickstarter launches', when: 'November 2026', status: 'upcoming' },
+    { id: 'ship', label: 'Watches ship', when: 'Early 2027', status: 'upcoming' },
+  ]
 
   // Format a Substack pubDate (e.g. "Sat, 21 Jun 2026 10:00:00 GMT") into "Jun 21"
   const formatDate = (iso) => {
@@ -100,15 +109,26 @@ function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVot
         </p>
       </header>
 
-      {/* CARD 1 - Timeline */}
+      {/* CARD 1 - Visual timeline */}
       <section className="l2-card fade-in-delay-1">
-        <p className="l2-section-label">What happens next</p>
-        <div className="l2-confirm-box">
-          <p className="l2-confirm-line">Samples arrive this summer.</p>
-          <p className="l2-confirm-line">Kickstarter launches this fall.</p>
-          <p className="l2-confirm-line">Watches ship early 2027.</p>
-          <p className="l2-confirm-line">You'll hear from me when each happens.</p>
-        </div>
+        <p className="l2-section-label">The road to launch</p>
+        <ol className="l2-timeline">
+          {timeline.map((m, i) => (
+            <li key={m.id} className={`l2-timeline-step l2-timeline-${m.status}`}>
+              <div className="l2-timeline-dot" aria-hidden="true">
+                {m.status === 'done' && (
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                )}
+              </div>
+              <div className="l2-timeline-text">
+                <div className="l2-timeline-label">{m.label}</div>
+                <div className="l2-timeline-when">{m.when}</div>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       {/* CARD 2 - Active poll. Real decision you can shape. */}
@@ -150,6 +170,60 @@ function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVot
           )}
         </section>
       )}
+
+      {/* CARD 2b - Wood vote. Real product decision insiders shape. */}
+      <section className="l2-card l2-poll-card fade-in-delay-2">
+        <p className="l2-section-label">Which wood should ship first?</p>
+        <p className="l2-poll-question">Three woods, three samples. Which one are you most excited about?</p>
+        {woodSubmitted ? (
+          <div className="l2-poll-results">
+            {['Padauk', 'Ebony', 'Hinoki'].map(wood => {
+              const woodKey = wood.toLowerCase()
+              const votes = (woodResults && (woodResults[woodKey] || woodResults[wood])) || 0
+              const total = Object.values(woodResults || {}).reduce((sum, n) => sum + (n || 0), 0)
+              const pct = total > 0 ? Math.round((votes / total) * 100) : 0
+              const isMine = (woodVote || '').toLowerCase() === woodKey
+              return (
+                <div key={wood} className={`l2-poll-result-row ${isMine ? 'mine' : ''}`}>
+                  <div className="l2-poll-result-bar" style={{ width: `${pct}%` }} />
+                  <div className="l2-poll-result-label">
+                    <span>{wood}{isMine ? ' (your vote)' : ''}</span>
+                    <span>{pct}%</span>
+                  </div>
+                </div>
+              )
+            })}
+            <p className="l2-poll-thanks">Thanks for the input. Live results above.</p>
+          </div>
+        ) : (
+          <>
+            <div className="l2-poll-options">
+              {['Padauk', 'Ebony', 'Hinoki'].map(wood => {
+                const woodKey = wood.toLowerCase()
+                const isSelected = (woodVote || '').toLowerCase() === woodKey
+                return (
+                  <button
+                    key={wood}
+                    className={`l2-poll-option-btn ${isSelected ? 'selected' : ''}`}
+                    onClick={() => onWoodVote(woodKey)}
+                  >
+                    {wood}
+                  </button>
+                )
+              })}
+            </div>
+            {woodVote && (
+              <button
+                className="l2-substack-btn"
+                onClick={onWoodSubmit}
+                style={{ marginTop: 16 }}
+              >
+                Submit vote
+              </button>
+            )}
+          </>
+        )}
+      </section>
 
       {/* CARD 3 - Latest from the journal */}
       <section className="l2-card fade-in-delay-2">
@@ -476,6 +550,11 @@ function App() {
       pollSubmitted={pollSubmitted}
       pollVote={pollVote}
       onPollVote={handlePollVote}
+      woodVote={woodVote}
+      woodSubmitted={woodSubmitted}
+      woodResults={woodResults}
+      onWoodVote={handleWoodVote}
+      onWoodSubmit={handleWoodSubmit}
       onBack={() => setLayer('landing')}
     />
   }
