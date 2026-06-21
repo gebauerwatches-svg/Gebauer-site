@@ -8,16 +8,7 @@ import { createSessionCookie } from '../_auth.js'
 export async function onRequestPost(context) {
   const { env } = context
   if (!env.ADMIN_PASSWORD) {
-    // Diagnostic - strip after debugging
-    const adminKeys = Object.keys(env).filter(k => k.toUpperCase().includes('ADMIN') || k.toUpperCase().includes('PASS'))
-    return json({
-      error: 'Admin not configured. Set ADMIN_PASSWORD env var.',
-      diag: {
-        admin_like_keys_visible: adminKeys,
-        ADMIN_PASSWORD_type: typeof env.ADMIN_PASSWORD,
-        ADMIN_PASSWORD_length: env.ADMIN_PASSWORD ? env.ADMIN_PASSWORD.length : 0,
-      },
-    }, 500)
+    return json({ error: 'Admin not configured. Set ADMIN_PASSWORD env var.' }, 500)
   }
 
   let body
