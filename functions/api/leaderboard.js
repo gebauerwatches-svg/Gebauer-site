@@ -2,61 +2,40 @@
  * GET /api/leaderboard
  *
  * Cloudflare Pages Function.
- * Returns top 10 referrers and total subscriber count.
- *
- * Phase 2 migration (June 13 2026): reads from MailerLite, not Supabase.
- *
- * Performance note: MailerLite doesn't sort by custom field server-side,
- * so we pull the group's subscribers and sort client-side. With ~135-300
- * subscribers this is fine. If the list grows past 1000, add Cloudflare KV
- * cache with ~60s TTL.
+ * Phase 3 migration (June 20 2026): reads from Cloudflare D1 with proper SQL.
+ * Fast and indexed, unlike the prior client-side sort over the MailerLite group.
  */
 
 import { json } from './_shared.js'
 
-const ML_BASE = 'https://connect.mailerlite.com/api'
-
-async function listGroupSubscribers(key, groupId, limit = 1000) {
-  const subscribers = []
-  let cursor = null
-  while (subscribers.length < limit) {
-    const params = new URLSearchParams({ limit: String(Math.min(100, limit - subscribers.length)) })
-    if (cursor) params.set('cursor', cursor)
-    const resp = await fetch(`${ML_BASE}/groups/${groupId}/subscribers?${params}`, {
-      headers: { 'Authorization': `Bearer ${key}`, 'Accept': 'application/json' },
-    })
-    if (!resp.ok) break
-    const body = await resp.json()
-    subscribers.push(...(body.data || []))
-    cursor = body.meta?.next_cursor
-    if (!cursor) break
-  }
-  return subscribers
-}
-
 export async function onRequestGet(context) {
   const { env } = context
 
-  if (!env.ML_KEY || !env.WAITLIST_GROUP_ID) {
-    return json({ error: 'Server configuration error.' }, 500)
-  }
+  if (!env.DB) return json({ error: 'Server configuration error.' }, 500)
 
   try {
-    const subs = await listGroupSubscribers(env.ML_KEY, env.WAITLIST_GROUP_ID, 1000)
+    // Top 100 referrers with referral_count > 0
+    const top = await env.DB.prepare(`
+      SELECT first_name, referral_count
+      FROM subscribers
+      WHERE status = 'active' AND referral_count > 0
+      ORDER BY referral_count DESC
+      LIMIT 100
+    `).all()
 
-    // Build the leaderboard from referral_count custom field
-    const ranked = subs
-      .map(s => ({
-        name: s.fields?.name || 'Anonymous',
-        referrals: parseInt(s.fields?.referral_count || 0, 10),
-      }))
-      .filter(r => r.referrals > 0)
-      .sort((a, b) => b.referrals - a.referrals)
-      .slice(0, 100)
+    // Total active subscriber count
+    const totalRow = await env.DB.prepare(`
+      SELECT COUNT(*) as cnt FROM subscribers WHERE status = 'active'
+    `).first()
+
+    const leaderboard = (top.results || []).map(r => ({
+      name: r.first_name || 'Anonymous',
+      referrals: r.referral_count || 0,
+    }))
 
     return json({
-      leaderboard: ranked,
-      total: subs.length,
+      leaderboard,
+      total: totalRow ? totalRow.cnt : 0,
     })
   } catch (err) {
     console.error('Leaderboard error:', err.message)

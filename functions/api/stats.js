@@ -2,18 +2,10 @@
  * GET /api/stats?email=...
  *
  * Cloudflare Pages Function.
- * Returns subscriber stats for the My Stats feature.
- *
- * Phase 2 migration (June 13 2026): reads from MailerLite, not Supabase.
- *
- * Environment variables:
- *   ML_KEY              — MailerLite API key
- *   WAITLIST_GROUP_ID   — Gebauer Pre Launch group ID (used for membership check)
+ * Phase 3 migration (June 20 2026): reads from Cloudflare D1.
  */
 
 import { json } from './_shared.js'
-
-const ML_BASE = 'https://connect.mailerlite.com/api'
 
 export async function onRequestGet(context) {
   const { env } = context
@@ -21,37 +13,31 @@ export async function onRequestGet(context) {
   const email = (url.searchParams.get('email') || '').trim().toLowerCase()
 
   if (!email) return json({ error: 'Email is required.' }, 400)
-  if (!env.ML_KEY) return json({ error: 'Server configuration error.' }, 500)
+  if (!env.DB) return json({ error: 'Server configuration error.' }, 500)
 
   try {
-    const resp = await fetch(`${ML_BASE}/subscribers/${encodeURIComponent(email)}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${env.ML_KEY}`,
-        'Accept': 'application/json',
-      },
-    })
+    const row = await env.DB.prepare(`
+      SELECT first_name, email, referral_count, referral_code, waitlist_position, status
+      FROM subscribers
+      WHERE email = ?
+      LIMIT 1
+    `).bind(email).first()
 
-    if (resp.status === 404) {
+    if (!row) {
       return json({ error: 'Email not found on the waitlist.' }, 404)
     }
-    if (!resp.ok) {
-      console.error('MailerLite stats lookup error:', resp.status, await resp.text())
-      return json({ error: 'Something went wrong.' }, 500)
+
+    if (row.status === 'unsubscribed') {
+      return json({ error: 'This email has unsubscribed from the waitlist.' }, 410)
     }
 
-    const body = await resp.json()
-    const sub = body?.data
-    if (!sub) return json({ error: 'Email not found on the waitlist.' }, 404)
-
-    const fields = sub.fields || {}
-    const position = parseInt(fields.waitlist_position || 9999, 10)
+    const position = parseInt(row.waitlist_position || 9999, 10)
 
     return json({
-      first_name: fields.name || '',
-      email: sub.email,
-      referral_count: parseInt(fields.referral_count || 0, 10),
-      referral_code: fields.referral_code || '',
+      first_name: row.first_name,
+      email: row.email,
+      referral_count: row.referral_count || 0,
+      referral_code: row.referral_code || '',
       current_position: position === 9999 ? 0 : position,
     })
   } catch (err) {
