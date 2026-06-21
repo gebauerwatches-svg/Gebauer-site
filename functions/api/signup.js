@@ -13,6 +13,7 @@
  */
 
 import { json, randomHex } from './_shared.js'
+import { sendWelcomeEmail } from './_welcome.js'
 
 
 // Save the milestone story to D1 community_stories. Best-effort, swallows errors.
@@ -106,9 +107,23 @@ export async function onRequestPost(context) {
       }
     }
 
-    // Milestone story still saves to the votes Supabase project (independent system).
+    // Milestone story (optional) writes to D1 community_stories.
     if (milestone_story && milestone_story.trim()) {
       try { await saveMilestoneStory(env, cleanEmail, cleanName, milestone_story.trim()) } catch (e) { console.error('Story save failed:', e.message) }
+    }
+
+    // Welcome email (best-effort, never blocks the response)
+    try {
+      const result = await sendWelcomeEmail(env, {
+        email: cleanEmail,
+        first_name: cleanName,
+        unsubscribe_token: unsubscribeToken,
+      })
+      if (!result.sent) {
+        console.log('Welcome skipped:', result.reason, result.error || '')
+      }
+    } catch (e) {
+      console.error('Welcome email error:', e.message)
     }
 
     return json({ ok: true, verified: true })

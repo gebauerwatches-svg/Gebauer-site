@@ -140,7 +140,7 @@
     }
 
     // ---- Router ----
-    const VIEWS = ['subscribers', 'broadcasts', 'stories', 'votes']
+    const VIEWS = ['subscribers', 'broadcasts', 'welcome', 'stories', 'votes']
     let currentView = 'subscribers'
 
     function navigate(view) {
@@ -207,6 +207,7 @@
           el('nav', {},
             navItem('subscribers', 'Subscribers'),
             navItem('broadcasts', 'Broadcasts'),
+            navItem('welcome', 'Welcome email'),
             navItem('stories', 'Stories'),
             navItem('votes', 'Wood votes'),
           ),
@@ -481,10 +482,58 @@
       ))
     }
 
+    // ---- Welcome email view ----
+    async function renderWelcome() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/settings').catch(() => ({ settings: {} }))
+      const s = data.settings || {}
+      const enabled = s.welcome_enabled === 'true'
+
+      const form = el('div', { class: 'composer' },
+        el('div', { class: 'field' },
+          el('label', {}, 'Enabled'),
+          el('select', { id: 'wel-enabled' },
+            el('option', { value: 'true', selected: enabled ? 'true' : null }, 'Yes, send welcome on signup'),
+            el('option', { value: 'false', selected: !enabled ? 'true' : null }, 'No, skip welcome email'),
+          ),
+        ),
+        el('div', { class: 'field' },
+          el('label', {}, 'Subject (supports {{first_name}})'),
+          el('input', { type: 'text', id: 'wel-subject', value: s.welcome_subject || '' }),
+        ),
+        el('div', { class: 'field' },
+          el('label', {}, 'Body (markdown, supports {{first_name}} and {{unsubscribe_url}}). No em dashes.'),
+          el('textarea', { id: 'wel-body', style: 'min-height:280px' }, s.welcome_body || ''),
+        ),
+        el('div', { class: 'toolbar' },
+          el('button', { onclick: async () => {
+            const data = await api('/settings', {
+              method: 'PUT',
+              body: JSON.stringify({
+                welcome_enabled: $('#wel-enabled').value,
+                welcome_subject: $('#wel-subject').value,
+                welcome_body: $('#wel-body').value,
+              }),
+            })
+            if (data.ok) alert('Saved.'); else alert('Error: ' + (data.error || 'unknown'))
+          }, class: 'primary' }, 'Save'),
+        ),
+        el('p', { class: 'page-sub', style: 'margin-top:16px;' },
+          'New signups get this email immediately. Requires GEBAUER_MAILING_ADDRESS env var to actually send. If missing, signup still succeeds but no email goes out.'),
+      )
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Welcome email'),
+        el('p', { class: 'page-sub' }, 'Auto-sent to every new signup. Edit subject and body below.'),
+        form,
+      ))
+    }
+
     // ---- Render dispatch ----
     function render() {
       if (currentView === 'subscribers') renderSubscribers()
       else if (currentView === 'broadcasts') renderBroadcasts()
+      else if (currentView === 'welcome') renderWelcome()
       else if (currentView === 'stories') renderStories()
       else if (currentView === 'votes') renderVotes()
     }
