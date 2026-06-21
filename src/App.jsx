@@ -66,7 +66,7 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
  * Three cards: greeting + timeline, active poll, latest journal posts.
  * Built to feel like an insider page, not a confirmation screen.
  */
-function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVote, woodVote, woodSubmitted, woodResults, onWoodVote, onWoodSubmit, onBack }) {
+function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVote, onWoodSubmit, onBack }) {
   const [posts, setPosts] = useState([])
   const [postsLoading, setPostsLoading] = useState(true)
 
@@ -131,47 +131,10 @@ function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVot
         </ol>
       </section>
 
-      {/* CARD 2 - Active poll. Real decision you can shape. */}
-      {activePoll && (
-        <section className="l2-card l2-poll-card fade-in-delay-1">
-          <p className="l2-section-label">Insider vote</p>
-          <h3 className="l2-poll-question">{activePoll.question}</h3>
-          {pollSubmitted ? (
-            <div className="l2-poll-results">
-              {(activePoll.options || []).map(opt => {
-                const votes = (activePoll.votes && activePoll.votes[opt]) || 0
-                const total = activePoll.total || 0
-                const pct = total > 0 ? Math.round((votes / total) * 100) : 0
-                const isMine = pollVote === opt
-                return (
-                  <div key={opt} className={`l2-poll-result-row ${isMine ? 'mine' : ''}`}>
-                    <div className="l2-poll-result-bar" style={{ width: `${pct}%` }} />
-                    <div className="l2-poll-result-label">
-                      <span>{opt}{isMine ? ' (your vote)' : ''}</span>
-                      <span>{pct}%</span>
-                    </div>
-                  </div>
-                )
-              })}
-              <p className="l2-poll-thanks">Thanks for weighing in. Next poll comes around soon.</p>
-            </div>
-          ) : (
-            <div className="l2-poll-options">
-              {(activePoll.options || []).map(opt => (
-                <button
-                  key={opt}
-                  className="l2-poll-option-btn"
-                  onClick={() => onPollVote(opt)}
-                >
-                  {opt}
-                </button>
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+      {/* Rotating polls system removed June 21 2026 per founder call.
+          Wood vote is the only active insider vote. */}
 
-      {/* CARD 2b - Wood vote. Real product decision insiders shape. */}
+      {/* CARD 2 - Wood vote. Real product decision insiders shape. */}
       <section className="l2-card l2-poll-card fade-in-delay-2">
         <p className="l2-section-label">Which wood should ship first?</p>
         <p className="l2-poll-question">Three woods, three samples. Which one are you most excited about?</p>
@@ -546,10 +509,6 @@ function App() {
   if (layer === 'inside') {
     return <InsiderView
       firstName={userData?.first_name || firstName || 'there'}
-      activePoll={activePoll}
-      pollSubmitted={pollSubmitted}
-      pollVote={pollVote}
-      onPollVote={handlePollVote}
       woodVote={woodVote}
       woodSubmitted={woodSubmitted}
       woodResults={woodResults}
