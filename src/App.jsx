@@ -61,6 +61,132 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
 }
 
 
+/**
+ * Insider view (Layer 2): what a signed-in subscriber sees.
+ * Three cards: greeting + timeline, active poll, latest journal posts.
+ * Built to feel like an insider page, not a confirmation screen.
+ */
+function InsiderView({ firstName, activePoll, pollSubmitted, pollVote, onPollVote, onBack }) {
+  const [posts, setPosts] = useState([])
+  const [postsLoading, setPostsLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/journal')
+      .then(r => r.json())
+      .then(d => {
+        if (d.posts) setPosts(d.posts)
+      })
+      .catch(() => {})
+      .finally(() => setPostsLoading(false))
+  }, [])
+
+  // Format a Substack pubDate (e.g. "Sat, 21 Jun 2026 10:00:00 GMT") into "Jun 21"
+  const formatDate = (iso) => {
+    if (!iso) return ''
+    const d = new Date(iso)
+    if (isNaN(d.getTime())) return ''
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+  }
+
+  return (
+    <div className="l2">
+      <header className="l2-welcome">
+        <img src={logo} alt="Gebauer" className="l2-logo" />
+        <h1 className="l2-rank-hero fade-in">
+          You're in, {firstName}.
+        </h1>
+        <p className="l2-rank-detail fade-in-delay-1">
+          One of the first to know about Gebauer.
+        </p>
+      </header>
+
+      {/* CARD 1 - Timeline */}
+      <section className="l2-card fade-in-delay-1">
+        <p className="l2-section-label">What happens next</p>
+        <div className="l2-confirm-box">
+          <p className="l2-confirm-line">Samples arrive this summer.</p>
+          <p className="l2-confirm-line">Kickstarter launches this fall.</p>
+          <p className="l2-confirm-line">Watches ship early 2027.</p>
+          <p className="l2-confirm-line">You'll hear from me when each happens.</p>
+        </div>
+      </section>
+
+      {/* CARD 2 - Active poll. Real decision you can shape. */}
+      {activePoll && (
+        <section className="l2-card l2-poll-card fade-in-delay-1">
+          <p className="l2-section-label">Insider vote</p>
+          <h3 className="l2-poll-question">{activePoll.question}</h3>
+          {pollSubmitted ? (
+            <div className="l2-poll-results">
+              {(activePoll.options || []).map(opt => {
+                const votes = (activePoll.votes && activePoll.votes[opt]) || 0
+                const total = activePoll.total || 0
+                const pct = total > 0 ? Math.round((votes / total) * 100) : 0
+                const isMine = pollVote === opt
+                return (
+                  <div key={opt} className={`l2-poll-result-row ${isMine ? 'mine' : ''}`}>
+                    <div className="l2-poll-result-bar" style={{ width: `${pct}%` }} />
+                    <div className="l2-poll-result-label">
+                      <span>{opt}{isMine ? ' (your vote)' : ''}</span>
+                      <span>{pct}%</span>
+                    </div>
+                  </div>
+                )
+              })}
+              <p className="l2-poll-thanks">Thanks for weighing in. Next poll comes around soon.</p>
+            </div>
+          ) : (
+            <div className="l2-poll-options">
+              {(activePoll.options || []).map(opt => (
+                <button
+                  key={opt}
+                  className="l2-poll-option-btn"
+                  onClick={() => onPollVote(opt)}
+                >
+                  {opt}
+                </button>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* CARD 3 - Latest from the journal */}
+      <section className="l2-card fade-in-delay-2">
+        <p className="l2-section-label">From the journal</p>
+        {postsLoading ? (
+          <p className="l2-journal-loading">Loading recent posts...</p>
+        ) : posts.length === 0 ? (
+          <p className="l2-journal-loading">No posts yet. First entries land soon.</p>
+        ) : (
+          <>
+            <ul className="l2-journal-list">
+              {posts.slice(0, 2).map(p => (
+                <li key={p.url} className="l2-journal-item">
+                  <a href={p.url} target="_blank" rel="noopener noreferrer">
+                    <span className="l2-journal-date">{formatDate(p.published_at)}</span>
+                    <span className="l2-journal-title">{p.title}</span>
+                    <span className="l2-journal-snippet">{p.snippet}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a className="l2-substack-btn" href="https://gebauerwatches.substack.com" target="_blank" rel="noopener noreferrer">
+              Read the full journal
+            </a>
+          </>
+        )}
+      </section>
+
+      <footer className="l2-footer">
+        <button className="l2-back" onClick={onBack}>Back to home</button>
+        <p>&copy; {new Date().getFullYear()} Gebauer Watches</p>
+      </footer>
+    </div>
+  )
+}
+
+
 function App() {
   const [layer, setLayer] = useState('landing')
   const [showSignup, setShowSignup] = useState(false)
@@ -344,39 +470,14 @@ function App() {
 
   // ---- LAYER 2 ----
   if (layer === 'inside') {
-    const displayName = userData?.first_name || firstName || 'there'
-
-    return (
-      <div className="l2">
-        <header className="l2-welcome">
-          <img src={logo} alt="Gebauer" className="l2-logo" />
-          <h1 className="l2-rank-hero fade-in">
-            You're in, {displayName}.
-          </h1>
-          <p className="l2-rank-detail fade-in-delay-1">
-            One of the first to know about Gebauer.
-          </p>
-        </header>
-
-        <section className="l2-referral fade-in-delay-1">
-          <p className="l2-section-label">What happens next</p>
-          <div className="l2-confirm-box">
-            <p className="l2-confirm-line">Samples arrive this summer.</p>
-            <p className="l2-confirm-line">Kickstarter launches this fall.</p>
-            <p className="l2-confirm-line">Watches ship early 2027.</p>
-            <p className="l2-confirm-line">You'll hear from me when each happens.</p>
-          </div>
-        </section>
-
-        <section className="l2-igdrasil fade-in-delay-2">
-          <h2 className="l2-igdrasil-title">Want the daily?</h2>
-          <p className="l2-igdrasil-sub">I write a short journal entry most days about what's happening behind the scenes. Open if you want the full version.</p>
-          <a className="l2-substack-btn" href="https://gebauerwatches.substack.com" target="_blank" rel="noopener noreferrer">Read Liam's daily journal</a>
-        </section>
-
-        <footer className="l2-footer"><button className="l2-back" onClick={() => setLayer('landing')}>Back to home</button><p>&copy; {new Date().getFullYear()} Gebauer Watches</p></footer>
-      </div>
-    )
+    return <InsiderView
+      firstName={userData?.first_name || firstName || 'there'}
+      activePoll={activePoll}
+      pollSubmitted={pollSubmitted}
+      pollVote={pollVote}
+      onPollVote={handlePollVote}
+      onBack={() => setLayer('landing')}
+    />
   }
 
   // ---- LAYER 1 ----
