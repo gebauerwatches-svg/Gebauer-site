@@ -28,16 +28,10 @@ const POLL_IMAGES = {
   'Deployant Clasp': { img: claspDeployed, desc: 'Opens wider. Easy on, easy off.' },
 }
 
-const RAVEN_PATH = [
-  { name: 'Villager', referrals: 0, unlock: 'You signed up. But you\'re not in the movement yet.', tease: '', spots: null, symbol: '\u2302' },
-  { name: 'Kindling', referrals: 2, unlock: 'You\'re in. Welcome to the movement.', tease: 'Bring 2 people and the door opens...', spots: null, symbol: '\u2740' },
-  { name: 'Runecaster', referrals: 5, unlock: 'You see what we\'re building before anyone else.', tease: 'Something most people never get to see...', spots: 50, symbol: '\u16B1' },
-  { name: 'Skald', referrals: 8, unlock: 'Your voice shapes what Gebauer becomes.', tease: 'You start to influence what we make...', spots: 25, symbol: '\u266B' },
-  { name: 'Einherjar', referrals: 12, unlock: 'Your name goes on something permanent.', tease: 'This one\'s permanent...', spots: 15, symbol: '\u2694' },
-  { name: 'Jarl', referrals: 16, unlock: 'You choose your edition number. 001, 042, 300. Yours.', tease: 'You get to pick something nobody else can...', spots: 10, symbol: '\u2655' },
-  { name: 'Muninn', referrals: 20, unlock: 'Direct access to Liam. You\'re in the inner circle.', tease: 'The founder knows your name...', spots: 5, symbol: '\u273B' },
-  { name: 'Huginn', referrals: 25, unlock: 'Hand-signed card from Liam. Named in the founding story.', tease: 'You become part of the origin...', spots: 2, symbol: '\u2726' },
-]
+// Raven Path referral system removed June 21 2026 per the brand pivot away
+// from gamified referrals. Numbers (1-300) are now reserved intentionally
+// by Liam, not earned through referrals. Historical referral_count data
+// preserved in D1 but the UI no longer displays it.
 
 const FALLBACK_WAITLIST_COUNT = 152
 
@@ -67,28 +61,18 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
 }
 
 
-// Helper: figure out rank from referral count
-function getRankInfo(referrals) {
-  let idx = 0
-  for (let i = RAVEN_PATH.length - 1; i >= 0; i--) {
-    if (referrals >= RAVEN_PATH[i].referrals) { idx = i; break }
-  }
-  return { index: idx, rank: RAVEN_PATH[idx], next: RAVEN_PATH[idx + 1] || null }
-}
-
 function App() {
   const [layer, setLayer] = useState('landing')
   const [showSignup, setShowSignup] = useState(false)
   const [honeypot, setHoneypot] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [copied, setCopied] = useState(false)
   const [needsVerification, setNeedsVerification] = useState(false)
-  const [referralFrom, setReferralFrom] = useState('')
   const [showStats, setShowStats] = useState(false)
-  const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
+  // Last-used email is remembered as autofill suggestion only. Does NOT
+  // auto-load identity (per the June 21 2026 localStorage fix).
+  const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_last_email') || '')
   const [menuOpen, setMenuOpen] = useState(false)
-  const [leaderboard, setLeaderboard] = useState([])
   const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
 
   // Voting system — saves to Supabase via API
@@ -224,10 +208,12 @@ function App() {
     return () => clearInterval(interval)
   }, [])
 
-  // User data (persisted in localStorage, fetched from API)
-  const [firstName, setFirstName] = useState(() => localStorage.getItem('gebauer_name') || '')
-  const [email, setEmail] = useState(() => localStorage.getItem('gebauer_email') || '')
-  const [userData, setUserData] = useState(null) // { first_name, referral_count, referral_code, current_position }
+  // Signup form fields. Start empty so the form doesn't auto-fill with a
+  // previous user's identity (the June 21 2026 auto-login bug).
+  // After a fresh signup or stats lookup, these get populated and persisted.
+  const [firstName, setFirstName] = useState('')
+  const [email, setEmail] = useState('')
+  const [userData, setUserData] = useState(null) // { first_name, referral_code, referral_count, current_position }
   const [statsLoading, setStatsLoading] = useState(false)
   const [statsError, setStatsError] = useState('')
 
@@ -245,8 +231,12 @@ function App() {
         setStatsError(data.error)
       } else {
         setUserData(data)
+        // gebauer_email and gebauer_name are session-like markers used by polls,
+        // votes, and the story system to remember what this user has done.
+        // gebauer_last_email is the autofill suggestion shown in the My Spot modal.
         localStorage.setItem('gebauer_name', data.first_name)
         localStorage.setItem('gebauer_email', data.email)
+        localStorage.setItem('gebauer_last_email', data.email)
         setFirstName(data.first_name)
         setEmail(data.email)
       }
@@ -254,26 +244,22 @@ function App() {
     finally { setStatsLoading(false) }
   }
 
-  // On mount: check URL params, auto-fetch stats for returning users
+  // On mount: check URL params + fetch waitlist total. We DO NOT auto-load
+  // the previous user's identity anymore (fixed June 21 2026). Email is
+  // remembered as an autofill suggestion in the My Spot modal, but the
+  // user must click Sign In there to actually load their data. Previously
+  // whoever last signed up on this browser became the auto-identity for
+  // every future visitor, which was wrong (shared computers, family laptops).
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
     if (params.get('verified') === 'true') {
-      const savedEmail = localStorage.getItem('gebauer_email')
-      if (savedEmail) fetchStats(savedEmail)
-      setLayer('inside')
       window.history.replaceState({}, '', window.location.pathname)
     }
-    if (params.get('ref')) setReferralFrom(params.get('ref'))
 
-    // Auto-fetch stats if we have a saved email
-    const savedEmail = localStorage.getItem('gebauer_email')
-    if (savedEmail) fetchStats(savedEmail)
-
-    // Fetch real leaderboard
+    // Fetch waitlist total for the proof-strip display
     fetch('/api/leaderboard')
       .then(r => r.json())
       .then(data => {
-        if (data.leaderboard) setLeaderboard(data.leaderboard)
         if (data.total) setWaitlistCount(data.total)
       })
       .catch(() => {})
@@ -291,7 +277,6 @@ function App() {
         body: JSON.stringify({
           first_name: firstName,
           email,
-          referred_by: referralFrom || undefined,
           honeypot,
           milestone_story: milestoneStory || undefined,
         }),
@@ -312,6 +297,7 @@ function App() {
         if (data.error && data.error.includes('already on the waitlist')) {
           localStorage.setItem('gebauer_email', email.trim().toLowerCase())
           localStorage.setItem('gebauer_name', firstName.trim())
+          localStorage.setItem('gebauer_last_email', email.trim().toLowerCase())
           if (milestoneStory.trim()) {
             // Save story separately for existing users
             fetch('/api/submit-story', {
@@ -332,9 +318,10 @@ function App() {
         }
         setError(data.error || 'Something went wrong.')
       } else {
-        // Instant signup — no verification needed.
+        // Instant signup. No verification needed.
         localStorage.setItem('gebauer_email', email.trim().toLowerCase())
         localStorage.setItem('gebauer_name', firstName.trim())
+        localStorage.setItem('gebauer_last_email', email.trim().toLowerCase())
         if (milestoneStory.trim()) {
           localStorage.setItem('gebauer_story_submitted', 'true')
           localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
@@ -355,84 +342,36 @@ function App() {
     finally { setLoading(false) }
   }
 
-  const handleCopyLink = () => {
-    const code = userData?.referral_code || ''
-    navigator.clipboard.writeText(`https://gebauerwatches.com/?ref=${code}`)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  // Compute rank from real or demo data
-  const userReferrals = userData?.referral_count ?? 0
-  const { index: currentRankIndex, rank: currentRank, next: nextRank } = getRankInfo(userReferrals)
-
   // ---- LAYER 2 ----
   if (layer === 'inside') {
     const displayName = userData?.first_name || firstName || 'there'
-    const refCode = userData?.referral_code || ''
-
-    const OG_TIERS = [
-      { friends: 0, label: 'You\'re an OG', reward: 'You\'re in. You found this before anyone.', unlocked: true },
-      { friends: 1, label: '1 friend', reward: 'Vote on every design decision' },
-      { friends: 3, label: '3 friends', reward: 'See sample photos before anyone' },
-      { friends: 5, label: '5 friends', reward: 'Pick your edition number (001-300)' },
-      { friends: 10, label: '10 friends', reward: 'Hand-signed card from Liam in your box' },
-    ]
 
     return (
       <div className="l2">
         <header className="l2-welcome">
           <img src={logo} alt="Gebauer" className="l2-logo" />
           <h1 className="l2-rank-hero fade-in">
-            {userData?.current_position || '—'} is yours, {displayName}.
+            You're in, {displayName}.
           </h1>
           <p className="l2-rank-detail fade-in-delay-1">
-            {userReferrals} referral{userReferrals !== 1 ? 's' : ''}
+            One of the first to know about Gebauer.
           </p>
         </header>
 
-        {/* Referral link */}
         <section className="l2-referral fade-in-delay-1">
-          <p className="l2-section-label">Your Link</p>
-          <div className="l2-referral-box">
-            <span className="l2-referral-url">
-              {refCode ? `gebauerwatches.com/?ref=${refCode}` : 'Loading...'}
-            </span>
-            <button className="l2-copy-btn" onClick={handleCopyLink} disabled={!refCode}>
-              {copied ? 'Copied' : 'Copy'}
-            </button>
+          <p className="l2-section-label">What happens next</p>
+          <div className="l2-confirm-box">
+            <p className="l2-confirm-line">Samples arrive this summer.</p>
+            <p className="l2-confirm-line">Kickstarter launches this fall.</p>
+            <p className="l2-confirm-line">Watches ship early 2027.</p>
+            <p className="l2-confirm-line">You'll hear from me when each happens.</p>
           </div>
-          <p className="l2-referral-hint">Tell one person face to face. Then give them the link.</p>
         </section>
 
-        {/* OG Unlock Ladder */}
         <section className="l2-igdrasil fade-in-delay-2">
-          <h2 className="l2-igdrasil-title">Your OG Status</h2>
-          <p className="l2-igdrasil-sub">Bring people in. Unlock more.</p>
-          <div className="l2-tree">
-            {OG_TIERS.map((tier, i) => {
-              const isUnlocked = userReferrals >= tier.friends
-              const isNext = !isUnlocked && (i === 0 || userReferrals >= OG_TIERS[i - 1].friends)
-              return (
-                <div key={tier.friends} className={`l2-tree-node ${isUnlocked ? 'unlocked' : ''} ${isNext ? 'current' : ''}`}>
-                  {i > 0 && <div className={`l2-tree-branch ${isUnlocked ? 'unlocked' : ''}`} />}
-                  <div className="l2-tree-circle">
-                    {isUnlocked
-                      ? <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                      : <span className="l2-tree-dot" />
-                    }
-                  </div>
-                  <div className="l2-tree-info">
-                    <div className="l2-tree-rank-row">
-                      <h3 className="l2-tree-rank-name">{tier.label}</h3>
-                      {isNext && <span className="l2-tree-referrals">{tier.friends - userReferrals} more</span>}
-                    </div>
-                    <p className="l2-tree-unlock">{tier.reward}</p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+          <h2 className="l2-igdrasil-title">Want the daily?</h2>
+          <p className="l2-igdrasil-sub">I write a short journal entry most days about what's happening behind the scenes. Open if you want the full version.</p>
+          <a className="l2-substack-btn" href="https://gebauerwatches.substack.com" target="_blank" rel="noopener noreferrer">Read Liam's daily journal</a>
         </section>
 
         <footer className="l2-footer"><button className="l2-back" onClick={() => setLayer('landing')}>Back to home</button><p>&copy; {new Date().getFullYear()} Gebauer Watches</p></footer>
@@ -920,6 +859,7 @@ function App() {
                       setUserData(data)
                       localStorage.setItem('gebauer_email', data.email)
                       localStorage.setItem('gebauer_name', data.first_name)
+                      localStorage.setItem('gebauer_last_email', data.email)
                       setFirstName(data.first_name)
                       setEmail(data.email)
                       setShowStats(false)
