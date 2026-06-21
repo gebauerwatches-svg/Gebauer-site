@@ -35,6 +35,17 @@ function pick(xml, tag) {
   return m ? m[1].trim() : ''
 }
 
+function extractFirstImage(itemXml) {
+  // Substack RSS includes <enclosure url="..."/> for the post hero image,
+  // and also inlines images in <description> via <img src="..."/>. Try
+  // enclosure first (cleanest), fall back to first img in description.
+  const enclosure = itemXml.match(/<enclosure\s+[^>]*url=["']([^"']+)["']/i)
+  if (enclosure) return enclosure[1]
+  const inline = itemXml.match(/<img[^>]+src=["']([^"']+)["']/i)
+  if (inline) return inline[1]
+  return null
+}
+
 function parseFeed(xml, limit = 3) {
   // Split into items, parse each
   const items = []
@@ -48,6 +59,7 @@ function parseFeed(xml, limit = 3) {
     // Description has HTML body. Strip + truncate.
     const description = decodeEntities(pick(itemXml, 'description'))
     const snippet = stripHtml(description).slice(0, 180)
+    const image = extractFirstImage(itemXml)
 
     if (title && url) {
       items.push({
@@ -55,6 +67,7 @@ function parseFeed(xml, limit = 3) {
         url,
         published_at: pubDate,
         snippet,
+        image,
       })
     }
   }

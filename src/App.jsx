@@ -35,6 +35,15 @@ const POLL_IMAGES = {
 
 const FALLBACK_WAITLIST_COUNT = 152
 
+// Wood choices for the insider vote card. Matches the wood vote API which
+// expects lowercase keys (padauk, ebony, hinoki). Images use the existing
+// Tokiji render imports at the top of this file.
+const WOOD_OPTIONS = [
+  { key: 'padauk', label: 'Padauk', img: watchPadauk },
+  { key: 'ebony',  label: 'Ebony',  img: watchEbony },
+  { key: 'hinoki', label: 'Hinoki', img: watchHinoki },
+]
+
 const RavenIcon = ({ className = '', size = 20 }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C10.5 2 9 3 8.5 4.5C7 4 5 4.5 4 6C3 7.5 3.5 9.5 4.5 10.5C3 11.5 2 13.5 2.5 15.5C3 17.5 5 19 7 19L8 21H16L17 19C19 19 21 17.5 21.5 15.5C22 13.5 21 11.5 19.5 10.5C20.5 9.5 21 7.5 20 6C19 4.5 17 4 15.5 4.5C15 3 13.5 2 12 2ZM10 9C10.6 9 11 9.4 11 10S10.6 11 10 11S9 10.6 9 10S9.4 9 10 9ZM14 9C14.6 9 15 9.4 15 10S14.6 11 14 11S13 10.6 13 10S13.4 9 14 9Z"/>
@@ -82,11 +91,12 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
 
   // Timeline milestones. "done", "current", or "upcoming" determines the visual state.
   // Update this manually as each milestone hits.
+  // Image is optional; when present, renders a thumbnail at the milestone.
   const timeline = [
-    { id: 'design', label: 'Design locked', when: 'June 2026', status: 'done' },
-    { id: 'samples', label: 'Samples arrive', when: 'August 2026', status: 'current' },
-    { id: 'kickstarter', label: 'Kickstarter launches', when: 'November 2026', status: 'upcoming' },
-    { id: 'ship', label: 'Watches ship', when: 'Early 2027', status: 'upcoming' },
+    { id: 'design', label: 'Design locked', when: 'June 2026', status: 'done', image: watchPadauk },
+    { id: 'samples', label: 'Samples arrive', when: 'August 2026', status: 'current', image: null },
+    { id: 'kickstarter', label: 'Kickstarter launches', when: 'November 2026', status: 'upcoming', image: null },
+    { id: 'ship', label: 'Watches ship', when: 'Early 2027', status: 'upcoming', image: null },
   ]
 
   // Format a Substack pubDate (e.g. "Sat, 21 Jun 2026 10:00:00 GMT") into "Jun 21"
@@ -113,7 +123,7 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
       <section className="l2-card fade-in-delay-1">
         <p className="l2-section-label">The road to launch</p>
         <ol className="l2-timeline">
-          {timeline.map((m, i) => (
+          {timeline.map((m) => (
             <li key={m.id} className={`l2-timeline-step l2-timeline-${m.status}`}>
               <div className="l2-timeline-dot" aria-hidden="true">
                 {m.status === 'done' && (
@@ -126,6 +136,9 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
                 <div className="l2-timeline-label">{m.label}</div>
                 <div className="l2-timeline-when">{m.when}</div>
               </div>
+              {m.image && (
+                <img src={m.image} alt="" className="l2-timeline-thumb" />
+              )}
             </li>
           ))}
         </ol>
@@ -135,42 +148,56 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
           Wood vote is the only active insider vote. */}
 
       {/* CARD 2 - Wood vote. Real product decision insiders shape. */}
-      <section className="l2-card l2-poll-card fade-in-delay-2">
-        <p className="l2-section-label">Which wood should ship first?</p>
-        <p className="l2-poll-question">Three woods, three samples. Which one are you most excited about?</p>
+      <section className="l2-card l2-wood-card fade-in-delay-2">
+        <p className="l2-section-label">Pick your favorite wood</p>
+        <p className="l2-poll-question">Tap a watch to vote. Live results after you submit.</p>
         {woodSubmitted ? (
-          <div className="l2-poll-results">
-            {['Padauk', 'Ebony', 'Hinoki'].map(wood => {
-              const woodKey = wood.toLowerCase()
-              const votes = (woodResults && (woodResults[woodKey] || woodResults[wood])) || 0
+          <div className="l2-wood-results">
+            {WOOD_OPTIONS.map(({ key, label, img }) => {
+              const votes = (woodResults && (woodResults[key] || woodResults[label])) || 0
               const total = Object.values(woodResults || {}).reduce((sum, n) => sum + (n || 0), 0)
               const pct = total > 0 ? Math.round((votes / total) * 100) : 0
-              const isMine = (woodVote || '').toLowerCase() === woodKey
+              const isMine = (woodVote || '').toLowerCase() === key
               return (
-                <div key={wood} className={`l2-poll-result-row ${isMine ? 'mine' : ''}`}>
-                  <div className="l2-poll-result-bar" style={{ width: `${pct}%` }} />
-                  <div className="l2-poll-result-label">
-                    <span>{wood}{isMine ? ' (your vote)' : ''}</span>
-                    <span>{pct}%</span>
+                <div key={key} className={`l2-wood-result-row ${isMine ? 'mine' : ''}`}>
+                  <img src={img} alt={label} className="l2-wood-result-img" />
+                  <div className="l2-wood-result-info">
+                    <div className="l2-wood-result-label">
+                      <span>{label}{isMine ? ' (your vote)' : ''}</span>
+                      <span className="l2-wood-result-pct">{pct}%</span>
+                    </div>
+                    <div className="l2-wood-result-track">
+                      <div className="l2-wood-result-bar" style={{ width: `${pct}%` }} />
+                    </div>
                   </div>
                 </div>
               )
             })}
-            <p className="l2-poll-thanks">Thanks for the input. Live results above.</p>
+            <p className="l2-poll-thanks">Thanks for the input.</p>
           </div>
         ) : (
           <>
-            <div className="l2-poll-options">
-              {['Padauk', 'Ebony', 'Hinoki'].map(wood => {
-                const woodKey = wood.toLowerCase()
-                const isSelected = (woodVote || '').toLowerCase() === woodKey
+            <div className="l2-wood-options">
+              {WOOD_OPTIONS.map(({ key, label, img }) => {
+                const isSelected = (woodVote || '').toLowerCase() === key
                 return (
                   <button
-                    key={wood}
-                    className={`l2-poll-option-btn ${isSelected ? 'selected' : ''}`}
-                    onClick={() => onWoodVote(woodKey)}
+                    key={key}
+                    className={`l2-wood-option-btn ${isSelected ? 'selected' : ''}`}
+                    onClick={() => onWoodVote(key)}
+                    aria-label={`Vote for ${label}`}
                   >
-                    {wood}
+                    <div className="l2-wood-img-wrap">
+                      <img src={img} alt={label} className="l2-wood-img" />
+                      {isSelected && (
+                        <div className="l2-wood-checkmark" aria-hidden="true">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 6 9 17 4 12" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <span className="l2-wood-name">{label}</span>
                   </button>
                 )
               })}
@@ -179,7 +206,7 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
               <button
                 className="l2-substack-btn"
                 onClick={onWoodSubmit}
-                style={{ marginTop: 16 }}
+                style={{ marginTop: 16, width: '100%' }}
               >
                 Submit vote
               </button>
@@ -199,11 +226,16 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
           <>
             <ul className="l2-journal-list">
               {posts.slice(0, 2).map(p => (
-                <li key={p.url} className="l2-journal-item">
+                <li key={p.url} className={`l2-journal-item ${p.image ? 'has-img' : ''}`}>
                   <a href={p.url} target="_blank" rel="noopener noreferrer">
-                    <span className="l2-journal-date">{formatDate(p.published_at)}</span>
-                    <span className="l2-journal-title">{p.title}</span>
-                    <span className="l2-journal-snippet">{p.snippet}</span>
+                    {p.image && (
+                      <img src={p.image} alt="" className="l2-journal-thumb" loading="lazy" />
+                    )}
+                    <div className="l2-journal-text">
+                      <span className="l2-journal-date">{formatDate(p.published_at)}</span>
+                      <span className="l2-journal-title">{p.title}</span>
+                      <span className="l2-journal-snippet">{p.snippet}</span>
+                    </div>
                   </a>
                 </li>
               ))}
