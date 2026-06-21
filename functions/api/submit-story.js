@@ -1,6 +1,8 @@
 /**
- * POST /api/submit-story — save a milestone story for an existing user
- * Uses the votes Supabase project. Filters inappropriate content.
+ * POST /api/submit-story - save a milestone story for an existing user
+ *
+ * Phase 4 migration (June 21 2026): writes to D1 community_stories.
+ * Filters inappropriate content before insert.
  */
 
 import { json } from './_shared.js'
@@ -14,16 +16,12 @@ const BAD_WORDS = [
 
 function containsBadWords(text) {
   const lower = text.toLowerCase()
-  return BAD_WORDS.some(w => {
-    const regex = new RegExp(`\\b${w}\\b`, 'i')
-    return regex.test(lower)
-  })
+  return BAD_WORDS.some(w => new RegExp(`\\b${w}\\b`, 'i').test(lower))
 }
 
 export async function onRequestPost(context) {
   const { env } = context
-  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL || env.SUPABASE_URL
-  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY || env.SUPABASE_KEY
+  if (!env.DB) return json({ error: 'Server configuration error.' }, 500)
 
   let body
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request' }, 400) }
@@ -31,43 +29,33 @@ export async function onRequestPost(context) {
   const { email, first_name, story } = body || {}
   if (!email || !story) return json({ error: 'Missing email or story' }, 400)
 
-  // Content moderation
   if (containsBadWords(story) || containsBadWords(first_name || '')) {
     return json({ error: 'Please keep your submission appropriate.' }, 400)
   }
 
+  const cleanEmail = email.trim().toLowerCase()
+  const cleanName = (first_name || 'Anonymous').trim()
+  const cleanStory = story.trim().slice(0, 500)
+  const now = new Date().toISOString()
+
   try {
-    // Check if they already submitted a story
-    const existing = await fetch(
-      `${url}/rest/v1/milestone_stories?email=eq.${encodeURIComponent(email)}&select=id&limit=1`,
-      { headers: { 'apikey': key, 'Authorization': `Bearer ${key}` } }
-    )
-    const existingData = await existing.json().catch(() => [])
-    if (Array.isArray(existingData) && existingData.length > 0) {
+    // Idempotent: if they already submitted, return ok with a flag
+    const existing = await env.DB.prepare(
+      'SELECT id FROM community_stories WHERE email = ? LIMIT 1'
+    ).bind(cleanEmail).first()
+
+    if (existing) {
       return json({ ok: true, already_submitted: true })
     }
 
-    // Insert story as approved (bad words already filtered above)
-    const resp = await fetch(`${url}/rest/v1/milestone_stories`, {
-      method: 'POST',
-      headers: {
-        'apikey': key, 'Authorization': `Bearer ${key}`,
-        'Content-Type': 'application/json', 'Prefer': 'return=representation',
-      },
-      body: JSON.stringify({
-        email: email.trim().toLowerCase(),
-        first_name: (first_name || 'Anonymous').trim(),
-        story: story.trim().slice(0, 500),
-        status: 'approved',
-      }),
-    })
-
-    if (resp.status >= 400) {
-      return json({ error: 'Could not save story' }, 500)
-    }
+    await env.DB.prepare(`
+      INSERT INTO community_stories (email, first_name, story, status, created_at)
+      VALUES (?, ?, ?, 'approved', ?)
+    `).bind(cleanEmail, cleanName, cleanStory, now).run()
 
     return json({ ok: true })
   } catch (err) {
+    console.error('submit-story error:', err.message)
     return json({ error: 'Could not save story', message: err.message }, 500)
   }
 }

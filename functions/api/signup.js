@@ -8,38 +8,31 @@
  * Bindings required (set in Cloudflare Pages dashboard or wrangler.toml):
  *   DB             - D1 database binding (database name: gebauer-waitlist)
  *
- * Optional (for milestone story write to the votes Supabase project):
- *   SUPABASE_VOTES_URL, SUPABASE_VOTES_KEY  - already exist for the polls/stories system
+ * Milestone story (optional) writes to the D1 community_stories table.
+ * Phase 4 migration (June 21 2026): no more Supabase votes project dependency.
  */
 
 import { json, randomHex } from './_shared.js'
 
 
-// Save the milestone story to the votes Supabase project (separate, untouched).
+// Save the milestone story to D1 community_stories. Best-effort, swallows errors.
 async function saveMilestoneStory(env, email, firstName, story) {
-  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL
-  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY
-  if (!url || !key) return
+  if (!env.DB) return
 
   const badWords = ['fuck','shit','bitch','damn','dick','cock','pussy','cunt','fag','nigger','nigga','retard','slut','whore','porn','rape','nazi','hitler','terrorist','bomb']
   const lower = story.toLowerCase()
   if (badWords.some(w => new RegExp(`\\b${w}\\b`, 'i').test(lower))) return
 
-  await fetch(`${url}/rest/v1/milestone_stories`, {
-    method: 'POST',
-    headers: {
-      'apikey': key,
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json',
-      'Prefer': 'return=minimal',
-    },
-    body: JSON.stringify({
-      email,
-      first_name: firstName,
-      story: story.slice(0, 500),
-      status: 'approved',
-    }),
-  })
+  const now = new Date().toISOString()
+  try {
+    await env.DB.prepare(`
+      INSERT INTO community_stories (email, first_name, story, status, created_at)
+      VALUES (?, ?, ?, 'approved', ?)
+    `).bind(email, firstName, story.slice(0, 500), now).run()
+  } catch (e) {
+    // Best-effort: don't fail the signup if the story save errors (e.g. duplicate email)
+    console.error('saveMilestoneStory:', e.message)
+  }
 }
 
 

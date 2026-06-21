@@ -1,36 +1,37 @@
 /**
- * GET /api/stories — fetch submitted milestone stories
- * Uses the votes Supabase project where milestone_stories table lives
+ * GET /api/stories - return approved community stories + total count
+ *
+ * Phase 4 migration (June 21 2026): reads from D1 community_stories.
  */
 
 import { json } from './_shared.js'
 
 export async function onRequestGet(context) {
   const { env } = context
-  const url = env.SUPABASE_VOTES_URL || env.VOTES_URL || env.SUPABASE_URL
-  const key = env.SUPABASE_VOTES_KEY || env.VOTES_KEY || env.SUPABASE_KEY
+  if (!env.DB) return json({ error: 'Server configuration error.' }, 500)
 
   try {
-    const resp = await fetch(
-      `${url}/rest/v1/milestone_stories?select=first_name,story&status=eq.approved&order=created_at.desc&limit=20`,
-      { headers: { 'apikey': key, 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' } }
-    )
+    const rows = await env.DB.prepare(`
+      SELECT first_name, story FROM community_stories
+      WHERE status = 'approved'
+      ORDER BY created_at DESC
+      LIMIT 20
+    `).all()
 
-    const data = await resp.json().catch(() => [])
-
-    if (!Array.isArray(data)) {
-      return json({ stories: [], count: 0 })
-    }
-
-    const stories = data
+    const stories = (rows.results || [])
       .filter(s => s.story && s.story.trim().length > 0)
       .map(s => ({
-        name: s.first_name.split(' ')[0],
+        name: (s.first_name || '').split(' ')[0] || 'Friend',
         story: s.story.trim(),
       }))
 
-    return json({ stories, count: stories.length })
+    const countRow = await env.DB.prepare(
+      "SELECT COUNT(*) as cnt FROM community_stories WHERE status = 'approved'"
+    ).first()
+
+    return json({ stories, count: countRow ? countRow.cnt : 0 })
   } catch (err) {
-    return json({ error: 'Could not fetch stories', message: err.message }, 500)
+    console.error('Stories error:', err.message)
+    return json({ error: 'Could not fetch stories' }, 500)
   }
 }
