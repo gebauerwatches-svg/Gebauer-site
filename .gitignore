@@ -1,3 +1,12 @@
+# Wrangler / Cloudflare
+.wrangler
+.dev.vars
+
+# D1 seed files contain real subscriber emails. Generated locally,
+# applied via wrangler. Should NOT be committed.
+d1_seed_subscribers.sql
+d1_seed_subscribers.sql.bak
+
 # Logs
 logs
 *.log

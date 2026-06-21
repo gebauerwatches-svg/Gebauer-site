@@ -1,0 +1,8 @@
+name = "gebauer-site"
+compatibility_date = "2026-06-20"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "gebauer-waitlist"
+database_id = "5d0648ce-d3e4-48cf-a4cb-2374e63480c8"
