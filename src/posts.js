@@ -26,13 +26,15 @@ I drafted an email that was basically: "I'm a teenager who wants to understand h
 
 I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
-He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a movement smaller than a quarter.
+He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a hairspring adjustment. Each email taught me something new about patience, precision, and why certain choices matter.
 
-The most valuable lesson came in his fourth email. He wrote about how his grandfather would spend three days on a single balance wheel, not because it was necessary, but because rushing meant disrespecting the person who would wear it. Time given to craft becomes time given back to the owner.
+The most valuable lesson came in his fifth email. He explained how they choose which movements deserve their highest level of finishing. Not every watch gets the same attention. The ones that do are selected based on a simple test: will the owner notice the difference? Not in specs or marketing materials. In daily wear. In the weight on their wrist. In how the crown feels when they wind it.
 
-That philosophy shapes how we approach Gebauer. Every watch gets the attention it deserves, not the minimum it requires. When you email us with a question, you get a real answer from someone who cares about the craft, not a template.
+That philosophy shapes everything we do at Gebauer now. When we select movements for our watches, when we decide which details to obsess over, I think about Tanaka-san's workshop. About craftsmen who could take shortcuts but don't, because someone, somewhere, will feel the difference.
 
-Hiroshi taught me that the best businesses run on respect. Respect for materials, respect for tradition, respect for the person on the other side of the transaction. Cold emails work when they come from that place. Everything else is just noise.`
+The funny part is he never asked why a teenager from California was so interested in Japanese watchmaking. He just kept teaching. Maybe he recognized something familiar: someone willing to ask basic questions and listen to real answers.
+
+That exchange taught me more about watches than any YouTube channel or forum thread. It also taught me that the best way to learn is often the simplest. Find someone who knows. Ask honest questions. Listen.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
