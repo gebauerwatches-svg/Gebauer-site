@@ -15,7 +15,6 @@ import watchPadauk from './assets/tokiji-padauk-render.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
 import padaukDeep from './assets/padauk-deep.jpeg'
 import milanBg from './assets/milan.jpeg'
-import seikoWrist from './assets/seiko-wrist.jpeg'
 import './App.css'
 
 // Map poll option text to images
@@ -631,8 +630,6 @@ function App() {
 
       {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
       <Reveal className="story-beat story-milan" id="story">
-        <img src={seikoWrist} alt="" className="story-milan-bg" />
-        <div className="story-milan-overlay" />
         <div className="story-beat-inner story-beat-over">
           <h2 className="story-beat-headline">I'm Liam. I'm 14. I bought a watch in Milan.</h2>
           <p className="story-beat-text">Walked into a Seiko store with 310 euros. No notifications. No swipes. Just the time. My three siblings saw it. They wanted one too.</p>
