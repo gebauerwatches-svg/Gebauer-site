@@ -10,6 +10,7 @@ const ALLOWED_KEYS = new Set([
   'welcome_enabled',
   'welcome_subject',
   'welcome_body',
+  'timeline_json',
 ])
 
 export async function onRequestGet(context) {

@@ -140,7 +140,7 @@
     }
 
     // ---- Router ----
-    const VIEWS = ['subscribers', 'broadcasts', 'welcome', 'stories', 'votes']
+    const VIEWS = ['subscribers', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
     let currentView = 'subscribers'
 
     function navigate(view) {
@@ -210,6 +210,7 @@
             navItem('welcome', 'Welcome email'),
             navItem('stories', 'Stories'),
             navItem('votes', 'Wood votes'),
+            navItem('timeline', 'Timeline'),
           ),
           el('button', { class: 'logout', onclick: handleLogout }, 'Sign out'),
         ),
@@ -561,6 +562,91 @@
       ))
     }
 
+    // ---- Timeline view ----
+    async function renderTimeline() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const settings = await api('/settings').catch(() => ({ settings: {} }))
+      const publicResp = await fetch('/api/timeline').then(r => r.json()).catch(() => ({ milestones: [] }))
+
+      let items
+      try {
+        const raw = settings.settings && settings.settings.timeline_json
+        items = raw ? JSON.parse(raw) : publicResp.milestones
+      } catch { items = publicResp.milestones || [] }
+      if (!Array.isArray(items)) items = []
+
+      const STATUSES = ['done', 'current', 'upcoming']
+
+      function listWrap() {
+        const wrap = el('div', { id: 'tl-list' })
+        items.forEach((m, i) => {
+          wrap.appendChild(el('div', { class: 'composer', style: 'padding:16px;margin-bottom:10px;' },
+            el('div', { class: 'toolbar', style: 'margin-bottom:8px;' },
+              el('div', { class: 'field', style: 'flex:2;margin:0;' },
+                el('label', {}, 'Label'),
+                el('input', { type: 'text', value: m.label || '', oninput: (e) => { items[i].label = e.target.value } }),
+              ),
+              el('div', { class: 'field', style: 'flex:1;margin:0;' },
+                el('label', {}, 'When'),
+                el('input', { type: 'text', value: m.when || '', oninput: (e) => { items[i].when = e.target.value } }),
+              ),
+              el('div', { class: 'field', style: 'flex:1;margin:0;' },
+                el('label', {}, 'Status'),
+                el('select', { onchange: (e) => { items[i].status = e.target.value } },
+                  ...STATUSES.map(s => el('option', { value: s, selected: m.status === s ? 'true' : null }, s)),
+                ),
+              ),
+            ),
+            el('div', { class: 'toolbar' },
+              el('div', { class: 'field', style: 'flex:1;margin:0;' },
+                el('label', {}, 'ID (used for image lookup)'),
+                el('input', { type: 'text', value: m.id || '', oninput: (e) => { items[i].id = e.target.value } }),
+              ),
+              el('button', { onclick: () => { if (i > 0) { [items[i-1], items[i]] = [items[i], items[i-1]]; redraw() } } }, 'Move up'),
+              el('button', { onclick: () => { if (i < items.length - 1) { [items[i], items[i+1]] = [items[i+1], items[i]]; redraw() } } }, 'Move down'),
+              el('button', { class: 'danger', onclick: () => { items.splice(i, 1); redraw() } }, 'Delete'),
+            ),
+          ))
+        })
+        return wrap
+      }
+
+      function redraw() {
+        const old = $('#tl-list')
+        const fresh = listWrap()
+        old.replaceWith(fresh)
+      }
+
+      const addBtn = el('button', { onclick: () => {
+        items.push({ id: 'milestone-' + (items.length + 1), label: 'New milestone', when: '', status: 'upcoming' })
+        redraw()
+      } }, '+ Add milestone')
+
+      const saveBtn = el('button', { class: 'primary', onclick: async () => {
+        // Strip empty rows; validate status
+        const clean = items
+          .filter(m => (m.label || '').trim())
+          .map(m => ({
+            id: (m.id || '').trim() || 'milestone',
+            label: (m.label || '').trim(),
+            when: (m.when || '').trim(),
+            status: STATUSES.includes(m.status) ? m.status : 'upcoming',
+          }))
+        const resp = await api('/settings', {
+          method: 'PUT',
+          body: JSON.stringify({ timeline_json: JSON.stringify(clean) }),
+        })
+        if (resp.ok) alert('Saved. Live in seconds.'); else alert('Error: ' + (resp.error || 'unknown'))
+      } }, 'Save')
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Timeline'),
+        el('p', { class: 'page-sub' }, 'Edit the milestones shown on the insider page. Status "done" gets a checkmark, "current" is highlighted, "upcoming" is dim.'),
+        listWrap(),
+        el('div', { class: 'toolbar' }, addBtn, saveBtn),
+      ))
+    }
+
     // ---- Render dispatch ----
     function render() {
       if (currentView === 'subscribers') renderSubscribers()
@@ -568,6 +654,7 @@
       else if (currentView === 'welcome') renderWelcome()
       else if (currentView === 'stories') renderStories()
       else if (currentView === 'votes') renderVotes()
+      else if (currentView === 'timeline') renderTimeline()
     }
 
     // ---- Utils ----

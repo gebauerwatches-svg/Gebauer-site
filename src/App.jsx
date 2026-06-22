@@ -78,6 +78,16 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
 function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVote, onWoodSubmit, onBack }) {
   const [posts, setPosts] = useState([])
   const [postsLoading, setPostsLoading] = useState(true)
+  // Timeline is editable from /admin (Timeline view). Falls back to the default in /api/timeline if D1 row missing.
+  const [timeline, setTimeline] = useState([
+    { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
+    { id: 'samples',     label: 'Samples arrive',        when: 'August 2026',   status: 'current' },
+    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'November 2026', status: 'upcoming' },
+    { id: 'ship',        label: 'Watches ship',          when: 'Early 2027',    status: 'upcoming' },
+  ])
+
+  // Per-milestone-id thumbnail. Admin edits text only; the image is resolved client-side.
+  const milestoneImage = (id) => (id === 'design' ? watchPadauk : null)
 
   useEffect(() => {
     fetch('/api/journal')
@@ -87,17 +97,14 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
       })
       .catch(() => {})
       .finally(() => setPostsLoading(false))
-  }, [])
 
-  // Timeline milestones. "done", "current", or "upcoming" determines the visual state.
-  // Update this manually as each milestone hits.
-  // Image is optional; when present, renders a thumbnail at the milestone.
-  const timeline = [
-    { id: 'design', label: 'Design locked', when: 'June 2026', status: 'done', image: watchPadauk },
-    { id: 'samples', label: 'Samples arrive', when: 'August 2026', status: 'current', image: null },
-    { id: 'kickstarter', label: 'Kickstarter launches', when: 'November 2026', status: 'upcoming', image: null },
-    { id: 'ship', label: 'Watches ship', when: 'Early 2027', status: 'upcoming', image: null },
-  ]
+    fetch('/api/timeline')
+      .then(r => r.json())
+      .then(d => {
+        if (Array.isArray(d.milestones) && d.milestones.length > 0) setTimeline(d.milestones)
+      })
+      .catch(() => {})
+  }, [])
 
   // Format a Substack pubDate (e.g. "Sat, 21 Jun 2026 10:00:00 GMT") into "Jun 21"
   const formatDate = (iso) => {
@@ -136,8 +143,8 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
                 <div className="l2-timeline-label">{m.label}</div>
                 <div className="l2-timeline-when">{m.when}</div>
               </div>
-              {m.image && (
-                <img src={m.image} alt="" className="l2-timeline-thumb" />
+              {milestoneImage(m.id) && (
+                <img src={milestoneImage(m.id)} alt="" className="l2-timeline-thumb" />
               )}
             </li>
           ))}
