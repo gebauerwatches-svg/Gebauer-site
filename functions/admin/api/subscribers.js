@@ -22,20 +22,28 @@ export async function onRequestGet(context) {
 
   try {
     let rows
+    const baseSelect = `
+      SELECT s.id, s.email, s.first_name, s.referral_code, s.referral_count,
+             s.waitlist_position, s.status, s.subscribed_at, s.notes,
+             COUNT(cs.id) AS story_count,
+             GROUP_CONCAT(cs.story, '||SEP||') AS stories
+      FROM subscribers s
+      LEFT JOIN community_stories cs ON cs.email = s.email
+    `
     if (q) {
       const pat = `%${q}%`
       rows = await env.DB.prepare(
-        `SELECT id, email, first_name, referral_code, referral_count, waitlist_position, status, subscribed_at, notes
-         FROM subscribers
-         WHERE LOWER(email) LIKE ? OR LOWER(first_name) LIKE ?
-         ORDER BY ${sortCol} ${order}
+        `${baseSelect}
+         WHERE LOWER(s.email) LIKE ? OR LOWER(s.first_name) LIKE ? OR LOWER(cs.story) LIKE ?
+         GROUP BY s.id
+         ORDER BY s.${sortCol} ${order}
          LIMIT ?`
-      ).bind(pat, pat, limit).all()
+      ).bind(pat, pat, pat, limit).all()
     } else {
       rows = await env.DB.prepare(
-        `SELECT id, email, first_name, referral_code, referral_count, waitlist_position, status, subscribed_at, notes
-         FROM subscribers
-         ORDER BY ${sortCol} ${order}
+        `${baseSelect}
+         GROUP BY s.id
+         ORDER BY s.${sortCol} ${order}
          LIMIT ?`
       ).bind(limit).all()
     }
@@ -44,10 +52,15 @@ export async function onRequestGet(context) {
       "SELECT COUNT(*) as cnt, SUM(CASE WHEN status='active' THEN 1 ELSE 0 END) as active FROM subscribers"
     ).first()
 
+    const storiesRow = await env.DB.prepare(
+      "SELECT COUNT(*) as cnt FROM community_stories"
+    ).first()
+
     return json({
       subscribers: rows.results || [],
       total: totalRow ? totalRow.cnt : 0,
       active: totalRow ? totalRow.active : 0,
+      stories_total: storiesRow ? storiesRow.cnt : 0,
     })
   } catch (err) {
     console.error('subscribers GET:', err.message)

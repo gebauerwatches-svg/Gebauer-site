@@ -235,11 +235,24 @@
       const tableWrap = el('div', { id: 'subs-table-wrap' })
       const addBtn = el('button', { class: 'primary', onclick: showAddSubscriberModal }, '+ Add')
 
+      function momentSnippet(s) {
+        if (!s.stories) return el('span', { style: 'color:var(--muted);' }, '—')
+        const all = s.stories.split('||SEP||').filter(Boolean)
+        const first = all[0] || ''
+        const snippet = first.length > 50 ? first.slice(0, 50) + '...' : first
+        const label = all.length > 1 ? `${snippet} (+${all.length - 1} more)` : snippet
+        return el('a', {
+          href: '#', style: 'color:var(--gold);',
+          onclick: (e) => { e.preventDefault(); showMomentModal(s, all) },
+        }, label)
+      }
+
       function renderSubsTable(rows) {
         const tableEl = el('table', {},
           el('thead', {}, el('tr', {},
             el('th', {}, 'Name'),
             el('th', {}, 'Email'),
+            el('th', {}, 'Moment'),
             el('th', {}, 'Position'),
             el('th', {}, 'Status'),
             el('th', {}, 'Joined'),
@@ -248,6 +261,7 @@
           el('tbody', {}, ...rows.map(s => el('tr', {},
             el('td', {}, s.first_name || ''),
             el('td', {}, s.email),
+            el('td', { style: 'max-width:280px;' }, momentSnippet(s)),
             el('td', {}, s.waitlist_position === 9999 ? '—' : `#${s.waitlist_position}`),
             el('td', {}, el('span', { class: `status-pill status-${s.status}` }, s.status)),
             el('td', {}, (s.subscribed_at || '').slice(0, 10)),
@@ -261,15 +275,33 @@
 
       renderShell(el('div', {},
         el('h1', { class: 'page-title' }, 'Subscribers'),
-        el('p', { class: 'page-sub' }, `${data.active} active, ${data.total} total`),
+        el('p', { class: 'page-sub' }, `${data.active} active, ${data.total} total. Search matches email, name, or moment text.`),
         el('div', { class: 'stats-row' },
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Total'), el('div', { class: 'stat-value' }, String(data.total))),
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Active'), el('div', { class: 'stat-value' }, String(data.active))),
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Reserved positions'), el('div', { class: 'stat-value' }, String(subs.filter(s => s.waitlist_position !== 9999).length))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Moments'), el('div', { class: 'stat-value' }, String(data.stories_total || 0))),
         ),
         el('div', { class: 'toolbar' }, searchInput, addBtn),
         tableWrap,
       ))
+    }
+
+    function showMomentModal(s, stories) {
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('div', { class: 'modal' },
+          el('h3', {}, `${s.first_name || 'Subscriber'} moment${stories.length > 1 ? 's' : ''}`),
+          el('p', { class: 'page-sub', style: 'margin-bottom:16px;' }, s.email),
+          ...stories.map((text, i) => el('div', { class: 'story-card', style: 'margin-bottom:10px;' },
+            stories.length > 1 ? el('div', { class: 'story-meta' }, el('span', {}, `Moment ${i + 1} of ${stories.length}`)) : null,
+            el('p', { class: 'story-text' }, text),
+          )),
+          el('div', { class: 'modal-actions' },
+            el('button', { onclick: () => modal.remove() }, 'Close'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
     }
 
     function showAddSubscriberModal() {
