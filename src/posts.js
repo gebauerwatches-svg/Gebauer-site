@@ -18,23 +18,19 @@ const posts = [
     date: 'June 03, 2026',
     author: 'Liam',
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `Last year, I decided I wanted to understand how watch manufacturing actually works. Not the marketing pitch. The real process.
-
-I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
+    content: `I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
 
 I drafted an email that was basically: "I'm a teenager who wants to understand how you make watches. Would you be willing to tell me about your process?" No pitch. No ask. Just genuine curiosity.
 
 I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
-He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a hairspring adjustment. Each email taught me something new about patience, precision, and why certain choices matter.
+He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a balance wheel smaller than a fingernail.
 
-The most valuable lesson came in his fifth email. He explained how they choose which movements deserve their highest level of finishing. Not every watch gets the same attention. The ones that do are selected based on a simple test: will the owner notice the difference? Not in specs or marketing materials. In daily wear. In the weight on their wrist. In how the crown feels when they wind it.
+The most valuable thing he shared wasn't technical. It was philosophical. "Most people think precision comes from machines," he wrote. "But machines only do what humans teach them. True precision comes from understanding why each adjustment matters."
 
-That philosophy shapes everything we do at Gebauer now. When we select movements for our watches, when we decide which details to obsess over, I think about Tanaka-san's workshop. About craftsmen who could take shortcuts but don't, because someone, somewhere, will feel the difference.
+That stuck with me. When I started designing my own watches, I kept coming back to his words. Every decision, every material choice, every curve of the case needs a reason beyond "it looks good" or "competitors do it this way."
 
-The funny part is he never asked why a teenager from California was so interested in Japanese watchmaking. He just kept teaching. Maybe he recognized something familiar: someone willing to ask basic questions and listen to real answers.
-
-That exchange taught me more about watches than any YouTube channel or forum thread. It also taught me that the best way to learn is often the simplest. Find someone who knows. Ask honest questions. Listen.`
+The real process of making watches isn't about having the fanciest equipment or the biggest factory. It's about caring enough to ask why things are done a certain way, then having the patience to do them right. Sometimes that starts with a cold email from a curious teenager to a craftsman on the other side of the world who still believes in answering honest questions with honest answers.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
