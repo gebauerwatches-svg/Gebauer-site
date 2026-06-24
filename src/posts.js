@@ -20,17 +20,19 @@ const posts = [
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
     content: `I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
 
-I drafted an email that was basically: "I'm a teenager who wants to understand how you make watches. Would you be willing to tell me about your process?" No pitch. No ask. Just genuine curiosity.
+I drafted an email that was basically: "I'm 16 and trying to understand how master watchmakers create their movements. Would you be willing to share your process?" No pitch. No ask. Just genuine curiosity.
 
 I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
-He didn't know my age. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a balance wheel smaller than a fingernail.
+He didn't know anything about me beyond that first email. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a balance wheel smaller than a fingernail.
 
-The most valuable thing he shared wasn't technical. It was philosophical. "Most people think precision comes from machines," he wrote. "But machines only do what humans teach them. True precision comes from understanding why each adjustment matters."
+The most valuable thing he shared wasn't technical. It was philosophical. "Most people think watches are about time," he wrote. "But really they're about the person who wears them. Every scratch tells a story. Every service marks a chapter. A good watch should outlive its first owner."
 
-That stuck with me. When I started designing my own watches, I kept coming back to his words. Every decision, every material choice, every curve of the case needs a reason beyond "it looks good" or "competitors do it this way."
+That stuck with me. When I started designing what would become Gebauer watches, I kept thinking about that idea. Not just building something that works, but something that becomes part of someone's story. Something worth passing down.
 
-The real process of making watches isn't about having the fanciest equipment or the biggest factory. It's about caring enough to ask why things are done a certain way, then having the patience to do them right. Sometimes that starts with a cold email from a curious teenager to a craftsman on the other side of the world who still believes in answering honest questions with honest answers.`
+Tanaka-san never knew he was helping shape a future watch company. He was just a craftsman sharing his knowledge with a curious kid halfway around the world. But that exchange, those months of emails about movements and philosophy, became the foundation for how I think about what we're building.
+
+The lesson? Sometimes the most important business relationships start without any business at all. Just honest questions and people generous enough to answer them.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
