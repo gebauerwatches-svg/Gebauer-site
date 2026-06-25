@@ -20,19 +20,21 @@ const posts = [
     excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
     content: `I found a small independent watchmaker in Nagano Prefecture through weeks of online research. Their website looked like it was built in 2003. Perfect. No corporate polish, just pure craft.
 
-I drafted an email that was basically: "I'm 16 and trying to understand how master watchmakers create their movements. Would you be willing to share your process?" No pitch. No ask. Just genuine curiosity.
+I drafted an email that was basically: "I'm 15 and trying to understand how master watchmakers create their movements. Would you be willing to share your process?" No pitch. No ask. Just genuine curiosity.
 
 I expected nothing. Maybe a form response or silence. Instead, Hiroshi Tanaka, the owner, wrote back three paragraphs explaining how they hand-finish watch movements using techniques passed down through three generations of his family.
 
 He didn't know anything about me beyond that first email. He just saw a sincere question from someone who seemed to care about craftsmanship. We ended up exchanging emails for months. He sent me technical drawings, photos of his workshop at dawn, videos of hands steadying a loupe over a balance wheel smaller than a fingernail.
 
-The most valuable thing he shared wasn't technical. It was philosophical. "Most people think watches are about time," he wrote. "But really they're about the person who wears them. Every scratch tells a story. Every service marks a chapter. A good watch should outlive its first owner."
+The most valuable thing he shared wasn't technical. It was philosophical. "A watch movement is like a haiku," he wrote. "Every component must justify its existence. If you can remove something without losing function, you have failed."
 
-That stuck with me. When I started designing what would become Gebauer watches, I kept thinking about that idea. Not just building something that works, but something that becomes part of someone's story. Something worth passing down.
+That stuck with me. When I started designing Gebauer watches, I kept coming back to his words. Look at our dial. No date window, no subdials, no complications you won't use. Just the time, rendered as purely as we could manage.
 
-Tanaka-san never knew he was helping shape a future watch company. He was just a craftsman sharing his knowledge with a curious kid halfway around the world. But that exchange, those months of emails about movements and philosophy, became the foundation for how I think about what we're building.
+Tanaka-san never asked for anything in return. He just kept teaching. When I finally told him I was starting my own watch company, he sent one final email: "Good. The world needs more people who ask real questions."
 
-The lesson? Sometimes the most important business relationships start without any business at all. Just honest questions and people generous enough to answer them.`
+That exchange taught me something crucial about business. The best connections don't start with what you want from someone. They start with genuine interest in what they know. Cold emails work when they're not actually cold, when they come from a real place of wanting to understand someone else's craft.
+
+I still have every email saved. Sometimes I read them before making design decisions, checking whether what I'm adding truly needs to exist.`
   },
   {
     slug: 'the-missing-piece-how-great-brands-are-born',
