@@ -74,11 +74,14 @@ export async function onRequestPost(context) {
 
   let body
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request.' }, 400) }
-  const { email, first_name, notes } = body || {}
+  const { email, first_name, notes, waitlist_position } = body || {}
   if (!email || !first_name) return json({ error: 'email and first_name are required' }, 400)
 
   const cleanEmail = email.trim().toLowerCase()
   const cleanName = first_name.trim()
+  const watchNumber = Number.isInteger(waitlist_position) && waitlist_position >= 1 && waitlist_position <= 300
+    ? waitlist_position
+    : 9999
 
   try {
     const existing = await env.DB.prepare(
@@ -93,8 +96,8 @@ export async function onRequestPost(context) {
     const result = await env.DB.prepare(`
       INSERT INTO subscribers
         (email, first_name, referral_code, referral_count, waitlist_position, unsubscribe_token, status, subscribed_at, notes)
-      VALUES (?, ?, ?, 0, 9999, ?, 'active', ?, ?)
-    `).bind(cleanEmail, cleanName, referralCode, unsubscribeToken, now, notes || null).run()
+      VALUES (?, ?, ?, 0, ?, ?, 'active', ?, ?)
+    `).bind(cleanEmail, cleanName, referralCode, watchNumber, unsubscribeToken, now, notes || null).run()
 
     return json({ ok: true, id: result.meta.last_row_id, referral_code: referralCode })
   } catch (err) {
