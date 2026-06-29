@@ -59,17 +59,72 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Product",
-      "name": "Gebauer Watch — African Padauk",
-      "description": "Premium watch with real African Padauk wood dial that transforms from fiery orange to deep burgundy over years. Japanese movement, sapphire crystal, 316L stainless steel. Limited to 300, individually numbered.",
+      "@type": "ProductGroup",
+      "productGroupID": "GEB-FIRST-EDITION",
+      "name": "Gebauer Watches First Edition",
+      "description": "Three Japanese-crafted watches with real wood dials. 300 watches total, 100 per variant. Individually numbered.",
       "brand": { "@type": "Brand", "name": "Gebauer Watches" },
-      "material": "African Padauk wood dial, 316L stainless steel case and bracelet, sapphire crystal",
-      "offers": {
-        "@type": "Offer",
-        "price": "375",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/PreOrder"
-      }
+      "url": "https://gebauerwatches.com",
+      "variesBy": ["color", "material"],
+      "hasVariant": [
+        {
+          "@type": "Product",
+          "name": "Gebauer Watch — Hinoki",
+          "sku": "GEB-HINOKI",
+          "image": "https://gebauerwatches.com/images/watch-hinoki.jpeg",
+          "description": "Premium watch with a real Hinoki (Japanese cypress) wood dial. Pale gold grain. Japanese movement, sapphire crystal with anti-reflective coating, 316L stainless steel case. Limited to 100, individually numbered (HINOKI 001 / 100 to HINOKI 100 / 100).",
+          "brand": { "@type": "Brand", "name": "Gebauer Watches" },
+          "material": "Hinoki wood dial, 316L stainless steel case and bracelet, sapphire crystal",
+          "color": "Pale gold",
+          "offers": {
+            "@type": "Offer",
+            "url": "https://gebauerwatches.com",
+            "price": "299",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/PreOrder",
+            "priceValidUntil": "2027-12-31",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Gebauer Watch — Black Ebony",
+          "sku": "GEB-EBONY",
+          "image": "https://gebauerwatches.com/images/watch-ebony.jpeg",
+          "description": "Premium watch with a real Black Ebony wood dial. Deep, dense, and permanent. Japanese movement, sapphire crystal with anti-reflective coating, 316L stainless steel case. Limited to 100, individually numbered (EBONY 001 / 100 to EBONY 100 / 100).",
+          "brand": { "@type": "Brand", "name": "Gebauer Watches" },
+          "material": "Black Ebony wood dial, 316L stainless steel case and bracelet, sapphire crystal",
+          "color": "Black",
+          "offers": {
+            "@type": "Offer",
+            "url": "https://gebauerwatches.com",
+            "price": "339",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/PreOrder",
+            "priceValidUntil": "2027-12-31",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        },
+        {
+          "@type": "Product",
+          "name": "Gebauer Watch — African Padauk",
+          "sku": "GEB-PADAUK",
+          "image": "https://gebauerwatches.com/images/watch-padauk.jpeg",
+          "description": "Premium watch with a real African Padauk wood dial. Transforms from fiery orange to deep burgundy over years. Japanese movement, sapphire crystal with anti-reflective coating, 316L stainless steel case. Limited to 100, individually numbered (PADAUK 001 / 100 to PADAUK 100 / 100).",
+          "brand": { "@type": "Brand", "name": "Gebauer Watches" },
+          "material": "African Padauk wood dial, 316L stainless steel case and bracelet, sapphire crystal",
+          "color": "Orange to burgundy",
+          "offers": {
+            "@type": "Offer",
+            "url": "https://gebauerwatches.com",
+            "price": "375",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/PreOrder",
+            "priceValidUntil": "2027-12-31",
+            "itemCondition": "https://schema.org/NewCondition"
+          }
+        }
+      ]
     }
     </script>
   </head>
