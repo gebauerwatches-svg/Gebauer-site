@@ -1,0 +1,60 @@
+{
+  "@context": "https://schema.org",
+  "@type": "ProductGroup",
+  "name": "Gebauer Watches",
+  "description": "Premium wooden watches available in three variants: Hinoki, Black Ebony, and African Padauk",
+  "url": "https://gebauerwatches.com/watches",
+  "brand": {
+    "@type": "Brand",
+    "name": "Gebauer Watches"
+  },
+  "founder": [
+    {
+      "@type": "Person",
+      "name": "Liam Gebauer"
+    },
+    {
+      "@type": "Person",
+      "name": "Sarah Gebauer"
+    }
+  ],
+  "location": {
+    "@type": "Place",
+    "name": "Steamboat Springs, Colorado"
+  },
+  "hasVariant": [
+    {
+      "@type": "Product",
+      "name": "Gebauer Watches Hinoki",
+      "url": "https://gebauerwatches.com/watches",
+      "brand": "Gebauer Watches",
+      "offers": {
+        "@type": "Offer",
+        "price": "299",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Gebauer Watches Black Ebony",
+      "url": "https://gebauerwatches.com/watches",
+      "brand": "Gebauer Watches",
+      "offers": {
+        "@type": "Offer",
+        "price": "339",
+        "priceCurrency": "USD"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Gebauer Watches African Padauk",
+      "url": "https://gebauerwatches.com/watches",
+      "brand": "Gebauer Watches",
+      "offers": {
+        "@type": "Offer",
+        "price": "375",
+        "priceCurrency": "USD"
+      }
+    }
+  ]
+}

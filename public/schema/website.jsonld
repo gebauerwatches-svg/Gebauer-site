@@ -1,53 +1,67 @@
 {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Gebauer Watches",
-    "url": "https://gebauerwatches.com",
-    "description": "Handcrafted wooden watches from Steamboat Springs, Colorado",
-    "founder": [
-        {
-            "@type": "Person",
-            "name": "Liam Gebauer"
-        },
-        {
-            "@type": "Person", 
-            "name": "Sarah Gebauer"
-        }
-    ],
-    "location": {
-        "@type": "Place",
-        "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Steamboat Springs",
-            "addressRegion": "Colorado"
-        }
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Gebauer Watches",
+  "url": "https://gebauerwatches.com",
+  "description": "Handcrafted wooden watches by Gebauer Watches",
+  "founder": [
+    {
+      "@type": "Person",
+      "name": "Liam Gebauer"
     },
-    "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://gebauerwatches.com/search?q={search_term_string}",
-        "query-input": "required name=search_term_string"
-    },
-    "offers": {
-        "@type": "AggregateOffer",
-        "highPrice": 375,
-        "lowPrice": 299,
-        "offerCount": 3,
-        "offers": [
-            {
-                "@type": "Offer",
-                "name": "Hinoki Watch",
-                "price": 299
-            },
-            {
-                "@type": "Offer", 
-                "name": "Black Ebony Watch",
-                "price": 339
-            },
-            {
-                "@type": "Offer",
-                "name": "African Padauk Watch", 
-                "price": 375
-            }
-        ]
+    {
+      "@type": "Person",
+      "name": "Sarah Gebauer"
     }
+  ],
+  "location": {
+    "@type": "Place",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Steamboat Springs",
+      "addressRegion": "Colorado",
+      "addressCountry": "US"
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://gebauerwatches.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Gebauer Watches Collection",
+    "itemListElement": [
+      {
+        "@type": "Product",
+        "name": "Hinoki Watch",
+        "offers": {
+          "@type": "Offer",
+          "price": "299",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "Black Ebony Watch",
+        "offers": {
+          "@type": "Offer",
+          "price": "339",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "Product",
+        "name": "African Padauk Watch",
+        "offers": {
+          "@type": "Offer",
+          "price": "375",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
 }
