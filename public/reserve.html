@@ -7,7 +7,6 @@
     <meta name="theme-color" content="#F5F2ED" />
     <link rel="canonical" href="https://gebauerwatches.com/reserve" />
     <meta name="description" content="Reserve one of the first 300 Gebauer Watches. Real wood dials, made in Japan, individually numbered. Ships early 2027." />
-    <meta name="keywords" content="reserve Gebauer Watch, wood dial watch reservation, limited edition watch reservation, milestone watch" />
     <meta property="og:title" content="Reserve a Gebauer Watch" />
     <meta property="og:description" content="Real wood dials, made in Japan, first edition of 300. Individually numbered." />
     <meta property="og:type" content="website" />
@@ -19,9 +18,11 @@
     <style>
       :root {
         --purple: #1E1A2E;
+        --purple-mid: #2A2440;
         --purple-soft: #5C5478;
         --gold: #C4952A;
         --gold-light: #D4A63A;
+        --gold-pale: #E8C060;
         --bg-cream: #F5F2ED;
         --bg-warm: #EFECE6;
         --bg-light: #FAF8F5;
@@ -38,7 +39,7 @@
         min-height: 100vh;
         padding: 72px 24px 96px;
       }
-      .container { max-width: 620px; margin: 0 auto; }
+      .container { max-width: 780px; margin: 0 auto; }
 
       .nav { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 56px; color: var(--gold); }
       .nav a { color: var(--gold); text-decoration: none; }
@@ -47,8 +48,8 @@
       h1 {
         font-family: 'Cormorant Garamond', Georgia, serif;
         font-weight: 400;
-        font-size: 48px;
-        line-height: 1.15;
+        font-size: 52px;
+        line-height: 1.1;
         color: var(--purple);
         margin: 0 0 14px;
         letter-spacing: -0.5px;
@@ -64,8 +65,121 @@
         font-size: 17px;
         color: var(--text-warm);
         margin-bottom: 40px;
-        max-width: 520px;
+        max-width: 620px;
       }
+
+      /* Availability grids */
+      .avail-wrap { margin-bottom: 48px; }
+      .avail-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 10px;
+      }
+      .avail-title {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 500;
+        font-size: 22px;
+        color: var(--purple);
+      }
+      .avail-count {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .avail-grid {
+        display: grid;
+        grid-template-columns: repeat(10, 1fr);
+        gap: 3px;
+        margin-bottom: 32px;
+      }
+      .avail-cell {
+        aspect-ratio: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-size: 10px;
+        font-weight: 500;
+        transition: transform 0.1s, background 0.15s, color 0.15s;
+      }
+      .avail-cell.avail {
+        cursor: pointer;
+        border: 1px solid;
+      }
+      .avail-cell.avail:hover {
+        transform: scale(1.2);
+        z-index: 5;
+      }
+      .avail-cell.reserved {
+        background: #ebe6dc;
+        color: rgba(80, 72, 60, 0.5);
+        border: 1px dashed rgba(120, 110, 90, 0.35);
+        text-decoration: line-through;
+        cursor: not-allowed;
+      }
+      .avail-cell.pending {
+        background: #f0e6c8;
+        color: rgba(120, 100, 60, 0.6);
+        border: 1px dashed rgba(196, 149, 42, 0.5);
+        cursor: not-allowed;
+      }
+      .avail-cell.selected {
+        transform: scale(1.25);
+        z-index: 5;
+        box-shadow: 0 0 0 2px var(--purple);
+      }
+
+      /* Hinoki: pale gold */
+      .avail-grid.hinoki .avail-cell.avail { background: #e8dbb0; color: #1a1714; border-color: #c4b478; }
+      /* Ebony: dark charcoal */
+      .avail-grid.ebony .avail-cell.avail { background: #3a3028; color: #f0ece5; border-color: #5a4d40; }
+      /* Padauk: warm orange */
+      .avail-grid.padauk .avail-cell.avail { background: #c46a3a; color: #1a1714; border-color: #9c5028; }
+
+      .legend {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 8px;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+      }
+      .legend-swatch { display: inline-block; width: 12px; height: 12px; vertical-align: middle; margin-right: 6px; border: 1px solid; }
+      .legend-swatch.avail { background: #e8dbb0; border-color: #c4b478; }
+      .legend-swatch.reserved { background: #ebe6dc; border-color: rgba(120,110,90,0.5); }
+      .legend-swatch.pending { background: #f0e6c8; border-color: rgba(196,149,42,0.5); }
+
+      .picked-notice {
+        padding: 14px 16px;
+        margin: 20px 0 40px;
+        background: var(--purple);
+        color: var(--gold-pale);
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .picked-notice.hidden { display: none; }
+      .picked-clear {
+        background: transparent;
+        border: 1px solid rgba(232, 192, 96, 0.4);
+        color: var(--gold-pale);
+        padding: 4px 12px;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+        margin: 0;
+        width: auto;
+        text-transform: uppercase;
+      }
+      .picked-clear:hover { background: rgba(232, 192, 96, 0.15); }
 
       form {
         background: var(--bg-light);
@@ -108,15 +222,8 @@
         padding-right: 36px;
         cursor: pointer;
       }
-      .hint {
-        font-family: 'Georgia', serif;
-        font-style: italic;
-        font-size: 13px;
-        color: var(--text-muted);
-        margin-top: 6px;
-      }
 
-      button {
+      button.submit-btn {
         width: 100%;
         padding: 16px 28px;
         font-family: 'Inter', sans-serif;
@@ -131,8 +238,8 @@
         margin-top: 8px;
         transition: background 0.2s, color 0.2s;
       }
-      button:hover { background: var(--gold); color: var(--purple); }
-      button:disabled { opacity: 0.5; cursor: not-allowed; }
+      button.submit-btn:hover { background: var(--gold); color: var(--purple); }
+      button.submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
       .msg { padding: 14px 16px; margin-top: 20px; font-size: 14px; font-family: 'Georgia', serif; }
       .msg.error { background: #f5e6e6; color: #7d2b2b; border-left: 3px solid #a63030; }
@@ -153,6 +260,7 @@
       @media (max-width: 640px) {
         body { padding: 48px 20px 72px; }
         h1 { font-size: 38px; }
+        .avail-cell { font-size: 9px; }
         form { padding: 28px 22px; }
       }
     </style>
@@ -165,8 +273,43 @@
       <p class="subtitle">One of three hundred, ever.</p>
 
       <p class="intro">
-        Numbers aren't handed out by queue. Tell me a little about you and I'll get back personally.
+        Numbers aren't handed out by queue. Tap any available number below, or skip the grid and just fill out the form. Either way, I'll get back personally.
       </p>
+
+      <div class="legend">
+        <span><span class="legend-swatch avail"></span>Available</span>
+        <span><span class="legend-swatch reserved"></span>Reserved</span>
+        <span><span class="legend-swatch pending"></span>Requested</span>
+      </div>
+
+      <div id="picked-notice" class="picked-notice hidden">
+        <span id="picked-text">You picked HINOKI 001</span>
+        <button type="button" id="picked-clear" class="picked-clear">Clear</button>
+      </div>
+
+      <div class="avail-wrap">
+        <div class="avail-title-row">
+          <span class="avail-title">Hinoki &nbsp;&middot;&nbsp; $299</span>
+          <span class="avail-count" id="hinoki-count">Loading...</span>
+        </div>
+        <div class="avail-grid hinoki" id="grid-hinoki" data-wood="hinoki"></div>
+      </div>
+
+      <div class="avail-wrap">
+        <div class="avail-title-row">
+          <span class="avail-title">Black Ebony &nbsp;&middot;&nbsp; $339</span>
+          <span class="avail-count" id="ebony-count">Loading...</span>
+        </div>
+        <div class="avail-grid ebony" id="grid-ebony" data-wood="ebony"></div>
+      </div>
+
+      <div class="avail-wrap">
+        <div class="avail-title-row">
+          <span class="avail-title">African Padauk &nbsp;&middot;&nbsp; $375</span>
+          <span class="avail-count" id="padauk-count">Loading...</span>
+        </div>
+        <div class="avail-grid padauk" id="grid-padauk" data-wood="padauk"></div>
+      </div>
 
       <form id="reserve-form">
         <div class="field">
@@ -200,7 +343,7 @@
           <input type="text" id="website" name="honeypot" tabindex="-1" autocomplete="off" />
         </div>
 
-        <button type="submit" id="submit-btn">Request a reservation</button>
+        <button type="submit" class="submit-btn" id="submit-btn">Request a reservation</button>
 
         <div id="response-msg" class="msg hidden"></div>
       </form>
@@ -216,14 +359,85 @@
       const form = document.getElementById('reserve-form');
       const btn = document.getElementById('submit-btn');
       const msg = document.getElementById('response-msg');
+      const pickedNotice = document.getElementById('picked-notice');
+      const pickedText = document.getElementById('picked-text');
+      const pickedClear = document.getElementById('picked-clear');
 
-      // Pre-select wood from URL param if present (e.g., /reserve?wood=padauk)
+      let selectedWood = null;
+      let selectedPosition = null;
+
+      // Pre-select wood from URL param if present
       const urlParams = new URLSearchParams(window.location.search);
       const woodParam = urlParams.get('wood');
       const validWoods = ['hinoki', 'ebony', 'padauk', 'unsure'];
       if (woodParam && validWoods.includes(woodParam.toLowerCase())) {
         form.wood_preference.value = woodParam.toLowerCase();
       }
+
+      const WOOD_LABEL = { hinoki: 'HINOKI', ebony: 'EBONY', padauk: 'PADAUK' };
+
+      function pad(n) { return String(n).padStart(3, '0'); }
+
+      async function loadAvailability() {
+        let data = { hinoki: [], ebony: [], padauk: [], pending: { hinoki: [], ebony: [], padauk: [] } };
+        try {
+          const resp = await fetch('/api/availability');
+          if (resp.ok) data = await resp.json();
+        } catch (e) { /* silently show all-available on network failure */ }
+
+        for (const wood of ['hinoki', 'ebony', 'padauk']) {
+          const reserved = new Set(data[wood] || []);
+          const pending = new Set((data.pending && data.pending[wood]) || []);
+          const grid = document.getElementById('grid-' + wood);
+          grid.innerHTML = '';
+          let available = 0;
+          for (let n = 1; n <= 100; n++) {
+            const cell = document.createElement('div');
+            cell.textContent = pad(n);
+            if (reserved.has(n)) {
+              cell.className = 'avail-cell reserved';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — reserved';
+            } else if (pending.has(n)) {
+              cell.className = 'avail-cell pending';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — requested by someone else, awaiting review';
+            } else {
+              cell.className = 'avail-cell avail';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — available. Tap to pick.';
+              cell.dataset.wood = wood;
+              cell.dataset.position = n;
+              cell.addEventListener('click', () => pickCell(wood, n));
+              available++;
+            }
+            grid.appendChild(cell);
+          }
+          document.getElementById(wood + '-count').textContent = available + ' of 100 still available';
+        }
+      }
+
+      function pickCell(wood, n) {
+        // Clear any prior selection visual
+        document.querySelectorAll('.avail-cell.selected').forEach(el => el.classList.remove('selected'));
+        // Highlight the new one
+        const grid = document.getElementById('grid-' + wood);
+        const target = grid.children[n - 1];
+        if (target) target.classList.add('selected');
+        // Set the wood dropdown to match
+        form.wood_preference.value = wood;
+        selectedWood = wood;
+        selectedPosition = n;
+        // Show the notice
+        pickedText.textContent = 'You picked ' + WOOD_LABEL[wood] + ' ' + pad(n);
+        pickedNotice.classList.remove('hidden');
+        // Scroll form into view
+        setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+      }
+
+      pickedClear.addEventListener('click', () => {
+        selectedWood = null;
+        selectedPosition = null;
+        document.querySelectorAll('.avail-cell.selected').forEach(el => el.classList.remove('selected'));
+        pickedNotice.classList.add('hidden');
+      });
 
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -236,6 +450,7 @@
           email: form.email.value.trim().toLowerCase(),
           wood_preference: form.wood_preference.value,
           why_message: form.why_message.value.trim(),
+          preferred_position: (selectedWood === form.wood_preference.value && selectedPosition) ? selectedPosition : null,
           honeypot: form.honeypot.value,
         };
 
@@ -248,10 +463,14 @@
           const data = await resp.json();
           if (resp.ok && data.ok) {
             msg.className = 'msg success';
-            msg.textContent = "Got it. I'll be in touch personally in a few days.";
+            msg.textContent = payload.preferred_position
+              ? "Got it. I'll follow up personally to confirm " + WOOD_LABEL[payload.wood_preference] + ' ' + pad(payload.preferred_position) + '.'
+              : "Got it. I'll be in touch personally in a few days.";
             msg.classList.remove('hidden');
             form.reset();
             btn.textContent = 'Sent';
+            // Refresh grid so the newly-requested number shows as pending
+            loadAvailability();
           } else {
             msg.className = 'msg error';
             msg.textContent = data.error || 'Something went wrong. Please try again in a moment.';
@@ -267,6 +486,8 @@
           btn.textContent = 'Request a reservation';
         }
       });
+
+      loadAvailability();
     </script>
   </body>
 </html>

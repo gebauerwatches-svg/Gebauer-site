@@ -44,6 +44,7 @@ async function notifyLiam(env, entry) {
       <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;color:#0F0D14;">New reservation interest</h2>
       <p><strong>${entry.first_name}</strong> (${entry.email}) just requested a reservation.</p>
       <p><strong>Wood preference:</strong> ${woodLabel}</p>
+      ${entry.preferred_position ? `<p><strong>Wants number:</strong> ${entry.wood_preference.toUpperCase()} #${entry.preferred_position} / 100</p>` : ''}
       ${entry.why_message ? `<p><strong>Why they want it:</strong><br>${entry.why_message.replace(/\n/g, '<br>')}</p>` : '<p><em>No message provided.</em></p>'}
       <hr style="border:0;border-top:1px solid #ccc;margin:24px 0;">
       <p style="font-size:13px;color:#666;">Review in <a href="https://gebauerwatches.com/admin#reservations">/admin</a>. Follow up personally to close.</p>
@@ -89,7 +90,7 @@ export async function onRequestPost(context) {
   let body
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request.' }, 400) }
 
-  const { first_name, email, wood_preference, why_message, honeypot } = body || {}
+  const { first_name, email, wood_preference, why_message, preferred_position, honeypot } = body || {}
 
   // Honeypot spam check
   if (honeypot) return json({ ok: true })
@@ -102,6 +103,9 @@ export async function onRequestPost(context) {
   const cleanEmail = String(email).trim().toLowerCase().slice(0, 200)
   const cleanWood = String(wood_preference).toLowerCase().trim()
   const cleanWhy = (why_message ? String(why_message).trim().slice(0, 1000) : null)
+  const cleanPos = (Number.isInteger(preferred_position) && preferred_position >= 1 && preferred_position <= 100)
+    ? preferred_position
+    : null
 
   if (cleanName.length < 1) return json({ error: 'Please enter your name.' }, 400)
   if (!cleanEmail.includes('@') || !cleanEmail.includes('.')) {
@@ -120,9 +124,9 @@ export async function onRequestPost(context) {
     // Insert the interest row
     const now = new Date().toISOString()
     const result = await env.DB.prepare(`
-      INSERT INTO reservation_interest (email, first_name, wood_preference, why_message, status, submitted_at)
-      VALUES (?, ?, ?, ?, 'pending', ?)
-    `).bind(cleanEmail, cleanName, cleanWood, cleanWhy, now).run()
+      INSERT INTO reservation_interest (email, first_name, wood_preference, why_message, preferred_position, status, submitted_at)
+      VALUES (?, ?, ?, ?, ?, 'pending', ?)
+    `).bind(cleanEmail, cleanName, cleanWood, cleanWhy, cleanPos, now).run()
 
     const insertedId = result.meta.last_row_id
 
@@ -134,6 +138,7 @@ export async function onRequestPost(context) {
         first_name: cleanName,
         wood_preference: cleanWood,
         why_message: cleanWhy,
+        preferred_position: cleanPos,
       })
       if (!notif.sent) console.log('Notify skipped:', notif.reason, notif.error || '')
     } catch (e) {
