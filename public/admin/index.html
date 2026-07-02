@@ -141,7 +141,7 @@
     }
 
     // ---- Router ----
-    const VIEWS = ['subscribers', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
+    const VIEWS = ['subscribers', 'reservations', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
     let currentView = 'subscribers'
 
     function navigate(view) {
@@ -207,6 +207,7 @@
           el('h2', {}, 'GEBAUER'),
           el('nav', {},
             navItem('subscribers', 'Subscribers'),
+            navItem('reservations', 'Reservations'),
             navItem('broadcasts', 'Broadcasts'),
             navItem('welcome', 'Welcome email'),
             navItem('stories', 'Stories'),
@@ -652,9 +653,143 @@
       ))
     }
 
+    // ---- Reservations view ----
+    async function renderReservations() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/reservations').catch(() => ({ reservations: [], counts: {} }))
+      const items = data.reservations || []
+      const counts = data.counts || {}
+
+      const WOOD_LABEL = {
+        hinoki: 'Hinoki ($299)', ebony: 'Black Ebony ($339)',
+        padauk: 'African Padauk ($375)', unsure: 'Not sure',
+      }
+
+      function statusPill(s) {
+        const colorMap = {
+          pending: 'rgba(196,149,42,0.15);color:#c4952a',
+          contacted: 'rgba(20,120,200,0.15);color:#40a0d0',
+          converted: 'rgba(42,107,82,0.15);color:var(--ok)',
+          declined: 'rgba(120,120,120,0.15);color:#888',
+        }
+        return el('span', {
+          style: `display:inline-block;padding:3px 10px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;background:${colorMap[s] || colorMap.pending}`,
+        }, s)
+      }
+
+      const list = items.length === 0
+        ? el('p', { class: 'page-sub' }, 'No reservation interest yet. When someone submits the /reserve form, it will appear here.')
+        : el('div', {}, ...items.map(r => el('div', {
+            class: 'story-card',
+            style: 'margin-bottom:12px;padding:18px 20px;',
+          },
+            el('div', { style: 'display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px;flex-wrap:wrap;' },
+              el('div', {},
+                el('div', { style: 'font-family:Georgia,serif;font-size:16px;color:var(--ink);margin-bottom:2px;' }, `${r.first_name}`),
+                el('div', { style: 'font-size:13px;color:var(--muted);' }, r.email),
+              ),
+              el('div', { style: 'display:flex;flex-direction:column;align-items:flex-end;gap:6px;' },
+                statusPill(r.status),
+                el('div', { style: 'font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;' }, (r.submitted_at || '').slice(0, 10)),
+              ),
+            ),
+            el('div', { style: 'font-size:13px;color:var(--ink);margin-bottom:8px;' },
+              el('strong', {}, 'Wants: '),
+              el('span', {}, WOOD_LABEL[r.wood_preference] || r.wood_preference),
+            ),
+            r.why_message ? el('div', {
+              class: 'story-text',
+              style: 'font-size:14px;color:var(--text);margin-bottom:12px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--gold);',
+            }, r.why_message) : null,
+            r.notes ? el('div', { style: 'font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;' }, `Note: ${r.notes}`) : null,
+            el('div', { class: 'story-actions', style: 'gap:6px;flex-wrap:wrap;' },
+              el('button', { onclick: () => showEditReservation(r) }, 'Follow up / edit'),
+              el('button', {
+                onclick: async () => {
+                  const notes = prompt('Notes on the conversation (optional):', r.notes || '')
+                  if (notes === null) return
+                  await api(`/reservation/${r.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status: 'contacted', notes }),
+                  })
+                  renderReservations()
+                },
+              }, 'Mark contacted'),
+              el('button', {
+                onclick: async () => {
+                  if (!confirm(`Convert ${r.first_name} to a full subscriber? You'll add them via the Subscribers tab next.`)) return
+                  await api(`/reservation/${r.id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ status: 'converted' }),
+                  })
+                  alert("Marked converted. Go to Subscribers and use '+ Add' to create their subscriber row with their watch number.")
+                  renderReservations()
+                },
+                class: 'primary',
+              }, 'Mark converted'),
+              el('button', {
+                class: 'danger',
+                onclick: async () => {
+                  if (!confirm(`Delete this reservation request? (Use "Mark declined" if they said no but you want to keep the record.)`)) return
+                  await api(`/reservation/${r.id}`, { method: 'DELETE' })
+                  renderReservations()
+                },
+              }, 'Delete'),
+            ),
+          )))
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Reservation interest'),
+        el('p', { class: 'page-sub' }, 'Cold visitors who submitted the /reserve form. Follow up personally, then convert to a full subscriber with a watch number assigned.'),
+        el('div', { class: 'stats-row' },
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Pending'), el('div', { class: 'stat-value' }, String(counts.pending || 0))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Contacted'), el('div', { class: 'stat-value' }, String(counts.contacted || 0))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Converted'), el('div', { class: 'stat-value' }, String(counts.converted || 0))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Declined'), el('div', { class: 'stat-value' }, String(counts.declined || 0))),
+        ),
+        list,
+      ))
+    }
+
+    function showEditReservation(r) {
+      const STATUSES = ['pending', 'contacted', 'converted', 'declined']
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('form', { class: 'modal', onsubmit: async (e) => {
+          e.preventDefault()
+          const data = await api(`/reservation/${r.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              status: $('#res-status', modal).value,
+              notes: $('#res-notes', modal).value,
+            }),
+          })
+          if (data.ok) { modal.remove(); renderReservations() }
+          else alert('Error: ' + (data.error || 'unknown'))
+        } },
+          el('h3', {}, `${r.first_name} - ${r.email}`),
+          el('div', { class: 'field' },
+            el('label', {}, 'Status'),
+            el('select', { id: 'res-status' },
+              ...STATUSES.map(s => el('option', { value: s, selected: r.status === s ? 'true' : null }, s)),
+            ),
+          ),
+          el('div', { class: 'field' },
+            el('label', {}, 'Follow-up notes'),
+            el('textarea', { id: 'res-notes', style: 'min-height:120px' }, r.notes || ''),
+          ),
+          el('div', { class: 'modal-actions' },
+            el('button', { type: 'button', onclick: () => modal.remove() }, 'Cancel'),
+            el('button', { type: 'submit', class: 'primary' }, 'Save'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
+    }
+
     // ---- Render dispatch ----
     function render() {
       if (currentView === 'subscribers') renderSubscribers()
+      else if (currentView === 'reservations') renderReservations()
       else if (currentView === 'broadcasts') renderBroadcasts()
       else if (currentView === 'welcome') renderWelcome()
       else if (currentView === 'stories') renderStories()
