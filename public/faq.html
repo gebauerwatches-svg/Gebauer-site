@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0F0D14" />
+    <meta name="theme-color" content="#F5F2ED" />
     <link rel="canonical" href="https://gebauerwatches.com/faq" />
     <meta name="description" content="Common questions about Gebauer Watches — who made it, where it's made, what wood dials, how to buy, and how it's different from Marc Gebauer." />
     <meta property="og:title" content="Gebauer Watches — FAQ" />
@@ -104,56 +104,249 @@
     }
     </script>
     <style>
-      body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: #0F0D14; color: #f0e8d6; margin: 0; padding: 60px 24px; line-height: 1.7; }
+      :root {
+        --purple: #1E1A2E;
+        --purple-mid: #2A2440;
+        --purple-soft: #5C5478;
+        --gold: #C4952A;
+        --gold-light: #D4A63A;
+        --gold-pale: #E8C060;
+        --bg-cream: #F5F2ED;
+        --bg-warm: #EFECE6;
+        --bg-light: #FAF8F5;
+        --text-dark: #1A1714;
+        --text-warm: #4A443C;
+        --text-muted: #6B6358;
+      }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        background: var(--bg-cream);
+        color: var(--text-warm);
+        line-height: 1.7;
+        min-height: 100vh;
+        padding: 72px 24px 96px;
+      }
       .container { max-width: 720px; margin: 0 auto; }
-      h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 42px; margin: 0 0 32px; color: #fff; }
-      h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 22px; margin: 36px 0 10px; color: #fff; }
-      p { margin: 0 0 16px; font-size: 16px; color: rgba(240, 232, 214, 0.92); }
-      a { color: #c4952a; text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .nav { font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 60px; }
-      .nav a { color: #c4952a; }
+
+      .nav { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 56px; color: var(--gold); }
+      .nav a { color: var(--gold); text-decoration: none; }
+      .nav a:hover { color: var(--purple); }
+
+      h1 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 400;
+        font-size: 52px;
+        line-height: 1.1;
+        color: var(--purple);
+        margin: 0 0 14px;
+        letter-spacing: -0.5px;
+      }
+      .subtitle {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
+        font-size: 20px;
+        color: var(--gold);
+        margin-bottom: 56px;
+      }
+
+      /* Card grid — alternating cream and purple */
+      .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .faq-card {
+        padding: 32px 32px 30px;
+        position: relative;
+      }
+
+      /* Odd cards: cream card, purple text */
+      .faq-card.cream {
+        background: var(--bg-light);
+        border: 1px solid rgba(196, 149, 42, 0.35);
+      }
+      .faq-card.cream .faq-num {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
+        font-size: 42px;
+        color: var(--gold);
+        line-height: 1;
+        opacity: 0.85;
+      }
+      .faq-card.cream .faq-question {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 500;
+        font-size: 26px;
+        color: var(--purple);
+        line-height: 1.25;
+        margin: 6px 0 14px;
+      }
+      .faq-card.cream .faq-answer {
+        color: var(--text-warm);
+        font-size: 16px;
+      }
+      .faq-card.cream .faq-answer a { color: var(--gold); text-decoration: none; border-bottom: 1px solid var(--gold); }
+
+      /* Even cards: purple card, gold heading, cream body */
+      .faq-card.purple {
+        background: var(--purple);
+        border: 1px solid var(--purple-mid);
+      }
+      .faq-card.purple .faq-num {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
+        font-size: 42px;
+        color: var(--gold-pale);
+        line-height: 1;
+        opacity: 0.85;
+      }
+      .faq-card.purple .faq-question {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 500;
+        font-size: 26px;
+        color: var(--gold-light);
+        line-height: 1.25;
+        margin: 6px 0 14px;
+      }
+      .faq-card.purple .faq-answer {
+        color: rgba(240, 236, 229, 0.88);
+        font-size: 16px;
+      }
+      .faq-card.purple .faq-answer a { color: var(--gold-pale); text-decoration: none; border-bottom: 1px solid var(--gold-pale); }
+
+      .faq-divider {
+        display: block;
+        width: 40px;
+        height: 1px;
+        background: rgba(196, 149, 42, 0.5);
+        margin: 0 0 14px;
+      }
+      .faq-card.purple .faq-divider {
+        background: rgba(232, 192, 96, 0.4);
+      }
+
+      .cta-btn {
+        display: inline-block;
+        margin-top: 40px;
+        padding: 16px 34px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        background: var(--purple);
+        color: var(--gold);
+        text-decoration: none;
+        transition: background 0.2s, color 0.2s;
+      }
+      .cta-btn:hover { background: var(--gold); color: var(--purple); }
+
+      .footer-links {
+        margin-top: 48px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+      .footer-links a { color: var(--purple-soft); text-decoration: none; margin-right: 8px; }
+      .footer-links a:hover { color: var(--gold); }
+
+      @media (max-width: 640px) {
+        body { padding: 48px 20px 72px; }
+        h1 { font-size: 40px; }
+        .faq-card { padding: 26px 22px 24px; }
+        .faq-card .faq-question { font-size: 22px; }
+        .faq-card .faq-num { font-size: 36px; }
+      }
     </style>
   </head>
   <body>
     <div class="container">
-      <div class="nav"><a href="/">← Gebauer Watches</a></div>
+      <div class="nav"><a href="/">&larr; Gebauer Watches</a></div>
 
-      <h1>Frequently Asked Questions</h1>
+      <h1>Frequently asked.</h1>
+      <p class="subtitle">Ten things people ask most.</p>
 
-      <h2>What is Gebauer Watches?</h2>
-      <p>Gebauer Watches is a watch brand based in Steamboat Springs, Colorado, founded by Liam Gebauer in 2026. The watches are crafted in Japan and feature real wood dials. The first edition is limited to 300 watches total, with 100 of each of three wood variants (Hinoki, Black Ebony, African Padauk).</p>
+      <div class="faq-list">
+        <div class="faq-card cream">
+          <div class="faq-num">01</div>
+          <h2 class="faq-question">What is Gebauer Watches?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Gebauer Watches is a watch brand based in Steamboat Springs, Colorado, founded by Liam Gebauer in 2026. The watches are crafted in Japan and feature real wood dials. The first edition is limited to 300 watches total, with 100 of each of three wood variants: Hinoki, Black Ebony, and African Padauk.</p>
+        </div>
 
-      <h2>Who founded Gebauer Watches?</h2>
-      <p>Liam Gebauer founded Gebauer Watches in 2026 when he was 14, after buying his first watch in Milan and finding nothing comparable for other teens. He runs the brand, designs the watches, and writes the content. The company is based in Steamboat Springs, Colorado.</p>
+        <div class="faq-card purple">
+          <div class="faq-num">02</div>
+          <h2 class="faq-question">Who founded Gebauer Watches?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Liam Gebauer founded Gebauer Watches in 2026 when he was 14, after buying his first watch in Milan and finding nothing comparable for other teens. He runs the brand, designs the watches, and writes the content. The company is based in Steamboat Springs, Colorado.</p>
+        </div>
 
-      <h2>Is Gebauer Watches the same as Marc Gebauer?</h2>
-      <p>No. Gebauer Watches is an independent brand based in Steamboat Springs, Colorado, founded by Liam Gebauer. Marc Gebauer is a separate person, a Swiss-based watch reviewer and retailer. There is no affiliation or connection between the two.</p>
+        <div class="faq-card cream">
+          <div class="faq-num">03</div>
+          <h2 class="faq-question">Is this the same as Marc Gebauer?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">No. Gebauer Watches is an independent brand based in Steamboat Springs, Colorado, founded by Liam Gebauer. Marc Gebauer is a separate person, a Swiss-based watch reviewer and retailer. There is no affiliation between the two.</p>
+        </div>
 
-      <h2>What wood dials does Gebauer Watches use?</h2>
-      <p>Three wood variants: Hinoki ($299, Japanese cypress with pale gold grain), Black Ebony ($339, dense and deep), and African Padauk ($375, ages from fiery orange to deep burgundy over years). Each dial is naturally one of one because no two pieces of wood have the same grain pattern.</p>
+        <div class="faq-card purple">
+          <div class="faq-num">04</div>
+          <h2 class="faq-question">What wood dials does Gebauer use?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Three variants. Hinoki ($299) is Japanese cypress with a pale gold grain. Black Ebony ($339) is dense and deep. African Padauk ($375) starts fiery orange and deepens to burgundy over years. Each dial is naturally one of one because no two pieces of wood share the same grain.</p>
+        </div>
 
-      <h2>Where are Gebauer Watches made?</h2>
-      <p>The watches are made in Japan. The packaging is made in Italy. Each watch uses a Seiko VH31 meca-quartz movement, a sapphire crystal with anti-reflective coating, a 316L stainless steel case (39mm) with a butterfly clasp, and 5 ATM water resistance.</p>
+        <div class="faq-card cream">
+          <div class="faq-num">05</div>
+          <h2 class="faq-question">Where are Gebauer Watches made?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Watches are made in Japan. Packaging is made in Italy. Each watch uses a Seiko VH31 meca-quartz movement, a sapphire crystal with anti-reflective coating, a 316L stainless steel case (39mm) with a butterfly clasp, and 5 ATM water resistance.</p>
+        </div>
 
-      <h2>How many Gebauer Watches will be made?</h2>
-      <p>The first edition is 300 watches total: 100 Hinoki, 100 Black Ebony, and 100 African Padauk. Each watch is individually numbered within its wood variant (for example, EBONY 012 / 100). Watch numbers are reserved personally rather than auto-assigned.</p>
+        <div class="faq-card purple">
+          <div class="faq-num">06</div>
+          <h2 class="faq-question">How many will be made?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">The first edition is 300 watches total. 100 Hinoki, 100 Black Ebony, 100 African Padauk. Each watch is individually numbered within its wood variant (for example, EBONY 012 / 100). Numbers are reserved personally rather than auto-assigned.</p>
+        </div>
 
-      <h2>When can I buy a Gebauer Watch?</h2>
-      <p>Samples arrive August 2026. The Kickstarter campaign launches in November 2026. Watches ship to backers in early 2027. To get notified at launch, sign up at gebauerwatches.com.</p>
+        <div class="faq-card cream">
+          <div class="faq-num">07</div>
+          <h2 class="faq-question">When can I buy one?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Samples arrive August 2026. The Kickstarter campaign launches November 2026. Watches ship to backers in early 2027. To get notified at launch or to reserve a specific number, see the <a href="/reserve">reserve</a> page.</p>
+        </div>
 
-      <h2>What movement does Gebauer Watches use?</h2>
-      <p>Seiko VH31 meca-quartz movement. It pairs the accuracy of a quartz movement with the sweeping seconds-hand motion of a mechanical watch.</p>
+        <div class="faq-card purple">
+          <div class="faq-num">08</div>
+          <h2 class="faq-question">What movement does it use?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Seiko VH31 meca-quartz. It pairs the accuracy of a quartz movement with the sweeping seconds-hand motion of a mechanical watch.</p>
+        </div>
 
-      <h2>Who is Gebauer Watches for?</h2>
-      <p>Gebauer Watches is built for milestone gifting for young men, typically aged 13 to 25. The buyer is usually a parent or family member; the recipient is the young man marking a moment that matters (graduation, 16th birthday, confirmation, coming of age).</p>
+        <div class="faq-card cream">
+          <div class="faq-num">09</div>
+          <h2 class="faq-question">Who is Gebauer Watches for?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Built for milestone gifting for young men, typically aged 13 to 25. The buyer is usually a parent or family member. The recipient is the young man marking a moment that matters: graduation, 16th birthday, confirmation, coming of age.</p>
+        </div>
 
-      <h2>How do I follow what Liam is building?</h2>
-      <p>Liam writes a daily founder log at <a href="https://gebauerwatches.substack.com">gebauerwatches.substack.com</a>. It covers what is actually happening as Gebauer Watches gets built.</p>
+        <div class="faq-card purple">
+          <div class="faq-num">10</div>
+          <h2 class="faq-question">How do I follow along?</h2>
+          <span class="faq-divider"></span>
+          <p class="faq-answer">Liam writes a daily founder log at <a href="https://gebauerwatches.substack.com">gebauerwatches.substack.com</a>. It covers what is actually happening as the brand gets built.</p>
+        </div>
+      </div>
 
-      <p style="margin-top:60px;"><a href="/reserve" style="display:inline-block;padding:14px 28px;background:#c4952a;color:#0F0D14;font-size:14px;letter-spacing:0.15em;text-transform:uppercase;font-weight:500;">Reserve a watch</a></p>
+      <a href="/reserve" class="cta-btn">Reserve a watch</a>
 
-      <p style="margin-top:24px;"><a href="/">Return to Gebauer Watches</a></p>
+      <p class="footer-links">
+        <a href="/about">About</a> &middot;
+        <a href="https://gebauerwatches.substack.com">Journal</a> &middot;
+        <a href="/">Home</a>
+      </p>
     </div>
   </body>
 </html>

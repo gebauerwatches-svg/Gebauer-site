@@ -141,7 +141,7 @@
     }
 
     // ---- Router ----
-    const VIEWS = ['subscribers', 'reservations', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
+    const VIEWS = ['subscribers', 'reservations', 'watches', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
     let currentView = 'subscribers'
 
     function navigate(view) {
@@ -208,6 +208,7 @@
           el('nav', {},
             navItem('subscribers', 'Subscribers'),
             navItem('reservations', 'Reservations'),
+            navItem('watches', 'Watches'),
             navItem('broadcasts', 'Broadcasts'),
             navItem('welcome', 'Welcome email'),
             navItem('stories', 'Stories'),
@@ -786,10 +787,144 @@
       document.body.appendChild(modal)
     }
 
+    // ---- Watches view (300-cell grid) ----
+    async function renderWatches() {
+      renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
+      const data = await api('/watches').catch(() => ({ assigned: [], pending: [] }))
+      const assigned = data.assigned || []
+      const pending = data.pending || []
+
+      // Build lookup by position for O(1) grid rendering
+      const byPos = {}
+      for (const a of assigned) byPos[a.position] = a
+
+      const WOODS = [
+        { key: 'hinoki', label: 'Hinoki', color: '#e8dbb0', border: '#c4b478' },
+        { key: 'ebony', label: 'Black Ebony', color: '#3a3028', border: '#5a4d40' },
+        { key: 'padauk', label: 'African Padauk', color: '#c46a3a', border: '#9c5028' },
+      ]
+
+      // Auto-assign wood by position range as a visual default:
+      //   1-100 = hinoki, 101-200 = ebony, 201-300 = padauk
+      // This is a display convention only; actual wood is stored in notes.
+      function woodForPos(n) {
+        if (n <= 100) return 'hinoki'
+        if (n <= 200) return 'ebony'
+        return 'padauk'
+      }
+
+      function cellForPos(n) {
+        const a = byPos[n]
+        const defaultWood = woodForPos(n)
+        // If the notes hint tells us a different wood, use that
+        const wood = (a && a.wood_hint) ? a.wood_hint : defaultWood
+        const spec = WOODS.find(w => w.key === wood) || WOODS[0]
+        const isTaken = !!a
+        const isLight = wood !== 'ebony'  // ebony needs light text
+
+        const cell = el('div', {
+          style: `
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Georgia, serif;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: ${isTaken ? 'pointer' : 'default'};
+            background: ${isTaken ? spec.color : '#f5f2ed'};
+            color: ${isTaken ? (isLight ? '#1a1714' : '#f0ece5') : '#c4b478'};
+            border: 1px solid ${isTaken ? spec.border : 'rgba(196,180,120,0.3)'};
+            transition: transform 0.1s;
+            position: relative;
+          `,
+          title: isTaken
+            ? `${a.first_name} (${a.email}) - ${spec.label} #${n}${a.notes ? '\nNotes: ' + a.notes : ''}`
+            : `${spec.label} #${n} - available`,
+        }, String(n))
+
+        if (isTaken) {
+          cell.addEventListener('click', () => showWatchDetail(a, spec.label, n))
+          cell.addEventListener('mouseenter', () => { cell.style.transform = 'scale(1.15)'; cell.style.zIndex = 10 })
+          cell.addEventListener('mouseleave', () => { cell.style.transform = ''; cell.style.zIndex = '' })
+        }
+        return cell
+      }
+
+      // Section renderer per wood
+      function renderWoodSection(woodKey, startNum, endNum) {
+        const spec = WOODS.find(w => w.key === woodKey)
+        const takenInRange = assigned.filter(a => a.position >= startNum && a.position <= endNum).length
+        const cells = []
+        for (let n = startNum; n <= endNum; n++) cells.push(cellForPos(n))
+        return el('section', { style: 'margin-bottom:36px;' },
+          el('div', { style: 'display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;' },
+            el('h2', { style: `font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:22px;color:var(--ink);margin:0;` }, spec.label),
+            el('span', { style: 'font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;' }, `${takenInRange} of 100 reserved`),
+          ),
+          el('div', {
+            style: 'display:grid;grid-template-columns:repeat(10,1fr);gap:4px;',
+          }, ...cells),
+        )
+      }
+
+      // Pending interest sidebar summary
+      const pendingSummary = pending.length === 0
+        ? el('p', { class: 'page-sub' }, 'No pending interest right now.')
+        : el('div', { style: 'display:flex;flex-direction:column;gap:8px;' },
+            ...pending.slice(0, 10).map(p => el('div', {
+              style: 'padding:10px 12px;background:var(--bg);border-left:3px solid var(--gold);',
+            },
+              el('div', { style: 'font-size:13px;color:var(--ink);font-weight:500;' }, `${p.first_name} - ${p.wood_preference}`),
+              el('div', { style: 'font-size:11px;color:var(--muted);' }, p.email),
+              p.why_message ? el('div', { style: 'font-size:12px;color:var(--text);margin-top:6px;font-family:Georgia,serif;font-style:italic;' }, p.why_message) : null,
+            )),
+          )
+
+      renderShell(el('div', {},
+        el('h1', { class: 'page-title' }, 'Watches'),
+        el('p', { class: 'page-sub' }, `Every number 1-300 in the first edition. Colored cells are reserved. Hover for details, click to see the reserver. Grays are still available.`),
+
+        el('div', { class: 'stats-row' },
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Total reserved'), el('div', { class: 'stat-value' }, String(assigned.length))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Available'), el('div', { class: 'stat-value' }, String(300 - assigned.length))),
+          el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Pending interest'), el('div', { class: 'stat-value' }, String(pending.length))),
+        ),
+
+        renderWoodSection('hinoki', 1, 100),
+        renderWoodSection('ebony', 101, 200),
+        renderWoodSection('padauk', 201, 300),
+
+        el('h2', { style: `font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:22px;color:var(--ink);margin:36px 0 12px;` }, 'Pending interest (recent)'),
+        pendingSummary,
+      ))
+    }
+
+    function showWatchDetail(a, woodLabel, n) {
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('div', { class: 'modal' },
+          el('h3', {}, `${woodLabel} #${n}`),
+          el('div', { style: 'margin-bottom:16px;' },
+            el('div', { style: 'font-family:Georgia,serif;font-size:18px;color:var(--ink);margin-bottom:4px;' }, a.first_name),
+            el('div', { style: 'font-size:13px;color:var(--muted);' }, a.email),
+          ),
+          a.notes ? el('div', {
+            style: 'padding:14px 16px;background:var(--bg);border-left:3px solid var(--gold);margin-bottom:16px;font-family:Georgia,serif;font-size:14px;',
+          }, a.notes) : null,
+          a.subscribed_at ? el('div', { style: 'font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:16px;' }, `Reserved ${a.subscribed_at.slice(0, 10)}`) : null,
+          el('div', { class: 'modal-actions' },
+            el('button', { onclick: () => modal.remove() }, 'Close'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
+    }
+
     // ---- Render dispatch ----
     function render() {
       if (currentView === 'subscribers') renderSubscribers()
       else if (currentView === 'reservations') renderReservations()
+      else if (currentView === 'watches') renderWatches()
       else if (currentView === 'broadcasts') renderBroadcasts()
       else if (currentView === 'welcome') renderWelcome()
       else if (currentView === 'stories') renderStories()
