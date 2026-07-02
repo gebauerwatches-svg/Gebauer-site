@@ -273,7 +273,11 @@
       <p class="subtitle">One of three hundred, ever.</p>
 
       <p class="intro">
-        Numbers aren't handed out by queue. Tap any available number below, or skip the grid and just fill out the form. Either way, I'll get back personally.
+        Numbers aren't handed out by queue. Tap any available number below, or skip the grid and just fill out the form. Either way, I'll follow up personally to confirm before anything is locked in.
+      </p>
+
+      <p style="font-size:14px;font-style:italic;color:var(--text-muted);margin-bottom:32px;">
+        Picking a number here doesn't reserve it. It sends me a note that this is what you'd like, and I confirm it with you before the number is really yours.
       </p>
 
       <div class="legend">
@@ -283,7 +287,7 @@
       </div>
 
       <div id="picked-notice" class="picked-notice hidden">
-        <span id="picked-text">You picked HINOKI 001</span>
+        <span id="picked-text">You picked HINOKI 001. Not reserved yet, we still have to talk first.</span>
         <button type="button" id="picked-clear" class="picked-clear">Clear</button>
       </div>
 
@@ -426,7 +430,7 @@
         selectedWood = wood;
         selectedPosition = n;
         // Show the notice
-        pickedText.textContent = 'You picked ' + WOOD_LABEL[wood] + ' ' + pad(n);
+        pickedText.textContent = 'You picked ' + WOOD_LABEL[wood] + ' ' + pad(n) + '. Not reserved yet, we still have to talk first.';
         pickedNotice.classList.remove('hidden');
         // Scroll form into view
         setTimeout(() => form.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
@@ -464,8 +468,8 @@
           if (resp.ok && data.ok) {
             msg.className = 'msg success';
             msg.textContent = payload.preferred_position
-              ? "Got it. I'll follow up personally to confirm " + WOOD_LABEL[payload.wood_preference] + ' ' + pad(payload.preferred_position) + '.'
-              : "Got it. I'll be in touch personally in a few days.";
+              ? "Got it. Your request for " + WOOD_LABEL[payload.wood_preference] + ' ' + pad(payload.preferred_position) + " isn't a reservation yet, I'll reach out personally to talk before it's locked in."
+              : "Got it. This isn't a reservation yet, I'll reach out personally to talk before anything is locked in.";
             msg.classList.remove('hidden');
             form.reset();
             btn.textContent = 'Sent';
