@@ -787,16 +787,12 @@
       document.body.appendChild(modal)
     }
 
-    // ---- Watches view (300-cell grid) ----
+    // ---- Watches view (per-variant grids) ----
     async function renderWatches() {
       renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
       const data = await api('/watches').catch(() => ({ assigned: [], pending: [] }))
       const assigned = data.assigned || []
       const pending = data.pending || []
-
-      // Build lookup by position for O(1) grid rendering
-      const byPos = {}
-      for (const a of assigned) byPos[a.position] = a
 
       const WOODS = [
         { key: 'hinoki', label: 'Hinoki', color: '#e8dbb0', border: '#c4b478' },
@@ -804,23 +800,59 @@
         { key: 'padauk', label: 'African Padauk', color: '#c46a3a', border: '#9c5028' },
       ]
 
-      // Auto-assign wood by position range as a visual default:
-      //   1-100 = hinoki, 101-200 = ebony, 201-300 = padauk
-      // This is a display convention only; actual wood is stored in notes.
-      function woodForPos(n) {
+      // Fallback wood if notes don't explicitly mention one:
+      //   position 1-100 defaults to Hinoki, 101-200 Ebony, 201-300 Padauk.
+      // This only matters for subscribers who don't have a wood mentioned
+      // in their notes column (old data from the pre-per-variant era).
+      function fallbackWoodForPos(n) {
         if (n <= 100) return 'hinoki'
         if (n <= 200) return 'ebony'
         return 'padauk'
       }
 
-      function cellForPos(n) {
-        const a = byPos[n]
-        const defaultWood = woodForPos(n)
-        // If the notes hint tells us a different wood, use that
-        const wood = (a && a.wood_hint) ? a.wood_hint : defaultWood
-        const spec = WOODS.find(w => w.key === wood) || WOODS[0]
+      // Build per-wood assignment maps: byWood[wood][positionWithinWood] = subscriber
+      // For each assigned subscriber:
+      //   - wood = notes hint if present, else fallback by position range
+      //   - positionWithinWood:
+      //       * if wood matches fallback: use raw position (mod 100 for ebony/padauk)
+      //       * if wood is set via notes and doesn't match fallback: use raw
+      //         position as-is (that's the number the customer chose within
+      //         their wood variant)
+      const byWood = { hinoki: {}, ebony: {}, padauk: {} }
+      for (const a of assigned) {
+        const wood = a.wood_hint || fallbackWoodForPos(a.position)
+        // Position within variant: if raw position is in the 1-100 range,
+        // use as-is regardless of wood (that's the per-variant number the
+        // customer picked). If raw position is 101-200 or 201-300 and it
+        // fell in the fallback range for its wood, normalize to 1-100.
+        let posInVariant = a.position
+        if (posInVariant > 100 && posInVariant <= 200 && wood === 'ebony') posInVariant -= 100
+        else if (posInVariant > 200 && posInVariant <= 300 && wood === 'padauk') posInVariant -= 200
+        byWood[wood][posInVariant] = a
+      }
+
+      function cellForPos(n, sectionWood) {
+        const a = byWood[sectionWood][n]
+        const spec = WOODS.find(w => w.key === sectionWood) || WOODS[0]
         const isTaken = !!a
-        const isLight = wood !== 'ebony'  // ebony needs light text
+        const isDarkWood = sectionWood === 'ebony'
+
+        // AVAILABLE = vibrant wood color (jumps out - "you can still get this")
+        // RESERVED  = faded/dimmed with strikethrough number (visually clear it's off limits)
+        let bg, color, border, opacity, decoration, label
+        if (isTaken) {
+          bg = '#eeeae2'
+          color = 'rgba(80,72,60,0.55)'
+          border = '1px dashed rgba(120,110,90,0.4)'
+          opacity = '1'
+          decoration = 'line-through'
+        } else {
+          bg = spec.color
+          color = isDarkWood ? '#f0ece5' : '#1a1714'
+          border = `1px solid ${spec.border}`
+          opacity = '1'
+          decoration = 'none'
+        }
 
         const cell = el('div', {
           style: `
@@ -832,35 +864,47 @@
             font-size: 11px;
             font-weight: 500;
             cursor: ${isTaken ? 'pointer' : 'default'};
-            background: ${isTaken ? spec.color : '#f5f2ed'};
-            color: ${isTaken ? (isLight ? '#1a1714' : '#f0ece5') : '#c4b478'};
-            border: 1px solid ${isTaken ? spec.border : 'rgba(196,180,120,0.3)'};
-            transition: transform 0.1s;
+            background: ${bg};
+            color: ${color};
+            border: ${border};
+            opacity: ${opacity};
+            text-decoration: ${decoration};
+            transition: transform 0.1s, background 0.15s;
             position: relative;
           `,
           title: isTaken
-            ? `${a.first_name} (${a.email}) - ${spec.label} #${n}${a.notes ? '\nNotes: ' + a.notes : ''}`
-            : `${spec.label} #${n} - available`,
+            ? `RESERVED: ${a.first_name} (${a.email}) - ${spec.label} #${n}${a.notes ? '\n' + a.notes : ''}`
+            : `${spec.label} #${n} - AVAILABLE`,
         }, String(n))
 
         if (isTaken) {
           cell.addEventListener('click', () => showWatchDetail(a, spec.label, n))
-          cell.addEventListener('mouseenter', () => { cell.style.transform = 'scale(1.15)'; cell.style.zIndex = 10 })
-          cell.addEventListener('mouseleave', () => { cell.style.transform = ''; cell.style.zIndex = '' })
+          cell.addEventListener('mouseenter', () => {
+            cell.style.transform = 'scale(1.15)'
+            cell.style.zIndex = 10
+            cell.style.background = '#dcd6c8'
+            cell.style.color = '#1a1714'
+          })
+          cell.addEventListener('mouseleave', () => {
+            cell.style.transform = ''
+            cell.style.zIndex = ''
+            cell.style.background = '#eeeae2'
+            cell.style.color = 'rgba(80,72,60,0.55)'
+          })
         }
         return cell
       }
 
-      // Section renderer per wood
-      function renderWoodSection(woodKey, startNum, endNum) {
+      // Section renderer per wood (each wood is its own 1-100 grid)
+      function renderWoodSection(woodKey) {
         const spec = WOODS.find(w => w.key === woodKey)
-        const takenInRange = assigned.filter(a => a.position >= startNum && a.position <= endNum).length
+        const takenCount = Object.keys(byWood[woodKey]).length
         const cells = []
-        for (let n = startNum; n <= endNum; n++) cells.push(cellForPos(n))
+        for (let n = 1; n <= 100; n++) cells.push(cellForPos(n, woodKey))
         return el('section', { style: 'margin-bottom:36px;' },
           el('div', { style: 'display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;' },
             el('h2', { style: `font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:22px;color:var(--ink);margin:0;` }, spec.label),
-            el('span', { style: 'font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;' }, `${takenInRange} of 100 reserved`),
+            el('span', { style: 'font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;' }, `${100 - takenCount} still available out of 100`),
           ),
           el('div', {
             style: 'display:grid;grid-template-columns:repeat(10,1fr);gap:4px;',
@@ -883,7 +927,7 @@
 
       renderShell(el('div', {},
         el('h1', { class: 'page-title' }, 'Watches'),
-        el('p', { class: 'page-sub' }, `Every number 1-300 in the first edition. Colored cells are reserved. Hover for details, click to see the reserver. Grays are still available.`),
+        el('p', { class: 'page-sub' }, `Every number 1-300 in the first edition. Colored cells are still available. Faded cells with strikethrough numbers are reserved (hover or click for details).`),
 
         el('div', { class: 'stats-row' },
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Total reserved'), el('div', { class: 'stat-value' }, String(assigned.length))),
@@ -891,9 +935,9 @@
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Pending interest'), el('div', { class: 'stat-value' }, String(pending.length))),
         ),
 
-        renderWoodSection('hinoki', 1, 100),
-        renderWoodSection('ebony', 101, 200),
-        renderWoodSection('padauk', 201, 300),
+        renderWoodSection('hinoki'),
+        renderWoodSection('ebony'),
+        renderWoodSection('padauk'),
 
         el('h2', { style: `font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:22px;color:var(--ink);margin:36px 0 12px;` }, 'Pending interest (recent)'),
         pendingSummary,
