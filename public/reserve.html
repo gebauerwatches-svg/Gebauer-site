@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0F0D14" />
+    <meta name="theme-color" content="#F5F2ED" />
     <link rel="canonical" href="https://gebauerwatches.com/reserve" />
     <meta name="description" content="Reserve one of the first 300 Gebauer Watches. Real wood dials, made in Japan, individually numbered. Ships early 2027." />
     <meta name="keywords" content="reserve Gebauer Watch, wood dial watch reservation, limited edition watch reservation, milestone watch" />
@@ -17,56 +17,156 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
+      :root {
+        --purple: #1E1A2E;
+        --purple-soft: #5C5478;
+        --gold: #C4952A;
+        --gold-light: #D4A63A;
+        --bg-cream: #F5F2ED;
+        --bg-warm: #EFECE6;
+        --bg-light: #FAF8F5;
+        --text-dark: #1A1714;
+        --text-warm: #4A443C;
+        --text-muted: #6B6358;
+      }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Inter', -apple-system, system-ui, sans-serif; background: #0F0D14; color: #f0e8d6; margin: 0; padding: 60px 24px; line-height: 1.65; min-height: 100vh; }
-      .container { max-width: 680px; margin: 0 auto; }
-      h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 42px; margin: 0 0 12px; color: #fff; letter-spacing: 0.5px; }
-      .subtitle { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 20px; color: #c4952a; margin-bottom: 40px; }
-      h2 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 24px; margin: 32px 0 12px; color: #fff; }
-      p { margin: 0 0 16px; font-size: 15px; color: rgba(240, 232, 214, 0.88); }
-      a { color: #c4952a; text-decoration: none; }
-      a:hover { text-decoration: underline; }
-      .nav { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 60px; }
+      body {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        background: var(--bg-cream);
+        color: var(--text-warm);
+        line-height: 1.7;
+        min-height: 100vh;
+        padding: 72px 24px 96px;
+      }
+      .container { max-width: 620px; margin: 0 auto; }
 
-      form { margin-top: 32px; }
-      .field { margin-bottom: 24px; }
-      label { display: block; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(240, 232, 214, 0.7); margin-bottom: 8px; }
+      .nav { font-family: 'Inter', sans-serif; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 56px; color: var(--gold); }
+      .nav a { color: var(--gold); text-decoration: none; }
+      .nav a:hover { color: var(--purple); }
+
+      h1 {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-weight: 400;
+        font-size: 48px;
+        line-height: 1.15;
+        color: var(--purple);
+        margin: 0 0 14px;
+        letter-spacing: -0.5px;
+      }
+      .subtitle {
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
+        font-size: 20px;
+        color: var(--gold);
+        margin-bottom: 44px;
+      }
+      p.intro {
+        font-size: 17px;
+        color: var(--text-warm);
+        margin-bottom: 40px;
+        max-width: 520px;
+      }
+
+      form {
+        background: var(--bg-light);
+        border: 1px solid rgba(196, 149, 42, 0.35);
+        padding: 36px 32px;
+        margin-top: 8px;
+      }
+      .field { margin-bottom: 22px; }
+      label {
+        display: block;
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--purple-soft);
+        margin-bottom: 8px;
+      }
       input, textarea, select {
-        width: 100%; padding: 14px 16px; font-size: 15px; font-family: 'Inter', sans-serif;
-        background: rgba(255,255,255,0.04); color: #f0e8d6; border: 1px solid rgba(196, 149, 42, 0.3);
-        border-radius: 2px; transition: border-color 0.2s;
+        width: 100%;
+        padding: 12px 14px;
+        font-size: 16px;
+        font-family: 'Georgia', serif;
+        background: var(--bg-cream);
+        color: var(--text-dark);
+        border: 1px solid rgba(30, 26, 46, 0.15);
+        border-radius: 0;
+        transition: border-color 0.2s, background 0.2s;
       }
-      input:focus, textarea:focus, select:focus { outline: none; border-color: #c4952a; background: rgba(255,255,255,0.06); }
-      textarea { min-height: 120px; resize: vertical; font-family: 'Inter', sans-serif; }
-      select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path fill="%23c4952a" d="M6 8L0 0h12z"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; padding-right: 40px; cursor: pointer; }
-      .hint { font-size: 12px; color: rgba(240, 232, 214, 0.55); margin-top: 6px; }
+      input:focus, textarea:focus, select:focus {
+        outline: none;
+        border-color: var(--gold);
+        background: var(--bg-light);
+      }
+      textarea { min-height: 100px; resize: vertical; }
+      select {
+        appearance: none;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6"><path fill="%23C4952A" d="M5 6L0 0h10z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 14px center;
+        padding-right: 36px;
+        cursor: pointer;
+      }
+      .hint {
+        font-family: 'Georgia', serif;
+        font-style: italic;
+        font-size: 13px;
+        color: var(--text-muted);
+        margin-top: 6px;
+      }
+
       button {
-        width: 100%; padding: 16px 28px; font-size: 14px; letter-spacing: 0.15em;
-        text-transform: uppercase; font-family: 'Inter', sans-serif; font-weight: 500;
-        background: #c4952a; color: #0F0D14; border: none; cursor: pointer;
-        transition: background 0.2s;
+        width: 100%;
+        padding: 16px 28px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        background: var(--purple);
+        color: var(--gold);
+        border: none;
+        cursor: pointer;
+        margin-top: 8px;
+        transition: background 0.2s, color 0.2s;
       }
-      button:hover { background: #d4a53a; }
+      button:hover { background: var(--gold); color: var(--purple); }
       button:disabled { opacity: 0.5; cursor: not-allowed; }
-      .msg { padding: 16px; margin-top: 20px; font-size: 14px; }
-      .msg.error { background: rgba(176, 48, 48, 0.15); color: #ff9999; border: 1px solid rgba(176, 48, 48, 0.4); }
-      .msg.success { background: rgba(42, 107, 82, 0.15); color: #90e0b0; border: 1px solid rgba(42, 107, 82, 0.5); font-size: 16px; line-height: 1.6; }
+
+      .msg { padding: 14px 16px; margin-top: 20px; font-size: 14px; font-family: 'Georgia', serif; }
+      .msg.error { background: #f5e6e6; color: #7d2b2b; border-left: 3px solid #a63030; }
+      .msg.success { background: #eaf1ec; color: #2a6b52; border-left: 3px solid #2a6b52; font-size: 15px; line-height: 1.6; }
       .hidden { display: none; }
       .honeypot { position: absolute; left: -9999px; }
+
+      .footer-links {
+        margin-top: 56px;
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+      }
+      .footer-links a { color: var(--purple-soft); text-decoration: none; margin-right: 8px; }
+      .footer-links a:hover { color: var(--gold); }
+
+      @media (max-width: 640px) {
+        body { padding: 48px 20px 72px; }
+        h1 { font-size: 38px; }
+        form { padding: 28px 22px; }
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <div class="nav"><a href="/">&larr; Gebauer Watches</a></div>
 
-      <h1>Reserve a Gebauer Watch</h1>
-      <p class="subtitle">Individually numbered. Made in Japan. One of 300.</p>
+      <h1>Reserve a watch.</h1>
+      <p class="subtitle">One of three hundred, ever.</p>
 
-      <p>The first edition is 300 watches total, with 100 of each wood variant. Each watch is individually numbered within its variant (HINOKI 001 / 100, and so on).</p>
-
-      <p>Watch numbers are not auto-assigned. If you want to reserve one, tell me a little about you and I will personally follow up to walk through what is available and lock in your number.</p>
-
-      <p>Payment happens when the Kickstarter campaign launches in November 2026. Reserving now costs you nothing and does not commit you to buy. It puts you in the priority queue and gives us a chance to talk.</p>
+      <p class="intro">
+        Numbers aren't handed out by queue. Tell me a little about you and I'll get back personally.
+      </p>
 
       <form id="reserve-form">
         <div class="field">
@@ -83,17 +183,16 @@
           <label for="wood_preference">Which wood?</label>
           <select id="wood_preference" name="wood_preference" required>
             <option value="">Pick one</option>
-            <option value="hinoki">Hinoki ($299)</option>
-            <option value="ebony">Black Ebony ($339)</option>
-            <option value="padauk">African Padauk ($375)</option>
+            <option value="hinoki">Hinoki &nbsp;&middot;&nbsp; $299</option>
+            <option value="ebony">Black Ebony &nbsp;&middot;&nbsp; $339</option>
+            <option value="padauk">African Padauk &nbsp;&middot;&nbsp; $375</option>
             <option value="unsure">Not sure yet</option>
           </select>
-          <div class="hint">You can change your mind before payment. This just helps me start the conversation right.</div>
         </div>
 
         <div class="field">
-          <label for="why_message">Why this watch? (optional)</label>
-          <textarea id="why_message" name="why_message" maxlength="1000" placeholder="For yourself, a gift, a milestone, or just because you liked what you saw. A sentence or two is plenty."></textarea>
+          <label for="why_message">A sentence about why</label>
+          <textarea id="why_message" name="why_message" maxlength="1000" placeholder="Optional. For yourself, a gift, a moment worth remembering."></textarea>
         </div>
 
         <div class="honeypot" aria-hidden="true">
@@ -106,10 +205,10 @@
         <div id="response-msg" class="msg hidden"></div>
       </form>
 
-      <p style="margin-top: 48px; font-size: 13px; color: rgba(240, 232, 214, 0.55);">
-        <a href="/about">About Gebauer Watches</a> &nbsp;&middot;&nbsp;
-        <a href="/faq">FAQ</a> &nbsp;&middot;&nbsp;
-        <a href="https://gebauerwatches.substack.com">Founder journal</a>
+      <p class="footer-links">
+        <a href="/about">About</a> &middot;
+        <a href="/faq">FAQ</a> &middot;
+        <a href="https://gebauerwatches.substack.com">Journal</a>
       </p>
     </div>
 
@@ -149,7 +248,7 @@
           const data = await resp.json();
           if (resp.ok && data.ok) {
             msg.className = 'msg success';
-            msg.textContent = "Got it. I'll be in touch personally within a few days to walk through what's available and lock in your number. Thanks for reaching out.";
+            msg.textContent = "Got it. I'll be in touch personally in a few days.";
             msg.classList.remove('hidden');
             form.reset();
             btn.textContent = 'Sent';
