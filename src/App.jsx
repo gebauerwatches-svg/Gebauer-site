@@ -74,7 +74,7 @@ function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
  * Three cards: greeting + timeline, active poll, latest journal posts.
  * Built to feel like an insider page, not a confirmation screen.
  */
-function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVote, onWoodSubmit, onBack }) {
+function InsiderView({ firstName, onBack }) {
   const [posts, setPosts] = useState([])
   const [postsLoading, setPostsLoading] = useState(true)
   // Timeline is editable from /admin (Timeline view). Falls back to the default in /api/timeline if D1 row missing.
@@ -150,75 +150,27 @@ function InsiderView({ firstName, woodVote, woodSubmitted, woodResults, onWoodVo
         </ol>
       </section>
 
-      {/* Rotating polls system removed June 21 2026 per founder call.
-          Wood vote is the only active insider vote. */}
+      {/* Rotating polls + wood vote removed July 2 2026 per founder call.
+          Replaced with reservation CTA: insiders who want a specific
+          number now have a direct path to reserve one instead of just
+          voting on wood variants. */}
 
-      {/* CARD 2 - Wood vote. Real product decision insiders shape. */}
-      <section className="l2-card l2-wood-card fade-in-delay-2">
-        <p className="l2-section-label">Pick your favorite wood</p>
-        <p className="l2-poll-question">Tap a watch to vote. Live results after you submit.</p>
-        {woodSubmitted ? (
-          <div className="l2-wood-results">
-            {WOOD_OPTIONS.map(({ key, label, img }) => {
-              const votes = (woodResults && (woodResults[key] || woodResults[label])) || 0
-              const total = Object.values(woodResults || {}).reduce((sum, n) => sum + (n || 0), 0)
-              const pct = total > 0 ? Math.round((votes / total) * 100) : 0
-              const isMine = (woodVote || '').toLowerCase() === key
-              return (
-                <div key={key} className={`l2-wood-result-row ${isMine ? 'mine' : ''}`}>
-                  <img src={img} alt={label} className="l2-wood-result-img" />
-                  <div className="l2-wood-result-info">
-                    <div className="l2-wood-result-label">
-                      <span>{label}{isMine ? ' (your vote)' : ''}</span>
-                      <span className="l2-wood-result-pct">{pct}%</span>
-                    </div>
-                    <div className="l2-wood-result-track">
-                      <div className="l2-wood-result-bar" style={{ width: `${pct}%` }} />
-                    </div>
-                  </div>
-                </div>
-              )
-            })}
-            <p className="l2-poll-thanks">Thanks for the input.</p>
-          </div>
-        ) : (
-          <>
-            <div className="l2-wood-options">
-              {WOOD_OPTIONS.map(({ key, label, img }) => {
-                const isSelected = (woodVote || '').toLowerCase() === key
-                return (
-                  <button
-                    key={key}
-                    className={`l2-wood-option-btn ${isSelected ? 'selected' : ''}`}
-                    onClick={() => onWoodVote(key)}
-                    aria-label={`Vote for ${label}`}
-                  >
-                    <div className="l2-wood-img-wrap">
-                      <img src={img} alt={label} className="l2-wood-img" />
-                      {isSelected && (
-                        <div className="l2-wood-checkmark" aria-hidden="true">
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-                    <span className="l2-wood-name">{label}</span>
-                  </button>
-                )
-              })}
-            </div>
-            {woodVote && (
-              <button
-                className="l2-substack-btn"
-                onClick={onWoodSubmit}
-                style={{ marginTop: 16, width: '100%' }}
-              >
-                Submit vote
-              </button>
-            )}
-          </>
-        )}
+      {/* CARD 2 - Reserve a watch */}
+      <section className="l2-card l2-reserve-card fade-in-delay-2" style={{ textAlign: 'center' }}>
+        <p className="l2-section-label">Ready to reserve one?</p>
+        <p className="l2-poll-question" style={{ marginBottom: 20 }}>
+          Watch numbers are assigned personally, not by queue. If you have a specific number in mind, or want to lock in a wood before the Kickstarter launches, start here.
+        </p>
+        <a
+          href="/reserve"
+          className="l2-substack-btn"
+          style={{ display: 'inline-block', textDecoration: 'none' }}
+        >
+          Reserve a watch
+        </a>
+        <p style={{ marginTop: 14, fontSize: 13, opacity: 0.7 }}>
+          Costs nothing. Doesn't commit you. Just starts a conversation with me.
+        </p>
       </section>
 
       {/* CARD 3 - Latest from the journal */}
@@ -547,11 +499,6 @@ function App() {
   if (layer === 'inside') {
     return <InsiderView
       firstName={userData?.first_name || firstName || 'there'}
-      woodVote={woodVote}
-      woodSubmitted={woodSubmitted}
-      woodResults={woodResults}
-      onWoodVote={handleWoodVote}
-      onWoodSubmit={handleWoodSubmit}
       onBack={() => setLayer('landing')}
     />
   }
@@ -566,7 +513,7 @@ function App() {
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
           <button className="nav-link" onClick={() => setShowStats(true)}>My Spot</button>
-          <button className="nav-link nav-link-primary" onClick={() => setShowSignup(true)}>Get In</button>
+          <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
         </div>
         {/* Mobile hamburger */}
         <button className="nav-toggle" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
@@ -579,7 +526,7 @@ function App() {
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
             <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Spot</button>
-            <button className="nav-link nav-link-primary" onClick={() => { setMenuOpen(false); setShowSignup(true) }}>Get In</button>
+            <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
           </div>
         )}
       </nav>
@@ -594,8 +541,8 @@ function App() {
           </h1>
           <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
           <div className="hero-buttons fade-in-delay-2">
-            <a href="#story" className="hero-cta-btn">Hear the Story</a>
-            <a href="#watches" className="hero-stats-btn">See the Watches</a>
+            <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
+            <a href="#story" className="hero-stats-btn">Hear the Story</a>
             {email && (
               <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
             )}
@@ -681,41 +628,17 @@ function App() {
               { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
               { id: 'hinoki', img: watchHinoki, name: 'Hinoki', price: '$299', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
             ].map(w => (
-              <div key={w.id} className={`wood-card ${woodVote === w.id ? 'voted' : ''}`}>
+              <div key={w.id} className="wood-card">
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>
                 <h3>{w.name}</h3>
                 {w.price && <p className="wood-price">{w.price}</p>}
                 <p>{w.desc}</p>
-                {!woodSubmitted && (
-                  <button className={`wood-vote-btn ${woodVote === w.id ? 'active' : ''}`} onClick={() => handleWoodVote(w.id)}>
-                    {woodVote === w.id ? 'Your pick' : 'This one'}
-                  </button>
-                )}
+                <a href={`/reserve?wood=${w.id}`} className="wood-vote-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                  Reserve one
+                </a>
               </div>
             ))}
           </div>
-          {!woodSubmitted && woodVote && (
-            <button className="wood-submit-btn" onClick={handleWoodSubmit}>Lock In My Pick</button>
-          )}
-          {woodSubmitted && (() => {
-            const total = Object.values(woodResults).reduce((a, b) => a + b, 0) || 1
-            return (
-              <div className="wood-results">
-                {['padauk', 'ebony', 'hinoki'].map(w => {
-                  const count = woodResults[w] || 0
-                  const pct = Math.round((count / total) * 100)
-                  return (
-                    <div key={w} className={`wood-result-bar ${woodVote === w ? 'voted' : ''}`}>
-                      <span className="wood-result-name">{w === 'padauk' ? 'Padauk' : w === 'ebony' ? 'Ebony' : 'Hinoki'}</span>
-                      <div className="wood-result-track"><div className="wood-result-fill" style={{width: `${pct}%`}} /></div>
-                      <span className="wood-result-pct">{pct}%</span>
-                    </div>
-                  )
-                })}
-                <p className="wood-result-total">{total} vote{total !== 1 ? 's' : ''}</p>
-              </div>
-            )
-          })()}
 
         </div>
       </Reveal>

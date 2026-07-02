@@ -118,6 +118,14 @@
       const btn = document.getElementById('submit-btn');
       const msg = document.getElementById('response-msg');
 
+      // Pre-select wood from URL param if present (e.g., /reserve?wood=padauk)
+      const urlParams = new URLSearchParams(window.location.search);
+      const woodParam = urlParams.get('wood');
+      const validWoods = ['hinoki', 'ebony', 'padauk', 'unsure'];
+      if (woodParam && validWoods.includes(woodParam.toLowerCase())) {
+        form.wood_preference.value = woodParam.toLowerCase();
+      }
+
       form.addEventListener('submit', async (e) => {
         e.preventDefault();
         msg.classList.add('hidden');
