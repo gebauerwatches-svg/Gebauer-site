@@ -717,17 +717,9 @@
                 },
               }, 'Mark contacted'),
               el('button', {
-                onclick: async () => {
-                  if (!confirm(`Convert ${r.first_name} to a full subscriber? You'll add them via the Subscribers tab next.`)) return
-                  await api(`/reservation/${r.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ status: 'converted' }),
-                  })
-                  alert("Marked converted. Go to Subscribers and use '+ Add' to create their subscriber row with their watch number.")
-                  renderReservations()
-                },
+                onclick: () => showConvertReservation(r),
                 class: 'primary',
-              }, 'Mark converted'),
+              }, 'Convert to subscriber'),
               el('button', {
                 class: 'danger',
                 onclick: async () => {
@@ -750,6 +742,60 @@
         ),
         list,
       ))
+    }
+
+    function showConvertReservation(r) {
+      // Pre-fill an Add Subscriber form with the reservation data.
+      // Watch # left blank so Liam picks it explicitly.
+      const WOOD_MAP = { hinoki: 'Hinoki', ebony: 'Ebony', padauk: 'Padauk', unsure: 'wood TBD' }
+      const defaultNotes = `${WOOD_MAP[r.wood_preference] || 'Wood TBD'} - converted from reservation ${new Date().toISOString().slice(0, 10)}.${r.why_message ? ' Their why: "' + r.why_message.slice(0, 200) + '"' : ''}`
+      const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
+        el('form', { class: 'modal', onsubmit: async (e) => {
+          e.preventDefault()
+          const errEl = $('#convert-err', modal)
+          errEl.classList.add('hidden')
+          const watchNumRaw = $('#convert-watchnum', modal).value
+          const watchNum = watchNumRaw ? parseInt(watchNumRaw, 10) : undefined
+          // Create subscriber
+          const subscriberResp = await api('/subscribers', {
+            method: 'POST',
+            body: JSON.stringify({
+              email: r.email,
+              first_name: $('#convert-name', modal).value,
+              notes: $('#convert-notes', modal).value,
+              waitlist_position: watchNum,
+            }),
+          })
+          if (!subscriberResp.ok) {
+            errEl.textContent = subscriberResp.error || 'Could not create subscriber.'
+            errEl.classList.remove('hidden')
+            return
+          }
+          // Mark reservation converted and link subscriber_id
+          await api(`/reservation/${r.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+              status: 'converted',
+              subscriber_id: subscriberResp.id,
+            }),
+          })
+          modal.remove()
+          renderReservations()
+        } },
+          el('h3', {}, `Convert ${r.first_name} to subscriber`),
+          el('p', { class: 'page-sub', style: 'margin-bottom:16px;' }, `Creating a subscriber row for ${r.email}. Their reservation stays as a record with a link to the new subscriber.`),
+          el('div', { class: 'field' }, el('label', {}, 'First name'), el('input', { type: 'text', id: 'convert-name', value: r.first_name, required: 'true' })),
+          el('div', { class: 'field' }, el('label', {}, 'Email (read-only)'), el('input', { type: 'email', value: r.email, disabled: 'true' })),
+          el('div', { class: 'field' }, el('label', {}, `Watch # (1-100 within ${WOOD_MAP[r.wood_preference] || 'wood'})`), el('input', { type: 'number', id: 'convert-watchnum', min: '1', max: '300', value: r.preferred_position || '', placeholder: r.preferred_position ? '' : 'e.g. 12' })),
+          el('div', { class: 'field' }, el('label', {}, 'Notes'), el('textarea', { id: 'convert-notes', style: 'min-height:80px', html: defaultNotes.replace(/</g, '&lt;') })),
+          el('p', { class: 'error hidden', id: 'convert-err' }, ''),
+          el('div', { class: 'modal-actions' },
+            el('button', { type: 'button', onclick: () => modal.remove() }, 'Cancel'),
+            el('button', { type: 'submit', class: 'primary' }, 'Create subscriber + convert'),
+          ),
+        )
+      )
+      document.body.appendChild(modal)
     }
 
     function showEditReservation(r) {

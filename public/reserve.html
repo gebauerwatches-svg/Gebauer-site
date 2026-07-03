@@ -103,15 +103,18 @@
         font-family: Georgia, serif;
         font-size: 10px;
         font-weight: 500;
-        transition: transform 0.1s, background 0.15s, color 0.15s;
+        border-radius: 6px;
+        transition: transform 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
       }
       .avail-cell.avail {
         cursor: pointer;
         border: 1px solid;
+        box-shadow: 0 1px 2px rgba(30, 26, 46, 0.06);
       }
       .avail-cell.avail:hover {
-        transform: scale(1.2);
+        transform: scale(1.25);
         z-index: 5;
+        box-shadow: 0 4px 12px rgba(30, 26, 46, 0.18);
       }
       /* One unified "not available" style. Reserved by a customer,
          requested by someone else, or held internally - the visitor
@@ -448,9 +451,10 @@
           const data = await resp.json();
           if (resp.ok && data.ok) {
             msg.className = 'msg success';
-            msg.textContent = payload.preferred_position
-              ? "Got it. Your request for " + WOOD_LABEL[payload.wood_preference] + ' ' + pad(payload.preferred_position) + " isn't a reservation yet, I'll reach out personally to talk before it's locked in."
-              : "Got it. This isn't a reservation yet, I'll reach out personally to talk before anything is locked in.";
+            const numPart = payload.preferred_position
+              ? " Your request is for " + WOOD_LABEL[payload.wood_preference] + ' ' + pad(payload.preferred_position) + '.'
+              : '';
+            msg.textContent = "Got it." + numPart + " Check your email for a confirmation. I'll follow up personally within a few days to confirm before anything is locked in.";
             msg.classList.remove('hidden');
             form.reset();
             btn.textContent = 'Sent';

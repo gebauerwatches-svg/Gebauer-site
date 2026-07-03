@@ -25,6 +25,20 @@ import { json } from './_shared.js'
 const VALID_WOODS = new Set(['hinoki', 'ebony', 'padauk', 'unsure'])
 
 
+const WOOD_LABELS = {
+  hinoki: 'Hinoki ($299)',
+  ebony: 'Black Ebony ($339)',
+  padauk: 'African Padauk ($375)',
+  unsure: 'Not sure yet',
+}
+
+const WOOD_SHORT = {
+  hinoki: 'HINOKI',
+  ebony: 'EBONY',
+  padauk: 'PADAUK',
+}
+
+
 async function notifyLiam(env, entry) {
   const apiKey = env.RESEND_API_KEY
   if (!apiKey) return { sent: false, reason: 'no-key' }
@@ -32,12 +46,7 @@ async function notifyLiam(env, entry) {
   const notifyTo = env.NOTIFY_EMAIL || 'gebauerwatches@gmail.com'
   const from = env.RESEND_FROM_EMAIL || 'Gebauer Watches <hello@gebauerwatches.com>'
 
-  const woodLabel = {
-    hinoki: 'Hinoki ($299)',
-    ebony: 'Black Ebony ($339)',
-    padauk: 'African Padauk ($375)',
-    unsure: 'Not sure yet',
-  }[entry.wood_preference] || entry.wood_preference
+  const woodLabel = WOOD_LABELS[entry.wood_preference] || entry.wood_preference
 
   const html = `
     <div style="font-family:Georgia,serif;font-size:15px;color:#1a1a1a;max-width:640px;line-height:1.55;">
@@ -62,6 +71,56 @@ async function notifyLiam(env, entry) {
         from,
         to: notifyTo,
         subject: `New reservation interest: ${entry.first_name} (${woodLabel})`,
+        html,
+      }),
+    })
+    if (!resp.ok) {
+      const text = await resp.text()
+      return { sent: false, reason: 'resend-failed', status: resp.status, body: text.slice(0, 200) }
+    }
+    return { sent: true }
+  } catch (e) {
+    return { sent: false, reason: 'exception', error: e.message }
+  }
+}
+
+
+async function confirmToReserver(env, entry) {
+  const apiKey = env.RESEND_API_KEY
+  if (!apiKey) return { sent: false, reason: 'no-key' }
+  if (!entry.email) return { sent: false, reason: 'no-email' }
+
+  const from = env.RESEND_FROM_EMAIL || 'Liam at Gebauer Watches <hello@gebauerwatches.com>'
+  const woodLabel = WOOD_LABELS[entry.wood_preference] || entry.wood_preference
+  const numLine = entry.preferred_position
+    ? `<p style="margin:0 0 14px;">Your request is for <strong>${WOOD_SHORT[entry.wood_preference] || entry.wood_preference.toUpperCase()} ${String(entry.preferred_position).padStart(3, '0')} / 100</strong>.</p>`
+    : `<p style="margin:0 0 14px;">You didn't pick a specific number yet. That's fine — we can talk about which numbers are meaningful to you when I reach out.</p>`
+
+  const html = `
+    <div style="font-family:Georgia,serif;font-size:15px;color:#1a1a1a;max-width:560px;line-height:1.7;">
+      <p style="margin:0 0 14px;">Hi ${entry.first_name},</p>
+      <p style="margin:0 0 14px;">Thanks for reaching out. This email is just to confirm your request came through.</p>
+      ${numLine}
+      <p style="margin:0 0 14px;"><strong>Wood:</strong> ${woodLabel}</p>
+      ${entry.why_message ? `<p style="margin:0 0 14px;"><strong>What you told me:</strong><br><em>${entry.why_message.replace(/\n/g, '<br>')}</em></p>` : ''}
+      <p style="margin:0 0 14px;">To be clear: this is not a reservation yet. I personally follow up with everyone who reaches out, usually within a few days, to talk before any number is locked in. If you don't hear from me within a week, reply to this email and I will make sure it did not slip.</p>
+      <p style="margin:0 0 14px;">In the meantime, if you want to see what I'm building day to day, the founder journal is at <a href="https://gebauerwatches.substack.com" style="color:#c4952a;">gebauerwatches.substack.com</a>.</p>
+      <p style="margin:20px 0 0;">Thanks,<br>Liam Gebauer<br>Founder, Gebauer Watches</p>
+    </div>
+  `
+
+  try {
+    const resp = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from,
+        to: entry.email,
+        reply_to: 'gebauerwatches@gmail.com',
+        subject: 'Your Gebauer Watch reservation request',
         html,
       }),
     })
@@ -130,19 +189,28 @@ export async function onRequestPost(context) {
 
     const insertedId = result.meta.last_row_id
 
-    // Fire-and-forget notification (best effort, never blocks the response)
+    // Fire-and-forget notifications (best effort, never block the response).
+    // 1) Alert Liam so he can follow up
+    // 2) Confirm to the reserver so they have a record + expectation-setting
+    const entry = {
+      id: insertedId,
+      email: cleanEmail,
+      first_name: cleanName,
+      wood_preference: cleanWood,
+      why_message: cleanWhy,
+      preferred_position: cleanPos,
+    }
     try {
-      const notif = await notifyLiam(env, {
-        id: insertedId,
-        email: cleanEmail,
-        first_name: cleanName,
-        wood_preference: cleanWood,
-        why_message: cleanWhy,
-        preferred_position: cleanPos,
-      })
-      if (!notif.sent) console.log('Notify skipped:', notif.reason, notif.error || '')
+      const notif = await notifyLiam(env, entry)
+      if (!notif.sent) console.log('Notify Liam skipped:', notif.reason, notif.error || '')
     } catch (e) {
-      console.error('Notify error:', e.message)
+      console.error('Notify Liam error:', e.message)
+    }
+    try {
+      const confirm = await confirmToReserver(env, entry)
+      if (!confirm.sent) console.log('Confirm to reserver skipped:', confirm.reason, confirm.error || '')
+    } catch (e) {
+      console.error('Confirm to reserver error:', e.message)
     }
 
     return json({ ok: true, id: insertedId })
