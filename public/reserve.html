@@ -121,10 +121,26 @@
         cursor: not-allowed;
       }
       .avail-cell.pending {
-        background: #f0e6c8;
-        color: rgba(120, 100, 60, 0.6);
-        border: 1px dashed rgba(196, 149, 42, 0.5);
+        background:
+          repeating-linear-gradient(
+            45deg,
+            #d8d3e5,
+            #d8d3e5 3px,
+            #b8b0d0 3px,
+            #b8b0d0 6px
+          );
+        color: rgba(46, 40, 68, 0.85);
+        border: 1px solid var(--purple-soft);
         cursor: not-allowed;
+        font-weight: 600;
+      }
+      .avail-cell.hold {
+        background: var(--purple);
+        color: var(--gold-pale);
+        border: 1px solid var(--purple-mid);
+        cursor: not-allowed;
+        font-family: 'Cormorant Garamond', Georgia, serif;
+        font-style: italic;
       }
       .avail-cell.selected {
         transform: scale(1.25);
@@ -152,7 +168,11 @@
       .legend-swatch { display: inline-block; width: 12px; height: 12px; vertical-align: middle; margin-right: 6px; border: 1px solid; }
       .legend-swatch.avail { background: #e8dbb0; border-color: #c4b478; }
       .legend-swatch.reserved { background: #ebe6dc; border-color: rgba(120,110,90,0.5); }
-      .legend-swatch.pending { background: #f0e6c8; border-color: rgba(196,149,42,0.5); }
+      .legend-swatch.pending {
+        background: repeating-linear-gradient(45deg, #d8d3e5, #d8d3e5 3px, #b8b0d0 3px, #b8b0d0 6px);
+        border-color: var(--purple-soft);
+      }
+      .legend-swatch.hold { background: var(--purple); border-color: var(--purple-mid); }
 
       .picked-notice {
         padding: 14px 16px;
@@ -283,7 +303,8 @@
       <div class="legend">
         <span><span class="legend-swatch avail"></span>Available</span>
         <span><span class="legend-swatch reserved"></span>Reserved</span>
-        <span><span class="legend-swatch pending"></span>Requested</span>
+        <span><span class="legend-swatch pending"></span>Requested by someone else</span>
+        <span><span class="legend-swatch hold"></span>Held for early supporters</span>
       </div>
 
       <div id="picked-notice" class="picked-notice hidden">
@@ -383,7 +404,7 @@
       function pad(n) { return String(n).padStart(3, '0'); }
 
       async function loadAvailability() {
-        let data = { hinoki: [], ebony: [], padauk: [], pending: { hinoki: [], ebony: [], padauk: [] } };
+        let data = { hinoki: [], ebony: [], padauk: [], pending: { hinoki: [], ebony: [], padauk: [] }, strategic_hold: { hinoki: [], ebony: [], padauk: [] } };
         try {
           const resp = await fetch('/api/availability');
           if (resp.ok) data = await resp.json();
@@ -392,6 +413,7 @@
         for (const wood of ['hinoki', 'ebony', 'padauk']) {
           const reserved = new Set(data[wood] || []);
           const pending = new Set((data.pending && data.pending[wood]) || []);
+          const hold = new Set((data.strategic_hold && data.strategic_hold[wood]) || []);
           const grid = document.getElementById('grid-' + wood);
           grid.innerHTML = '';
           let available = 0;
@@ -404,6 +426,9 @@
             } else if (pending.has(n)) {
               cell.className = 'avail-cell pending';
               cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — requested by someone else, awaiting review';
+            } else if (hold.has(n)) {
+              cell.className = 'avail-cell hold';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — held for founder, family, press, and early supporters';
             } else {
               cell.className = 'avail-cell avail';
               cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — available. Tap to pick.';

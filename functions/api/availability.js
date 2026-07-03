@@ -9,21 +9,26 @@
  * wood. Response is safe to expose publicly.
  *
  *   {
- *     hinoki: [reserved positions 1-100],
- *     ebony:  [reserved positions 1-100],
- *     padauk: [reserved positions 1-100],
- *     pending: {
- *       hinoki: [preferred positions from pending /reserve requests],
- *       ebony:  [...],
- *       padauk: [...]
- *     }
+ *     hinoki: [reserved positions 1-100],   // hard reserved by subscribers
+ *     ebony:  [...],
+ *     padauk: [...],
+ *     pending: { hinoki: [...], ebony: [...], padauk: [...] },
+ *     strategic_hold: { hinoki: [1..10], ebony: [1..10], padauk: [1..10] }
  *   }
  *
- * Pending positions are grouped separately so the UI can show them
- * differently (e.g., "under consideration" not fully reserved).
+ * Pending: preferred_position values from active reservation_interest
+ * rows. Someone else requested them, Liam hasn't confirmed yet.
+ *
+ * Strategic hold: numbers 1-10 of each wood are held for Liam, family,
+ * press, and key supporters. Not available to cold visitors even though
+ * no subscriber row exists for them yet. See memory feedback_number
+ * _reservation_policy: "#1-10 are strategically reserved."
  */
 
 import { json } from './_shared.js'
+
+
+const STRATEGIC_HOLD_MAX = 10  // numbers 1..N per wood are held internally
 
 
 function detectWood(text) {
@@ -91,7 +96,16 @@ export async function onRequestGet(context) {
       // Column may not exist yet — swallow so the endpoint still works
     }
 
-    return json({ ...reserved, pending })
+    // Strategic hold: numbers 1..STRATEGIC_HOLD_MAX for each wood
+    const holdRange = []
+    for (let i = 1; i <= STRATEGIC_HOLD_MAX; i++) holdRange.push(i)
+    const strategic_hold = {
+      hinoki: [...holdRange],
+      ebony: [...holdRange],
+      padauk: [...holdRange],
+    }
+
+    return json({ ...reserved, pending, strategic_hold })
   } catch (err) {
     console.error('availability GET:', err.message)
     return json({ error: 'Could not load availability' }, 500)
