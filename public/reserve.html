@@ -113,34 +113,15 @@
         transform: scale(1.2);
         z-index: 5;
       }
-      .avail-cell.reserved {
+      /* One unified "not available" style. Reserved by a customer,
+         requested by someone else, or held internally - the visitor
+         can't tap it either way, so they all look the same. */
+      .avail-cell.taken {
         background: #ebe6dc;
         color: rgba(80, 72, 60, 0.5);
         border: 1px dashed rgba(120, 110, 90, 0.35);
         text-decoration: line-through;
         cursor: not-allowed;
-      }
-      .avail-cell.pending {
-        background:
-          repeating-linear-gradient(
-            45deg,
-            #d8d3e5,
-            #d8d3e5 3px,
-            #b8b0d0 3px,
-            #b8b0d0 6px
-          );
-        color: rgba(46, 40, 68, 0.85);
-        border: 1px solid var(--purple-soft);
-        cursor: not-allowed;
-        font-weight: 600;
-      }
-      .avail-cell.hold {
-        background: var(--purple);
-        color: var(--gold-pale);
-        border: 1px solid var(--purple-mid);
-        cursor: not-allowed;
-        font-family: 'Cormorant Garamond', Georgia, serif;
-        font-style: italic;
       }
       .avail-cell.selected {
         transform: scale(1.25);
@@ -155,24 +136,6 @@
       /* Padauk: warm orange */
       .avail-grid.padauk .avail-cell.avail { background: #c46a3a; color: #1a1714; border-color: #9c5028; }
 
-      .legend {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        margin-bottom: 8px;
-        font-family: 'Inter', sans-serif;
-        font-size: 11px;
-        color: var(--text-muted);
-        letter-spacing: 0.05em;
-      }
-      .legend-swatch { display: inline-block; width: 12px; height: 12px; vertical-align: middle; margin-right: 6px; border: 1px solid; }
-      .legend-swatch.avail { background: #e8dbb0; border-color: #c4b478; }
-      .legend-swatch.reserved { background: #ebe6dc; border-color: rgba(120,110,90,0.5); }
-      .legend-swatch.pending {
-        background: repeating-linear-gradient(45deg, #d8d3e5, #d8d3e5 3px, #b8b0d0 3px, #b8b0d0 6px);
-        border-color: var(--purple-soft);
-      }
-      .legend-swatch.hold { background: var(--purple); border-color: var(--purple-mid); }
 
       .picked-notice {
         padding: 14px 16px;
@@ -300,13 +263,6 @@
         Picking a number here doesn't reserve it. It sends me a note that this is what you'd like, and I confirm it with you before the number is really yours.
       </p>
 
-      <div class="legend">
-        <span><span class="legend-swatch avail"></span>Available</span>
-        <span><span class="legend-swatch reserved"></span>Reserved</span>
-        <span><span class="legend-swatch pending"></span>Requested by someone else</span>
-        <span><span class="legend-swatch hold"></span>Held for early supporters</span>
-      </div>
-
       <div id="picked-notice" class="picked-notice hidden">
         <span id="picked-text">You picked HINOKI 001. Not reserved yet, we still have to talk first.</span>
         <button type="button" id="picked-clear" class="picked-clear">Clear</button>
@@ -421,14 +377,14 @@
             const cell = document.createElement('div');
             cell.textContent = pad(n);
             if (reserved.has(n)) {
-              cell.className = 'avail-cell reserved';
+              cell.className = 'avail-cell taken';
               cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — reserved';
             } else if (pending.has(n)) {
-              cell.className = 'avail-cell pending';
+              cell.className = 'avail-cell taken';
               cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — requested by someone else, awaiting review';
             } else if (hold.has(n)) {
-              cell.className = 'avail-cell hold';
-              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — held for founder, family, press, and early supporters';
+              cell.className = 'avail-cell taken';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — held';
             } else {
               cell.className = 'avail-cell avail';
               cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — available. Tap to pick.';
