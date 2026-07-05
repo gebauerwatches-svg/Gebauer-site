@@ -608,12 +608,12 @@ function App() {
           <div className="origin-badge">
             <div className="origin-col">
               <p className="origin-label">Assembled in</p>
-              <p className="origin-place">Fukushima</p>
+              <p className="origin-place">Northern</p>
               <p className="origin-country">Japan</p>
             </div>
             <div className="origin-col">
               <p className="origin-label">Boxed in</p>
-              <p className="origin-place">Bergamo</p>
+              <p className="origin-place">Northern</p>
               <p className="origin-country">Italy</p>
             </div>
             <div className="origin-col">
