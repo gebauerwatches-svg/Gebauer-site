@@ -26,35 +26,26 @@
     {
       "@type": "Product",
       "name": "Gebauer Watches Hinoki",
-      "url": "https://gebauerwatches.com/watches",
       "brand": "Gebauer Watches",
-      "offers": {
-        "@type": "Offer",
-        "price": "299",
-        "priceCurrency": "USD"
-      }
+      "price": "299",
+      "priceCurrency": "USD",
+      "url": "https://gebauerwatches.com/watches"
     },
     {
       "@type": "Product",
       "name": "Gebauer Watches Black Ebony",
-      "url": "https://gebauerwatches.com/watches",
       "brand": "Gebauer Watches",
-      "offers": {
-        "@type": "Offer",
-        "price": "339",
-        "priceCurrency": "USD"
-      }
+      "price": "339",
+      "priceCurrency": "USD",
+      "url": "https://gebauerwatches.com/watches"
     },
     {
       "@type": "Product",
       "name": "Gebauer Watches African Padauk",
-      "url": "https://gebauerwatches.com/watches",
       "brand": "Gebauer Watches",
-      "offers": {
-        "@type": "Offer",
-        "price": "375",
-        "priceCurrency": "USD"
-      }
+      "price": "375",
+      "priceCurrency": "USD",
+      "url": "https://gebauerwatches.com/watches"
     }
   ]
 }
