@@ -694,8 +694,15 @@ function App() {
         </div>
       </Reveal>
 
-      {/* The live decision — placed RIGHT after the co-design beat so the promise immediately becomes the action: "you finish it" → here's what's live, vote now */}
-      {(activePoll || lastPollResult) && (
+      {/* Rotating polls section removed 2026-07-08 per founder call.
+          The design decisions the polls tracked (2 hands vs 3, crown design,
+          clasp engraving, caseback raven) are all locked in the final tech
+          drawings from Tokiji, so continuing to show a "last decision / coming
+          up next" panel with 0 votes and stale question copy was misleading.
+          Poll infrastructure (activePoll state, POLL_IMAGES, handlePollVote
+          etc.) stays in the codebase for now in case a future short-run
+          co-design moment wants to bring polls back with a limited surface. */}
+      {false && (activePoll || lastPollResult) && (
         <Reveal className="story-beat story-cream">
           <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
             {activePoll && !pollSubmitted && !localStorage.getItem('gebauer_email') ? (
