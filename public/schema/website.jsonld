@@ -4,6 +4,14 @@
   "name": "Gebauer Watches",
   "url": "https://gebauerwatches.com",
   "description": "Handcrafted wooden watches by Gebauer Watches",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://gebauerwatches.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
   "founder": [
     {
       "@type": "Person",
@@ -14,22 +22,9 @@
       "name": "Sarah Gebauer"
     }
   ],
-  "location": {
+  "areaServed": {
     "@type": "Place",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Steamboat Springs",
-      "addressRegion": "Colorado",
-      "addressCountry": "US"
-    }
-  },
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": {
-      "@type": "EntryPoint",
-      "urlTemplate": "https://gebauerwatches.com/search?q={search_term_string}"
-    },
-    "query-input": "required name=search_term_string"
+    "name": "Steamboat Springs, Colorado"
   },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
