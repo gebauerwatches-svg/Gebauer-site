@@ -884,7 +884,7 @@ function App() {
       {/* FOOTER */}
       <footer className="site-footer">
         <img src={logo} alt="Gebauer" className="footer-logo" />
-        <p className="footer-tagline">Made in Japan. Boxed in Italy.</p>
+        <p className="footer-tagline">Assembled in Japan. Boxed in Italy.</p>
         <p className="footer-journal">
           <a href="https://gebauerwatches.substack.com" target="_blank" rel="noopener noreferrer">
             Read Liam's daily journal on Substack →
