@@ -678,19 +678,19 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 7 — "we" not "me". Sets up the workshop / live poll. */}
+      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">The OGs vote every three days. Wood. Box. Clasp. Caseback. Crown. Every detail of what you just saw was shaped by them. And the next decision is open right now.</p>
+          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built. 24 offered to pay before I had anything to sell.</p>
         </div>
       </Reveal>
 
-      {/* SCENE 9 — the workshop is still open. The next decision is live. You're not joining a finished thing. */}
+      {/* SCENE 9 — the workshop is still open. Updated 2026-07-14 to remove references to a live poll that no longer exists. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">The workshop is still open.</h2>
-          <p className="story-beat-text">There's a vote happening right now. The next one drops in days. You're not joining a finished thing. You're walking in mid-build.</p>
+          <p className="story-beat-text">Samples land in weeks. Kickstarter opens this fall. You're not joining a finished thing. You're walking in mid-build.</p>
         </div>
       </Reveal>
 
