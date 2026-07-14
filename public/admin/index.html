@@ -671,19 +671,32 @@
     }
 
     // ---- Reservations view ----
-    // Compute the highest available watch number in a wood variant that
-    // isn't already reserved, held, or pending. Used for auto-assigning
-    // a number to reservers who didn't pick one specifically. Higher
-    // numbers get picked LAST so people who care about specific numbers
-    // (typically low/prime ones) still have them available.
+    // Auto-assign zone for reservers who did NOT pick a specific number.
+    // Skips both ends of the range:
+    //   #1-10:   strategic hold (never auto-assigned; reserved for founder/family/press)
+    //   #91-100: reserved for people who specifically want "last of the run"
+    //   #11-90:  auto-assign zone (works down from #90)
+    // If the middle zone is depleted, falls back to expanding into
+    // the top range #100-91 as a safety net.
+    const AUTO_ASSIGN_TOP = 90     // start from here, work down
+    const AUTO_ASSIGN_BOTTOM = 11  // don't dip into strategic hold
+    const RESERVED_TOP_START = 91  // fallback range if middle depleted
+
     function lastAvailableInWood(availData, wood) {
       const reserved = new Set((availData && availData[wood]) || [])
       const pending = new Set((availData && availData.pending && availData.pending[wood]) || [])
       const hold = new Set((availData && availData.strategic_hold && availData.strategic_hold[wood]) || [])
-      for (let n = 100; n >= 1; n--) {
-        if (!reserved.has(n) && !pending.has(n) && !hold.has(n)) return n
+      const isOpen = (n) => !reserved.has(n) && !pending.has(n) && !hold.has(n)
+      // Middle zone first
+      for (let n = AUTO_ASSIGN_TOP; n >= AUTO_ASSIGN_BOTTOM; n--) {
+        if (isOpen(n)) return n
       }
-      return null  // sold out in this wood
+      // Fallback: expand into the top-reserved range so no-preference
+      // reservers still get a watch when middle is depleted
+      for (let n = 100; n >= RESERVED_TOP_START; n--) {
+        if (isOpen(n)) return n
+      }
+      return null  // fully sold out in this wood
     }
 
     async function renderReservations() {
@@ -789,8 +802,8 @@
               reserveBtn = el('button', {
                 class: 'primary',
                 onclick: () => doReserve(autoNumber),
-                title: `They did not pick a specific number. This auto-assigns the last-available number in ${wLabel} to preserve low numbers for people who specifically want them.`,
-              }, `Reserve last-available ${wLabel} #${String(autoNumber).padStart(3, '0')} for them`)
+                title: `They didn't pick a specific number. This auto-assigns from the mid-range (#11-90), skipping both the strategic hold (#1-10) and the top-of-run (#91-100) so people who specifically want low OR high numbers still have them available.`,
+              }, `Reserve ${wLabel} #${String(autoNumber).padStart(3, '0')} for them (auto)`)
             } else {
               reserveBtn = el('button', {
                 onclick: () => showConvertReservation(r),
