@@ -671,9 +671,27 @@
     }
 
     // ---- Reservations view ----
+    // Compute the highest available watch number in a wood variant that
+    // isn't already reserved, held, or pending. Used for auto-assigning
+    // a number to reservers who didn't pick one specifically. Higher
+    // numbers get picked LAST so people who care about specific numbers
+    // (typically low/prime ones) still have them available.
+    function lastAvailableInWood(availData, wood) {
+      const reserved = new Set((availData && availData[wood]) || [])
+      const pending = new Set((availData && availData.pending && availData.pending[wood]) || [])
+      const hold = new Set((availData && availData.strategic_hold && availData.strategic_hold[wood]) || [])
+      for (let n = 100; n >= 1; n--) {
+        if (!reserved.has(n) && !pending.has(n) && !hold.has(n)) return n
+      }
+      return null  // sold out in this wood
+    }
+
     async function renderReservations() {
       renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
-      const data = await api('/reservations').catch(() => ({ reservations: [], counts: {} }))
+      const [data, avail] = await Promise.all([
+        api('/reservations').catch(() => ({ reservations: [], counts: {} })),
+        fetch('/api/availability').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+      ])
       const items = data.reservations || []
       const counts = data.counts || {}
 
@@ -708,53 +726,76 @@
             // Reserve action: only makes sense when they picked a specific number.
             // Uses confirm() as the "are you sure" safety net per Liam's decision
             // that confirm modals replace the need for an undo mechanism.
-            const reserveBtn = r.preferred_position
-              ? el('button', {
-                  class: 'primary',
-                  onclick: async () => {
-                    const label = `${wLabel} #${String(r.preferred_position).padStart(3, '0')}`
-                    const ok = confirm(
-                      `Reserve ${label} for ${r.first_name}?\n\n` +
-                      `This locks in the watch number for them. Only 100 of this wood exist.\n\n` +
-                      `They will remain on the waitlist as a subscriber either way — this action is specifically about locking in the watch number.`
-                    )
-                    if (!ok) return
-                    // If subscriber already exists (auto-created on /reserve submit
-                    // in the July 14+ flow), just update their position. Otherwise
-                    // create a subscriber for older reservations.
-                    let subscriberId = r.subscriber_id
-                    if (!subscriberId) {
-                      const subResp = await api('/subscribers', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                          email: r.email,
-                          first_name: r.first_name,
-                          notes: `Auto-added on reservation confirmation ${new Date().toISOString().slice(0, 10)}`,
-                          waitlist_position: r.preferred_position,
-                        }),
-                      })
-                      if (!subResp.ok) {
-                        alert('Could not reserve: ' + (subResp.error || 'unknown error'))
-                        return
-                      }
-                      subscriberId = subResp.id
-                    } else {
-                      // Existing subscriber: update their waitlist_position
-                      await api(`/subscribers/${subscriberId}`, {
-                        method: 'PUT',
-                        body: JSON.stringify({ waitlist_position: r.preferred_position }),
-                      })
-                    }
-                    await api(`/reservation/${r.id}`, {
-                      method: 'PUT',
-                      body: JSON.stringify({ status: 'converted', subscriber_id: subscriberId }),
-                    })
-                    renderReservations()
-                  },
-                }, `Reserve ${wLabel} #${String(r.preferred_position).padStart(3, '0')} for them`)
-              : el('button', {
-                  onclick: () => showConvertReservation(r),
-                }, 'Pick a watch # for them')
+            // For reservers who picked a specific number: primary Reserve button
+            // uses their picked number. For reservers who didn't pick, we
+            // compute the LAST available number in their wood variant
+            // (highest still-open number, working down from 100). That
+            // preserves low/prime numbers for people who specifically want
+            // them while still guaranteeing early reservers a watch.
+            const autoNumber = (!r.preferred_position && ['hinoki', 'ebony', 'padauk'].includes(r.wood_preference))
+              ? lastAvailableInWood(avail, r.wood_preference) : null
+
+            async function doReserve(watchNum) {
+              const label = `${wLabel} #${String(watchNum).padStart(3, '0')}`
+              const ok = confirm(
+                `Reserve ${label} for ${r.first_name}?\n\n` +
+                `This locks in the watch number for them. Only 100 of this wood exist.\n\n` +
+                `They will remain on the waitlist as a subscriber either way. This action is specifically about locking in the watch number.`
+              )
+              if (!ok) return
+              let subscriberId = r.subscriber_id
+              if (!subscriberId) {
+                const subResp = await api('/subscribers', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    email: r.email,
+                    first_name: r.first_name,
+                    notes: `Auto-added on reservation confirmation ${new Date().toISOString().slice(0, 10)}`,
+                    waitlist_position: watchNum,
+                  }),
+                })
+                if (!subResp.ok) {
+                  alert('Could not reserve: ' + (subResp.error || 'unknown error'))
+                  return
+                }
+                subscriberId = subResp.id
+              } else {
+                await api(`/subscribers/${subscriberId}`, {
+                  method: 'PUT',
+                  body: JSON.stringify({ waitlist_position: watchNum }),
+                })
+              }
+              await api(`/reservation/${r.id}`, {
+                method: 'PUT',
+                body: JSON.stringify({ status: 'converted', subscriber_id: subscriberId }),
+              })
+              renderReservations()
+            }
+
+            // Primary reserve button:
+            // - If they picked a specific number → reserve that one
+            // - If not but wood is specified → reserve the last-available
+            //   number in that wood (highest still-open, working down
+            //   from 100). Preserves low/prime numbers for people who
+            //   specifically request them.
+            // - If wood is 'unsure' or sold out → fall back to modal
+            let reserveBtn
+            if (r.preferred_position) {
+              reserveBtn = el('button', {
+                class: 'primary',
+                onclick: () => doReserve(r.preferred_position),
+              }, `Reserve ${wLabel} #${String(r.preferred_position).padStart(3, '0')} for them`)
+            } else if (autoNumber) {
+              reserveBtn = el('button', {
+                class: 'primary',
+                onclick: () => doReserve(autoNumber),
+                title: `They did not pick a specific number. This auto-assigns the last-available number in ${wLabel} to preserve low numbers for people who specifically want them.`,
+              }, `Reserve last-available ${wLabel} #${String(autoNumber).padStart(3, '0')} for them`)
+            } else {
+              reserveBtn = el('button', {
+                onclick: () => showConvertReservation(r),
+              }, 'Pick a watch # for them')
+            }
 
             // Skip: they stay a subscriber (already on the waitlist from auto-add).
             // For old reservations that predated the auto-add change (July 14),
