@@ -682,7 +682,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built. 24 offered to pay before I had anything to sell.</p>
+          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
         </div>
       </Reveal>
 
