@@ -19,7 +19,7 @@
  *                               (defaults to gebauerwatches@gmail.com)
  */
 
-import { json } from './_shared.js'
+import { json, randomHex } from './_shared.js'
 
 
 const VALID_WOODS = new Set(['hinoki', 'ebony', 'padauk', 'unsure'])
@@ -180,12 +180,35 @@ export async function onRequestPost(context) {
   }
 
   try {
-    // Insert the interest row
     const now = new Date().toISOString()
+
+    // Auto-add to the waitlist. Per July 14 model change: reserving IS
+    // joining the waitlist. If they're already a subscriber, don't dupe.
+    // waitlist_position stays 9999 (placeholder for "on waitlist, no watch
+    // locked in") — Liam locks in the specific watch number separately
+    // via the admin when he confirms the reservation.
+    const existingSubscriber = await env.DB.prepare(
+      'SELECT id FROM subscribers WHERE email = ? LIMIT 1'
+    ).bind(cleanEmail).first()
+
+    let subscriberId = existingSubscriber ? existingSubscriber.id : null
+    if (!existingSubscriber) {
+      const referralCode = cleanName.split(' ')[0].toUpperCase().slice(0, 6) + '-' + randomHex(3).toUpperCase()
+      const unsubscribeToken = randomHex(16)
+      const subInsert = await env.DB.prepare(`
+        INSERT INTO subscribers
+          (email, first_name, referral_code, referred_by, referral_count, waitlist_position, unsubscribe_token, status, subscribed_at)
+        VALUES (?, ?, ?, NULL, 0, 9999, ?, 'active', ?)
+      `).bind(cleanEmail, cleanName, referralCode, unsubscribeToken, now).run()
+      subscriberId = subInsert.meta.last_row_id
+    }
+
+    // Insert the reservation_interest row (their specific watch-number
+    // request, awaiting Liam's confirmation).
     const result = await env.DB.prepare(`
-      INSERT INTO reservation_interest (email, first_name, wood_preference, why_message, preferred_position, status, submitted_at)
-      VALUES (?, ?, ?, ?, ?, 'pending', ?)
-    `).bind(cleanEmail, cleanName, cleanWood, cleanWhy, cleanPos, now).run()
+      INSERT INTO reservation_interest (email, first_name, wood_preference, why_message, preferred_position, status, submitted_at, subscriber_id)
+      VALUES (?, ?, ?, ?, ?, 'pending', ?, ?)
+    `).bind(cleanEmail, cleanName, cleanWood, cleanWhy, cleanPos, now, subscriberId).run()
 
     const insertedId = result.meta.last_row_id
 

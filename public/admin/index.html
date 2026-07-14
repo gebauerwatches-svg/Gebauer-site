@@ -143,6 +143,14 @@
     // ---- Router ----
     const VIEWS = ['subscribers', 'reservations', 'watches', 'broadcasts', 'welcome', 'stories', 'votes', 'timeline']
     let currentView = 'subscribers'
+    let pendingReservationsCount = 0  // for nav badge
+
+    async function refreshPendingCount() {
+      try {
+        const data = await api('/reservations')
+        pendingReservationsCount = (data && data.counts && data.counts.pending) || 0
+      } catch { pendingReservationsCount = 0 }
+    }
 
     function navigate(view) {
       currentView = view
@@ -197,17 +205,25 @@
     function renderShell(contentNode) {
       const app = $('#app')
       app.innerHTML = ''
-      const navItem = (id, label) => el('a', {
-        href: `#${id}`,
-        class: currentView === id ? 'active' : '',
-        onclick: (e) => { e.preventDefault(); navigate(id) },
-      }, label)
+      const navItem = (id, label, badgeCount) => {
+        const children = [document.createTextNode(label)]
+        if (badgeCount && badgeCount > 0) {
+          children.push(el('span', {
+            style: 'display:inline-block;margin-left:8px;min-width:20px;height:20px;padding:0 6px;background:#d94040;color:#fff;border-radius:10px;font-size:11px;font-weight:600;text-align:center;line-height:20px;vertical-align:middle;',
+          }, String(badgeCount)))
+        }
+        return el('a', {
+          href: `#${id}`,
+          class: currentView === id ? 'active' : '',
+          onclick: (e) => { e.preventDefault(); navigate(id) },
+        }, ...children)
+      }
       app.appendChild(el('div', { class: 'app' },
         el('aside', { class: 'sidebar' },
           el('h2', {}, 'GEBAUER'),
           el('nav', {},
             navItem('subscribers', 'Subscribers'),
-            navItem('reservations', 'Reservations'),
+            navItem('reservations', 'Reservations', pendingReservationsCount),
             navItem('watches', 'Watches'),
             navItem('broadcasts', 'Broadcasts'),
             navItem('welcome', 'Welcome email'),
@@ -678,58 +694,131 @@
         }, s)
       }
 
+      const WOOD_SHORT = { hinoki: 'HINOKI', ebony: 'EBONY', padauk: 'PADAUK', unsure: 'wood-TBD' }
       const list = items.length === 0
         ? el('p', { class: 'page-sub' }, 'No reservation interest yet. When someone submits the /reserve form, it will appear here.')
-        : el('div', {}, ...items.map(r => el('div', {
-            class: 'story-card',
-            style: 'margin-bottom:12px;padding:18px 20px;',
-          },
-            el('div', { style: 'display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px;flex-wrap:wrap;' },
-              el('div', {},
-                el('div', { style: 'font-family:Georgia,serif;font-size:16px;color:var(--ink);margin-bottom:2px;' }, `${r.first_name}`),
-                el('div', { style: 'font-size:13px;color:var(--muted);' }, r.email),
+        : el('div', {}, ...items.map(r => {
+            // Explicit request language: "Requested: HINOKI #100" or
+            // "Requested: HINOKI (no number picked)"
+            const wLabel = WOOD_SHORT[r.wood_preference] || r.wood_preference.toUpperCase()
+            const requestLine = r.preferred_position
+              ? `Requested: ${wLabel} #${String(r.preferred_position).padStart(3, '0')}`
+              : `Requested: ${wLabel} (no specific number picked)`
+
+            // Reserve action: only makes sense when they picked a specific number.
+            // Uses confirm() as the "are you sure" safety net per Liam's decision
+            // that confirm modals replace the need for an undo mechanism.
+            const reserveBtn = r.preferred_position
+              ? el('button', {
+                  class: 'primary',
+                  onclick: async () => {
+                    const label = `${wLabel} #${String(r.preferred_position).padStart(3, '0')}`
+                    const ok = confirm(
+                      `Reserve ${label} for ${r.first_name}?\n\n` +
+                      `This locks in the watch number for them. Only 100 of this wood exist.\n\n` +
+                      `They will remain on the waitlist as a subscriber either way — this action is specifically about locking in the watch number.`
+                    )
+                    if (!ok) return
+                    // If subscriber already exists (auto-created on /reserve submit
+                    // in the July 14+ flow), just update their position. Otherwise
+                    // create a subscriber for older reservations.
+                    let subscriberId = r.subscriber_id
+                    if (!subscriberId) {
+                      const subResp = await api('/subscribers', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                          email: r.email,
+                          first_name: r.first_name,
+                          notes: `Auto-added on reservation confirmation ${new Date().toISOString().slice(0, 10)}`,
+                          waitlist_position: r.preferred_position,
+                        }),
+                      })
+                      if (!subResp.ok) {
+                        alert('Could not reserve: ' + (subResp.error || 'unknown error'))
+                        return
+                      }
+                      subscriberId = subResp.id
+                    } else {
+                      // Existing subscriber: update their waitlist_position
+                      await api(`/subscribers/${subscriberId}`, {
+                        method: 'PUT',
+                        body: JSON.stringify({ waitlist_position: r.preferred_position }),
+                      })
+                    }
+                    await api(`/reservation/${r.id}`, {
+                      method: 'PUT',
+                      body: JSON.stringify({ status: 'converted', subscriber_id: subscriberId }),
+                    })
+                    renderReservations()
+                  },
+                }, `Reserve ${wLabel} #${String(r.preferred_position).padStart(3, '0')} for them`)
+              : el('button', {
+                  onclick: () => showConvertReservation(r),
+                }, 'Pick a watch # for them')
+
+            // Skip: they stay a subscriber (already on the waitlist from auto-add),
+            // but the specific number request is declined.
+            const skipBtn = el('button', {
+              onclick: async () => {
+                const ok = confirm(
+                  `Skip the watch-number request for ${r.first_name}?\n\n` +
+                  `They stay on the waitlist as a subscriber, but the specific number they asked for stays available for someone else.`
+                )
+                if (!ok) return
+                await api(`/reservation/${r.id}`, {
+                  method: 'PUT',
+                  body: JSON.stringify({ status: 'declined' }),
+                })
+                renderReservations()
+              },
+            }, 'Skip watch # (stay on waitlist)')
+
+            return el('div', {
+              class: 'story-card',
+              style: 'margin-bottom:12px;padding:18px 20px;',
+            },
+              el('div', { style: 'display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;gap:12px;flex-wrap:wrap;' },
+                el('div', {},
+                  el('div', { style: 'font-family:Georgia,serif;font-size:16px;color:var(--ink);margin-bottom:2px;' }, `${r.first_name}`),
+                  el('div', { style: 'font-size:13px;color:var(--muted);' }, r.email),
+                ),
+                el('div', { style: 'display:flex;flex-direction:column;align-items:flex-end;gap:6px;' },
+                  statusPill(r.status),
+                  el('div', { style: 'font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;' }, (r.submitted_at || '').slice(0, 10)),
+                ),
               ),
-              el('div', { style: 'display:flex;flex-direction:column;align-items:flex-end;gap:6px;' },
-                statusPill(r.status),
-                el('div', { style: 'font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;' }, (r.submitted_at || '').slice(0, 10)),
+              el('div', { style: 'font-size:14px;color:var(--ink);margin-bottom:8px;font-weight:600;' }, requestLine),
+              r.why_message ? el('div', {
+                class: 'story-text',
+                style: 'font-size:14px;color:var(--text);margin-bottom:12px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--gold);',
+              }, r.why_message) : null,
+              r.notes ? el('div', { style: 'font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;' }, `Note: ${r.notes}`) : null,
+              el('div', { class: 'story-actions', style: 'gap:6px;flex-wrap:wrap;' },
+                reserveBtn,
+                skipBtn,
+                el('button', { onclick: () => showEditReservation(r) }, 'Follow up / edit'),
+                el('button', {
+                  onclick: async () => {
+                    const notes = prompt('Notes on the conversation (optional):', r.notes || '')
+                    if (notes === null) return
+                    await api(`/reservation/${r.id}`, {
+                      method: 'PUT',
+                      body: JSON.stringify({ status: 'contacted', notes }),
+                    })
+                    renderReservations()
+                  },
+                }, 'Mark contacted'),
+                el('button', {
+                  class: 'danger',
+                  onclick: async () => {
+                    if (!confirm(`Delete this reservation request entirely?\n\nThis wipes the record. Use "Skip watch #" instead if you want to decline the number but keep the person on the waitlist.`)) return
+                    await api(`/reservation/${r.id}`, { method: 'DELETE' })
+                    renderReservations()
+                  },
+                }, 'Delete'),
               ),
-            ),
-            el('div', { style: 'font-size:13px;color:var(--ink);margin-bottom:8px;' },
-              el('strong', {}, 'Wants: '),
-              el('span', {}, WOOD_LABEL[r.wood_preference] || r.wood_preference),
-            ),
-            r.why_message ? el('div', {
-              class: 'story-text',
-              style: 'font-size:14px;color:var(--text);margin-bottom:12px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--gold);',
-            }, r.why_message) : null,
-            r.notes ? el('div', { style: 'font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;' }, `Note: ${r.notes}`) : null,
-            el('div', { class: 'story-actions', style: 'gap:6px;flex-wrap:wrap;' },
-              el('button', { onclick: () => showEditReservation(r) }, 'Follow up / edit'),
-              el('button', {
-                onclick: async () => {
-                  const notes = prompt('Notes on the conversation (optional):', r.notes || '')
-                  if (notes === null) return
-                  await api(`/reservation/${r.id}`, {
-                    method: 'PUT',
-                    body: JSON.stringify({ status: 'contacted', notes }),
-                  })
-                  renderReservations()
-                },
-              }, 'Mark contacted'),
-              el('button', {
-                onclick: () => showConvertReservation(r),
-                class: 'primary',
-              }, 'Convert to subscriber'),
-              el('button', {
-                class: 'danger',
-                onclick: async () => {
-                  if (!confirm(`Delete this reservation request? (Use "Mark declined" if they said no but you want to keep the record.)`)) return
-                  await api(`/reservation/${r.id}`, { method: 'DELETE' })
-                  renderReservations()
-                },
-              }, 'Delete'),
-            ),
-          )))
+            )
+          }))
 
       renderShell(el('div', {},
         el('h1', { class: 'page-title' }, 'Reservation interest'),
@@ -1011,7 +1100,10 @@
     }
 
     // ---- Render dispatch ----
-    function render() {
+    async function render() {
+      // Refresh the pending-reservation count on every render so the nav
+      // badge stays current even as reservations come in or get converted.
+      await refreshPendingCount()
       if (currentView === 'subscribers') renderSubscribers()
       else if (currentView === 'reservations') renderReservations()
       else if (currentView === 'watches') renderWatches()

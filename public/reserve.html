@@ -116,15 +116,29 @@
         z-index: 5;
         box-shadow: 0 4px 12px rgba(30, 26, 46, 0.18);
       }
-      /* One unified "not available" style. Reserved by a customer,
-         requested by someone else, or held internally - the visitor
-         can't tap it either way, so they all look the same. */
+      /* "Not available" style for truly locked numbers: confirmed by a
+         customer or held internally. Visitor can't tap. */
       .avail-cell.taken {
         background: #ebe6dc;
         color: rgba(80, 72, 60, 0.5);
         border: 1px dashed rgba(120, 110, 90, 0.35);
         text-decoration: line-through;
         cursor: not-allowed;
+      }
+      /* "Pending" style: someone else requested this number but it isn't
+         locked in yet. Visitor CAN still tap and request it — if the
+         first person doesn't confirm, whoever's next in line gets it. */
+      .avail-cell.pending {
+        cursor: pointer;
+        border: 1px solid rgba(196, 149, 42, 0.6);
+        background: rgba(196, 149, 42, 0.15);
+        color: rgba(80, 60, 20, 0.75);
+        box-shadow: 0 1px 2px rgba(30, 26, 46, 0.06);
+      }
+      .avail-cell.pending:hover {
+        transform: scale(1.25);
+        z-index: 5;
+        box-shadow: 0 4px 12px rgba(196, 149, 42, 0.28);
       }
       .avail-cell.selected {
         transform: scale(1.25);
@@ -381,16 +395,21 @@
             cell.textContent = pad(n);
             if (reserved.has(n)) {
               cell.className = 'avail-cell taken';
-              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — reserved';
-            } else if (pending.has(n)) {
-              cell.className = 'avail-cell taken';
-              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — requested by someone else, awaiting review';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + '. Reserved. Not available.';
             } else if (hold.has(n)) {
               cell.className = 'avail-cell taken';
-              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — held';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + '. Held. Not available.';
+            } else if (pending.has(n)) {
+              // Someone else requested this number but it is not locked
+              // in yet. Visitor can still tap and request it too.
+              cell.className = 'avail-cell pending';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + '. Someone else has already requested this one but it is not confirmed yet. Tap to also request it.';
+              cell.dataset.wood = wood;
+              cell.dataset.position = n;
+              cell.addEventListener('click', () => pickCell(wood, n));
             } else {
               cell.className = 'avail-cell avail';
-              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + ' — available. Tap to pick.';
+              cell.title = WOOD_LABEL[wood] + ' ' + pad(n) + '. Available. Tap to pick.';
               cell.dataset.wood = wood;
               cell.dataset.position = n;
               cell.addEventListener('click', () => pickCell(wood, n));
