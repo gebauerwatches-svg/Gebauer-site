@@ -671,6 +671,37 @@
     }
 
     // ---- Reservations view ----
+    // View mode: 'cards' (detailed, current) or 'batch' (compact table
+    // with checkboxes, bulk actions, and priority scoring). Persist
+    // in localStorage so it survives navigations.
+    let reservationsViewMode = localStorage.getItem('resView') || 'cards'
+    let batchSelected = new Set()  // reservation IDs selected via checkbox
+
+    // Priority score: helps Liam surface the reservations most worth
+    // reviewing first when there are many pending. Simple heuristic:
+    //   +2 if they picked a specific number (more committed)
+    //   +2 if they wrote a why_message (took time)
+    //   +1 if why_message > 100 chars (took MORE time)
+    //   +1 per week they've been pending (older = more urgent)
+    function reservationScore(r) {
+      let score = 0
+      if (r.preferred_position) score += 2
+      if (r.why_message) score += 2
+      if (r.why_message && r.why_message.length > 100) score += 1
+      if (r.submitted_at) {
+        const days = (Date.now() - new Date(r.submitted_at).getTime()) / (1000 * 60 * 60 * 24)
+        score += Math.min(3, Math.floor(days / 7))  // cap at +3
+      }
+      return score
+    }
+    function scoreDot(score) {
+      const color = score >= 5 ? '#3aa06d' : score >= 3 ? '#c4952a' : '#8a8a8a'
+      return el('span', {
+        style: `display:inline-block;width:8px;height:8px;border-radius:50%;background:${color};`,
+        title: `Priority score: ${score}`,
+      })
+    }
+
     // Auto-assign zone for reservers who did NOT pick a specific number.
     // Skips both ends of the range:
     //   #1-10:   strategic hold (never auto-assigned; reserved for founder/family/press)
@@ -891,16 +922,216 @@
             )
           }))
 
+      // Build the batch view (compact table) if that mode is active.
+      // Only shows PENDING reservations by default in batch mode - that's
+      // what needs your attention. Card view shows everything.
+      const pendingItems = items.filter(r => r.status === 'pending')
+      const sortedByScore = [...pendingItems].sort((a, b) => reservationScore(b) - reservationScore(a))
+
+      async function bulkReserve(ids) {
+        const selected = pendingItems.filter(r => ids.has(r.id))
+        if (!selected.length) return
+        const summary = selected.map(r => {
+          const w = WOOD_SHORT[r.wood_preference] || r.wood_preference.toUpperCase()
+          const num = r.preferred_position
+            ? String(r.preferred_position).padStart(3, '0')
+            : `auto (${String(lastAvailableInWood(avail, r.wood_preference) || '?').padStart(3, '0')})`
+          return `- ${r.first_name}: ${w} #${num}`
+        }).join('\n')
+        const ok = confirm(
+          `Reserve watches for ${selected.length} people?\n\n${summary}\n\nEach one locks in the watch number. Only 100 of each wood exist.`
+        )
+        if (!ok) return
+        for (const r of selected) {
+          const wood = r.wood_preference
+          const num = r.preferred_position || lastAvailableInWood(avail, wood)
+          if (!num) continue
+          let subscriberId = r.subscriber_id
+          if (!subscriberId) {
+            const subResp = await api('/subscribers', {
+              method: 'POST',
+              body: JSON.stringify({
+                email: r.email,
+                first_name: r.first_name,
+                notes: `Bulk-reserved on ${new Date().toISOString().slice(0, 10)}`,
+                waitlist_position: num,
+              }),
+            })
+            if (!subResp.ok) continue
+            subscriberId = subResp.id
+          } else {
+            await api(`/subscribers/${subscriberId}`, {
+              method: 'PUT',
+              body: JSON.stringify({ waitlist_position: num }),
+            })
+          }
+          await api(`/reservation/${r.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ status: 'converted', subscriber_id: subscriberId }),
+          })
+        }
+        batchSelected.clear()
+        renderReservations()
+      }
+
+      async function bulkSkip(ids) {
+        const selected = pendingItems.filter(r => ids.has(r.id))
+        if (!selected.length) return
+        const ok = confirm(
+          `Skip the watch requests for ${selected.length} people?\n\nThey stay on the waitlist as subscribers, but the specific numbers they asked for stay open for others.`
+        )
+        if (!ok) return
+        for (const r of selected) {
+          if (!r.subscriber_id) {
+            await api('/subscribers', {
+              method: 'POST',
+              body: JSON.stringify({
+                email: r.email,
+                first_name: r.first_name,
+                notes: `Auto-added on bulk skip ${new Date().toISOString().slice(0, 10)}. No watch # locked in.`,
+              }),
+            }).catch(() => {})
+          }
+          await api(`/reservation/${r.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({ status: 'declined' }),
+          })
+        }
+        batchSelected.clear()
+        renderReservations()
+      }
+
+      function renderBatchTable() {
+        if (!sortedByScore.length) {
+          return el('p', { class: 'page-sub' }, 'No pending reservations to review.')
+        }
+        const tableRows = sortedByScore.map(r => {
+          const wLabel = WOOD_SHORT[r.wood_preference] || r.wood_preference.toUpperCase()
+          const numLabel = r.preferred_position
+            ? `${wLabel} #${String(r.preferred_position).padStart(3, '0')}`
+            : `${wLabel} (auto)`
+          const whySnippet = r.why_message ? (r.why_message.length > 90 ? r.why_message.slice(0, 88) + '...' : r.why_message) : ''
+          const date = (r.submitted_at || '').slice(0, 10)
+          const score = reservationScore(r)
+          return el('tr', {
+            style: 'border-bottom:1px solid rgba(30,26,46,0.08);',
+          },
+            el('td', { style: 'padding:10px 8px;text-align:center;' },
+              el('input', {
+                type: 'checkbox',
+                onchange: (e) => {
+                  if (e.target.checked) batchSelected.add(r.id); else batchSelected.delete(r.id)
+                  updateBulkBar()
+                },
+              })
+            ),
+            el('td', { style: 'padding:10px 8px;text-align:center;' }, scoreDot(score)),
+            el('td', { style: 'padding:10px 8px;font-family:Georgia,serif;font-size:14px;color:var(--ink);' },
+              el('div', {}, r.first_name),
+              el('div', { style: 'font-size:11px;color:var(--muted);' }, r.email),
+            ),
+            el('td', { style: 'padding:10px 8px;font-size:13px;color:var(--ink);white-space:nowrap;' }, numLabel),
+            el('td', { style: 'padding:10px 8px;font-size:12px;color:var(--text);max-width:280px;' }, whySnippet || el('span', { style: 'color:var(--muted);font-style:italic;' }, 'no why message')),
+            el('td', { style: 'padding:10px 8px;font-size:11px;color:var(--muted);white-space:nowrap;' }, date),
+          )
+        })
+        return el('div', {
+          style: 'background:#fff;border:1px solid rgba(30,26,46,0.08);border-radius:4px;overflow-x:auto;',
+        },
+          el('table', {
+            style: 'width:100%;border-collapse:collapse;font-family:Inter,sans-serif;',
+          },
+            el('thead', {},
+              el('tr', {
+                style: 'border-bottom:2px solid rgba(30,26,46,0.15);background:var(--bg);',
+              },
+                el('th', { style: 'padding:10px 8px;text-align:center;width:36px;' },
+                  el('input', {
+                    type: 'checkbox',
+                    title: 'Select all',
+                    onchange: (e) => {
+                      const cbs = document.querySelectorAll('.res-table input[type=checkbox]')
+                      cbs.forEach(cb => {
+                        if (cb !== e.target) {
+                          cb.checked = e.target.checked
+                          cb.dispatchEvent(new Event('change'))
+                        }
+                      })
+                    },
+                  })
+                ),
+                el('th', { style: 'padding:10px 8px;text-align:center;width:24px;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);' }, 'P'),
+                el('th', { style: 'padding:10px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);' }, 'Name'),
+                el('th', { style: 'padding:10px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);' }, 'Requested'),
+                el('th', { style: 'padding:10px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);' }, 'Why'),
+                el('th', { style: 'padding:10px 8px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);' }, 'When'),
+              )
+            ),
+            el('tbody', { class: 'res-table' }, ...tableRows),
+          )
+        )
+      }
+
+      function updateBulkBar() {
+        const bar = document.getElementById('bulk-action-bar')
+        if (!bar) return
+        const count = batchSelected.size
+        if (count > 0) {
+          bar.style.display = 'flex'
+          bar.querySelector('.bulk-count').textContent = `${count} selected`
+        } else {
+          bar.style.display = 'none'
+        }
+      }
+
+      const bulkBar = el('div', {
+        id: 'bulk-action-bar',
+        style: 'display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--purple);color:#fff;padding:12px 20px;border-radius:6px;box-shadow:0 4px 16px rgba(0,0,0,0.2);align-items:center;gap:16px;z-index:100;',
+      },
+        el('span', { class: 'bulk-count', style: 'font-size:14px;font-weight:600;' }, '0 selected'),
+        el('button', {
+          class: 'primary',
+          style: 'padding:8px 16px;font-size:13px;',
+          onclick: () => bulkReserve(new Set(batchSelected)),
+        }, 'Reserve all selected'),
+        el('button', {
+          style: 'padding:8px 16px;font-size:13px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.4);',
+          onclick: () => bulkSkip(new Set(batchSelected)),
+        }, 'Skip all selected'),
+        el('button', {
+          style: 'padding:8px 12px;font-size:13px;background:transparent;color:#fff;border:none;',
+          onclick: () => { batchSelected.clear(); renderReservations() },
+        }, '×'),
+      )
+
+      const viewToggle = el('div', {
+        style: 'display:flex;gap:8px;align-items:center;margin-bottom:20px;',
+      },
+        el('span', { style: 'font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;' }, 'View:'),
+        el('button', {
+          style: `padding:6px 14px;font-size:12px;background:${reservationsViewMode === 'cards' ? 'var(--purple)' : 'transparent'};color:${reservationsViewMode === 'cards' ? '#fff' : 'var(--ink)'};border:1px solid var(--purple);`,
+          onclick: () => { reservationsViewMode = 'cards'; localStorage.setItem('resView', 'cards'); batchSelected.clear(); renderReservations() },
+        }, 'Cards (detailed)'),
+        el('button', {
+          style: `padding:6px 14px;font-size:12px;background:${reservationsViewMode === 'batch' ? 'var(--purple)' : 'transparent'};color:${reservationsViewMode === 'batch' ? '#fff' : 'var(--ink)'};border:1px solid var(--purple);`,
+          onclick: () => { reservationsViewMode = 'batch'; localStorage.setItem('resView', 'batch'); batchSelected.clear(); renderReservations() },
+        }, `Batch (${pendingItems.length} pending)`),
+      )
+
+      const content = reservationsViewMode === 'batch' ? renderBatchTable() : list
+
       renderShell(el('div', {},
         el('h1', { class: 'page-title' }, 'Reservation interest'),
-        el('p', { class: 'page-sub' }, 'Cold visitors who submitted the /reserve form. Follow up personally, then convert to a full subscriber with a watch number assigned.'),
+        el('p', { class: 'page-sub' }, 'Cold visitors who submitted the /reserve form. Reservations are expressions of interest, not guarantees. Review, then reserve or skip.'),
         el('div', { class: 'stats-row' },
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Pending'), el('div', { class: 'stat-value' }, String(counts.pending || 0))),
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Contacted'), el('div', { class: 'stat-value' }, String(counts.contacted || 0))),
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Converted'), el('div', { class: 'stat-value' }, String(counts.converted || 0))),
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Declined'), el('div', { class: 'stat-value' }, String(counts.declined || 0))),
         ),
-        list,
+        viewToggle,
+        content,
+        bulkBar,
       ))
     }
 
