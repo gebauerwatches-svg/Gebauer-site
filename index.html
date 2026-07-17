@@ -127,6 +127,22 @@
       ]
     }
     </script>
+      <script type="application/ld+json">
+    ERROR: All LLM providers failed. Attempts made:
+      - openrouter:openai/gpt-4o-mini: RuntimeError — OpenRouter (openai/gpt-4o-mini) failed: 403 - {"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/011a3f14f15cca78a752d3d3a33557243e197
+      - openrouter-fallback:anthropic/claude-3.5-haiku: RuntimeError — OpenRouter (anthropic/claude-3.5-haiku) failed: 404 - {"error":{"message":"No endpoints found for anthropic/claude-3.5-haiku.","code":404},"user_id":"user_3BrWOcICVhJWB5K05lSn3GgSHqZ"}
+      - openrouter-fallback:google/gemini-2.0-flash-001: RuntimeError — OpenRouter (google/gemini-2.0-flash-001) failed: 404 - {"error":{"message":"No endpoints found for google/gemini-2.0-flash-001.","code":404},"user_id":"user_3BrWOcICVhJWB5K05lSn3GgSHqZ"}
+      - anthropic-direct:haiku-last-resort: BadRequestError — Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+    Most likely cause: RuntimeError on first provider — could be rate limit, expired key, or unsupported model ID.
+    </script>
+    <script type="application/ld+json">
+    ERROR: All LLM providers failed. Attempts made:
+      - openrouter:openai/gpt-4o-mini: RuntimeError — OpenRouter (openai/gpt-4o-mini) failed: 403 - {"error":{"message":"Key limit exceeded (total limit). Manage it using https://openrouter.ai/workspaces/default/keys/011a3f14f15cca78a752d3d3a33557243e197
+      - openrouter-fallback:anthropic/claude-3.5-haiku: RuntimeError — OpenRouter (anthropic/claude-3.5-haiku) failed: 404 - {"error":{"message":"No endpoints found for anthropic/claude-3.5-haiku.","code":404},"user_id":"user_3BrWOcICVhJWB5K05lSn3GgSHqZ"}
+      - openrouter-fallback:google/gemini-2.0-flash-001: RuntimeError — OpenRouter (google/gemini-2.0-flash-001) failed: 404 - {"error":{"message":"No endpoints found for google/gemini-2.0-flash-001.","code":404},"user_id":"user_3BrWOcICVhJWB5K05lSn3GgSHqZ"}
+      - anthropic-direct:haiku-last-resort: BadRequestError — Error code: 400 - {'type': 'error', 'error': {'type': 'invalid_request_error', 'message': 'Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purcha
+    Most likely cause: RuntimeError on first provider — could be rate limit, expired key, or unsupported model ID.
+    </script>
   </head>
   <body>
     <div id="root"></div>
