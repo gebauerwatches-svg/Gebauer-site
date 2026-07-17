@@ -272,12 +272,14 @@
       <h1>Reserve a watch.</h1>
       <p class="subtitle">One of three hundred, ever.</p>
 
-      <p class="intro">
-        Numbers aren't handed out by queue. Tap any available number below, or skip the grid and just fill out the form. Either way, I'll follow up personally to confirm before anything is locked in.
-      </p>
+      <div style="background:var(--bg-light);border-left:3px solid var(--gold);padding:18px 22px;margin:24px 0 32px;font-size:14px;line-height:1.65;color:var(--text-warm);">
+        <strong style="color:var(--purple);font-family:'Cormorant Garamond',Georgia,serif;font-size:16px;">How reservations work.</strong><br>
+        Reservations are expressions of interest, not guarantees. I personally review each one and allocate the 300 first-edition watches based on story, engagement, and fit. If you're not among the first 300 confirmed, you're first in line for the next edition.<br><br>
+        <em style="color:var(--text-muted);">Not looking to commit to a specific watch? <a href="#just-waitlist" style="color:var(--gold);">Just join the waitlist &darr;</a></em>
+      </div>
 
-      <p style="font-size:14px;font-style:italic;color:var(--text-muted);margin-bottom:32px;">
-        Picking a number here doesn't reserve it. It sends me a note that this is what you'd like, and I confirm it with you before the number is really yours.
+      <p class="intro">
+        Numbers aren't handed out by queue. Tap any available number below, or skip the grid and just fill out the form. Either way, I'll follow up personally before anything is locked in.
       </p>
 
       <div id="picked-notice" class="picked-notice hidden">
@@ -345,6 +347,29 @@
 
         <div id="response-msg" class="msg hidden"></div>
       </form>
+
+      <div id="just-waitlist" style="margin-top:60px;padding-top:40px;border-top:1px solid rgba(30,26,46,0.12);">
+        <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-weight:400;font-size:28px;color:var(--purple);margin:0 0 8px;">Just join the waitlist.</h2>
+        <p style="font-size:15px;color:var(--text-warm);margin:0 0 24px;">
+          Not ready to commit to a specific watch. Just want to hear from me when the Kickstarter opens or the next edition drops. No pressure, no follow-up call.
+        </p>
+        <form id="waitlist-form" style="padding:24px 22px;">
+          <div class="field">
+            <label for="wl_first_name">First name</label>
+            <input type="text" id="wl_first_name" name="first_name" required maxlength="100" />
+          </div>
+          <div class="field">
+            <label for="wl_email">Email</label>
+            <input type="email" id="wl_email" name="email" required maxlength="200" />
+          </div>
+          <div class="honeypot" aria-hidden="true">
+            <label for="wl_website">Website (leave blank)</label>
+            <input type="text" id="wl_website" name="honeypot" tabindex="-1" autocomplete="off" />
+          </div>
+          <button type="submit" class="submit-btn" id="wl-submit-btn">Join the waitlist</button>
+          <div id="wl-response-msg" class="msg hidden"></div>
+        </form>
+      </div>
 
       <p class="footer-links">
         <a href="/about">About</a> &middot;
@@ -496,6 +521,55 @@
       });
 
       loadAvailability();
+
+      // Just-join-the-waitlist form. Calls /api/signup which adds them
+      // directly to subscribers without creating a reservation_interest
+      // row. For people who want to follow along without committing to
+      // a specific watch.
+      const wlForm = document.getElementById('waitlist-form');
+      const wlBtn = document.getElementById('wl-submit-btn');
+      const wlMsg = document.getElementById('wl-response-msg');
+
+      wlForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        wlMsg.classList.add('hidden');
+        wlBtn.disabled = true;
+        wlBtn.textContent = 'Submitting...';
+
+        const payload = {
+          first_name: wlForm.first_name.value.trim(),
+          email: wlForm.email.value.trim().toLowerCase(),
+          honeypot: wlForm.honeypot.value,
+        };
+
+        try {
+          const resp = await fetch('/api/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+          const data = await resp.json();
+          if (resp.ok && data.ok) {
+            wlMsg.className = 'msg success';
+            wlMsg.textContent = "You're on the waitlist. I'll email you when the Kickstarter opens and when the next edition drops. No pressure, no follow-up call.";
+            wlMsg.classList.remove('hidden');
+            wlForm.reset();
+            wlBtn.textContent = 'Done';
+          } else {
+            wlMsg.className = 'msg error';
+            wlMsg.textContent = data.error || 'Something went wrong. Please try again in a moment.';
+            wlMsg.classList.remove('hidden');
+            wlBtn.disabled = false;
+            wlBtn.textContent = 'Join the waitlist';
+          }
+        } catch (err) {
+          wlMsg.className = 'msg error';
+          wlMsg.textContent = 'Network error. Please try again in a moment.';
+          wlMsg.classList.remove('hidden');
+          wlBtn.disabled = false;
+          wlBtn.textContent = 'Join the waitlist';
+        }
+      });
     </script>
   </body>
 </html>
