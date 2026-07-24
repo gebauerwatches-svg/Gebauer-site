@@ -81,8 +81,8 @@ function InsiderView({ firstName, onBack }) {
   const [timeline, setTimeline] = useState([
     { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
     { id: 'samples',     label: 'Samples arrive',        when: 'August 2026',   status: 'current' },
-    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'November 2026', status: 'upcoming' },
-    { id: 'ship',        label: 'Watches ship',          when: 'Early 2027',    status: 'upcoming' },
+    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'Early 2027',    status: 'upcoming' },
+    { id: 'ship',        label: 'Watches ship',          when: 'Later 2027',    status: 'upcoming' },
   ])
 
   // Per-milestone-id thumbnail. Admin edits text only; the image is resolved client-side.
@@ -690,7 +690,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">The workshop is still open.</h2>
-          <p className="story-beat-text">Samples land in weeks. Kickstarter opens this fall. You're not joining a finished thing. You're walking in mid-build.</p>
+          <p className="story-beat-text">Samples land in weeks. Kickstarter opens early next year. You're not joining a finished thing. You're walking in mid-build.</p>
         </div>
       </Reveal>
 
