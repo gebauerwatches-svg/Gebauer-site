@@ -397,6 +397,31 @@
         form.wood_preference.value = woodParam.toLowerCase();
       }
 
+      // Existing subscriber path: if the visitor is already on the waitlist
+      // (localStorage populated from the homepage signup), autofill their
+      // name+email so they don't have to re-enter it, and hide the
+      // "just join waitlist" duplicate form at the bottom (they're already on it).
+      const savedEmail = localStorage.getItem('gebauer_email') || localStorage.getItem('gebauer_last_email') || '';
+      const savedName = localStorage.getItem('gebauer_name') || '';
+      if (savedEmail) {
+        form.email.value = savedEmail;
+        form.email.readOnly = true;
+        form.email.style.opacity = '0.75';
+      }
+      if (savedName) {
+        form.first_name.value = savedName;
+      }
+      if (savedEmail || savedName) {
+        // Hide the redundant "just join waitlist" section — they're already subscribed.
+        const wl = document.getElementById('just-waitlist');
+        if (wl) wl.style.display = 'none';
+        // Warm welcome-back note above the form so they know we recognize them.
+        const welcome = document.createElement('div');
+        welcome.style.cssText = 'background:#eaf1ec;border-left:3px solid #2a6b52;padding:14px 18px;margin:0 0 24px;font-size:14px;line-height:1.55;color:#2a6b52;font-family:Georgia,serif;';
+        welcome.innerHTML = 'Welcome back' + (savedName ? ', ' + savedName.split(' ')[0] : '') + '. You\'re already on the waitlist. Pick a watch below to request a specific number.';
+        form.parentNode.insertBefore(welcome, form);
+      }
+
       const WOOD_LABEL = { hinoki: 'HINOKI', ebony: 'EBONY', padauk: 'PADAUK' };
 
       function pad(n) { return String(n).padStart(3, '0'); }
