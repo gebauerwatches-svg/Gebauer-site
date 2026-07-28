@@ -535,11 +535,11 @@ function App() {
 
       {/* 1. HERO — emotional hook */}
       <section className="hero">
-        <img className="hero-img" src={kitchenTable} alt="Liam's kitchen table — where Gebauer is being built" />
+        <img className="hero-img" src={kitchenTable} alt="Liam's workshop, where Gebauer is being built" />
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
-            Help me build this from my kitchen table.
+            Help me build this from my workshop.
           </h1>
           <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
           <div className="hero-buttons fade-in-delay-2">
@@ -871,7 +871,7 @@ function App() {
             )}
             <button className="story-share" onClick={(e) => {
               if (navigator.share) {
-                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built from a kitchen table. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
+                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built from a workshop in Colorado. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
               } else {
                 navigator.clipboard.writeText('https://gebauerwatches.com')
                 e.currentTarget.textContent = 'Link Copied'

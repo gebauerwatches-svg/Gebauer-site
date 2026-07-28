@@ -129,7 +129,74 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--
+      PRERENDER FALLBACK. React replaces everything inside #root the moment it
+      mounts, so visitors never read this. Crawlers do, on the first pass,
+      before any JavaScript runs.
+
+      Why it exists: until Jul 2026 this div was empty. The homepage shipped
+      7,389 bytes of HTML with zero characters of body text, so Googlebot's
+      first pass saw a blank page and the site never got indexed, not even for
+      its own brand name. Rendering is a second pass that new, zero-backlink
+      sites wait a long time for.
+
+      RULE: this must stay a faithful summary of what App.jsx actually renders.
+      Showing crawlers something different from visitors is cloaking. When the
+      homepage copy changes materially, change this too.
+    -->
+      <main style="max-width:760px;margin:0 auto;padding:48px 24px;background:#0F0D14;color:#F2EDE4;font-family:Georgia,'Times New Roman',serif;line-height:1.6">
+        <h1>Help me build this from my workshop.</h1>
+        <p>A Gebauer doesn't just remember. It refuses to forget.</p>
+
+        <p>Gebauer Watches is a watch brand founded by Liam Gebauer in Steamboat
+        Springs, Colorado. Every watch has a dial cut from a real tree, so no two
+        grains are alike. The first edition is limited to 300 watches, individually
+        numbered.</p>
+
+        <h2>I'm Liam. I bought a watch in Milan.</h2>
+        <p>Walked into a Seiko store with 310 euros. No notifications. No swipes.
+        Just the time. My three siblings saw it. They wanted one too.</p>
+
+        <h2>Then I started getting gift cards.</h2>
+        <p>I spent one on pants I grew out of. A plant that sits in my room doing
+        nothing. My middle school graduation gift card bought a snack at the
+        airport. None of it stuck. None of it marked anything.</p>
+
+        <h2>Then I put it together.</h2>
+        <p>A watch. Made from wood, not plastic. Doesn't beep. Doesn't expire.
+        Ages with you. The literal opposite of a gift card. So I started designing
+        it.</p>
+
+        <h2>Three woods. Three stories. No two have ever been the same.</h2>
+        <p>Each dial is cut from a real tree. The grain is the design.
+        First edition, 300 only, numbered.</p>
+
+        <h3>Hinoki, $299</h3>
+        <p>Japan's sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300
+        years. Gets stronger as it ages.</p>
+
+        <h3>Black Ebony, $339</h3>
+        <p>Rarer than gold in ancient Egypt. Used for Tutankhamun's chair.
+        Razor-thin grain, nearly black. Permanent.</p>
+
+        <h3>African Padauk, $375</h3>
+        <p>Bleeds orange when cut. A wood that lives. And it doesn't stop
+        changing.</p>
+
+        <h2>How each watch is made</h2>
+        <p>Seiko VH31 meca-quartz movement. 316L stainless steel case, 39 by 44 by
+        10mm. Sapphire crystal with anti-reflective coating. 20mm lug width,
+        butterfly clasp. 5 ATM water resistant. Assembled and inspected in Japan.
+        Boxed in northern Italy. Designed in Steamboat Springs, Colorado.</p>
+
+        <h2>More about Gebauer Watches</h2>
+        <ul>
+          <li><a href="/about">How this started, in full</a></li>
+          <li><a href="/faq">Frequently asked questions</a></li>
+          <li><a href="/reserve">Reserve one of the 300</a></li>
+        </ul>
+      </main>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
