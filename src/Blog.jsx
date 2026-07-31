@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import logo from './assets/gebauer-logo.svg'
-import posts from './posts.js'
+import allPosts from './posts.js'
+
+// Posts marked `draft: true` never render. Until Jul 31 2026 there was no draft
+// state at all: every object in posts.js published the moment it was pushed,
+// which is how an unfinished June 3 draft became the site's top blog post and
+// stayed live for two months.
+const posts = allPosts.filter(p => !p.draft)
 import './Blog.css'
 
 const FREE_PREVIEW_COUNT = 2 // How many posts non-subscribers can see

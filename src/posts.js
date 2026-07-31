@@ -13,6 +13,12 @@
 
 const posts = [
   {
+    // UNPUBLISHED Jul 31 2026. The content below is not a blog post. It is an
+    // AI assistant's clarification request asking whether Hiroshi Tanaka is a
+    // real person, and it published under Liam's byline on Jun 3 2026, the same
+    // day blog_agent was disabled for hallucinating. Kept rather than deleted so
+    // the real post can be written later. Liam writes it, not an agent.
+    draft: true,
     slug: 'how-a-teenager-cold-emails-a-watch-manufacturer-in-japan',
     title: 'How a Teenager Cold-Emails a Watch Manufacturer in Japan',
     date: 'June 03, 2026',

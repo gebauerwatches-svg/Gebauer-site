@@ -565,7 +565,7 @@ function App() {
           </div>
           <div className="proof-divider" />
           <div className="proof-stat">
-            <span className="proof-stat-num">{storyCount > 0 ? storyCount : '—'}</span>
+            <span className="proof-stat-num">{storyCount > 0 ? storyCount : '-'}</span>
             <span className="proof-stat-label">moments shared</span>
           </div>
           <div className="proof-divider" />
