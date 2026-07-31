@@ -13,39 +13,6 @@
 
 const posts = [
   {
-    // UNPUBLISHED Jul 31 2026. The content below is not a blog post. It is an
-    // AI assistant's clarification request asking whether Hiroshi Tanaka is a
-    // real person, and it published under Liam's byline on Jun 3 2026, the same
-    // day blog_agent was disabled for hallucinating. Kept rather than deleted so
-    // the real post can be written later. Liam writes it, not an agent.
-    draft: true,
-    slug: 'how-a-teenager-cold-emails-a-watch-manufacturer-in-japan',
-    title: 'How a Teenager Cold-Emails a Watch Manufacturer in Japan',
-    date: 'June 03, 2026',
-    author: 'Liam',
-    excerpt: `I've learned that most people see an email as just an email. But when you're building something real, an email is a bridge.`,
-    content: `I need to pause here and ask for clarification before I rewrite this.
-
-**Factual verification question:**
-
-Is Hiroshi Tanaka a real person with whom you (Liam) actually corresponded, or is this a narrative composite/illustrative example?
-
-I ask because the post contains specific names, locations, and details (Nagano Prefecture, three-generation family technique, technical drawings, workshop photos at dawn). If these are real, I need to verify spelling and confirm you're comfortable naming him publicly. If this is a composite or illustrative narrative, that's completely fine for the voice and the story — but I need to know which before I approve it for publish.
-
-**Why I'm asking instead of guessing:**
-
-The cardinal rule here is honest reporting. I could rewrite the post and complete the final paragraph based on what feels right narratively, but if Hiroshi Tanaka is a real person and I invent details about what he shared, or if I'm publishing something you didn't intend, I've failed my job.
-
-**What I can do once you clarify:**
-
-- If real: I'll complete the final paragraph with a genuine detail from your actual correspondence, verify the names/locations are correct, and push it through.
-- If composite: I'll complete the narrative in a way that honors the truth of the experience while being clear about what's illustrative.
-
-Either way, the voice is clean and the structure works. I just need the factual foundation first.
-
-What's the status on Hiroshi Tanaka?`
-  },
-  {
     slug: 'the-missing-piece-how-great-brands-are-born',
     title: 'The Missing Piece: How Great Brands Are Born',
     date: 'April 24, 2026',
