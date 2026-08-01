@@ -137,8 +137,8 @@ That's still what we're doing, five hundred years later. We're just doing it bet
     title: 'Why Your Watch Dial Will Change Color Without You Doing Anything',
     date: 'April 20, 2026',
     author: 'Liam',
-    excerpt: `I bought a blue Seiko in Milan when I was 15, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. ...`,
-    content: `I bought a blue Seiko in Milan when I was 15. The dial had aged from its original color, and that history made it more real to me than any pristine new watch could be. Time had left visible marks, proof of the years someone else had worn it.
+    excerpt: `I bought a blue Seiko in Milan when I was 14, and the first thing I noticed wasn't the movement or the case finishing. It was that someone had owned it before me, and time had left marks I could see. ...`,
+    content: `I bought a blue Seiko in Milan when I was 14. The dial had aged from its original color, and that history made it more real to me than any pristine new watch could be. Time had left visible marks, proof of the years someone else had worn it.
 
 That memory came back when we were developing the Gebauer Padauk dial. Here was a material that would age and change just like that old Seiko, but by design rather than accident.
 
