@@ -13,6 +13,10 @@
 
 const posts = [
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'the-missing-piece-how-great-brands-are-born',
     title: 'The Missing Piece: How Great Brands Are Born',
     date: 'April 24, 2026',
@@ -35,6 +39,10 @@ What's missing is a mechanical watch that feels personal from day one. Not after
 That's the gap we're building for. Not because the market research says so, but because we're living it.`
   },
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'milestone-markers-why-your-son-deserves-more-than-a-gift-card',
     title: 'Milestone Markers: Why Your Son Deserves More Than a Gift Card',
     date: 'April 22, 2026',
@@ -63,6 +71,10 @@ My grandfather's watch stopped working years ago. But the story it tells keeps t
 The gift card gets spent and forgotten. The watch becomes part of who he is.`
   },
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'how-a-$25-watch-almost-destroyed-switzerland',
     title: 'How a $25 Watch Almost Destroyed Switzerland',
     date: 'April 22, 2026',
@@ -117,6 +129,10 @@ Every watch you've ever worn carries a piece of that first broken dream. Henlein
 That's still what we're doing, five hundred years later. We're just doing it better.`
   },
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'why-your-watch-dial-will-change-color-without-you-doing-anything',
     title: 'Why Your Watch Dial Will Change Color Without You Doing Anything',
     date: 'April 20, 2026',
@@ -147,6 +163,10 @@ Your Padauk dial will never look exactly like anyone else's after the first year
 That blue Seiko taught me something about time and objects. The best watches don't fight change. They embrace it. They show their history. Padauk just does it faster and more beautifully than most materials dare to try.`
   },
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'why-teenagers-are-wearing-watches-again-and-its-not-about-knowing-what-time-it-is',
     title: 'Why Teenagers Are Wearing Watches Again (And It\'s Not About Knowing What Time It Is)',
     date: 'April 15, 2026',
@@ -171,6 +191,10 @@ That's what we're really buying when we buy a watch. Not just a way to tell time
 The teenagers wearing watches aren't rejecting technology. They're choosing what parts of their lives they want to control. And a watch, more than almost anything else, gives them that control.`
   },
   {
+    // UNPUBLISHED Aug 1 2026. Written by blog_agent, not by Liam, and
+    // published under his byline. Confirmed against blog_agent/post_log.json.
+    // Liam's rule: only he writes forward-facing content.
+    draft: true,
     slug: 'the-gift-that-gets-kept',
     title: 'The Gift That Gets Kept',
     date: 'April 14, 2026',
