@@ -3,7 +3,6 @@ import { createRoot } from 'react-dom/client'
 import './palette.css'
 import './index.css'
 import App from './App.jsx'
-import Blog from './Blog.jsx'
 import Vote from './Vote.jsx'
 import Privacy from './Privacy.jsx'
 
@@ -26,14 +25,18 @@ class ErrorBoundary extends Component {
 
 // Simple path-based routing (no react-router needed)
 const path = window.location.pathname
-const isBlog = path.startsWith('/blog')
+// /blog route removed Aug 1 2026. Nothing linked to it, it was not in the
+// sitemap, and it carried six posts written by blog_agent under Liam's
+// byline. Substack is the publication. Removing the route also drops
+// posts.js and Blog.jsx out of the bundle entirely, so the text stops
+// shipping to every visitor. Both files stay in the repo.
 const isVote = path === '/vote' || path.startsWith('/vote/')
 const isPrivacy = path === '/privacy' || path.startsWith('/privacy/')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      {isPrivacy ? <Privacy /> : isVote ? <Vote /> : isBlog ? <Blog /> : <App />}
+      {isPrivacy ? <Privacy /> : isVote ? <Vote /> : <App />}
     </ErrorBoundary>
   </StrictMode>,
 )

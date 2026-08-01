@@ -4,3 +4,11 @@
 https://www.gebauerwatches.com/* https://gebauerwatches.com/:splat 301!
 http://www.gebauerwatches.com/*  https://gebauerwatches.com/:splat 301!
 http://gebauerwatches.com/*      https://gebauerwatches.com/:splat 301!
+
+# /blog retired Aug 1 2026. The route was removed from main.jsx, so without
+# these rules the SPA would render the homepage at /blog, which is a soft 404
+# and Google treats those as a quality problem. A 301 tells crawlers the pages
+# are gone and moves any existing link equity to the homepage.
+# Substack is the publication. See gebauer-site/src/posts.js for the archive.
+/blog/*  /  301
+/blog    /  301
