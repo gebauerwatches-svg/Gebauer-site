@@ -17,7 +17,7 @@ function SubscribeGate({ subEmail, setSubEmail, subLoading, handleSubscribe }) {
       <div className="blog-gate-inner">
         <h2 className="blog-gate-title">There's more where that came from.</h2>
         <p className="blog-gate-text">
-          Sign up to unlock the full archive, plus get every new post from Liam straight to your inbox. No spam. Just the story of a watch brand being built from a workshop in Colorado.
+          Sign up to unlock the full archive, plus get every new post from Liam straight to your inbox. No spam. Just the story of a watch brand being built from a kitchen table in Colorado.
         </p>
         <form className="blog-subscribe-form" onSubmit={handleSubscribe}>
           <input type="email" placeholder="Your email" value={subEmail} onChange={(e) => setSubEmail(e.target.value)} required />
