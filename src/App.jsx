@@ -80,7 +80,7 @@ function InsiderView({ firstName, onBack }) {
   // Timeline is editable from /admin (Timeline view). Falls back to the default in /api/timeline if D1 row missing.
   const [timeline, setTimeline] = useState([
     { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
-    { id: 'samples',     label: 'Samples arrive',        when: 'August 2026',   status: 'current' },
+    { id: 'samples',     label: 'Samples arrive',        when: 'In progress',   status: 'current' },
     { id: 'kickstarter', label: 'Kickstarter launches',  when: 'Early 2027',    status: 'upcoming' },
     { id: 'ship',        label: 'Watches ship',          when: 'Later 2027',    status: 'upcoming' },
   ])

@@ -10,7 +10,7 @@ import { json } from './_shared.js'
 
 const DEFAULT_TIMELINE = [
   { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
-  { id: 'samples',     label: 'Samples arrive',        when: 'August 2026',   status: 'current' },
+  { id: 'samples',     label: 'Samples arrive',        when: 'In progress',   status: 'current' },
   { id: 'kickstarter', label: 'Kickstarter launches',  when: 'November 2026', status: 'upcoming' },
   { id: 'ship',        label: 'Watches ship',          when: 'Early 2027',    status: 'upcoming' },
 ]
