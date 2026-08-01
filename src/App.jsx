@@ -688,10 +688,10 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 9 — the workshop is still open. Updated 2026-07-14 to remove references to a live poll that no longer exists. */}
+      {/* SCENE 9 - you're early. Updated 2026-07-14 to remove references to a live poll that no longer exists. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">The workshop is still open.</h2>
+          <h2 className="story-beat-headline">You're early.</h2>
           <p className="story-beat-text">Samples land in weeks. Kickstarter opens early next year. You're not joining a finished thing. You're walking in mid-build.</p>
         </div>
       </Reveal>
@@ -817,10 +817,10 @@ function App() {
         </Reveal>
       )}
 
-      {/* SCENE 11 — the workshop wall. Pinned moments from OGs. Yours could be next. */}
+      {/* SCENE 11 - the wall. Pinned moments from OGs. Yours could be next. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">These are pinned on the workshop wall.</h2>
+          <h2 className="story-beat-headline">These are pinned on the wall.</h2>
           {hasSubmittedStory ? (
             <>
               {myMoment && (
