@@ -302,7 +302,7 @@ This is the part of Gebauer that nobody else can copy. You can copy a case shape
     excerpt: "I'm 16 and building a watch brand from Steamboat Springs. Here's why.",
     content: `I'm 16 and I started a watch company. That sounds ridiculous and I know it.
 
-It started in Milan. I was 15 and I'd saved up for months to buy my first real watch. A Seiko. 310 euros. The most expensive thing I'd ever owned. The second it was on my wrist I understood something I hadn't before: this was different from everything else I owned. My phone would be outdated in two years. My headphones would break. But this watch was going to be with me for a long time.
+It started in Milan. I was 14 and I'd saved up for months to buy my first real watch. A Seiko. 310 euros. The most expensive thing I'd ever owned. The second it was on my wrist I understood something I hadn't before: this was different from everything else I owned. My phone would be outdated in two years. My headphones would break. But this watch was going to be with me for a long time.
 
 I looked around and realized nobody was making watches like that for people my age. Every brand that made something with real weight to it was designed by old guys, for old guys. Everything aimed at teens was plastic and disposable.
 
