@@ -589,55 +589,9 @@ function App() {
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
       </Reveal>
 
-      {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
-      <Reveal className="story-beat story-milan" id="story">
-        <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam and I'm {founderAge}. When I was 14, I bought a watch in Milan.</h2>
-          <p className="story-beat-text">I walked into a Seiko store with 310 euros I'd been saving for months, and walked out with my first real watch. What amazed me was that it didn't beep or buzz or try to get my attention. It just told the time. Everything else I owned was going to be obsolete or used up in a couple of years. This wasn't.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 2 — Liam's own gift card pain. Specific (middle school grad), embarrassing, relatable. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
-          <p className="story-beat-text">I spent one on a plant that just sits in my room, another on a book I half read, and another on some pants I grew out of. My middle school graduation gift card bought a snack at the airport. They were all nice. None of them marked anything.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 3 — the insight. Tees up the watches reveal that comes immediately after. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I put it together.</h2>
-          <p className="story-beat-text">A watch with a real wood dial. Something that lasts, that you can't spend, and that you'd actually want to wear. So I started designing it.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 5 — vulnerability. The kid had no clue. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
-          <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
-          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
-        </div>
-      </Reveal>
-
-      {/* The watch — comes right after "they deserve a Gebauer" so the reveal lands as the emotional payoff */}
+      {/* The watches. Sits directly under the hero and proof strip so cold traffic
+          sees the product before the story, while the kitchen-table hero stays first.
+          Moved up 2026-08-15: the story below now runs uninterrupted. */}
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
@@ -697,6 +651,54 @@ function App() {
             </div>
           </div>
           <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
+      <Reveal className="story-beat story-milan" id="story">
+        <div className="story-beat-inner story-beat-over">
+          <h2 className="story-beat-headline">I'm Liam and I'm {founderAge}. When I was 14, I bought a watch in Milan.</h2>
+          <p className="story-beat-text">I walked into a Seiko store with 310 euros I'd been saving for months, and walked out with my first real watch. What amazed me was that it didn't beep or buzz or try to get my attention. It just told the time. It was the first thing I'd ever bought that wasn't going to wear out.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 2 — Liam's own gift card pain. Specific (middle school grad), embarrassing, relatable. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
+          <p className="story-beat-text">I spent one on a plant that just sits in my room, another on a book I half read, and another on some pants I grew out of. My middle school graduation gift card bought a snack at the airport. They were all nice. None of them marked anything.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 3 — the insight. Tees up the watches reveal that comes immediately after. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">Then I put it together.</h2>
+          <p className="story-beat-text">A watch with a real wood dial. Something that lasts, that you can't spend, and that you'd actually want to wear. So I started designing it.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 5 — vulnerability. The kid had no clue. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
+          <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
+          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
+          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
         </div>
       </Reveal>
 
