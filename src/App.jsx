@@ -34,6 +34,17 @@ const POLL_IMAGES = {
 
 const FALLBACK_WAITLIST_COUNT = 152
 
+// Founder's age is COMPUTED, never hardcoded. The story keeps the founding
+// moment in past tense ("when I was 14") so it never decays; this is the one
+// present-tense fact on the page and it updates itself. Born May 2011; exact
+// day unknown, so it ticks over on June 1 and never overstates his age.
+const FOUNDER_BIRTH_YEAR = 2011
+const FOUNDER_BIRTH_MONTH = 5 // May
+function founderAgeNow(now = new Date()) {
+  const past = now.getMonth() + 1 > FOUNDER_BIRTH_MONTH
+  return now.getFullYear() - FOUNDER_BIRTH_YEAR - (past ? 0 : 1)
+}
+
 // Wood choices for the insider vote card. Matches the wood vote API which
 // expects lowercase keys (padauk, ebony, hinoki). Images use the existing
 // Tokiji render imports at the top of this file.
@@ -227,6 +238,7 @@ function App() {
   const [statsEmail, setStatsEmail] = useState(() => localStorage.getItem('gebauer_last_email') || '')
   const [menuOpen, setMenuOpen] = useState(false)
   const [waitlistCount, setWaitlistCount] = useState(FALLBACK_WAITLIST_COUNT)
+  const founderAge = founderAgeNow()
 
   // Voting system — saves to Supabase via API
   const [woodVote, setWoodVote] = useState(() => localStorage.getItem('gebauer_wood_vote') || '')
@@ -580,8 +592,8 @@ function App() {
       {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
       <Reveal className="story-beat story-milan" id="story">
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. I was 14. I bought a watch in Milan.</h2>
-          <p className="story-beat-text">Walked into a Seiko store with 310 euros. No notifications. No swipes. Just the time. My three siblings saw it. They wanted one too.</p>
+          <h2 className="story-beat-headline">I'm Liam and I'm {founderAge}. When I was 14, I bought a watch in Milan.</h2>
+          <p className="story-beat-text">I walked into a Seiko store with 310 euros I'd been saving for months, and walked out with my first real watch. What amazed me was that it didn't beep or buzz or try to get my attention. It just told the time. Everything else I owned was going to be obsolete or used up in a couple of years. This wasn't.</p>
         </div>
       </Reveal>
 
@@ -589,7 +601,7 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
-          <p className="story-beat-text">I spent one on pants I grew out of. A plant that sits in my room doing nothing. My middle school graduation gift card bought a snack at the airport. None of it stuck. None of it marked anything.</p>
+          <p className="story-beat-text">I spent one on a plant that just sits in my room, another on a book I half read, and another on some pants I grew out of. My middle school graduation gift card bought a snack at the airport. They were all nice. None of them marked anything.</p>
         </div>
       </Reveal>
 
@@ -597,7 +609,31 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">Then I put it together.</h2>
-          <p className="story-beat-text">A watch. Made from wood, not plastic. Doesn't beep. Doesn't expire. Ages with you. The literal opposite of a gift card. So I started designing it.</p>
+          <p className="story-beat-text">A watch with a real wood dial. Something that lasts, that you can't spend, and that you'd actually want to wear. So I started designing it.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 5 — vulnerability. The kid had no clue. */}
+      <Reveal className="story-beat story-cream">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
+          <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
+          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
+        </div>
+      </Reveal>
+
+      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{textAlign: 'center'}}>
+          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
+          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
         </div>
       </Reveal>
 
@@ -664,35 +700,11 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 5 — vulnerability. The kid had no clue. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">But I had no idea where to start.</h2>
-          <p className="story-beat-text">I'm 14. I don't run a watch company. So I emailed manufacturers in five countries. Most ignored me. Then one in Japan replied. Then one in Italy.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
-          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
-        </div>
-      </Reveal>
-
       {/* SCENE 9 - you're early. Updated 2026-07-14 to remove references to a live poll that no longer exists. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">You're early.</h2>
-          <p className="story-beat-text">Samples land in weeks. Kickstarter opens early next year. You're not joining a finished thing. You're walking in mid-build.</p>
+          <p className="story-beat-text">Kickstarter opens early next year. You're not joining a finished thing, you're walking in mid-build.</p>
         </div>
       </Reveal>
 
