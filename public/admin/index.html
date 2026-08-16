@@ -715,11 +715,14 @@
     const AUTO_ASSIGN_BOTTOM = 11  // don't dip into strategic hold
     const RESERVED_TOP_START = 91  // fallback range if middle depleted
 
-    function lastAvailableInWood(availData, wood) {
+    // `claimed` holds numbers handed out earlier in the SAME assignment pass.
+    // Without it this function only sees what is already in the DB, so two
+    // people who did not pick a number both got the same one.
+    function lastAvailableInWood(availData, wood, claimed) {
       const reserved = new Set((availData && availData[wood]) || [])
       const pending = new Set((availData && availData.pending && availData.pending[wood]) || [])
       const hold = new Set((availData && availData.strategic_hold && availData.strategic_hold[wood]) || [])
-      const isOpen = (n) => !reserved.has(n) && !pending.has(n) && !hold.has(n)
+      const isOpen = (n) => !reserved.has(n) && !pending.has(n) && !hold.has(n) && !(claimed && claimed.has(n))
       // Middle zone first
       for (let n = AUTO_ASSIGN_TOP; n >= AUTO_ASSIGN_BOTTOM; n--) {
         if (isOpen(n)) return n
@@ -740,6 +743,25 @@
       ])
       const items = data.reservations || []
       const counts = data.counts || {}
+
+      // One auto-number per person who did not pick one, all distinct.
+      // Earliest signup is assigned first. Numbers still walk down from 90 so
+      // the low ones stay free for people who ask for a specific number.
+      function buildAutoAssignments(availData, reservations) {
+        const claimed = {}
+        const out = new Map()
+        const queue = reservations
+          .filter(r => !r.preferred_position && ['cherry', 'hinoki', 'ebony', 'padauk'].includes(r.wood_preference))
+          .sort((a, b) => String(a.submitted_at || '').localeCompare(String(b.submitted_at || '')))
+        for (const r of queue) {
+          const wood = r.wood_preference === 'hinoki' ? 'cherry' : r.wood_preference
+          if (!claimed[wood]) claimed[wood] = new Set()
+          const n = lastAvailableInWood(availData, wood, claimed[wood])
+          if (n) { claimed[wood].add(n); out.set(r.id, n) }
+        }
+        return out
+      }
+      const autoAssign = buildAutoAssignments(avail, items)
 
       const WOOD_LABEL = {
         cherry: 'Cherry ($299)', hinoki: 'Cherry ($299)', ebony: 'Black Ebony ($339)',
@@ -778,8 +800,7 @@
             // (highest still-open number, working down from 100). That
             // preserves low/prime numbers for people who specifically want
             // them while still guaranteeing early reservers a watch.
-            const autoNumber = (!r.preferred_position && ['cherry', 'hinoki', 'ebony', 'padauk'].includes(r.wood_preference))
-              ? lastAvailableInWood(avail, r.wood_preference) : null
+            const autoNumber = autoAssign.get(r.id) || null
 
             async function doReserve(watchNum) {
               const label = `${wLabel} #${String(watchNum).padStart(3, '0')}`
@@ -937,7 +958,7 @@
           const w = WOOD_SHORT[r.wood_preference] || r.wood_preference.toUpperCase()
           const num = r.preferred_position
             ? String(r.preferred_position).padStart(3, '0')
-            : `auto (${String(lastAvailableInWood(avail, r.wood_preference) || '?').padStart(3, '0')})`
+            : `auto (${String(autoAssign.get(r.id) || '?').padStart(3, '0')})`
           return `- ${r.first_name}: ${w} #${num}`
         }).join('\n')
         const ok = confirm(
@@ -946,7 +967,7 @@
         if (!ok) return
         for (const r of selected) {
           const wood = r.wood_preference
-          const num = r.preferred_position || lastAvailableInWood(avail, wood)
+          const num = r.preferred_position || autoAssign.get(r.id)
           if (!num) continue
           let subscriberId = r.subscriber_id
           if (!subscriberId) {
