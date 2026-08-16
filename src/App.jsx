@@ -529,6 +529,7 @@ function App() {
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
           <a href="/about" className="nav-link">About</a>
+          <a href="/specs" className="nav-link">Specs</a>
           <button className="nav-link" onClick={() => setShowStats(true)}>My Spot</button>
           <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
         </div>
@@ -543,6 +544,7 @@ function App() {
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
             <a href="/about" className="nav-link">About</a>
+          <a href="/specs" className="nav-link">Specs</a>
             <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Spot</button>
             <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
           </div>
