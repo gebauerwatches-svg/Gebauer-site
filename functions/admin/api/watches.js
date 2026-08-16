@@ -26,7 +26,7 @@ import { requireAuth } from '../_auth.js'
 function detectWood(text) {
   if (!text) return null
   const t = text.toLowerCase()
-  if (t.includes('hinoki')) return 'hinoki'
+  if (t.includes('cherry') || t.includes('hinoki')) return 'cherry'  // hinoki = legacy pale variant, dropped Aug 2026
   if (t.includes('ebony')) return 'ebony'
   if (t.includes('padauk')) return 'padauk'
   return null

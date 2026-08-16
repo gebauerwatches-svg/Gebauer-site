@@ -146,8 +146,8 @@
         box-shadow: 0 0 0 2px var(--purple);
       }
 
-      /* Hinoki: pale gold */
-      .avail-grid.hinoki .avail-cell.avail { background: #e8dbb0; color: #1a1714; border-color: #c4b478; }
+      /* Cherry: warm pale tan, the colour it starts at before it darkens */
+      .avail-grid.cherry .avail-cell.avail { background: #e6c9a8; color: #1a1714; border-color: #c49a72; }
       /* Ebony: dark charcoal */
       .avail-grid.ebony .avail-cell.avail { background: #3a3028; color: #f0ece5; border-color: #5a4d40; }
       /* Padauk: warm orange */
@@ -283,16 +283,16 @@
       </p>
 
       <div id="picked-notice" class="picked-notice hidden">
-        <span id="picked-text">You picked HINOKI 001. Not reserved yet, we still have to talk first.</span>
+        <span id="picked-text">You picked CHERRY 001. Not reserved yet, we still have to talk first.</span>
         <button type="button" id="picked-clear" class="picked-clear">Clear</button>
       </div>
 
       <div class="avail-wrap">
         <div class="avail-title-row">
-          <span class="avail-title">Hinoki &nbsp;&middot;&nbsp; $299</span>
-          <span class="avail-count" id="hinoki-count">Loading...</span>
+          <span class="avail-title">Cherry &nbsp;&middot;&nbsp; $299</span>
+          <span class="avail-count" id="cherry-count">Loading...</span>
         </div>
-        <div class="avail-grid hinoki" id="grid-hinoki" data-wood="hinoki"></div>
+        <div class="avail-grid cherry" id="grid-cherry" data-wood="cherry"></div>
       </div>
 
       <div class="avail-wrap">
@@ -326,7 +326,7 @@
           <label for="wood_preference">Which wood?</label>
           <select id="wood_preference" name="wood_preference" required>
             <option value="">Pick one</option>
-            <option value="hinoki">Hinoki &nbsp;&middot;&nbsp; $299</option>
+            <option value="cherry">Cherry &nbsp;&middot;&nbsp; $299</option>
             <option value="ebony">Black Ebony &nbsp;&middot;&nbsp; $339</option>
             <option value="padauk">African Padauk &nbsp;&middot;&nbsp; $375</option>
             <option value="unsure">Not sure yet</option>
@@ -392,7 +392,7 @@
       // Pre-select wood from URL param if present
       const urlParams = new URLSearchParams(window.location.search);
       const woodParam = urlParams.get('wood');
-      const validWoods = ['hinoki', 'ebony', 'padauk', 'unsure'];
+      const validWoods = ['cherry', 'ebony', 'padauk', 'unsure'];
       if (woodParam && validWoods.includes(woodParam.toLowerCase())) {
         form.wood_preference.value = woodParam.toLowerCase();
       }
@@ -422,18 +422,18 @@
         form.parentNode.insertBefore(welcome, form);
       }
 
-      const WOOD_LABEL = { hinoki: 'HINOKI', ebony: 'EBONY', padauk: 'PADAUK' };
+      const WOOD_LABEL = { cherry: 'CHERRY', ebony: 'EBONY', padauk: 'PADAUK' };
 
       function pad(n) { return String(n).padStart(3, '0'); }
 
       async function loadAvailability() {
-        let data = { hinoki: [], ebony: [], padauk: [], pending: { hinoki: [], ebony: [], padauk: [] }, strategic_hold: { hinoki: [], ebony: [], padauk: [] } };
+        let data = { cherry: [], ebony: [], padauk: [], pending: { cherry: [], ebony: [], padauk: [] }, strategic_hold: { cherry: [], ebony: [], padauk: [] } };
         try {
           const resp = await fetch('/api/availability');
           if (resp.ok) data = await resp.json();
         } catch (e) { /* silently show all-available on network failure */ }
 
-        for (const wood of ['hinoki', 'ebony', 'padauk']) {
+        for (const wood of ['cherry', 'ebony', 'padauk']) {
           const reserved = new Set(data[wood] || []);
           const pending = new Set((data.pending && data.pending[wood]) || []);
           const hold = new Set((data.strategic_hold && data.strategic_hold[wood]) || []);

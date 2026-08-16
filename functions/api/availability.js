@@ -9,11 +9,11 @@
  * wood. Response is safe to expose publicly.
  *
  *   {
- *     hinoki: [reserved positions 1-100],   // hard reserved by subscribers
+ *     cherry: [reserved positions 1-100],   // hard reserved by subscribers
  *     ebony:  [...],
  *     padauk: [...],
- *     pending: { hinoki: [...], ebony: [...], padauk: [...] },
- *     strategic_hold: { hinoki: [1..10], ebony: [1..10], padauk: [1..10] }
+ *     pending: { cherry: [...], ebony: [...], padauk: [...] },
+ *     strategic_hold: { cherry: [1..10], ebony: [1..10], padauk: [1..10] }
  *   }
  *
  * Pending: preferred_position values from active reservation_interest
@@ -31,10 +31,15 @@ import { json } from './_shared.js'
 const STRATEGIC_HOLD_MAX = 10  // numbers 1..N per wood are held internally
 
 
+// 'hinoki' is a LEGACY value. Hinoki was the pale variant until Aug 2026, when
+// it turned out to be unsourceable and was replaced by cherry. Rows written
+// before then still say hinoki in notes / wood_preference, so every read path
+// maps it onto cherry. Do not delete this without migrating the D1 data first,
+// or those reservations silently stop resolving to a variant.
 function detectWood(text) {
   if (!text) return null
   const t = text.toLowerCase()
-  if (t.includes('hinoki')) return 'hinoki'
+  if (t.includes('cherry') || t.includes('hinoki')) return 'cherry'
   if (t.includes('ebony')) return 'ebony'
   if (t.includes('padauk')) return 'padauk'
   return null
@@ -42,7 +47,7 @@ function detectWood(text) {
 
 
 function fallbackWood(pos) {
-  if (pos <= 100) return 'hinoki'
+  if (pos <= 100) return 'cherry'
   if (pos <= 200) return 'ebony'
   return 'padauk'
 }
@@ -57,7 +62,7 @@ function positionWithinVariant(pos, wood) {
 
 export async function onRequestGet(context) {
   const { env } = context
-  if (!env.DB) return json({ hinoki: [], ebony: [], padauk: [], pending: { hinoki: [], ebony: [], padauk: [] } })
+  if (!env.DB) return json({ cherry: [], ebony: [], padauk: [], pending: { cherry: [], ebony: [], padauk: [] } })
 
   try {
     // Reserved: subscribers with an assigned waitlist_position
@@ -71,7 +76,7 @@ export async function onRequestGet(context) {
          AND status = 'active'`
     ).all()
 
-    const reserved = { hinoki: [], ebony: [], padauk: [] }
+    const reserved = { cherry: [], ebony: [], padauk: [] }
     for (const r of (assigned.results || [])) {
       const wood = detectWood(r.notes) || fallbackWood(r.waitlist_position)
       const pos = positionWithinVariant(r.waitlist_position, wood)
@@ -79,7 +84,7 @@ export async function onRequestGet(context) {
     }
 
     // Pending: reservation_interest rows with a preferred_position specified
-    const pending = { hinoki: [], ebony: [], padauk: [] }
+    const pending = { cherry: [], ebony: [], padauk: [] }
     try {
       const pendingRows = await env.DB.prepare(
         `SELECT preferred_position, wood_preference
@@ -87,8 +92,8 @@ export async function onRequestGet(context) {
          WHERE status = 'pending' AND preferred_position IS NOT NULL`
       ).all()
       for (const p of (pendingRows.results || [])) {
-        const w = p.wood_preference
-        if (['hinoki', 'ebony', 'padauk'].includes(w) && p.preferred_position >= 1 && p.preferred_position <= 100) {
+        const w = p.wood_preference === 'hinoki' ? 'cherry' : p.wood_preference  // legacy, see detectWood
+        if (['cherry', 'ebony', 'padauk'].includes(w) && p.preferred_position >= 1 && p.preferred_position <= 100) {
           pending[w].push(p.preferred_position)
         }
       }
@@ -100,7 +105,7 @@ export async function onRequestGet(context) {
     const holdRange = []
     for (let i = 1; i <= STRATEGIC_HOLD_MAX; i++) holdRange.push(i)
     const strategic_hold = {
-      hinoki: [...holdRange],
+      cherry: [...holdRange],
       ebony: [...holdRange],
       padauk: [...holdRange],
     }

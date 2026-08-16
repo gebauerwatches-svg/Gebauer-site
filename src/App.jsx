@@ -10,7 +10,11 @@ import boxDebossed from './assets/polls/box-debossed.png'
 import boxGoldLogo from './assets/polls/box-gold-logo.png'
 import interiorSuede from './assets/polls/interior-suede.jpeg'
 import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
-import watchHinoki from './assets/tokiji-hinoki-render.jpeg'
+// PLACEHOLDER: this is still the Hinoki render. Hinoki was dropped Aug 2026
+// (unsourceable) and replaced by cherry, but no cherry render exists yet.
+// Showing a Hinoki dial labelled "Cherry" misrepresents the product. Replace
+// before the campaign, or before any outreach sends traffic here.
+import watchCherry from './assets/tokiji-hinoki-render.jpeg'
 import watchPadauk from './assets/tokiji-padauk-render.jpeg'
 import padaukAged from './assets/padauk-aged.jpeg'
 import padaukDeep from './assets/padauk-deep.jpeg'
@@ -46,12 +50,12 @@ function founderAgeNow(now = new Date()) {
 }
 
 // Wood choices for the insider vote card. Matches the wood vote API which
-// expects lowercase keys (padauk, ebony, hinoki). Images use the existing
+// expects lowercase keys (padauk, ebony, cherry). Images use the existing
 // Tokiji render imports at the top of this file.
 const WOOD_OPTIONS = [
   { key: 'padauk', label: 'Padauk', img: watchPadauk },
   { key: 'ebony',  label: 'Ebony',  img: watchEbony },
-  { key: 'hinoki', label: 'Hinoki', img: watchHinoki },
+  { key: 'cherry', label: 'Cherry', img: watchCherry },
 ]
 
 const RavenIcon = ({ className = '', size = 20 }) => (
@@ -618,7 +622,7 @@ function App() {
             {[
               { id: 'padauk', img: watchPadauk, name: 'African Padauk', price: '$375', desc: 'Bleeds orange when cut. A wood that lives. And it doesn\'t stop changing.' },
               { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
-              { id: 'hinoki', img: watchHinoki, name: 'Hinoki', price: '$299', desc: 'Japan\'s sacred cypress. Used to rebuild the Ise Jingu shrine for 1,300 years. Gets stronger as it ages.' },
+              { id: 'cherry', img: watchCherry, name: 'Cherry', price: '$299', desc: 'Starts pale and darkens to a deep reddish brown, most of it within the first months. The fastest-changing of the three.' },
             ].map(w => (
               <div key={w.id} className="wood-card">
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>

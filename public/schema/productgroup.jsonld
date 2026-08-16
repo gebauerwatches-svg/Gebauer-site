@@ -2,7 +2,7 @@
   "@context": "https://schema.org",
   "@type": "ProductGroup",
   "name": "Gebauer Watches",
-  "description": "Premium wooden watches available in three variants: Hinoki, Black Ebony, and African Padauk",
+  "description": "Premium wooden watches available in three variants: Cherry, Black Ebony, and African Padauk",
   "url": "https://gebauerwatches.com/watches",
   "brand": {
     "@type": "Brand",
@@ -25,7 +25,7 @@
   "hasVariant": [
     {
       "@type": "Product",
-      "name": "Gebauer Watches Hinoki",
+      "name": "Gebauer Watches Cherry",
       "brand": "Gebauer Watches",
       "price": "299",
       "priceCurrency": "USD",

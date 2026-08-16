@@ -32,7 +32,7 @@
     "itemListElement": [
       {
         "@type": "Product",
-        "name": "Hinoki Watch",
+        "name": "Cherry Watch",
         "offers": {
           "@type": "Offer",
           "price": "299",

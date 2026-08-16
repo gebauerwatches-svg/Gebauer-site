@@ -22,18 +22,18 @@
 import { json, randomHex } from './_shared.js'
 
 
-const VALID_WOODS = new Set(['hinoki', 'ebony', 'padauk', 'unsure'])
+const VALID_WOODS = new Set(['cherry', 'ebony', 'padauk', 'unsure'])
 
 
 const WOOD_LABELS = {
-  hinoki: 'Hinoki ($299)',
+  cherry: 'Cherry ($299)',
   ebony: 'Black Ebony ($339)',
   padauk: 'African Padauk ($375)',
   unsure: 'Not sure yet',
 }
 
 const WOOD_SHORT = {
-  hinoki: 'HINOKI',
+  cherry: 'CHERRY',
   ebony: 'EBONY',
   padauk: 'PADAUK',
 }
@@ -160,7 +160,11 @@ export async function onRequestPost(context) {
 
   const cleanName = String(first_name).trim().slice(0, 100)
   const cleanEmail = String(email).trim().toLowerCase().slice(0, 200)
-  const cleanWood = String(wood_preference).toLowerCase().trim()
+  // 'hinoki' is accepted and folded into cherry: hinoki was the pale variant
+  // until Aug 2026 and old links (/reserve?wood=hinoki) are still bookmarked
+  // and indexed. Rejecting them would fail a real reservation for no reason.
+  const rawWood = String(wood_preference).toLowerCase().trim()
+  const cleanWood = rawWood === 'hinoki' ? 'cherry' : rawWood
   const cleanWhy = (why_message ? String(why_message).trim().slice(0, 1000) : null)
   const cleanPos = (Number.isInteger(preferred_position) && preferred_position >= 1 && preferred_position <= 100)
     ? preferred_position

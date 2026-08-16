@@ -517,7 +517,9 @@
       const data = await fetch('/api/vote?poll=wood').then(r => r.json()).catch(() => ({ results: {}, total: 0 }))
       const results = data.results || {}
       const total = data.total || 0
-      const woods = ['padauk', 'ebony', 'hinoki']
+      // 'hinoki' appears as an alias in the maps below: it was the pale variant
+      // until Aug 2026 and legacy D1 rows still carry it. See functions/api/availability.js
+      const woods = ['padauk', 'ebony', 'cherry']
       const rows = woods.map(w => {
         const n = results[w] || 0
         const pct = total > 0 ? Math.round((n / total) * 100) : 0
@@ -740,7 +742,7 @@
       const counts = data.counts || {}
 
       const WOOD_LABEL = {
-        hinoki: 'Hinoki ($299)', ebony: 'Black Ebony ($339)',
+        cherry: 'Cherry ($299)', hinoki: 'Cherry ($299)', ebony: 'Black Ebony ($339)',
         padauk: 'African Padauk ($375)', unsure: 'Not sure',
       }
 
@@ -756,12 +758,12 @@
         }, s)
       }
 
-      const WOOD_SHORT = { hinoki: 'HINOKI', ebony: 'EBONY', padauk: 'PADAUK', unsure: 'wood-TBD' }
+      const WOOD_SHORT = { cherry: 'CHERRY', hinoki: 'CHERRY', ebony: 'EBONY', padauk: 'PADAUK', unsure: 'wood-TBD' }
       const list = items.length === 0
         ? el('p', { class: 'page-sub' }, 'No reservation interest yet. When someone submits the /reserve form, it will appear here.')
         : el('div', {}, ...items.map(r => {
-            // Explicit request language: "Requested: HINOKI #100" or
-            // "Requested: HINOKI (no number picked)"
+            // Explicit request language: "Requested: CHERRY #100" or
+            // "Requested: CHERRY (no number picked)"
             const wLabel = WOOD_SHORT[r.wood_preference] || r.wood_preference.toUpperCase()
             const requestLine = r.preferred_position
               ? `Requested: ${wLabel} #${String(r.preferred_position).padStart(3, '0')}`
@@ -776,7 +778,7 @@
             // (highest still-open number, working down from 100). That
             // preserves low/prime numbers for people who specifically want
             // them while still guaranteeing early reservers a watch.
-            const autoNumber = (!r.preferred_position && ['hinoki', 'ebony', 'padauk'].includes(r.wood_preference))
+            const autoNumber = (!r.preferred_position && ['cherry', 'hinoki', 'ebony', 'padauk'].includes(r.wood_preference))
               ? lastAvailableInWood(avail, r.wood_preference) : null
 
             async function doReserve(watchNum) {
@@ -1138,7 +1140,7 @@
     function showConvertReservation(r) {
       // Pre-fill an Add Subscriber form with the reservation data.
       // Watch # left blank so Liam picks it explicitly.
-      const WOOD_MAP = { hinoki: 'Hinoki', ebony: 'Ebony', padauk: 'Padauk', unsure: 'wood TBD' }
+      const WOOD_MAP = { cherry: 'Cherry', hinoki: 'Cherry', ebony: 'Ebony', padauk: 'Padauk', unsure: 'wood TBD' }
       const defaultNotes = `${WOOD_MAP[r.wood_preference] || 'Wood TBD'} - converted from reservation ${new Date().toISOString().slice(0, 10)}.${r.why_message ? ' Their why: "' + r.why_message.slice(0, 200) + '"' : ''}`
       const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
         el('form', { class: 'modal', onsubmit: async (e) => {
@@ -1232,17 +1234,17 @@
       const pending = data.pending || []
 
       const WOODS = [
-        { key: 'hinoki', label: 'Hinoki', color: '#e8dbb0', border: '#c4b478' },
+        { key: 'cherry', label: 'Cherry', color: '#e6c9a8', border: '#c49a72' },
         { key: 'ebony', label: 'Black Ebony', color: '#3a3028', border: '#5a4d40' },
         { key: 'padauk', label: 'African Padauk', color: '#c46a3a', border: '#9c5028' },
       ]
 
       // Fallback wood if notes don't explicitly mention one:
-      //   position 1-100 defaults to Hinoki, 101-200 Ebony, 201-300 Padauk.
+      //   position 1-100 defaults to Cherry, 101-200 Ebony, 201-300 Padauk.
       // This only matters for subscribers who don't have a wood mentioned
       // in their notes column (old data from the pre-per-variant era).
       function fallbackWoodForPos(n) {
-        if (n <= 100) return 'hinoki'
+        if (n <= 100) return 'cherry'
         if (n <= 200) return 'ebony'
         return 'padauk'
       }
@@ -1255,7 +1257,7 @@
       //       * if wood is set via notes and doesn't match fallback: use raw
       //         position as-is (that's the number the customer chose within
       //         their wood variant)
-      const byWood = { hinoki: {}, ebony: {}, padauk: {} }
+      const byWood = { cherry: {}, ebony: {}, padauk: {} }
       for (const a of assigned) {
         const wood = a.wood_hint || fallbackWoodForPos(a.position)
         // Position within variant: if raw position is in the 1-100 range,
@@ -1372,7 +1374,7 @@
           el('div', { class: 'stat' }, el('div', { class: 'stat-label' }, 'Pending interest'), el('div', { class: 'stat-value' }, String(pending.length))),
         ),
 
-        renderWoodSection('hinoki'),
+        renderWoodSection('cherry'),
         renderWoodSection('ebony'),
         renderWoodSection('padauk'),
 
