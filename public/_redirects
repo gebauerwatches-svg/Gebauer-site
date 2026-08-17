@@ -12,3 +12,9 @@ http://gebauerwatches.com/*      https://gebauerwatches.com/:splat 301!
 # Substack is the publication. See gebauer-site/src/posts.js for the archive.
 /blog/*  /  301
 /blog    /  301
+
+# /specs retired Aug 17 2026. The specification table now lives inline under
+# the watches on the homepage - one page instead of sending people to a second
+# one. The URL is kept alive because it is in llms.txt and was mailed out.
+/specs   /#watches   301
+/specs/  /#watches   301

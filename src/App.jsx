@@ -58,6 +58,28 @@ const WOOD_OPTIONS = [
   { key: 'cherry', label: 'Cherry', img: watchCherry },
 ]
 
+// Line icons for the spec rows under the watches. Deliberately plain: 24x24,
+// stroked in currentColor, no fill, so they read as markers rather than art.
+const SPEC_ICONS = {
+  movement: <><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></>,
+  case:     <><circle cx="12" cy="12" r="6.5"/><path d="M9 5.7V2.5h6v3.2M9 18.3v3.2h6v-3.2"/></>,
+  crystal:  <><path d="M3 9.5h18l-9 11.5z"/><path d="M3 9.5l3.2-5h11.6l3.2 5"/></>,
+  water:    <path d="M12 2.8s6 6.6 6 10.2a6 6 0 0 1-12 0C6 9.4 12 2.8 12 2.8z"/>,
+  dial:     <><circle cx="12" cy="12" r="9"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21"/></>,
+  hands:    <><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l4 2.4"/></>,
+  bracelet: <><rect x="2.5" y="9" width="5.2" height="6" rx="1.6"/><rect x="9.4" y="9" width="5.2" height="6" rx="1.6"/><rect x="16.3" y="9" width="5.2" height="6" rx="1.6"/></>,
+  edition:  <path d="M9.5 3.5L7.5 20.5M16.5 3.5l-2 17M4 9h16M3.4 15H19.4"/>,
+  assembly: <><path d="M12 21.2s6.8-6 6.8-11a6.8 6.8 0 1 0-13.6 0c0 5 6.8 11 6.8 11z"/><circle cx="12" cy="10.2" r="2.4"/></>,
+}
+
+const SpecIcon = ({ name }) => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"
+       style={{ flex: '0 0 15px', marginTop: 4, opacity: 0.7 }} aria-hidden="true">
+    {SPEC_ICONS[name]}
+  </svg>
+)
+
 const RavenIcon = ({ className = '', size = 20 }) => (
   <svg className={className} width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 2C10.5 2 9 3 8.5 4.5C7 4 5 4.5 4 6C3 7.5 3.5 9.5 4.5 10.5C3 11.5 2 13.5 2.5 15.5C3 17.5 5 19 7 19L8 21H16L17 19C19 19 21 17.5 21.5 15.5C22 13.5 21 11.5 19.5 10.5C20.5 9.5 21 7.5 20 6C19 4.5 17 4 15.5 4.5C15 3 13.5 2 12 2ZM10 9C10.6 9 11 9.4 11 10S10.6 11 10 11S9 10.6 9 10S9.4 9 10 9ZM14 9C14.6 9 15 9.4 15 10S14.6 11 14 11S13 10.6 13 10S13.4 9 14 9Z"/>
@@ -529,7 +551,6 @@ function App() {
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>
           <a href="/about" className="nav-link">About</a>
-          <a href="/specs" className="nav-link">Specs</a>
           <button className="nav-link" onClick={() => setShowStats(true)}>My Spot</button>
           <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
         </div>
@@ -544,7 +565,6 @@ function App() {
             <a href="#story" className="nav-link">Story</a>
             <a href="#watches" className="nav-link">Watches</a>
             <a href="/about" className="nav-link">About</a>
-          <a href="/specs" className="nav-link">Specs</a>
             <button className="nav-link" onClick={() => { setMenuOpen(false); setShowStats(true) }}>My Spot</button>
             <a href="/reserve" className="nav-link nav-link-primary">Reserve</a>
           </div>
@@ -638,19 +658,44 @@ function App() {
             ))}
           </div>
 
-          {/* Compact spec line. Collectors want the numbers next to the price,
-              not three pages away. Full sheet lives at /specs. */}
-          <p style={{
-            marginTop: 28, fontSize: 13, lineHeight: 1.9,
-            letterSpacing: '0.04em', color: 'rgba(240,232,214,0.55)',
-          }}>
-            Seiko VH31 meca-quartz &nbsp;&middot;&nbsp; 39mm 316L steel &nbsp;&middot;&nbsp; Sapphire
-            &nbsp;&middot;&nbsp; 5 ATM &nbsp;&middot;&nbsp; Butterfly clasp
-            <br />
-            <a href="/specs" style={{ color: '#c4952a', textDecoration: 'none' }}>
-              Full specifications
-            </a>
-          </p>
+          {/* Specs live here rather than on their own page. A collector reading
+              a $375 price wants the movement in the same eyeline, and one page
+              beats sending people off to a second one. /specs 301s back here. */}
+          <div style={{ marginTop: 48, maxWidth: 540, margin: '48px auto 0', textAlign: 'left' }}>
+            {[
+              ['movement', 'Movement', 'Seiko VH31 meca-quartz, sweeping seconds'],
+              ['case', 'Case', '39mm, 10mm thick, 44mm lug to lug, 316L steel'],
+              ['crystal', 'Crystal', 'Flat sapphire, anti-reflective'],
+              ['water', 'Water resistance', '5 ATM'],
+              ['dial', 'Dial', 'Real wood, cut individually'],
+              ['hands', 'Hands', 'Dauphine, luminescent'],
+              ['bracelet', 'Bracelet', 'Steel, 20mm lugs, butterfly clasp'],
+              ['edition', 'Edition', '300 total, 100 of each wood, numbered within its wood'],
+              ['assembly', 'Assembly', 'Japan. Packaging made in northern Italy'],
+            ].map(([icon, k, v]) => (
+              <div key={k} style={{
+                display: 'flex', gap: 14, padding: '11px 0', fontSize: 14,
+                borderBottom: '1px solid rgba(240,232,214,0.08)',
+              }}>
+                <span style={{
+                  flex: '0 0 40%', display: 'flex', gap: 10, alignItems: 'flex-start',
+                  color: 'rgba(240,232,214,0.5)',
+                }}>
+                  <SpecIcon name={icon} />
+                  {k}
+                </span>
+                <span style={{ color: 'rgba(240,232,214,0.9)' }}>{v}</span>
+              </div>
+            ))}
+            <img
+              src="/images/caseback.png"
+              alt="Gebauer caseback: an etched raven above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
+              style={{ display: 'block', width: '100%', maxWidth: 230, height: 'auto', margin: '40px auto 0' }}
+            />
+            <p style={{ marginTop: 14, fontSize: 13, textAlign: 'center', color: 'rgba(240,232,214,0.5)', lineHeight: 1.7 }}>
+              Every caseback is etched with its own number within its wood.
+            </p>
+          </div>
 
         </div>
       </Reveal>
@@ -925,6 +970,11 @@ function App() {
           <a href="https://gebauerwatches.substack.com" target="_blank" rel="noopener noreferrer">
             Read Liam's daily journal on Substack →
           </a>
+        </p>
+        <p className="footer-journal" style={{ marginTop: 4 }}>
+          <a href="/about">About</a>
+          <span style={{ opacity: 0.35, margin: '0 12px' }}>&middot;</span>
+          <a href="/faq">FAQ</a>
         </p>
         <p className="footer-copy">&copy; {new Date().getFullYear()} Gebauer Watches</p>
         <a href="/privacy" className="footer-legal" onClick={() => window.location.href = '/privacy'}>Privacy Policy</a>
