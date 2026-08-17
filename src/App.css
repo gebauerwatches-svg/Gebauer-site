@@ -1541,8 +1541,8 @@
   max-width: 860px;
   text-align: left;
 }
-.spec-item { display: flex; gap: 24px; align-items: flex-start; }
-.spec-item-icon { flex: 0 0 76px; width: 76px; height: 76px; opacity: 0.95; }
+.spec-item { display: flex; gap: 16px; align-items: flex-start; }
+.spec-item-icon { flex: 0 0 30px; width: 30px; height: 30px; opacity: 0.85; margin-top: 4px; }
 .spec-item h3 {
   margin: 4px 0 10px;
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
@@ -1560,7 +1560,7 @@
 }
 @media (max-width: 760px) {
   .spec-grid { grid-template-columns: 1fr; gap: 34px; margin-top: 48px; }
-  .spec-item-icon { flex: 0 0 60px; width: 60px; height: 60px; }
+  .spec-item-icon { flex: 0 0 26px; width: 26px; height: 26px; }
   .spec-item p { font-size: 16px; }
   .spec-item { gap: 18px; }
 }

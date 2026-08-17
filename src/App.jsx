@@ -58,57 +58,24 @@ const WOOD_OPTIONS = [
   { key: 'cherry', label: 'Cherry', img: watchCherry },
 ]
 
-// Line drawings of the actual parts, 64x64, for the spec grid under the
-// watches. Drawn rather than sourced so they match the site's line weight.
+// Small marker icons for the spec blocks. Deliberately simple and small:
+// these are markers, not technical illustrations. A simplified drawing blown
+// up to 76px just looks like clipart, which is what the first attempt did.
+// If Tokiji will supply real part drawings, swap these for those.
 const SPEC_ICONS = {
-  case: <>
-    <path d="M20 16V9h9v7M35 16V9h9v7M20 48v7h9v-7M35 48v7h9v-7"/>
-    <rect x="16" y="16" width="32" height="32" rx="9"/>
-    <circle cx="32" cy="32" r="11"/>
-    <path d="M48 28h5v8h-5"/>
-  </>,
-  movement: <>
-    <circle cx="32" cy="32" r="19"/>
-    <circle cx="32" cy="32" r="5"/>
-    <circle cx="23" cy="23" r="4.5"/>
-    <circle cx="42" cy="25" r="3.5"/>
-    <circle cx="25" cy="42" r="3.5"/>
-    <circle cx="41" cy="41" r="5"/>
-    <path d="M32 13v3M32 48v3M13 32h3M48 32h3"/>
-  </>,
-  dial: <>
-    <circle cx="32" cy="32" r="20"/>
-    <path d="M32 13v5M32 46v5M13 32h5M46 32h5M18.7 18.7l3.5 3.5M41.8 41.8l3.5 3.5M45.3 18.7l-3.5 3.5M22.2 41.8l-3.5 3.5"/>
-    <circle cx="32" cy="32" r="1.6"/>
-  </>,
-  hands: <>
-    <circle cx="28" cy="42" r="3"/>
-    <path d="M28 39L23.5 22 28 11l4.5 11z"/>
-    <path d="M30.8 40.4L46 32l7-2.4-5.6 5.6z"/>
-  </>,
-  bracelet: <>
-    <rect x="8" y="23" width="13" height="18" rx="4"/>
-    <rect x="25.5" y="23" width="13" height="18" rx="4"/>
-    <rect x="43" y="23" width="13" height="18" rx="4"/>
-    <path d="M21 32h4.5M38.5 32H43"/>
-  </>,
-  glass: <>
-    <path d="M20 15h24l9 13-21 22-21-22z"/>
-    <path d="M11 28h42M20 15l5 13M44 15l-5 13M32 50l-7-22M32 50l7-22"/>
-  </>,
-  caseback: <>
-    <circle cx="32" cy="32" r="20"/>
-    <circle cx="32" cy="32" r="14.5"/>
-    <path d="M32 12v4M32 48v4M12 32h4M48 32h4M18 18l2.9 2.9M43.1 43.1L46 46M46 18l-2.9 2.9M20.9 43.1L18 46"/>
-  </>,
-  edition: <>
-    <path d="M25 11l-6 42M45 11l-6 42M13 24h40M11 40h40"/>
-  </>,
+  case:     <><circle cx="12" cy="12" r="6.5"/><path d="M9 5.7V2.5h6v3.2M9 18.3v3.2h6v-3.2M18.5 10.5h2v3h-2"/></>,
+  dial:     <><circle cx="12" cy="12" r="9"/><path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21"/></>,
+  movement: <><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2.1 2.1M16.7 16.7l2.1 2.1M18.8 5.2l-2.1 2.1M7.3 16.7l-2.1 2.1"/></>,
+  bracelet: <><rect x="2.5" y="9" width="5.2" height="6" rx="1.6"/><rect x="9.4" y="9" width="5.2" height="6" rx="1.6"/><rect x="16.3" y="9" width="5.2" height="6" rx="1.6"/></>,
+  hands:    <><circle cx="12" cy="12" r="9"/><path d="M12 6.5V12l4 2.4"/></>,
+  glass:    <><path d="M3 9.5h18l-9 11.5z"/><path d="M3 9.5l3.2-5h11.6l3.2 5"/></>,
+  caseback: <><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.5"/><path d="M12 3v1.8M12 19.2V21M3 12h1.8M19.2 12H21"/></>,
+  edition:  <path d="M9.5 3.5L7.5 20.5M16.5 3.5l-2 17M4 9h16M3.4 15H19.4"/>,
 }
 
 const SpecIcon = ({ name }) => (
-  <svg className="spec-item-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor"
-       strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  <svg className="spec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {SPEC_ICONS[name]}
   </svg>
 )
@@ -691,36 +658,6 @@ function App() {
             ))}
           </div>
 
-          {/* Specs live here rather than on their own page. A collector reading
-              a $375 price wants the movement in the same eyeline, and one page
-              beats sending people off to a second one. /specs 301s back here. */}
-          <div className="spec-grid">
-            {[
-              ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
-              ['dial', 'Dial', ['Real wood, cut individually', 'Cherry, ebony or padauk', 'No two grains alike']],
-              ['movement', 'Movement', ['Seiko VH31', 'Meca-quartz', 'Sweeping seconds hand', 'Japanese']],
-              ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
-              ['hands', 'Hands', ['Dauphine', 'Luminescent']],
-              ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
-              ['caseback', 'Caseback', ['Chemically etched raven', 'Numbered within its wood', 'Assembled in Japan']],
-              ['edition', 'Edition', ['300 watches', '100 of each wood', 'Individually numbered']],
-            ].map(([icon, title, lines]) => (
-              <div className="spec-item" key={title}>
-                <SpecIcon name={icon} />
-                <div>
-                  <h3>{title}</h3>
-                  <p>{lines.map(l => <span key={l}>{l}<br /></span>)}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <img
-            src="/images/caseback.png"
-            alt="Gebauer caseback: an etched raven above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
-            style={{ display: 'block', width: '100%', maxWidth: 240, height: 'auto', margin: '56px auto 0' }}
-          />
-
         </div>
       </Reveal>
 
@@ -740,6 +677,42 @@ function App() {
             </div>
           </div>
           <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
+        </div>
+      </Reveal>
+
+      {/* Specifications. Deliberately AFTER the padauk reveal: the colour
+          change is the emotional payoff of the product, and eight blocks of
+          technical data sitting between the watches and their own reveal
+          interrupted it. Sold first, evidence second. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
+            <div className="spec-grid">
+              {[
+                ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
+                ['dial', 'Dial', ['Real wood, cut individually', 'Cherry, ebony or padauk', 'No two grains alike']],
+                ['movement', 'Movement', ['Seiko VH31', 'Meca-quartz', 'Sweeping seconds hand', 'Japanese']],
+                ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
+                ['hands', 'Hands', ['Dauphine', 'Luminescent']],
+                ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
+                ['caseback', 'Caseback', ['Chemically etched raven', 'Numbered within its wood', 'Assembled in Japan']],
+                ['edition', 'Edition', ['300 watches', '100 of each wood', 'Individually numbered']],
+              ].map(([icon, title, lines]) => (
+                <div className="spec-item" key={title}>
+                  <SpecIcon name={icon} />
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{lines.map(l => <span key={l}>{l}<br /></span>)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <img
+              src="/images/caseback.png"
+              alt="Gebauer caseback: an etched raven above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
+              style={{ display: 'block', width: '100%', maxWidth: 240, height: 'auto', margin: '56px auto 0' }}
+            />
+
         </div>
       </Reveal>
 
