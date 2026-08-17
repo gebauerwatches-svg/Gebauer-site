@@ -1541,12 +1541,12 @@
   max-width: 860px;
   text-align: left;
 }
-.spec-item { display: flex; gap: 20px; align-items: flex-start; }
-.spec-item-icon { flex: 0 0 58px; width: 58px; height: 58px; opacity: 0.75; }
+.spec-item { display: flex; gap: 24px; align-items: flex-start; }
+.spec-item-icon { flex: 0 0 76px; width: 76px; height: 76px; opacity: 0.95; }
 .spec-item h3 {
   margin: 4px 0 10px;
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -1554,12 +1554,13 @@
 }
 .spec-item p {
   margin: 0;
-  font-size: 15.5px;
-  line-height: 1.8;
-  color: rgba(240, 232, 214, 0.78);
+  font-size: 17px;
+  line-height: 1.85;
+  color: rgba(240, 232, 214, 0.82);
 }
 @media (max-width: 760px) {
   .spec-grid { grid-template-columns: 1fr; gap: 34px; margin-top: 48px; }
-  .spec-item-icon { flex: 0 0 48px; width: 48px; height: 48px; }
-  .spec-item p { font-size: 15px; }
+  .spec-item-icon { flex: 0 0 60px; width: 60px; height: 60px; }
+  .spec-item p { font-size: 16px; }
+  .spec-item { gap: 18px; }
 }
