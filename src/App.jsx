@@ -690,7 +690,7 @@ function App() {
               {[
                 ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
                 ['dial', 'Dial', ['Real wood, cut individually', 'Cherry, ebony or padauk', 'No two grains alike']],
-                ['movement', 'Movement', ['Seiko VH31', 'Meca-quartz', 'Sweeping seconds hand', 'Japanese']],
+                ['movement', 'Movement', ['Seiko VH31', 'Sweeping quartz', '4 ticks per second', 'Japanese']],
                 ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
                 ['hands', 'Hands', ['Dauphine', 'Luminescent']],
                 ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
