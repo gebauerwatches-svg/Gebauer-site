@@ -1530,37 +1530,45 @@
 @keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
 
 /* ── Specifications grid ──────────────────────────────────────────────
-   Two columns of labelled blocks with large line-art icons, sitting under
-   the watches. Replaces a 14px label/value table that was unreadable next
-   to the product cards. Collapses to one column on phones. */
+   Four compact columns under the watches, icon stacked above the label.
+   Two columns on tablets and phones. Icons are stroked heavier than a
+   normal UI icon because thin lines go invisible on this background. */
 .spec-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 46px 44px;
-  margin: 64px auto 0;
-  max-width: 860px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 38px 30px;
+  margin: 52px auto 0;
+  max-width: 1000px;
   text-align: left;
 }
-.spec-item { display: flex; gap: 16px; align-items: flex-start; }
-.spec-item-icon { flex: 0 0 30px; width: 30px; height: 30px; opacity: 0.85; margin-top: 4px; }
+.spec-item-icon {
+  display: block;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 13px;
+  color: #f0e8d6;
+  opacity: 1;
+}
 .spec-item h3 {
-  margin: 4px 0 10px;
+  margin: 0 0 9px;
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #fff;
 }
 .spec-item p {
   margin: 0;
-  font-size: 17px;
-  line-height: 1.85;
-  color: rgba(240, 232, 214, 0.82);
+  font-size: 14px;
+  line-height: 1.72;
+  color: rgba(240, 232, 214, 0.72);
 }
-@media (max-width: 760px) {
-  .spec-grid { grid-template-columns: 1fr; gap: 34px; margin-top: 48px; }
-  .spec-item-icon { flex: 0 0 26px; width: 26px; height: 26px; }
-  .spec-item p { font-size: 16px; }
-  .spec-item { gap: 18px; }
+@media (max-width: 1000px) {
+  .spec-grid { grid-template-columns: repeat(2, 1fr); gap: 34px 28px; max-width: 620px; }
+}
+@media (max-width: 560px) {
+  .spec-grid { gap: 28px 20px; margin-top: 40px; }
+  .spec-item-icon { width: 26px; height: 26px; margin-bottom: 10px; }
+  .spec-item p { font-size: 13.5px; }
 }

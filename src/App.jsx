@@ -75,7 +75,7 @@ const SPEC_ICONS = {
 
 const SpecIcon = ({ name }) => (
   <svg className="spec-item-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+       strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     {SPEC_ICONS[name]}
   </svg>
 )
@@ -699,10 +699,8 @@ function App() {
               ].map(([icon, title, lines]) => (
                 <div className="spec-item" key={title}>
                   <SpecIcon name={icon} />
-                  <div>
-                    <h3>{title}</h3>
-                    <p>{lines.map(l => <span key={l}>{l}<br /></span>)}</p>
-                  </div>
+                  <h3>{title}</h3>
+                  <p>{lines.map(l => <span key={l}>{l}<br /></span>)}</p>
                 </div>
               ))}
             </div>
