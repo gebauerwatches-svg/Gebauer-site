@@ -1528,3 +1528,38 @@
 @keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
 .card-enter { animation: cardIn 0.35s ease-out both; }
 @keyframes cardIn { from { opacity: 0; transform: translateY(16px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* ── Specifications grid ──────────────────────────────────────────────
+   Two columns of labelled blocks with large line-art icons, sitting under
+   the watches. Replaces a 14px label/value table that was unreadable next
+   to the product cards. Collapses to one column on phones. */
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 46px 44px;
+  margin: 64px auto 0;
+  max-width: 860px;
+  text-align: left;
+}
+.spec-item { display: flex; gap: 20px; align-items: flex-start; }
+.spec-item-icon { flex: 0 0 58px; width: 58px; height: 58px; opacity: 0.75; }
+.spec-item h3 {
+  margin: 4px 0 10px;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.spec-item p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.8;
+  color: rgba(240, 232, 214, 0.78);
+}
+@media (max-width: 760px) {
+  .spec-grid { grid-template-columns: 1fr; gap: 34px; margin-top: 48px; }
+  .spec-item-icon { flex: 0 0 48px; width: 48px; height: 48px; }
+  .spec-item p { font-size: 15px; }
+}
