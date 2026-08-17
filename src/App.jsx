@@ -638,6 +638,20 @@ function App() {
             ))}
           </div>
 
+          {/* Compact spec line. Collectors want the numbers next to the price,
+              not three pages away. Full sheet lives at /specs. */}
+          <p style={{
+            marginTop: 28, fontSize: 13, lineHeight: 1.9,
+            letterSpacing: '0.04em', color: 'rgba(240,232,214,0.55)',
+          }}>
+            Seiko VH31 meca-quartz &nbsp;&middot;&nbsp; 39mm 316L steel &nbsp;&middot;&nbsp; Sapphire
+            &nbsp;&middot;&nbsp; 5 ATM &nbsp;&middot;&nbsp; Butterfly clasp
+            <br />
+            <a href="/specs" style={{ color: '#c4952a', textDecoration: 'none' }}>
+              Full specifications
+            </a>
+          </p>
+
         </div>
       </Reveal>
 
