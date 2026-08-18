@@ -735,6 +735,21 @@
       return null  // fully sold out in this wood
     }
 
+    // Every still-open number in a wood, so a specific one can be picked from a
+    // dropdown instead of only accepting the auto-assigned suggestion. The
+    // strategic hold (1-10) is INCLUDED but flagged, because those are Liam's
+    // to give away deliberately - that is the whole point of holding them.
+    function availableNumbers(availData, wood) {
+      const taken = new Set([
+        ...((availData && availData[wood]) || []),
+        ...((availData && availData.pending && availData.pending[wood]) || []),
+      ])
+      const held = new Set((availData && availData.strategic_hold && availData.strategic_hold[wood]) || [])
+      const out = []
+      for (let n = 1; n <= 100; n++) if (!taken.has(n)) out.push({ n, held: held.has(n) })
+      return out
+    }
+
     async function renderReservations() {
       renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
       const [data, avail] = await Promise.all([
@@ -836,6 +851,7 @@
                 method: 'PUT',
                 body: JSON.stringify({ status: 'converted', subscriber_id: subscriberId }),
               })
+              alert(`Reserved. ${r.first_name} now has ${label}.`)
               renderReservations()
             }
 
@@ -846,18 +862,37 @@
             //   from 100). Preserves low/prime numbers for people who
             //   specifically request them.
             // - If wood is 'unsure' or sold out → fall back to modal
-            let reserveBtn
-            if (r.preferred_position) {
+            // Number picker + reserve. The dropdown is the point: previously the
+            // only options were "accept the number the system chose" or "Skip",
+            // so giving someone a specific number (a collector asking for #16)
+            // meant editing the record by hand.
+            const woodKey = r.wood_preference === 'hinoki' ? 'cherry' : r.wood_preference
+            let reserveBtn, numSelect = null
+            const isConverted = r.status === 'converted'
+
+            if (isConverted) {
+              reserveBtn = el('div', {
+                style: 'padding:8px 12px;background:rgba(42,107,82,0.15);color:var(--ok);font-size:13px;letter-spacing:0.04em;',
+              }, `RESERVED${r.preferred_position ? ` \u00b7 ${wLabel} #${String(r.preferred_position).padStart(3, '0')}` : ''}`)
+            } else if (['cherry', 'hinoki', 'ebony', 'padauk'].includes(r.wood_preference)) {
+              const opts = availableNumbers(avail, woodKey)
+              const preferred = r.preferred_position || autoNumber
+              numSelect = el('select', { style: 'padding:7px 9px;font-size:13px;min-width:132px;' })
+              if (!opts.length) numSelect.appendChild(el('option', {}, 'none left'))
+              for (const { n, held } of opts) {
+                const o = document.createElement('option')
+                o.value = String(n)
+                o.textContent = `#${String(n).padStart(3, '0')}${held ? '  (held)' : ''}${n === autoNumber ? '  \u2190 auto' : ''}`
+                if (n === preferred) o.selected = true
+                numSelect.appendChild(o)
+              }
+              const labelFor = (v) => `Reserve ${wLabel} #${String(v).padStart(3, '0')} for them`
               reserveBtn = el('button', {
                 class: 'primary',
-                onclick: () => doReserve(r.preferred_position),
-              }, `Reserve ${wLabel} #${String(r.preferred_position).padStart(3, '0')} for them`)
-            } else if (autoNumber) {
-              reserveBtn = el('button', {
-                class: 'primary',
-                onclick: () => doReserve(autoNumber),
-                title: `They didn't pick a specific number. This auto-assigns from the mid-range (#11-90), skipping both the strategic hold (#1-10) and the top-of-run (#91-100) so people who specifically want low OR high numbers still have them available.`,
-              }, `Reserve ${wLabel} #${String(autoNumber).padStart(3, '0')} for them (auto)`)
+                onclick: () => { if (numSelect.value) doReserve(Number(numSelect.value)) },
+                title: 'Pick any open number. Numbers 1-10 are your strategic hold and are marked (held) - they are yours to give away on purpose.',
+              }, labelFor(numSelect.value || '?'))
+              numSelect.addEventListener('change', () => { reserveBtn.textContent = labelFor(numSelect.value) })
             } else {
               reserveBtn = el('button', {
                 onclick: () => showConvertReservation(r),
@@ -918,9 +953,10 @@
                 style: 'font-size:14px;color:var(--text);margin-bottom:12px;padding:12px 14px;background:var(--bg);border-left:3px solid var(--gold);',
               }, r.why_message) : null,
               r.notes ? el('div', { style: 'font-size:12px;color:var(--muted);margin-bottom:10px;font-style:italic;' }, `Note: ${r.notes}`) : null,
-              el('div', { class: 'story-actions', style: 'gap:6px;flex-wrap:wrap;' },
+              el('div', { class: 'story-actions', style: 'gap:6px;flex-wrap:wrap;align-items:center;' },
+                numSelect,
                 reserveBtn,
-                skipBtn,
+                isConverted ? null : skipBtn,
                 el('button', { onclick: () => showEditReservation(r) }, 'Follow up / edit'),
                 el('button', {
                   onclick: async () => {
