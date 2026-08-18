@@ -379,7 +379,15 @@
         } },
           el('h3', {}, `Edit ${s.email}`),
           el('div', { class: 'field' }, el('label', {}, 'First name'), el('input', { type: 'text', id: 'edit-name', value: s.first_name || '' })),
-          el('div', { class: 'field' }, el('label', {}, 'Watch # (1-300, blank = none)'), el('input', { type: 'number', id: 'edit-pos', value: s.waitlist_position === 9999 ? '' : s.waitlist_position })),
+          el('div', { class: 'field' },
+            el('label', {}, 'Watch # within its wood (1-100, blank = none)'),
+            el('input', { type: 'number', id: 'edit-pos', value: s.waitlist_position === 9999 ? '' : s.waitlist_position }),
+            // The wood is resolved from the Notes field first, and only falls back
+            // to the number range (1-100 cherry, 101-200 ebony, 201-300 padauk) if
+            // no wood is named there. So a bare "16" silently becomes CHERRY 016.
+            el('div', { style: 'font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.55;' },
+               'The wood comes from Notes. Write the wood name there (padauk, ebony or cherry) or this number is read as cherry.'),
+          ),
           el('div', { class: 'field' }, el('label', {}, 'Status'),
             el('select', { id: 'edit-status' },
               el('option', { value: 'active', selected: s.status === 'active' ? 'true' : null }, 'active'),
@@ -387,7 +395,10 @@
               el('option', { value: 'bounced', selected: s.status === 'bounced' ? 'true' : null }, 'bounced'),
             ),
           ),
-          el('div', { class: 'field' }, el('label', {}, 'Notes'), el('input', { type: 'text', id: 'edit-notes', value: s.notes || '' })),
+          el('div', { class: 'field' },
+            el('label', {}, 'Notes (must name the wood if a watch # is set)'),
+            el('input', { type: 'text', id: 'edit-notes', value: s.notes || '', placeholder: 'e.g. PADAUK #16 reserved, confirmed by email' }),
+          ),
           el('p', { class: 'error hidden', id: 'edit-err' }, ''),
           el('div', { class: 'modal-actions' },
             el('button', { type: 'button', class: 'danger', onclick: async () => {
