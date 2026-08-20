@@ -371,7 +371,18 @@
               first_name: $('#edit-name', modal).value,
               waitlist_position: parseInt($('#edit-pos', modal).value, 10) || 9999,
               status: $('#edit-status', modal).value,
-              notes: $('#edit-notes', modal).value,
+              // The wood dropdown is the source of truth. There is no wood column
+              // on subscribers, so the wood has to live in notes, which is what
+              // detectWood() reads. Any existing wood word is stripped first,
+              // because detectWood checks cherry before padauk and notes holding
+              // both would silently resolve to the wrong one.
+              notes: (() => {
+                const w = $('#edit-wood', modal).value
+                let n = $('#edit-notes', modal).value.trim()
+                if (!w) return n
+                n = n.replace(/\b(cherry|hinoki|ebony|padauk)\b/gi, '').replace(/\s{2,}/g, ' ').trim()
+                return n ? `${w.toUpperCase()} ${n}` : w.toUpperCase()
+              })(),
             }),
           })
           if (data.ok) { modal.remove(); renderSubscribers() }
@@ -385,8 +396,23 @@
             // The wood is resolved from the Notes field first, and only falls back
             // to the number range (1-100 cherry, 101-200 ebony, 201-300 padauk) if
             // no wood is named there. So a bare "16" silently becomes CHERRY 016.
+          ),
+          el('div', { class: 'field' },
+            el('label', {}, 'Wood'),
+            (() => {
+              const cur = (s.notes || '').toLowerCase()
+              const sel = cur.includes('padauk') ? 'padauk'
+                        : cur.includes('ebony') ? 'ebony'
+                        : (cur.includes('cherry') || cur.includes('hinoki')) ? 'cherry' : ''
+              return el('select', { id: 'edit-wood' },
+                el('option', { value: '', selected: sel === '' ? 'true' : null }, 'No wood set'),
+                el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($299)'),
+                el('option', { value: 'ebony', selected: sel === 'ebony' ? 'true' : null }, 'Black Ebony ($339)'),
+                el('option', { value: 'padauk', selected: sel === 'padauk' ? 'true' : null }, 'African Padauk ($375)'),
+              )
+            })(),
             el('div', { style: 'font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.55;' },
-               'The wood comes from Notes. Write the wood name there (padauk, ebony or cherry) or this number is read as cherry.'),
+               'Picking a wood here writes it into Notes for you. You do not need to type it.'),
           ),
           el('div', { class: 'field' }, el('label', {}, 'Status'),
             el('select', { id: 'edit-status' },
@@ -396,8 +422,8 @@
             ),
           ),
           el('div', { class: 'field' },
-            el('label', {}, 'Notes (must name the wood if a watch # is set)'),
-            el('input', { type: 'text', id: 'edit-notes', value: s.notes || '', placeholder: 'e.g. PADAUK #16 reserved, confirmed by email' }),
+            el('label', {}, 'Notes'),
+            el('input', { type: 'text', id: 'edit-notes', value: s.notes || '', placeholder: 'e.g. reserved by email, Aug 2026' }),
           ),
           el('p', { class: 'error hidden', id: 'edit-err' }, ''),
           el('div', { class: 'modal-actions' },
