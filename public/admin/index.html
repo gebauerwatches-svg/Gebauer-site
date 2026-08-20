@@ -446,6 +446,13 @@
       const data = await api('/broadcasts').catch(() => ({ broadcasts: [] }))
       const history = data.broadcasts || []
 
+      // A broadcast cannot be recalled, so sending is gated on three things:
+      // you must have previewed THIS exact subject and body, you must confirm a
+      // summary that includes the real recipient count, and you must type SEND.
+      // Editing after previewing invalidates the preview.
+      let previewedKey = null
+      const bcKey = (subj, body) => subj + '\u0000' + body
+
       const composer = el('div', { class: 'composer' },
         el('h3', { class: 'page-title', style: 'font-size:20px;margin-bottom:12px;' }, 'New broadcast'),
         el('div', { class: 'field' },
@@ -468,23 +475,51 @@
             const iframe = el('iframe', {})
             previewEl.appendChild(iframe)
             iframe.contentDocument.open(); iframe.contentDocument.write(data.html); iframe.contentDocument.close()
+            previewedKey = bcKey(subject, body)
           } }, 'Preview'),
-          el('button', { class: 'primary', onclick: async () => {
+          el('button', { class: 'primary', onclick: async (ev) => {
+            const sendBtn = ev.currentTarget
             const subject = $('#bc-subject').value
             const body = $('#bc-body').value
             if (!subject || !body) return alert('Subject and body required.')
-            const conf = prompt(`Send "${subject}" to all active subscribers? Type SEND to confirm.`)
+
+            // Layer 1: you must have previewed exactly what you are about to send.
+            if (previewedKey !== bcKey(subject, body)) {
+              return alert(
+                previewedKey === null
+                  ? 'Preview it first.\n\nClick Preview and read the email the way it will actually arrive.'
+                  : 'You edited it after previewing.\n\nClick Preview again and re-read it before sending.'
+              )
+            }
+
+            // Layer 2: confirm against the real recipient count, not "all subscribers".
+            const subsData = await api('/subscribers?limit=300').catch(() => null)
+            const count = subsData && subsData.subscribers
+              ? subsData.subscribers.filter(x => x.status === 'active').length
+              : null
+            const firstLine = (body.trim().split('\n').find(l => l.trim()) || '').slice(0, 90)
+            const who = count === null ? 'every active subscriber' : `${count} people`
+            if (!confirm(
+              `Send this to ${who}?\n\n` +
+              `Subject:  ${subject}\n` +
+              `Opens:    ${firstLine}\n\n` +
+              `Once it goes out it cannot be recalled or edited.`
+            )) return
+
+            // Layer 3: type it out.
+            const conf = prompt(`Last check. Type SEND to email ${who}.`)
             if (conf !== 'SEND') return
-            const sendBtn = event.target
+
             sendBtn.disabled = true; sendBtn.textContent = 'Sending...'
             const data = await api('/broadcasts/send', { method: 'POST', body: JSON.stringify({ subject, body }) })
             sendBtn.disabled = false; sendBtn.textContent = 'Send'
             if (data.error) { alert('Error: ' + data.error); return }
+            previewedKey = null
             alert(`Done. Sent: ${data.sent}, Failed: ${data.failed}.`)
             renderBroadcasts()
           } }, 'Send'),
         ),
-        el('p', { class: 'page-sub', style: 'margin-top:12px;' }, 'Voice guard refuses em/en dashes. Replace with periods or commas.'),
+        el('p', { class: 'page-sub', style: 'margin-top:12px;' }, 'Voice guard refuses em/en dashes. Replace with periods or commas. Send is locked until you preview, and editing after a preview locks it again.'),
       )
 
       const preview = el('div', { class: 'preview-pane', id: 'bc-preview' },
