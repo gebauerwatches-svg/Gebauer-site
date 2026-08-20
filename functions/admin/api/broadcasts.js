@@ -4,7 +4,7 @@
  * POST /admin/api/broadcasts/send             - send to all active subscribers
  */
 
-import { json } from '../../api/_shared.js'
+import { json, mailingAddress } from '../../api/_shared.js'
 import { requireAuth } from '../_auth.js'
 
 const FORBIDDEN_DASHES = ['—', '–']
@@ -33,7 +33,7 @@ function mdToHtml(md) {
   return parts.join('\n')
 }
 
-function buildEmailHtml(bodyHtml, unsubscribeUrl, mailingAddress) {
+function buildEmailHtml(bodyHtml, unsubscribeUrl, addr) {
   return `<!doctype html>
 <html><body style="margin:0;padding:0;background:#f5f3ef;">
   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#f5f3ef;padding:32px 16px;">
@@ -90,16 +90,13 @@ export async function onRequestPost(context) {
     return json({ error: `Voice guard: ${dashHits.join(', ')}. Replace dashes with periods or commas.` }, 400)
   }
 
-  const mailingAddress = env.GEBAUER_MAILING_ADDRESS || ''
-  if (!mailingAddress) {
-    return json({ error: 'Missing GEBAUER_MAILING_ADDRESS env var (required for CAN-SPAM compliance).' }, 500)
-  }
+  const addr = mailingAddress(env)
 
   const bodyHtml = mdToHtml(bodyMd)
 
   // PREVIEW path: render once with a placeholder unsubscribe URL
   if (action === 'preview') {
-    const sample = buildEmailHtml(bodyHtml, 'https://gebauerwatches.com/api/unsubscribe?token=PREVIEW', mailingAddress)
+    const sample = buildEmailHtml(bodyHtml, 'https://gebauerwatches.com/api/unsubscribe?token=PREVIEW', addr)
     return json({ ok: true, html: sample })
   }
 
@@ -135,7 +132,7 @@ export async function onRequestPost(context) {
     const errors = []
     for (const r of recipients) {
       const unsubUrl = `https://gebauerwatches.com/api/unsubscribe?token=${r.unsubscribe_token}`
-      const html = buildEmailHtml(bodyHtml, unsubUrl, mailingAddress)
+      const html = buildEmailHtml(bodyHtml, unsubUrl, addr)
       try {
         const resp = await fetch('https://api.resend.com/emails', {
           method: 'POST',

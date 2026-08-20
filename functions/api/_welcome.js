@@ -9,6 +9,8 @@
  * if the welcome email errors.
  */
 
+import { mailingAddress } from './_shared.js'
+
 const FORBIDDEN_DASHES = ['—', '–']  // em / en dash
 
 function mdToHtml(md) {
@@ -62,7 +64,6 @@ async function getSetting(env, key) {
 export async function sendWelcomeEmail(env, { email, first_name, unsubscribe_token }) {
   try {
     if (!env.DB || !env.RESEND_API_KEY) return { sent: false, reason: 'missing-env' }
-    if (!env.GEBAUER_MAILING_ADDRESS) return { sent: false, reason: 'missing-mailing-address' }
     if (!email || !unsubscribe_token) return { sent: false, reason: 'missing-recipient' }
 
     const enabled = await getSetting(env, 'welcome_enabled')
@@ -88,7 +89,7 @@ export async function sendWelcomeEmail(env, { email, first_name, unsubscribe_tok
       }
     }
 
-    const html = buildHtml(mdToHtml(body), unsubscribeUrl, env.GEBAUER_MAILING_ADDRESS)
+    const html = buildHtml(mdToHtml(body), unsubscribeUrl, mailingAddress(env))
     const fromName = env.GEBAUER_FROM_NAME || 'Liam from Gebauer'
     const fromEmail = env.GEBAUER_FROM_EMAIL || 'hello@gebauerwatches.com'
 

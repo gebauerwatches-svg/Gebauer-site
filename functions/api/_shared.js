@@ -29,3 +29,14 @@ export function randomHex(bytes) {
   crypto.getRandomValues(arr)
   return Array.from(arr, b => b.toString(16).padStart(2, '0')).join('')
 }
+
+// CAN-SPAM requires a physical postal address in every commercial email.
+// This is hardcoded rather than read from config because it is not a secret,
+// it is printed in every email we send, and it changes roughly never. It was
+// an env var, which meant a missing value silently disabled welcome emails and
+// blocked broadcasts entirely. A legally required constant should not be able
+// to go missing. GEBAUER_MAILING_ADDRESS still overrides it if ever set.
+export const MAILING_ADDRESS = 'Gebauer Watches, c/o RCEDP, P.O. Box 774408, Steamboat Springs, CO 80477'
+export function mailingAddress(env) {
+  return (env && env.GEBAUER_MAILING_ADDRESS) || MAILING_ADDRESS
+}
