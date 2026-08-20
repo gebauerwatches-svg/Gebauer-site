@@ -468,7 +468,7 @@
             const subject = $('#bc-subject').value
             const body = $('#bc-body').value
             if (!subject || !body) return alert('Subject and body required.')
-            const data = await api('/broadcasts/preview', { method: 'POST', body: JSON.stringify({ subject, body }) })
+            const data = await api('/broadcasts', { method: 'POST', body: JSON.stringify({ action: 'preview', subject, body }) })
             if (data.error) { alert(data.error); return }
             const previewEl = $('#bc-preview')
             previewEl.innerHTML = ''
@@ -511,7 +511,7 @@
             if (conf !== 'SEND') return
 
             sendBtn.disabled = true; sendBtn.textContent = 'Sending...'
-            const data = await api('/broadcasts/send', { method: 'POST', body: JSON.stringify({ subject, body }) })
+            const data = await api('/broadcasts', { method: 'POST', body: JSON.stringify({ action: 'send', subject, body }) })
             sendBtn.disabled = false; sendBtn.textContent = 'Send'
             if (data.error) { alert('Error: ' + data.error); return }
             previewedKey = null

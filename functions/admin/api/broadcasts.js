@@ -69,11 +69,16 @@ export async function onRequestGet(context) {
 export async function onRequestPost(context) {
   const unauth = await requireAuth(context, json); if (unauth) return unauth
   const { env } = context
-  const url = new URL(context.request.url)
-  const action = url.pathname.endsWith('/preview') ? 'preview' : 'send'
-
   let body
   try { body = await context.request.json() } catch { return json({ error: 'Invalid request.' }, 400) }
+
+  // The action comes from the request BODY, not the path. Cloudflare Pages maps
+  // this file to /admin/api/broadcasts exactly; sub-paths like /broadcasts/send
+  // need a directory (see reservation/[id].js). There isn't one, so the old
+  // pathname check meant every send and preview from the admin UI 405'd and the
+  // feature had never actually run. Pathname is still honoured for old clients.
+  const url = new URL(context.request.url)
+  const action = (body.action === 'preview' || url.pathname.endsWith('/preview')) ? 'preview' : 'send'
 
   const subject = (body.subject || '').trim()
   const bodyMd = (body.body || '').trim()
