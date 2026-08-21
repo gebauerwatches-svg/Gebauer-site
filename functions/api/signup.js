@@ -74,10 +74,20 @@ export async function onRequestPost(context) {
   try {
     // Already on the waitlist?
     const existing = await env.DB.prepare(
-      'SELECT id FROM subscribers WHERE email = ? LIMIT 1'
+      'SELECT id, status FROM subscribers WHERE email = ? LIMIT 1'
     ).bind(cleanEmail).first()
 
     if (existing) {
+      // Someone who unsubscribed and later signs up again was being told
+      // "you're already on the waitlist" and left off it permanently, with no
+      // way back except an admin editing their row by hand. Changing your mind
+      // is a normal thing to do, so re-signing up reactivates instead.
+      if (existing.status === 'unsubscribed') {
+        await env.DB.prepare(
+          "UPDATE subscribers SET status = 'active', unsubscribed_at = NULL, first_name = ? WHERE id = ?"
+        ).bind(cleanName, existing.id).run()
+        return json({ ok: true, reactivated: true, message: "Welcome back. You're on the list again." })
+      }
       return json({ error: "You're already on the waitlist." }, 400)
     }
 
