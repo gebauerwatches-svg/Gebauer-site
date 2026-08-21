@@ -43,7 +43,7 @@ function buildEmailHtml(bodyHtml, unsubscribeUrl, addr) {
           ${bodyHtml}
           <hr style="border:0;border-top:1px solid #e0d8c8;margin:32px 0 16px;">
           <p style="font-family:Arial,sans-serif;font-size:11px;color:#888;line-height:1.5;margin:0 0 8px;">You are receiving this because you signed up at gebauerwatches.com.</p>
-          <p style="font-family:Arial,sans-serif;font-size:11px;color:#888;line-height:1.5;margin:0 0 8px;">${mailingAddress}</p>
+          <p style="font-family:Arial,sans-serif;font-size:11px;color:#888;line-height:1.5;margin:0 0 8px;">${addr}</p>
           <p style="font-family:Arial,sans-serif;font-size:11px;color:#888;line-height:1.5;margin:0;"><a href="${unsubscribeUrl}" style="color:#888;">Unsubscribe</a></p>
         </td></tr>
       </table>
