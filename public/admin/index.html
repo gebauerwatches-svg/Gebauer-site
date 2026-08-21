@@ -453,15 +453,34 @@
       let previewedKey = null
       const bcKey = (subj, body) => subj + '\u0000' + body
 
+      // Drafts survive a reload. The composer used to lose everything on any
+      // refresh, which matters because refreshing is exactly what you do to pick
+      // up a code change, and retyping a long email is how mistakes get in.
+      const DRAFT_KEY = 'gebauer_broadcast_draft'
+      const loadDraft = () => { try { return JSON.parse(localStorage.getItem(DRAFT_KEY)) || {} } catch { return {} } }
+      const saveDraft = () => {
+        try {
+          localStorage.setItem(DRAFT_KEY, JSON.stringify({
+            subject: $('#bc-subject').value, body: $('#bc-body').value,
+          }))
+        } catch {}
+      }
+      const clearDraft = () => { try { localStorage.removeItem(DRAFT_KEY) } catch {} }
+      const draft = loadDraft()
+
       const composer = el('div', { class: 'composer' },
         el('h3', { class: 'page-title', style: 'font-size:20px;margin-bottom:12px;' }, 'New broadcast'),
         el('div', { class: 'field' },
           el('label', {}, 'Subject'),
-          el('input', { type: 'text', id: 'bc-subject', placeholder: 'e.g. June 22 update' }),
+          el('input', { type: 'text', id: 'bc-subject', placeholder: 'e.g. June 22 update', value: draft.subject || '', oninput: saveDraft }),
         ),
         el('div', { class: 'field' },
           el('label', {}, 'Body (markdown). No em dashes — voice guard blocks them.'),
-          el('textarea', { id: 'bc-body', placeholder: 'Hi guys,\n\nQuick update...\n\nRock on.\n-Liam' }),
+          (() => {
+            const ta = el('textarea', { id: 'bc-body', placeholder: 'Hi everyone,\n\nWhat happened...\n\n-Liam', oninput: saveDraft })
+            ta.value = draft.body || ''
+            return ta
+          })(),
         ),
         el('div', { class: 'toolbar' },
           el('button', { onclick: async () => {
@@ -515,6 +534,7 @@
             sendBtn.disabled = false; sendBtn.textContent = 'Send'
             if (data.error) { alert('Error: ' + data.error); return }
             previewedKey = null
+            clearDraft()
             alert(`Done. Sent: ${data.sent}, Failed: ${data.failed}.`)
             renderBroadcasts()
           } }, 'Send'),
