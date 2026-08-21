@@ -125,44 +125,50 @@ export async function onRequestPost(context) {
     ).bind(subject, bodyHtml, now, recipients.length, 'admin').run()
     const broadcastId = broadcastResult.meta.last_row_id
 
-    // Send each one. Cap to first 200 per request to stay within Cloudflare time limits.
-    // For a full 134-subscriber send this is fine in one batch. Larger lists would need a queue.
+    // Send in batches of 100 through Resend's batch endpoint rather than one
+    // HTTP request per person. The per-person loop fired ~3 requests a second
+    // against a 2/second limit, so a 138 person send delivered 50 and lost 88
+    // to 429s. Two batch calls have no pacing problem and finish inside the
+    // Function's time budget.
+    const BATCH = 100
     let sent = 0
     let failed = 0
     const errors = []
-    for (const r of recipients) {
-      const unsubUrl = `https://gebauerwatches.com/api/unsubscribe?token=${r.unsubscribe_token}`
-      const html = buildEmailHtml(bodyHtml, unsubUrl, addr)
-      try {
-        const resp = await fetch('https://api.resend.com/emails', {
+    const nowIso = () => new Date().toISOString()
+
+    const logSend = (r, status, err) => env.DB.prepare(
+      "INSERT INTO broadcast_sends (broadcast_id, subscriber_id, email, sent_at, status, error) VALUES (?, ?, ?, ?, ?, ?)"
+    ).bind(broadcastId, r.id, r.email, nowIso(), status, err ? String(err).slice(0, 500) : null).run()
+
+    for (let i = 0; i < recipients.length; i += BATCH) {
+      const chunk = recipients.slice(i, i + BATCH)
+      const payload = chunk.map((r) => ({
+        from: `${fromName} <${fromEmail}>`,
+        to: [r.email],
+        subject,
+        html: buildEmailHtml(bodyHtml, `https://gebauerwatches.com/api/unsubscribe?token=${r.unsubscribe_token}`, addr),
+      }))
+
+      let resp, attempt = 0
+      while (attempt < 3) {
+        resp = await fetch('https://api.resend.com/emails/batch', {
           method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${resendKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            from: `${fromName} <${fromEmail}>`,
-            to: [r.email],
-            subject,
-            html,
-          }),
+          headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
         })
-        if (resp.ok) {
-          sent++
-          await env.DB.prepare(
-            "INSERT INTO broadcast_sends (broadcast_id, subscriber_id, email, sent_at, status) VALUES (?, ?, ?, ?, 'sent')"
-          ).bind(broadcastId, r.id, r.email, new Date().toISOString()).run()
-        } else {
-          failed++
-          const errText = await resp.text()
-          errors.push(`${r.email}: ${resp.status}`)
-          await env.DB.prepare(
-            "INSERT INTO broadcast_sends (broadcast_id, subscriber_id, email, sent_at, status, error) VALUES (?, ?, ?, ?, 'failed', ?)"
-          ).bind(broadcastId, r.id, r.email, new Date().toISOString(), errText.slice(0, 500)).run()
-        }
-      } catch (err) {
-        failed++
-        errors.push(`${r.email}: ${err.message}`)
+        if (resp.status !== 429) break
+        attempt++
+        await new Promise((res) => setTimeout(res, 1000 * attempt))
+      }
+
+      if (resp && resp.ok) {
+        sent += chunk.length
+        for (const r of chunk) await logSend(r, 'sent', null)
+      } else {
+        const errText = resp ? await resp.text() : 'no response'
+        failed += chunk.length
+        errors.push(`batch ${i / BATCH + 1}: ${resp ? resp.status : '?'}`)
+        for (const r of chunk) await logSend(r, 'failed', errText)
       }
     }
 
