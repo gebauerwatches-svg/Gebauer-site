@@ -491,16 +491,31 @@ function App() {
           localStorage.setItem('gebauer_last_email', email.trim().toLowerCase())
           if (milestoneStory.trim()) {
             // Save story separately for existing users
+            // Only reflect what the server actually did. This used to add the
+            // story to the list and bump the count regardless of the response,
+            // so a failed or ignored save still looked like it had worked.
             fetch('/api/submit-story', {
               method: 'POST', headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), story: milestoneStory.trim() }),
-            }).catch(() => {})
-            localStorage.setItem('gebauer_story_submitted', 'true')
-            localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
-            setHasSubmittedStory(true)
-            setMyMoment(milestoneStory.trim())
-            setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
-            setStoryCount(prev => prev + 1)
+            })
+              .then(r => r.json())
+              .then(d => {
+                if (!d || !d.ok) return
+                localStorage.setItem('gebauer_story_submitted', 'true')
+                localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
+                setHasSubmittedStory(true)
+                setMyMoment(milestoneStory.trim())
+                if (d.updated) {
+                  // Replaced an existing moment: swap the text, do not double count.
+                  setCommunityStories(prev => prev.map(x =>
+                    x.name === firstName.trim().split(' ')[0]
+                      ? { ...x, story: milestoneStory.trim() } : x))
+                } else {
+                  setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
+                  setStoryCount(prev => prev + 1)
+                }
+              })
+              .catch(() => {})
           }
           fetchStats(email.trim().toLowerCase())
           setShowSignup(false)

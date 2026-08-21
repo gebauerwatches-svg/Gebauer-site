@@ -45,7 +45,14 @@ export async function onRequestPost(context) {
     ).bind(cleanEmail).first()
 
     if (existing) {
-      return json({ ok: true, already_submitted: true })
+      // Was: return ok and silently discard. The site optimistically shows the
+      // new text either way, so someone editing their moment saw it appear and
+      // then vanish on refresh. Changing your mind about the moment you would
+      // relive is a reasonable thing to do, so this now updates it.
+      await env.DB.prepare(
+        'UPDATE community_stories SET story = ?, first_name = ?, created_at = ? WHERE id = ?'
+      ).bind(cleanStory, cleanName, now, existing.id).run()
+      return json({ ok: true, updated: true })
     }
 
     await env.DB.prepare(`
