@@ -938,7 +938,13 @@ function App() {
               )}
               {communityStories.length > 0 && (
                 <div className="community-stories">
-                  {communityStories.slice(0, 6).map((s, i) => (
+                  {/* No slice. This was .slice(0, 6) while the line directly
+                      below printed the real total, so with 7 moments the page
+                      said "7 moments submitted" above a grid of 6 and the
+                      oldest one was invisible. /api/stories already caps at 20
+                      and sorts newest first, so the display is bounded there
+                      rather than silently hiding a real person here. */}
+                  {communityStories.map((s, i) => (
                     <div key={i} className="community-story">
                       <p className="community-story-text">"{s.story}"</p>
                       <p className="community-story-name">{s.name}</p>
