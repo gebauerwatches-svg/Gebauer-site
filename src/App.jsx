@@ -705,7 +705,7 @@ function App() {
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{maxWidth: 720, textAlign: 'center'}}>
           <h2 className="story-beat-headline">How a wood dial is made.</h2>
-          <p className="story-beat-text">The wood is cut, then sanded until it's very smooth, so there are no cracks, warps or splinters that could split the dial. It's then oiled several times, which hardens the wood.</p>
+          <p className="story-beat-text">The wood is cut, then sanded flat, so there are no cracks, warps or splinters that could split the dial. You can see the grain, but you can't feel it. It's then oiled several times, which hardens the wood.</p>
           <p className="story-beat-text">It still changes color. That comes from UV light reaching the wood, and the oil hardens the surface without blocking the light.</p>
           <p className="story-beat-text">The dial then goes onto a metal plate, which holds the wood flat.</p>
           <p className="story-beat-text">Every dial is made this way, one at a time, from real wood. No two are the same.</p>
