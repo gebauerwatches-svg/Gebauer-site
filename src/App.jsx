@@ -695,6 +695,23 @@ function App() {
         </div>
       </Reveal>
 
+      {/* How a dial is made. Added after Liam's call with Scott, the first
+          collector on the list, who said the process is the question every
+          buyer will ask and was the one he asked himself. The site had
+          nothing on it. Sits right after the padauk reveal because the reveal
+          is what creates the doubt: wood, in a watch, for decades?
+          PHOTOS PENDING: macro shots of a real dial go here once the six sun
+          test samples arrive. Factory tray photos are not good enough. */}
+      <Reveal className="story-beat story-dark">
+        <div className="story-beat-inner" style={{maxWidth: 720, textAlign: 'center'}}>
+          <h2 className="story-beat-headline">How a wood dial is made.</h2>
+          <p className="story-beat-text">The wood is cut, then sanded until it's very smooth, so there are no cracks, warps or splinters that could split the dial. It's then oiled several times, which hardens the wood.</p>
+          <p className="story-beat-text">It still changes color. That comes from UV light reaching the wood, and the oil hardens the surface without blocking the light.</p>
+          <p className="story-beat-text">The dial then goes onto a metal plate, which holds the wood flat.</p>
+          <p className="story-beat-text">Every dial is made this way, one at a time, from real wood. No two are the same.</p>
+        </div>
+      </Reveal>
+
       {/* Specifications. Deliberately AFTER the padauk reveal: the colour
           change is the emotional payoff of the product, and eight blocks of
           technical data sitting between the watches and their own reveal
