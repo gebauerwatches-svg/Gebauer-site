@@ -749,7 +749,7 @@ function App() {
       {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
       <Reveal className="story-beat story-milan" id="story">
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam and I'm {founderAge}. When I was 14, I bought a watch in Milan.</h2>
+          <h2 className="story-beat-headline">I'm Liam. When I was 14, I bought a watch in Milan.</h2>
           <p className="story-beat-text">I walked into a Seiko store with 310 euros I'd been saving for months, and walked out with my first real watch. What amazed me was that it didn't beep or buzz or try to get my attention. It just told the time. It was the first thing I'd ever bought that wasn't going to wear out.</p>
         </div>
       </Reveal>
@@ -774,7 +774,7 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">But I had no idea where to start.</h2>
-          <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy.</p>
+          <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy. I'm {founderAge} now, and they are making the first 300.</p>
         </div>
       </Reveal>
 
