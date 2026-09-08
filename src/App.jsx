@@ -383,13 +383,22 @@ function App() {
     } catch {}
   }
 
-  // Countdown to December 2026 drop
+  // Countdown to samples, end of October 2026.
+  //
+  // Was 2026-12-01, a drop date that stopped existing when the plan moved to a
+  // February 2027 Kickstarter. Repointed Sep 6 2026 at the next thing that is
+  // actually real: samples. Do NOT point this at the Kickstarter until the
+  // date is committed, and never at a shipping month.
+  //
+  // NOTE: `countdown` is not rendered anywhere in this file. It has been dead
+  // state for some time. Left in place and corrected rather than deleted, so
+  // that wiring it into the page shows a true date instead of a stale one.
   const [countdown, setCountdown] = useState('')
   useEffect(() => {
-    const target = new Date('2026-12-01T00:00:00').getTime()
+    const target = new Date('2026-10-31T00:00:00').getTime()
     const update = () => {
       const diff = target - Date.now()
-      if (diff <= 0) { setCountdown('The drop is here.'); return }
+      if (diff <= 0) { setCountdown('Samples are here.'); return }
       const days = Math.floor(diff / 86400000)
       const hours = Math.floor((diff % 86400000) / 3600000)
       setCountdown(`${days}d ${hours}h`)
@@ -722,7 +731,7 @@ function App() {
               {[
                 ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
                 ['dial', 'Dial', ['Real wood, cut individually', 'Cherry, ebony or padauk', 'No two grains alike']],
-                ['movement', 'Movement', ['Seiko VH31', 'Sweeping quartz', '4 ticks per second', 'Japanese']],
+                ['movement', 'Movement', ['Seiko VH31', 'Meca-quartz', '4 ticks per second', 'Japanese']],
                 ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
                 ['hands', 'Hands', ['Dauphine', 'Luminescent']],
                 ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
