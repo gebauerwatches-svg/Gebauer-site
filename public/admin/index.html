@@ -406,9 +406,9 @@
                         : (cur.includes('cherry') || cur.includes('hinoki')) ? 'cherry' : ''
               return el('select', { id: 'edit-wood' },
                 el('option', { value: '', selected: sel === '' ? 'true' : null }, 'No wood set'),
-                el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($299)'),
+                el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($339)'),
                 el('option', { value: 'ebony', selected: sel === 'ebony' ? 'true' : null }, 'Black Ebony ($339)'),
-                el('option', { value: 'padauk', selected: sel === 'padauk' ? 'true' : null }, 'African Padauk ($375)'),
+                el('option', { value: 'padauk', selected: sel === 'padauk' ? 'true' : null }, 'African Padauk ($339)'),
               )
             })(),
             el('div', { style: 'font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.55;' },
@@ -871,8 +871,8 @@
       const autoAssign = buildAutoAssignments(avail, items)
 
       const WOOD_LABEL = {
-        cherry: 'Cherry ($299)', hinoki: 'Cherry ($299)', ebony: 'Black Ebony ($339)',
-        padauk: 'African Padauk ($375)', unsure: 'Not sure',
+        cherry: 'Cherry ($339)', hinoki: 'Cherry ($339)', ebony: 'Black Ebony ($339)',
+        padauk: 'African Padauk ($339)', unsure: 'Not sure',
       }
 
       function statusPill(s) {

@@ -26,9 +26,9 @@ const VALID_WOODS = new Set(['cherry', 'ebony', 'padauk', 'unsure'])
 
 
 const WOOD_LABELS = {
-  cherry: 'Cherry ($299)',
+  cherry: 'Cherry ($339)',
   ebony: 'Black Ebony ($339)',
-  padauk: 'African Padauk ($375)',
+  padauk: 'African Padauk ($339)',
   unsure: 'Not sure yet',
 }
 
