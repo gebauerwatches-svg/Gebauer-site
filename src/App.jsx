@@ -639,6 +639,33 @@ function App() {
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
       </Reveal>
 
+      {/* Muninn. Sits between the proof strip and the watches on purpose: the
+          world first, then the artifacts that came out of it. The raven is
+          chemical-etched on every caseback regardless of wood, so it is the one
+          element that carries the brand rather than the choice.
+
+          Deliberately under-explained. It never connects the raven to memory,
+          milestones or gifts, because a reader who makes that leap themselves
+          is the one who repeats it. The stanza citation is there so a skeptic
+          can verify it and a curious one has somewhere to go. Do not expand
+          this into a paragraph. */}
+      <Reveal className="raven-beat" id="muninn">
+        <span className="raven-name">Muninn</span>
+        <p className="raven-body">
+          Odin kept two ravens. Huginn was Thought. Muninn was Memory. Every
+          morning he sent them out over the world, and every night they came
+          back and told him what they&rsquo;d seen.
+        </p>
+        <p className="raven-body">
+          He said he feared Huginn might not come back. He feared more for
+          Muninn.
+        </p>
+        <p className="raven-close">
+          There are two. This is the one on the back of your watch.
+        </p>
+        <span className="raven-cite">Gr&iacute;mnism&aacute;l, stanza 20</span>
+      </Reveal>
+
       {/* The watches. Sits directly under the hero and proof strip so cold traffic
           sees the product before the story, while the kitchen-table hero stays first.
           Moved up 2026-08-15: the story below now runs uninterrupted. */}

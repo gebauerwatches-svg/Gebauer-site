@@ -1572,3 +1572,48 @@
   .spec-item-icon { width: 26px; height: 26px; margin-bottom: 10px; }
   .spec-item p { font-size: 13.5px; }
 }
+
+/* ---- Muninn ------------------------------------------------------------
+   Quiet on purpose. This block sits between the proof strip and the watches
+   and its job is to slow the reader down for four lines, not to sell. Wide
+   letter-spacing on the name, generous space around it, nothing to click. */
+.raven-beat {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 104px 24px 96px;
+  text-align: center;
+}
+.raven-name {
+  display: block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #c4952a;
+  margin-bottom: 34px;
+}
+.raven-body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(19px, 2.3vw, 23px);
+  line-height: 1.62;
+  color: rgba(240, 232, 214, 0.86);
+  margin: 0 0 22px;
+}
+.raven-close {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(20px, 2.5vw, 25px);
+  line-height: 1.5;
+  color: #f0e8d6;
+  margin: 34px 0 28px;
+}
+.raven-cite {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 232, 214, 0.38);
+}
+@media (max-width: 640px) {
+  .raven-beat { padding: 72px 22px 64px; }
+  .raven-name { letter-spacing: 0.32em; margin-bottom: 26px; }
+}
