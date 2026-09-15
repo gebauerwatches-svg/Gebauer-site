@@ -644,26 +644,37 @@ function App() {
           chemical-etched on every caseback regardless of wood, so it is the one
           element that carries the brand rather than the choice.
 
-          Deliberately under-explained. It never connects the raven to memory,
-          milestones or gifts, because a reader who makes that leap themselves
-          is the one who repeats it. The stanza citation is there so a skeptic
-          can verify it and a curious one has somewhere to go. Do not expand
-          this into a paragraph. */}
-      <Reveal className="raven-beat" id="muninn">
+          Deliberately a PALE block between two dark ones. The page goes dark,
+          then quiet and light here, then dark again for the watches. The break
+          is the point.
+
+          The quote is Bellows' 1923 translation of Grimnismal, public domain,
+          hosted on Wikisource. Using the real stanza rather than a paraphrase
+          because a reader can go and check it, and because "my care is more"
+          is better than anything either of us would write.
+
+          Under-explained on purpose. It never connects the raven to memory,
+          milestones or gifts. The reader who makes that leap is the one who
+          repeats it. Do not expand this. */}
+      <Reveal className="raven-beat">
         <span className="raven-name">Muninn</span>
-        <p className="raven-body">
+        <p className="raven-intro">
           Odin kept two ravens. Huginn was Thought. Muninn was Memory. Every
           morning he sent them out over the world, and every night they came
           back and told him what they&rsquo;d seen.
         </p>
-        <p className="raven-body">
-          He said he feared Huginn might not come back. He feared more for
-          Muninn.
-        </p>
+        <blockquote className="raven-quote">
+          <p>
+            For Hugin I fear lest he come not home,<br />
+            But for Munin my care is more.
+          </p>
+        </blockquote>
         <p className="raven-close">
           There are two. This is the one on the back of your watch.
         </p>
-        <span className="raven-cite">Gr&iacute;mnism&aacute;l, stanza 20</span>
+        <span className="raven-cite">
+          Gr&iacute;mnism&aacute;l, stanza 20 &middot; trans. Bellows, 1923
+        </span>
       </Reveal>
 
       {/* The watches. Sits directly under the hero and proof strip so cold traffic

@@ -1574,46 +1574,63 @@
 }
 
 /* ---- Muninn ------------------------------------------------------------
-   Quiet on purpose. This block sits between the proof strip and the watches
-   and its job is to slow the reader down for four lines, not to sell. Wide
-   letter-spacing on the name, generous space around it, nothing to click. */
+   A deliberately PALE block between two dark ones. Explicit background, not
+   inherited: the first version assumed a dark section and shipped gold text
+   on off-white at 2.58 contrast, which is unreadable. Purple on cream is
+   15.14. Every colour here was checked, not eyeballed. */
 .raven-beat {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 104px 24px 96px;
+  background: var(--bg-cream);
+  padding: 116px 24px 104px;
   text-align: center;
 }
+.raven-beat > * { max-width: 620px; margin-left: auto; margin-right: auto; }
 .raven-name {
   display: block;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 13px;
   letter-spacing: 0.42em;
   text-transform: uppercase;
-  color: #c4952a;
-  margin-bottom: 34px;
+  color: var(--purple-soft);
+  margin-bottom: 36px;
 }
-.raven-body {
+.raven-intro {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(19px, 2.3vw, 23px);
-  line-height: 1.62;
-  color: rgba(240, 232, 214, 0.86);
-  margin: 0 0 22px;
+  font-size: clamp(18px, 2.2vw, 21px);
+  line-height: 1.68;
+  color: var(--purple-mid);
+  margin: 0 0 40px;
+}
+.raven-quote {
+  margin: 0 auto 40px;
+  padding: 0;
+  border: none;
+}
+.raven-quote p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(23px, 3.2vw, 32px);
+  line-height: 1.42;
+  color: var(--purple);
+  margin: 0;
 }
 .raven-close {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(20px, 2.5vw, 25px);
+  font-size: clamp(19px, 2.4vw, 23px);
   line-height: 1.5;
-  color: #f0e8d6;
-  margin: 34px 0 28px;
+  color: var(--purple);
+  margin: 0 auto 30px;
 }
 .raven-cite {
   display: block;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(240, 232, 214, 0.38);
+  color: var(--purple-soft);
+  opacity: 0.75;
 }
 @media (max-width: 640px) {
-  .raven-beat { padding: 72px 22px 64px; }
-  .raven-name { letter-spacing: 0.32em; margin-bottom: 26px; }
+  .raven-beat { padding: 76px 22px 68px; }
+  .raven-name { letter-spacing: 0.3em; margin-bottom: 28px; }
+  .raven-intro { margin-bottom: 30px; }
+  .raven-quote { margin-bottom: 30px; }
 }
