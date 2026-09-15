@@ -570,7 +570,7 @@ function App() {
     <>
       {/* NAV — always visible */}
       <nav className="site-nav">
-        <a href="/" className="nav-logo"><img src={logo} alt="Gebauer" /></a>
+        <a href="/" className="nav-logo">Gebauer</a>
         <div className="nav-links">
           <a href="#story" className="nav-link">Story</a>
           <a href="#watches" className="nav-link">Watches</a>

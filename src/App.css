@@ -24,7 +24,19 @@
   background: rgba(15, 13, 20, 0.9);
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
 }
-.nav-logo img { width: 28px; height: auto; opacity: 0.7; }
+/* Text wordmark, not an image. The 28px mark was a 49KB traced SVG whose
+   detail was invisible at that size, and a failed load left a broken-image
+   icon in the corner of every page. Text cannot 404. */
+.nav-logo {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 17px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 236, 229, 0.82);
+  text-decoration: none;
+  line-height: 1;
+}
+.nav-logo:hover { color: var(--gold); }
 
 /* Desktop nav links — always visible */
 .nav-links {
