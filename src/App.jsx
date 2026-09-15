@@ -661,7 +661,7 @@ function App() {
           <span className="raven-name">Muninn</span>
           <p className="raven-intro">
             Odin sent two ravens out every morning. Huginn, who was Thought,
-            and Muninn, who was Memory.
+            and Muninn, who was Memory. He once said:
           </p>
           <blockquote className="raven-quote">
             <p>

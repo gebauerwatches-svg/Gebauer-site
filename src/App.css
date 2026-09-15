@@ -1605,7 +1605,7 @@
   font-size: clamp(17px, 2vw, 19px);
   line-height: 1.6;
   color: var(--purple-mid);
-  margin: 0 0 30px;
+  margin: 0 0 22px;
 }
 .raven-quote { margin: 0 0 28px; padding: 0; border: none; }
 .raven-quote p {
@@ -1634,6 +1634,6 @@
 @media (max-width: 640px) {
   .raven-beat { padding: 60px 22px 54px; }
   .raven-name { letter-spacing: 0.3em; margin-bottom: 20px; }
-  .raven-intro { margin-bottom: 24px; }
+  .raven-intro { margin-bottom: 18px; }
   .raven-quote { margin-bottom: 22px; }
 }
