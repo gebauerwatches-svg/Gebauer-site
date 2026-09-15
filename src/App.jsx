@@ -657,24 +657,25 @@ function App() {
           milestones or gifts. The reader who makes that leap is the one who
           repeats it. Do not expand this. */}
       <Reveal className="raven-beat">
-        <span className="raven-name">Muninn</span>
-        <p className="raven-intro">
-          Odin kept two ravens. Huginn was Thought. Muninn was Memory. Every
-          morning he sent them out over the world, and every night they came
-          back and told him what they&rsquo;d seen.
-        </p>
-        <blockquote className="raven-quote">
-          <p>
-            For Hugin I fear lest he come not home,<br />
-            But for Munin my care is more.
+        <div className="raven-inner">
+          <span className="raven-name">Muninn</span>
+          <p className="raven-intro">
+            Odin sent two ravens out every morning. Huginn, who was Thought,
+            and Muninn, who was Memory.
           </p>
-        </blockquote>
-        <p className="raven-close">
-          There are two. This is the one on the back of your watch.
-        </p>
-        <span className="raven-cite">
-          Gr&iacute;mnism&aacute;l, stanza 20 &middot; trans. Bellows, 1923
-        </span>
+          <blockquote className="raven-quote">
+            <p>
+              For Hugin I fear lest he come not home,<br />
+              But for Munin my care is more.
+            </p>
+          </blockquote>
+          <p className="raven-close">
+            There are two. This is the one on the back of your watch.
+          </p>
+          <span className="raven-cite">
+            Gr&iacute;mnism&aacute;l, stanza 20 &middot; trans. Bellows, 1923
+          </span>
+        </div>
       </Reveal>
 
       {/* The watches. Sits directly under the hero and proof strip so cold traffic

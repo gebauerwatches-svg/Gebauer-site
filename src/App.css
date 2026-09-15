@@ -1574,63 +1574,66 @@
 }
 
 /* ---- Muninn ------------------------------------------------------------
-   A deliberately PALE block between two dark ones. Explicit background, not
-   inherited: the first version assumed a dark section and shipped gold text
-   on off-white at 2.58 contrast, which is unreadable. Purple on cream is
-   15.14. Every colour here was checked, not eyeballed. */
+   Centring lives on .raven-inner, NOT on a `> *` rule. The first version set
+   margin-left/right:auto on .raven-beat > * and then used the `margin`
+   shorthand on each child, which silently reset both to zero at equal
+   specificity. The intro paragraph ran off the left edge of the viewport.
+   One wrapper with auto margins cannot be cancelled that way.
+
+   Colours checked, not eyeballed: purple on cream is 15.14, the gold this
+   replaced was 2.58 against a 4.5 minimum. */
 .raven-beat {
   background: var(--bg-cream);
-  padding: 116px 24px 104px;
+  padding: 84px 24px 76px;
+}
+.raven-inner {
+  max-width: 600px;
+  margin: 0 auto;
   text-align: center;
 }
-.raven-beat > * { max-width: 620px; margin-left: auto; margin-right: auto; }
 .raven-name {
   display: block;
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.42em;
   text-transform: uppercase;
   color: var(--purple-soft);
-  margin-bottom: 36px;
+  margin-bottom: 26px;
 }
 .raven-intro {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(18px, 2.2vw, 21px);
-  line-height: 1.68;
+  font-size: clamp(17px, 2vw, 19px);
+  line-height: 1.6;
   color: var(--purple-mid);
-  margin: 0 0 40px;
+  margin: 0 0 30px;
 }
-.raven-quote {
-  margin: 0 auto 40px;
-  padding: 0;
-  border: none;
-}
+.raven-quote { margin: 0 0 28px; padding: 0; border: none; }
 .raven-quote p {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: clamp(23px, 3.2vw, 32px);
-  line-height: 1.42;
+  font-size: clamp(22px, 3vw, 29px);
+  line-height: 1.38;
   color: var(--purple);
   margin: 0;
 }
 .raven-close {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(19px, 2.4vw, 23px);
+  font-size: clamp(18px, 2.2vw, 21px);
   line-height: 1.5;
   color: var(--purple);
-  margin: 0 auto 30px;
+  margin: 0 0 22px;
 }
 .raven-cite {
   display: block;
-  font-size: 11px;
+  font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--purple-soft);
-  opacity: 0.75;
+  opacity: 0.7;
 }
 @media (max-width: 640px) {
-  .raven-beat { padding: 76px 22px 68px; }
-  .raven-name { letter-spacing: 0.3em; margin-bottom: 28px; }
-  .raven-intro { margin-bottom: 30px; }
-  .raven-quote { margin-bottom: 30px; }
+  .raven-beat { padding: 60px 22px 54px; }
+  .raven-name { letter-spacing: 0.3em; margin-bottom: 20px; }
+  .raven-intro { margin-bottom: 24px; }
+  .raven-quote { margin-bottom: 22px; }
 }
