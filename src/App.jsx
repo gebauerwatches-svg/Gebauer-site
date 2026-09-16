@@ -804,9 +804,8 @@ function App() {
           and Liam was the kid. Do not spell that out on the page. */}
       <Reveal className="story-beat story-dark" id="drawer">
         <div className="story-beat-inner">
-          <h2 className="story-beat-headline">It didn&rsquo;t start in Milan. It started with a watch I never wore.</h2>
-          <p className="story-beat-text">For my 10th birthday, my parents got me a smartwatch. They thought it would be good to have because it tracked progress on the mountain and doubled as a safety device, and could be used every day for a variety of other reasons. But I just never wore it. It sat at my charging station for three years until my dad decided to make it his own. I didn&rsquo;t care that he took it back then and I still don&rsquo;t.</p>
-          <p className="story-beat-text">I didn&rsquo;t know why I wasn&rsquo;t wearing it at the time, but it was because it was another device. People are so connected these days. Laptops, phones, tablets, earbuds, all of it everywhere around us. Thinking back, I just didn&rsquo;t want another device to carry around, or to look at, or to simply have in my life.</p>
+          <h2 className="story-beat-headline">It started with a watch I never wore.</h2>
+          <p className="story-beat-text">For my 10th birthday my parents got me a smartwatch. Good reasons: it tracked my skiing and doubled as a safety device on the mountain. I never wore it. It sat at my charging station for three years until my dad took it for himself, and I didn&rsquo;t care then and I still don&rsquo;t. I couldn&rsquo;t have told you why at the time. It was just another device.</p>
         </div>
       </Reveal>
 
