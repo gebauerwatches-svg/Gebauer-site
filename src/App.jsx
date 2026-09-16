@@ -802,7 +802,7 @@ function App() {
           It is also the brand thesis from the other side: parents buy a
           thoughtful gift, the kid never wears it. That is the customer problem,
           and Liam was the kid. Do not spell that out on the page. */}
-      <Reveal className="story-beat story-dark" id="drawer">
+      <Reveal className="story-beat story-cream" id="drawer">
         <div className="story-beat-inner">
           <h2 className="story-beat-headline">It started with a watch I never wore.</h2>
           <p className="story-beat-text">For my 10th birthday my parents got me a smartwatch. It tracked my skiing and doubled as a safety device on the mountain. I never wore it. It sat at my charging station for three years until my dad took it for himself, and I didn&rsquo;t care then and I still don&rsquo;t. I couldn&rsquo;t have told you why at the time. Looking back, I didn&rsquo;t wear it because it was just another device.</p>
