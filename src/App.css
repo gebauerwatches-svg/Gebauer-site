@@ -1649,3 +1649,27 @@
   .raven-intro { margin-bottom: 18px; }
   .raven-quote { margin-bottom: 22px; }
 }
+
+/* ---- the problem scene ----
+   Reuses .stats-bar-inner, which was styled long ago and never used. The
+   slightly lighter panel inside a cream section gives the numbers separation
+   without another background flip, since the scenes either side are cream too. */
+.problem-stats {
+  background: var(--bg-light);
+  border: 1px solid rgba(26,23,20,0.08);
+  padding: 26px 24px;
+  margin: 30px 0;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.problem-stats .stats-bar-label { max-width: 15ch; line-height: 1.5; }
+.problem-cite {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(26,23,20,0.45);
+  margin-top: 22px;
+}
+@media (max-width: 640px) {
+  .problem-stats { gap: 22px; padding: 22px 18px; justify-content: flex-start; }
+}

@@ -825,6 +825,43 @@ function App() {
         </div>
       </Reveal>
 
+      {/* THE PROBLEM. Sits between his own gift-card story and the insight,
+          because without it the page reads as "one kid got annoying gift cards
+          so he started a watch company". This is the beat that widens it from
+          a personal grudge to a category that collapsed.
+
+          Every figure here was already written in index.html, the crawler
+          fallback, and nowhere in the app. Google could read the strongest
+          argument on this site and a human visitor could not.
+
+          Cash and gift cards are shown SEPARATELY on purpose. They are shares
+          of gifts, not of dollars, and respondents can pick both, so adding
+          them to reach one big number would be double counting. */}
+      <Reveal className="story-beat story-cream" id="problem">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">Then I realised it wasn&rsquo;t just me.</h2>
+          <p className="story-beat-text">Class rings used to be the object you got. Two decades ago around 65% of high school sophomores bought one. By the 2010s it was 20 to 30%, according to a Jostens representative. I have never seen a single person at my school with one.</p>
+
+          <div className="stats-bar-inner problem-stats">
+            <div className="stats-bar-item">
+              <span className="stats-bar-num">$6.8B</span>
+              <span className="stats-bar-label">Spent on graduation gifts</span>
+            </div>
+            <div className="stats-bar-item">
+              <span className="stats-bar-num">20&ndash;30%</span>
+              <span className="stats-bar-label">Sophomores with a class ring, from 65%</span>
+            </div>
+            <div className="stats-bar-item">
+              <span className="stats-bar-num">Over half</span>
+              <span className="stats-bar-label">Of graduation gifts are cash</span>
+            </div>
+          </div>
+
+          <p className="story-beat-text">The money never went anywhere. Graduation gift spending just hit a record. Cash is the single most popular gift and it turns up in more than half of them, with gift cards in another 31%. So the spending stayed exactly where it was. The object is the part that disappeared.</p>
+          <p className="problem-cite">Spending and gift data: National Retail Federation. Class ring figures: Jostens.</p>
+        </div>
+      </Reveal>
+
       {/* SCENE 3 — the insight. Tees up the watches reveal that comes immediately after. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
