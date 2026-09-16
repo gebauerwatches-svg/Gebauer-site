@@ -794,10 +794,26 @@ function App() {
         </div>
       </Reveal>
 
+      {/* SCENE 0 — the smartwatch that sat in a drawer. Added Sep 2026.
+          Goes BEFORE Milan on purpose. Without it, Milan reads as an impulse
+          buy that happened to become a company. With it, Milan is the
+          resolution of something that had been unresolved for four years.
+
+          It is also the brand thesis from the other side: parents buy a
+          thoughtful gift, the kid never wears it. That is the customer problem,
+          and Liam was the kid. Do not spell that out on the page. */}
+      <Reveal className="story-beat story-dark" id="drawer">
+        <div className="story-beat-inner">
+          <h2 className="story-beat-headline">It didn&rsquo;t start in Milan. It started with a watch I never wore.</h2>
+          <p className="story-beat-text">For my 10th birthday, my parents got me a smartwatch. They thought it would be good to have because it tracked progress on the mountain and doubled as a safety device, and could be used every day for a variety of other reasons. But I just never wore it. It sat at my charging station for three years until my dad decided to make it his own. I didn&rsquo;t care that he took it back then and I still don&rsquo;t.</p>
+          <p className="story-beat-text">I didn&rsquo;t know why I wasn&rsquo;t wearing it at the time, but it was because it was another device. People are so connected these days. Laptops, phones, tablets, earbuds, all of it everywhere around us. Thinking back, I just didn&rsquo;t want another device to carry around, or to look at, or to simply have in my life.</p>
+        </div>
+      </Reveal>
+
       {/* SCENE 1 — Milan. The buy that started it. Shorter than before, just the moment. */}
       <Reveal className="story-beat story-milan" id="story">
         <div className="story-beat-inner story-beat-over">
-          <h2 className="story-beat-headline">I'm Liam. When I was 14, I bought a watch in Milan.</h2>
+          <h2 className="story-beat-headline">Four years after that birthday, I bought a watch in Milan.</h2>
           <p className="story-beat-text">I walked into a Seiko store with 310 euros I'd been saving for months, and walked out with my first real watch. What amazed me was that it didn't beep or buzz or try to get my attention. It just told the time. It was the first thing I'd ever bought that wasn't going to wear out.</p>
         </div>
       </Reveal>
