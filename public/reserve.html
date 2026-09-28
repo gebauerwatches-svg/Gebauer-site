@@ -150,8 +150,6 @@
       .avail-grid.cherry .avail-cell.avail { background: #e6c9a8; color: #1a1714; border-color: #c49a72; }
       /* Ebony: dark charcoal */
       .avail-grid.ebony .avail-cell.avail { background: #3a3028; color: #f0ece5; border-color: #5a4d40; }
-      /* Padauk: warm orange */
-      .avail-grid.padauk .avail-cell.avail { background: #c46a3a; color: #1a1714; border-color: #9c5028; }
 
 
       .picked-notice {
@@ -264,10 +262,10 @@
         form { padding: 28px 22px; }
       }
     </style>
-      <meta property="og:image" content="https://gebauerwatches.com/images/watch-padauk.jpeg" />
+      <meta property="og:image" content="https://gebauerwatches.com/images/watch-ebony.jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="1800" />
-    <meta name="twitter:image" content="https://gebauerwatches.com/images/watch-padauk.jpeg" />
+    <meta name="twitter:image" content="https://gebauerwatches.com/images/watch-ebony.jpeg" />
   </head>
   <body>
     <div class="container">
@@ -307,14 +305,6 @@
         <div class="avail-grid ebony" id="grid-ebony" data-wood="ebony"></div>
       </div>
 
-      <div class="avail-wrap">
-        <div class="avail-title-row">
-          <span class="avail-title">African Padauk &nbsp;&middot;&nbsp; $339</span>
-          <span class="avail-count" id="padauk-count">Loading...</span>
-        </div>
-        <div class="avail-grid padauk" id="grid-padauk" data-wood="padauk"></div>
-      </div>
-
       <form id="reserve-form">
         <div class="field">
           <label for="first_name">First name</label>
@@ -332,7 +322,6 @@
             <option value="">Pick one</option>
             <option value="cherry">Cherry &nbsp;&middot;&nbsp; $339</option>
             <option value="ebony">Black Ebony &nbsp;&middot;&nbsp; $339</option>
-            <option value="padauk">African Padauk &nbsp;&middot;&nbsp; $339</option>
             <option value="unsure">Not sure yet</option>
           </select>
         </div>
@@ -396,7 +385,9 @@
       // Pre-select wood from URL param if present
       const urlParams = new URLSearchParams(window.location.search);
       const woodParam = urlParams.get('wood');
-      const validWoods = ['cherry', 'ebony', 'padauk', 'unsure'];
+      // 'padauk' deliberately absent: cut from the first edition Sep 24 2026.
+      // A ?wood=padauk link now falls through and selects nothing.
+      const validWoods = ['cherry', 'ebony', 'unsure'];
       if (woodParam && validWoods.includes(woodParam.toLowerCase())) {
         form.wood_preference.value = woodParam.toLowerCase();
       }
@@ -426,25 +417,32 @@
         form.parentNode.insertBefore(welcome, form);
       }
 
-      const WOOD_LABEL = { cherry: 'CHERRY', ebony: 'EBONY', padauk: 'PADAUK' };
+      const WOOD_LABEL = { cherry: 'CHERRY', ebony: 'EBONY' };
 
       function pad(n) { return String(n).padStart(3, '0'); }
 
       async function loadAvailability() {
-        let data = { cherry: [], ebony: [], padauk: [], pending: { cherry: [], ebony: [], padauk: [] }, strategic_hold: { cherry: [], ebony: [], padauk: [] } };
+        // /api/availability still returns a padauk key for legacy rows. It is
+        // read and ignored here: there is no padauk grid to render into.
+        let data = { cherry: [], ebony: [], pending: { cherry: [], ebony: [] }, strategic_hold: { cherry: [], ebony: [] } };
         try {
           const resp = await fetch('/api/availability');
           if (resp.ok) data = await resp.json();
         } catch (e) { /* silently show all-available on network failure */ }
 
-        for (const wood of ['cherry', 'ebony', 'padauk']) {
+        // Units per variant, confirmed with the factory Sep 24 2026. The API
+        // also returns these as data.units; prefer that if present so the two
+        // can never drift apart.
+        const UNITS = (data.units && data.units.cherry) ? data.units : { cherry: 250, ebony: 50 };
+
+        for (const wood of ['cherry', 'ebony']) {
           const reserved = new Set(data[wood] || []);
           const pending = new Set((data.pending && data.pending[wood]) || []);
           const hold = new Set((data.strategic_hold && data.strategic_hold[wood]) || []);
           const grid = document.getElementById('grid-' + wood);
           grid.innerHTML = '';
           let available = 0;
-          for (let n = 1; n <= 100; n++) {
+          for (let n = 1; n <= UNITS[wood]; n++) {
             const cell = document.createElement('div');
             cell.textContent = pad(n);
             if (reserved.has(n)) {
@@ -471,7 +469,7 @@
             }
             grid.appendChild(cell);
           }
-          document.getElementById(wood + '-count').textContent = available + ' of 100 still available';
+          document.getElementById(wood + '-count').textContent = available + ' of ' + UNITS[wood] + ' still available';
         }
       }
 

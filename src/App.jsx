@@ -15,9 +15,9 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 // Showing a Hinoki dial labelled "Cherry" misrepresents the product. Replace
 // before the campaign, or before any outreach sends traffic here.
 import watchCherry from './assets/tokiji-hinoki-render.jpeg'
-import watchPadauk from './assets/tokiji-padauk-render.jpeg'
-import padaukAged from './assets/padauk-aged.jpeg'
-import padaukDeep from './assets/padauk-deep.jpeg'
+// Padauk renders (tokiji-padauk-render, padauk-aged, padauk-deep) are no longer
+// imported as of Sep 24 2026. The files are still in ./assets in case the red
+// wood returns in a later run, correctly named as pau rosa. See DECISIONS H13.
 import milanBg from './assets/milan.jpeg'
 import './App.css'
 
@@ -50,10 +50,11 @@ function founderAgeNow(now = new Date()) {
 }
 
 // Wood choices for the insider vote card. Matches the wood vote API which
-// expects lowercase keys (padauk, ebony, cherry). Images use the existing
+// expects lowercase keys (ebony, cherry). Images use the existing
 // Tokiji render imports at the top of this file.
+// 'padauk' removed Sep 24 2026 (cut from the first edition). Historic padauk
+// votes still exist in D1 and still render in /admin; this only stops new ones.
 const WOOD_OPTIONS = [
-  { key: 'padauk', label: 'Padauk', img: watchPadauk },
   { key: 'ebony',  label: 'Ebony',  img: watchEbony },
   { key: 'cherry', label: 'Cherry', img: watchCherry },
 ]
@@ -118,12 +119,15 @@ function InsiderView({ firstName, onBack }) {
   const [timeline, setTimeline] = useState([
     { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
     { id: 'samples',     label: 'Samples arrive',        when: 'In progress',   status: 'current' },
-    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'Early 2027',    status: 'upcoming' },
+    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'June 2027',     status: 'upcoming' },
     { id: 'ship',        label: 'Watches ship',          when: 'Later 2027',    status: 'upcoming' },
   ])
 
   // Per-milestone-id thumbnail. Admin edits text only; the image is resolved client-side.
-  const milestoneImage = (id) => (id === 'design' ? watchPadauk : null)
+  // Was the padauk render until Sep 24 2026. Swapped to ebony when padauk was
+  // cut: ebony is the only variant with a real render (the cherry image is
+  // still the discontinued hinoki one).
+  const milestoneImage = (id) => (id === 'design' ? watchEbony : null)
 
   useEffect(() => {
     fetch('/api/journal')
@@ -705,7 +709,6 @@ function App() {
           </div>
           <div className="wood-grid">
             {[
-              { id: 'padauk', img: watchPadauk, name: 'African Padauk', price: '$339', desc: 'Bleeds orange when cut. A wood that lives. And it doesn\'t stop changing.' },
               { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
               { id: 'cherry', img: watchCherry, name: 'Cherry', price: '$339', desc: 'The wood American families passed down. Shaker chests, grandfather clocks. Starts pale and darkens to deep reddish brown, most of it in the first year.' },
             ].map(w => (
@@ -724,30 +727,22 @@ function App() {
         </div>
       </Reveal>
 
-      {/* Padauk transformation — pulled OUT of the watches section onto its own cream-background beat so the visual jump from dark watches → cream reveal creates the "holy moley" moment. Sits immediately after the watches so all product info is still adjacent. */}
-      <Reveal className="story-beat story-cream padauk-reveal">
-        <div className="story-beat-inner" style={{textAlign: 'center', maxWidth: 760}}>
-          <p className="padauk-transform-label">About Padauk</p>
-          <h3 className="padauk-transform-headline">Here's the crazy part.</h3>
-          <div className="watch-compare">
-            <div className="watch-compare-item">
-              <img src={watchPadauk} alt="Padauk, day one" />
-              <p>Day one</p>
-            </div>
-            <div className="watch-compare-item">
-              <img src={padaukDeep} alt="Padauk, years later" />
-              <p>Years later</p>
-            </div>
-          </div>
-          <p className="padauk-transform-text">Padauk shifts from fiery orange to deep burgundy over the years. No finish can stop it. The watch you wear at graduation won't look like the one you wear at 25. The wood remembers what you did with it.</p>
-        </div>
-      </Reveal>
+      {/* GAP HERE. The padauk transformation beat was removed Sep 24 2026 when
+          padauk was cut from the first edition: the wood was pau rosa, which
+          does not shift from fiery orange to deep burgundy, so the copy was
+          false. It was the colour-change payoff of the whole page and nothing
+          replaces it yet. Cherry darkens faster and more visibly than padauk
+          would have, so the beat should come back as a cherry reveal, but
+          LIAM WRITES THAT COPY, not an agent [H1], and no cherry photography
+          exists yet (the only cherry-adjacent image in the repo is the
+          discontinued hinoki render). Blocked on the Japan trip. */}
 
       {/* How a dial is made. Added after Liam's call with Scott, the first
           collector on the list, who said the process is the question every
           buyer will ask and was the one he asked himself. The site had
-          nothing on it. Sits right after the padauk reveal because the reveal
-          is what creates the doubt: wood, in a watch, for decades?
+          nothing on it. Originally sat right after the padauk reveal because
+          the reveal created the doubt: wood, in a watch, for decades? With
+          the reveal gone this now has to carry that job alone.
           PHOTOS PENDING: macro shots of a real dial go here once the six sun
           test samples arrive. Factory tray photos are not good enough. */}
       <Reveal className="story-beat story-dark">
@@ -769,13 +764,18 @@ function App() {
             <div className="spec-grid">
               {[
                 ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
-                ['dial', 'Dial', ['Real wood, cut individually', 'Cherry, ebony or padauk', 'No two grains alike']],
+                ['dial', 'Dial', ['Real wood, cut individually', 'Cherry or ebony', 'No two grains alike']],
                 ['movement', 'Movement', ['Seiko VH31', 'Meca-quartz', '4 ticks per second', 'Japanese']],
                 ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
                 ['hands', 'Hands', ['Dauphine', 'Luminescent']],
                 ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
                 ['caseback', 'Caseback', ['Chemically etched raven', 'Numbered within its wood', 'Assembled in Japan']],
-                ['edition', 'Edition', ['300 watches', '100 of each wood', 'Individually numbered']],
+                // '100 of each wood' removed Sep 24 2026: with padauk cut it
+                // implied a 200-piece edition against the 300 stated above.
+                // The real split is not publishable until the factory confirms
+                // it (facts.EDITION_SPLIT_CONFIRMED_WITH_FACTORY is False), so
+                // the line is gone rather than replaced with a wrong number.
+                ['edition', 'Edition', ['300 watches', 'Individually numbered']],
               ].map(([icon, title, lines]) => (
                 <div className="spec-item" key={title}>
                   <SpecIcon name={icon} />

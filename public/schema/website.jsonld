@@ -47,15 +47,6 @@
           "price": "339",
           "priceCurrency": "USD"
         }
-      },
-      {
-        "@type": "Product",
-        "name": "African Padauk Watch",
-        "offers": {
-          "@type": "Offer",
-          "price": "339",
-          "priceCurrency": "USD"
-        }
       }
     ]
   }

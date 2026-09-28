@@ -404,11 +404,16 @@
               const sel = cur.includes('padauk') ? 'padauk'
                         : cur.includes('ebony') ? 'ebony'
                         : (cur.includes('cherry') || cur.includes('hinoki')) ? 'cherry' : ''
+              // Padauk was cut from the first edition Sep 24 2026. The option
+              // only appears if THIS record is already padauk, so existing
+              // rows keep rendering and nothing new can be assigned to it.
               return el('select', { id: 'edit-wood' },
                 el('option', { value: '', selected: sel === '' ? 'true' : null }, 'No wood set'),
                 el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($339)'),
                 el('option', { value: 'ebony', selected: sel === 'ebony' ? 'true' : null }, 'Black Ebony ($339)'),
-                el('option', { value: 'padauk', selected: sel === 'padauk' ? 'true' : null }, 'African Padauk ($339)'),
+                ...(sel === 'padauk'
+                  ? [el('option', { value: 'padauk', selected: 'true' }, 'African Padauk (CUT, legacy record)')]
+                  : []),
               )
             })(),
             el('div', { style: 'font-size:11.5px;color:var(--muted);margin-top:5px;line-height:1.55;' },

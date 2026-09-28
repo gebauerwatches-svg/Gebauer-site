@@ -22,20 +22,27 @@
 import { json, randomHex } from './_shared.js'
 
 
-const VALID_WOODS = new Set(['cherry', 'ebony', 'padauk', 'unsure'])
+// 'padauk' is a LEGACY value as of Sep 24 2026, handled the same way as
+// 'hinoki' in availability.js. The wood sold as African Padauk turned out to be
+// pau rosa, which does not age the way the site described it, so it was cut
+// from the first edition. It is NOT accepted for new reservations, but it stays
+// in the label maps below because existing D1 rows still carry it and those
+// rows have to keep rendering. Do not delete the labels without migrating the
+// data first.
+const VALID_WOODS = new Set(['cherry', 'ebony', 'unsure'])
 
 
 const WOOD_LABELS = {
   cherry: 'Cherry ($339)',
   ebony: 'Black Ebony ($339)',
-  padauk: 'African Padauk ($339)',
+  padauk: 'African Padauk ($339)',  // legacy, read-only
   unsure: 'Not sure yet',
 }
 
 const WOOD_SHORT = {
   cherry: 'CHERRY',
   ebony: 'EBONY',
-  padauk: 'PADAUK',
+  padauk: 'PADAUK',  // legacy, read-only
 }
 
 
