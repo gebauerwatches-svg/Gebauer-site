@@ -238,6 +238,26 @@
     }
 
     // ---- Subscribers view ----
+    // Units per variant, confirmed with the factory Sep 24 2026. Numbering is
+    // PER WOOD, so cherry #7 and ebony #7 are two different watches and a bare
+    // "#7" is meaningless. Every number shown in this UI carries its wood.
+    // Module scope on purpose: the add and edit modals both validate against it
+    // and they live outside renderSubscribers.
+    const VARIANT_UNITS = { cherry: 250, ebony: 50 }
+
+    // Reads the wood out of notes, the same way functions/api/availability.js
+    // does. There is no wood column on subscribers. Cherry is checked before
+    // ebony and 'hinoki' maps to cherry, matching the server exactly: if these
+    // two ever disagree, /admin and the public grid show different owners for
+    // the same number.
+    function woodOf(s) {
+      const t = (s.notes || '').toLowerCase()
+      if (t.includes('cherry') || t.includes('hinoki')) return 'cherry'
+      if (t.includes('ebony')) return 'ebony'
+      if (t.includes('padauk')) return 'padauk'
+      return null
+    }
+
     async function renderSubscribers() {
       renderShell(el('div', {}, el('p', { class: 'page-sub' }, 'Loading...')))
       const data = await api('/subscribers?limit=300').catch(() => ({ subscribers: [], total: 0, active: 0 }))
@@ -254,6 +274,20 @@
 
       const tableWrap = el('div', { id: 'subs-table-wrap' })
       const addBtn = el('button', { class: 'primary', onclick: showAddSubscriberModal }, '+ Add')
+
+      function watchCell(s) {
+        if (s.waitlist_position === 9999) return el('span', { style: 'color:var(--muted);' }, '—')
+        const w = woodOf(s)
+        if (!w) {
+          // A number with no wood is a real data problem, not a cosmetic one:
+          // nobody can tell which watch was promised. Make it impossible to miss.
+          return el('span', { style: 'color:#b23c17;font-weight:600;', title: 'This number has no wood set. Open Edit and pick one.' },
+                    `#${s.waitlist_position} wood?`)
+        }
+        const over = VARIANT_UNITS[w] && s.waitlist_position > VARIANT_UNITS[w]
+        return el('span', over ? { style: 'color:#b23c17;font-weight:600;', title: `${w} only runs to ${VARIANT_UNITS[w]}` } : {},
+                  `${w.toUpperCase()} #${s.waitlist_position}${over ? ' !' : ''}`)
+      }
 
       function momentSnippet(s) {
         if (!s.stories) return el('span', { style: 'color:var(--muted);' }, '—')
@@ -282,7 +316,7 @@
             el('td', {}, s.first_name || ''),
             el('td', {}, s.email),
             el('td', { style: 'max-width:280px;' }, momentSnippet(s)),
-            el('td', {}, s.waitlist_position === 9999 ? '—' : `#${s.waitlist_position}`),
+            el('td', {}, watchCell(s)),
             el('td', {}, el('span', { class: `status-pill status-${s.status}` }, s.status)),
             el('td', {}, (s.subscribed_at || '').slice(0, 10)),
             el('td', {}, el('button', { onclick: () => showEditSubscriberModal(s) }, 'Edit')),
@@ -325,19 +359,44 @@
     }
 
     function showAddSubscriberModal() {
+      // Add had NO wood field until Sep 28 2026. You could set a watch number
+      // and there was nowhere to say which wood it belonged to, so the number
+      // was ambiguous the moment it was saved and the wood had to be typed by
+      // hand into notes, or set afterwards by reopening Edit. That is how
+      // "Ebony #7" ended up hand-written and how an add was abandoned midway.
+      //
+      // The number field also still said 1-300, which was the dead scheme where
+      // 1-100 was cherry, 101-200 ebony and 201-300 padauk. Numbering is now
+      // per variant: cherry 1-250, ebony 1-50.
       const modal = el('div', { class: 'modal-bg', onclick: (e) => { if (e.target.classList.contains('modal-bg')) modal.remove() } },
         el('form', { class: 'modal', onsubmit: async (e) => {
           e.preventDefault()
           const errEl = $('#add-err', modal)
           errEl.classList.add('hidden')
+          const wood = $('#add-wood', modal).value
           const watchNumRaw = $('#add-watchnum', modal).value
           const watchNum = watchNumRaw ? parseInt(watchNumRaw, 10) : undefined
+
+          // Refuse the two mistakes that are invisible once saved: a number with
+          // no wood, and a number past what that wood actually runs to.
+          if (watchNum && !wood) {
+            errEl.textContent = 'Pick a wood. A watch number means nothing on its own.'
+            errEl.classList.remove('hidden'); return
+          }
+          if (watchNum && wood && watchNum > VARIANT_UNITS[wood]) {
+            errEl.textContent = `${wood} only runs to ${VARIANT_UNITS[wood]}. #${watchNum} does not exist.`
+            errEl.classList.remove('hidden'); return
+          }
+
+          const typed = $('#add-notes', modal).value.trim()
+          const notes = wood ? (typed ? `${wood.toUpperCase()} ${typed}` : wood.toUpperCase()) : typed
+
           const data = await api('/subscribers', {
             method: 'POST',
             body: JSON.stringify({
               email: $('#add-email', modal).value,
               first_name: $('#add-name', modal).value,
-              notes: $('#add-notes', modal).value,
+              notes,
               waitlist_position: watchNum,
             }),
           })
@@ -347,7 +406,27 @@
           el('h3', {}, 'Add subscriber'),
           el('div', { class: 'field' }, el('label', {}, 'Email'), el('input', { type: 'email', id: 'add-email', required: 'true' })),
           el('div', { class: 'field' }, el('label', {}, 'First name'), el('input', { type: 'text', id: 'add-name', required: 'true' })),
-          el('div', { class: 'field' }, el('label', {}, 'Watch # (1-300, blank = none)'), el('input', { type: 'number', id: 'add-watchnum', min: '1', max: '300' })),
+          el('div', { class: 'field' },
+            el('label', {}, 'Wood'),
+            el('select', { id: 'add-wood', onchange: (e) => {
+              const w = e.target.value
+              const num = $('#add-watchnum', modal)
+              const hint = $('#add-num-hint', modal)
+              num.max = w ? String(VARIANT_UNITS[w]) : '250'
+              hint.textContent = w
+                ? `${w} runs 1 to ${VARIANT_UNITS[w]}. Numbers 1 to 10 are held back.`
+                : 'Pick a wood first.'
+            } },
+              el('option', { value: '' }, 'No wood set'),
+              el('option', { value: 'cherry' }, 'Cherry (250 made)'),
+              el('option', { value: 'ebony' }, 'Ebony (50 made)'),
+            ),
+          ),
+          el('div', { class: 'field' },
+            el('label', {}, 'Watch # (blank = no number yet)'),
+            el('input', { type: 'number', id: 'add-watchnum', min: '1', max: '250' }),
+            el('div', { id: 'add-num-hint', style: 'font-size:11.5px;color:var(--muted);margin-top:5px;' }, 'Pick a wood first.'),
+          ),
           el('div', { class: 'field' }, el('label', {}, 'Notes (optional)'), el('input', { type: 'text', id: 'add-notes' })),
           el('p', { class: 'error hidden', id: 'add-err' }, ''),
           el('div', { class: 'modal-actions' },
@@ -365,11 +444,25 @@
           e.preventDefault()
           const errEl = $('#edit-err', modal)
           errEl.classList.add('hidden')
+
+          // Same two guards as Add. A number with no wood cannot be fulfilled,
+          // and a number past the run does not exist. Ebony is 50, not 100.
+          const _w = $('#edit-wood', modal).value
+          const _pos = parseInt($('#edit-pos', modal).value, 10) || 9999
+          if (_pos !== 9999 && !_w) {
+            errEl.textContent = 'Pick a wood. A watch number means nothing on its own.'
+            errEl.classList.remove('hidden'); return
+          }
+          if (_pos !== 9999 && VARIANT_UNITS[_w] && _pos > VARIANT_UNITS[_w]) {
+            errEl.textContent = `${_w} only runs to ${VARIANT_UNITS[_w]}. #${_pos} does not exist.`
+            errEl.classList.remove('hidden'); return
+          }
+
           const data = await api(`/subscriber/${s.id}`, {
             method: 'PUT',
             body: JSON.stringify({
               first_name: $('#edit-name', modal).value,
-              waitlist_position: parseInt($('#edit-pos', modal).value, 10) || 9999,
+              waitlist_position: _pos,
               status: $('#edit-status', modal).value,
               // The wood dropdown is the source of truth. There is no wood column
               // on subscribers, so the wood has to live in notes, which is what
