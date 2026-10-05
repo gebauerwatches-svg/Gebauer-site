@@ -55,8 +55,15 @@ const VARIANT_UNITS = { cherry: 250, ebony: 50 }
 // REMOVE the ebony entry the moment Scott picks. Holding 16 of only 50 ebony
 // indefinitely is real inventory sitting idle.
 const NAMED_HOLDS = {
-  ebony: [16],  // Scott OMeara, pending his choice. Set Sep 28 2026.
+  cherry: [2],      // Liam's grandmother, pending her choice. Set Oct 5 2026.
+  ebony: [2, 16],   // 2: Liam's grandmother. 16: Scott OMeara. Both pending.
 }
+
+// Note on #2: numbers 1-10 are already inside STRATEGIC_HOLD_MAX, so listing it
+// here does not change what a visitor can book. It is recorded anyway because
+// the blanket hold says "held" and says nothing about WHO for. That gap is
+// exactly how padauk #16 came to be attributed to the wrong Scott. A hold with
+// a name on it survives a handover; an anonymous one does not.
 
 
 // 'hinoki' is a LEGACY value. Hinoki was the pale variant until Aug 2026, when
