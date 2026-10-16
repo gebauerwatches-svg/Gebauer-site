@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
-import kitchenTable from './assets/kitchen-table.jpeg'
+import watchSketch from './assets/watch-sketch.png'
 import watchEbony from './assets/tokiji-ebony-render.jpeg'
 import ravenSimple from './assets/raven-simple.png'
 import ravenMinimal from './assets/raven-minimal.png'
@@ -599,22 +599,46 @@ function App() {
         )}
       </nav>
 
-      {/* 1. HERO — emotional hook */}
-      <section className="hero">
-        <img className="hero-img" src={kitchenTable} alt="The table where Gebauer is being built, with tools and sketches" />
+      {/* 1. HERO — emotional hook.
+
+          The kitchen-table photo came out Oct 16 2026 and Liam's sketch of the
+          watch went in. The sketch cannot do the job the photo did. The photo
+          was a full-bleed background: object-fit:cover, stretched edge to edge
+          under a dark overlay so white type stayed readable. The sketch is
+          pencil on white paper at 512x383. Stretched across a 100vh hero it
+          upscales roughly 3x into mush, the crop eats the bracelet on a phone,
+          and the overlay that makes the type legible is the exact thing that
+          drowns fine pencil line.
+
+          So the hero stops being a backdrop and becomes a split: type on one
+          side, drawing on the other, shown whole at a size the file can
+          actually carry. Stacks on mobile with the drawing first.
+
+          The paper panel is deliberate. A white rectangle floating on a dark
+          page reads as a mistake; a warm panel with a border reads as a sheet
+          of paper, which is what it is.
+
+          To revert: put <img className="hero-img" src={photo}> back as the
+          first child and drop the hero-split wrapper. */}
+      <section className="hero hero-split">
         <div className="hero-overlay" />
-        <div className="hero-content">
-          <h1 className="hero-headline fade-in">
-            Help me build this.
-          </h1>
-          <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
-          <div className="hero-buttons fade-in-delay-2">
-            <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
-            <a href="#story" className="hero-stats-btn">Hear the Story</a>
-            {email && (
-              <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
-            )}
+        <div className="hero-split-inner">
+          <div className="hero-content">
+            <h1 className="hero-headline fade-in">
+              Help me build this.
+            </h1>
+            <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
+            <div className="hero-buttons fade-in-delay-2">
+              <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
+              <a href="#story" className="hero-stats-btn">Hear the Story</a>
+              {email && (
+                <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
+              )}
+            </div>
           </div>
+          <figure className="hero-sketch fade-in-delay-1">
+            <img src={watchSketch} alt="Liam's pencil sketch of the Gebauer watch, three-quarter view on its steel bracelet" />
+          </figure>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
@@ -664,7 +688,11 @@ function App() {
       <Reveal className="story-beat story-dark" id="watches">
         <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
           <p className="watches-pre-label">First Edition · 300 only · Numbered</p>
-          <h2 className="story-beat-headline">Three woods. Three stories. No two have ever been the same.</h2>
+          {/* Two, not three. Padauk was cut Sep 24 2026; the wood grid below
+              has been two woods since then and only this headline still said
+              three. "No two dials" rather than "no two", because "Two woods.
+              Two stories. No two..." trips over itself. */}
+          <h2 className="story-beat-headline">Two woods. Two stories. No two dials have ever been the same.</h2>
           <p className="story-beat-text">Each dial is cut from a real tree. The grain is the design.</p>
           <div className="origin-badge">
             <div className="origin-col">

@@ -105,6 +105,49 @@
 .scroll-hint-line { width: 1px; height: 28px; background: var(--text-secondary); }
 @keyframes bob { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(8px); } }
 
+/* ---- Hero split -------------------------------------------------------
+   For a hero carrying a DRAWING rather than a photograph. A photo can be a
+   full-bleed background behind the type; a pencil sketch on white paper
+   cannot, because the dark overlay that keeps white type readable is also
+   what kills fine pencil line. So the art gets its own column instead of
+   sitting underneath the words. See the comment on <section className="hero
+   hero-split"> in App.jsx for the full reasoning and how to revert. */
+.hero-split { height: auto; padding: 104px 0 88px; }
+.hero-split .hero-split-inner {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+  gap: 56px; width: 100%; max-width: 1120px; padding: 0 28px;
+}
+.hero-split .hero-content { max-width: none; padding: 0; align-items: flex-start; text-align: left; }
+.hero-split .hero-headline { max-width: none; }
+.hero-split .hero-tagline { margin-left: 0; }
+.hero-split .hero-buttons { justify-content: flex-start; flex-wrap: wrap; }
+
+/* A bare white rectangle on a dark page reads as a rendering fault. Warm
+   paper stock with a hairline edge and a drop shadow reads as a sheet of
+   paper lying on the page, which is what it is. */
+.hero-sketch {
+  margin: 0; background: #f4f1ea; padding: 20px;
+  border: 1px solid rgba(240, 236, 229, 0.12);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+/* The drawing is 512x383 and that is all the resolution there is. Capping at
+   its native width means it letterboxes on a wide screen instead of
+   upscaling into softness. Drop in a higher-resolution scan and this cap can
+   come up. */
+.hero-sketch img { display: block; width: 100%; max-width: 512px; height: auto; margin: 0 auto; }
+
+@media (max-width: 900px) {
+  .hero-split { padding: 88px 0 72px; }
+  .hero-split .hero-split-inner { grid-template-columns: 1fr; gap: 32px; max-width: 520px; }
+  /* Drawing first on a phone. It is the thing worth seeing, and it leaves the
+     buttons near the bottom of the screen where a thumb already is. */
+  .hero-split .hero-sketch { order: -1; padding: 14px; }
+  .hero-split .hero-content { align-items: center; text-align: center; }
+  .hero-split .hero-tagline { margin-left: auto; margin-right: auto; }
+  .hero-split .hero-buttons { justify-content: center; }
+}
+
 
 /* ===========================================
    STORY BEATS — the scroll narrative
@@ -879,7 +922,11 @@
 .wood-headline em { font-style: italic; color: var(--purple); }
 .wood-sub { font-family: 'Inter', sans-serif; font-weight: 300; font-size: 15px; color: var(--text-warm); text-align: center; margin-bottom: 56px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
 
-.wood-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; max-width: 920px; margin: 0 auto; }
+/* Two columns since padauk was cut. It was repeat(3, 1fr) at 920px, which
+   left the two remaining cards in columns 1 and 2 with a dead third column,
+   so the row read as off-centre rather than centred. 640px is 920 minus one
+   card and one gap, so the cards keep exactly the width they had. */
+.wood-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; max-width: 640px; margin: 0 auto; }
 @media (max-width: 768px) { .wood-grid { grid-template-columns: 1fr; gap: 28px; max-width: 320px; } }
 
 .wood-card { background: var(--bg-card); overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; border: 1px solid rgba(240, 236, 229, 0.06); text-align: center; }
