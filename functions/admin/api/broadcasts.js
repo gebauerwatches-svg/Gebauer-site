@@ -18,12 +18,44 @@ function checkVoiceGuard(subject, body) {
   return hits
 }
 
-// Tiny markdown -> HTML. Handles paragraphs, **bold**, *italic*, [text](url).
+// The email body table is 560px wide with 32px of padding each side, so the
+// usable content column is 496px. Images are sized to exactly that.
+const CONTENT_WIDTH = 496
+
+const escapeAttr = (s) => String(s)
+  .replace(/&/g, '&amp;').replace(/"/g, '&quot;')
+  .replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
+// Only absolute http(s) URLs. An image in an email has to be fetched by the
+// recipient's mail client, so a relative path or a local file path silently
+// renders as a broken image for every single person on the list.
+const isSafeUrl = (u) => /^https:\/\/[^\s"'<>]+$/i.test(u) || /^http:\/\/[^\s"'<>]+$/i.test(u)
+
+function imgTag(alt, url) {
+  return `<img src="${escapeAttr(url)}" alt="${escapeAttr(alt)}" width="${CONTENT_WIDTH}" ` +
+    `style="display:block;width:100%;max-width:${CONTENT_WIDTH}px;height:auto;` +
+    `margin:0 auto 20px;border:0;outline:none;text-decoration:none;" />`
+}
+
+// Tiny markdown -> HTML. Handles paragraphs, **bold**, *italic*, [text](url),
+// and ![alt](url) images. Images must be matched BEFORE links, or the link
+// pattern claims the [alt](url) half and leaves a stray "!" in the email.
 function mdToHtml(md) {
   const parts = []
   for (const para of String(md).trim().split(/\n\n+/)) {
     let p = para.trim()
     if (!p) continue
+
+    // A paragraph that is nothing but an image becomes a bare block, with no
+    // surrounding <p> and no body-text margins pushing it off centre.
+    const lone = p.match(/^!\[([^\]]*)\]\(([^)]+)\)$/)
+    if (lone) {
+      if (isSafeUrl(lone[2])) { parts.push(imgTag(lone[1], lone[2])); continue }
+      parts.push(`<p style="margin:0 0 16px 0;font-family:Arial,sans-serif;font-size:13px;color:#b00;">[image skipped: "${escapeAttr(lone[2])}" is not an https:// link]</p>`)
+      continue
+    }
+
+    p = p.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, (m, alt, url) => isSafeUrl(url) ? imgTag(alt, url) : '')
     p = p.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
     p = p.replace(/\*(.+?)\*/g, '<em>$1</em>')
     p = p.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2" style="color:#d4a62a;">$1</a>')

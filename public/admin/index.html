@@ -566,6 +566,37 @@
       const clearDraft = () => { try { localStorage.removeItem(DRAFT_KEY) } catch {} }
       const draft = loadDraft()
 
+      // Photos you can drop into a broadcast. An email client fetches images
+      // over the network from the recipient's machine, so there is no such
+      // thing as attaching a file from this screen: the image has to already be
+      // live at a public URL. These are the files under public/images/, which
+      // are served from gebauerwatches.com once the site is deployed. Add a
+      // deployed image here and it shows up as a button.
+      const SITE_PHOTOS = [
+        { label: 'Ebony dial', alt: 'The ebony dial', url: 'https://gebauerwatches.com/images/samples-2026-10-14/ebony-dial.jpeg' },
+        { label: 'Cherry dial', alt: 'The cherry dial', url: 'https://gebauerwatches.com/images/samples-2026-10-14/cherry-dial.jpeg' },
+        { label: 'Caseback', alt: 'The engraved caseback', url: 'https://gebauerwatches.com/images/samples-2026-10-14/caseback.jpeg' },
+        { label: 'Crown', alt: 'The crown, engraved with the G logo', url: 'https://gebauerwatches.com/images/samples-2026-10-14/crown.jpeg' },
+        { label: 'Clasp', alt: 'The bracelet clasp', url: 'https://gebauerwatches.com/images/samples-2026-10-14/clasp.jpeg' },
+      ]
+
+      const insertAtCursor = (text) => {
+        const ta = $('#bc-body')
+        const start = ta.selectionStart ?? ta.value.length
+        const end = ta.selectionEnd ?? ta.value.length
+        const before = ta.value.slice(0, start)
+        const after = ta.value.slice(end)
+        // An image needs a blank line on each side or it lands mid-paragraph
+        // and renders inline next to the text instead of as its own block.
+        const pad = (s) => (s === '' || /\n\n$/.test(s) ? '' : (/\n$/.test(s) ? '\n' : '\n\n'))
+        const snippet = (before === '' ? '' : pad(before)) + text + (after === '' ? '\n' : '\n\n')
+        ta.value = before + snippet + after
+        const caret = before.length + snippet.length
+        ta.selectionStart = ta.selectionEnd = caret
+        ta.focus()
+        saveDraft()
+      }
+
       const composer = el('div', { class: 'composer' },
         el('h3', { class: 'page-title', style: 'font-size:20px;margin-bottom:12px;' }, 'New broadcast'),
         el('div', { class: 'field' },
@@ -573,13 +604,23 @@
           el('input', { type: 'text', id: 'bc-subject', placeholder: 'e.g. June 22 update', value: draft.subject || '', oninput: saveDraft }),
         ),
         el('div', { class: 'field' },
-          el('label', {}, 'Body (markdown). No em dashes — voice guard blocks them.'),
+          el('label', {}, 'Body (markdown). No em dashes, voice guard blocks them.'),
           (() => {
             const ta = el('textarea', { id: 'bc-body', placeholder: 'Hi everyone,\n\nWhat happened...\n\n-Liam', oninput: saveDraft })
             ta.value = draft.body || ''
             return ta
           })(),
         ),
+        el('div', { class: 'toolbar', style: 'margin-bottom:4px;align-items:center;flex-wrap:wrap;gap:6px;' },
+          el('span', { class: 'page-sub', style: 'margin:0 4px 0 0;' }, 'Insert photo:'),
+          ...SITE_PHOTOS.map(p => el('button', {
+            title: p.url,
+            onclick: () => insertAtCursor(`![${p.alt}](${p.url})`),
+          }, p.label)),
+        ),
+        el('p', { class: 'page-sub', style: 'margin:0 0 12px;' },
+          'Photos must already be deployed to the live site before they will load in anyone’s inbox. ' +
+          'Preview shows them from the live URL, so a broken image in the preview means a broken image in the email.'),
         el('div', { class: 'toolbar' },
           el('button', { onclick: async () => {
             const subject = $('#bc-subject').value
