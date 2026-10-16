@@ -643,44 +643,20 @@ function App() {
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
       </Reveal>
 
-      {/* Muninn. Sits between the proof strip and the watches on purpose: the
-          world first, then the artifacts that came out of it. The raven is
-          chemical-etched on every caseback regardless of wood, so it is the one
-          element that carries the brand rather than the choice.
+      {/* The Muninn beat was removed Oct 16 2026. It named Odin, Huginn and
+          Muninn and quoted Grimnismal, which pinned the caseback bird to Norse
+          mythology and made it a raven for good. The bird reads just as well as
+          an eagle, and leaving it unnamed keeps that open.
 
-          Deliberately a PALE block between two dark ones. The page goes dark,
-          then quiet and light here, then dark again for the watches. The break
-          is the point.
+          Removed rather than rewritten, deliberately. A block of that weight
+          has to earn its place with a story, and there isn't a replacement
+          story yet. A nameless bird with a vague caption is worse than no beat
+          at all, because the page goes quiet for a paragraph and pays nothing
+          back. The pale-between-two-dark rhythm is a real loss; if something
+          goes back in this slot, it should be pale.
 
-          The quote is Bellows' 1923 translation of Grimnismal, public domain,
-          hosted on Wikisource. Using the real stanza rather than a paraphrase
-          because a reader can go and check it, and because "my care is more"
-          is better than anything either of us would write.
-
-          Under-explained on purpose. It never connects the raven to memory,
-          milestones or gifts. The reader who makes that leap is the one who
-          repeats it. Do not expand this. */}
-      <Reveal className="raven-beat">
-        <div className="raven-inner">
-          <span className="raven-name">Muninn</span>
-          <p className="raven-intro">
-            Odin sent two ravens out every morning. Huginn, who was Thought,
-            and Muninn, who was Memory. He once said:
-          </p>
-          <blockquote className="raven-quote">
-            <p>
-              For Hugin I fear lest he come not home,<br />
-              But for Munin my care is more.
-            </p>
-          </blockquote>
-          <p className="raven-close">
-            There are two. This is the one on the back of your watch.
-          </p>
-          <span className="raven-cite">
-            Gr&iacute;mnism&aacute;l, stanza 20 &middot; trans. Bellows, 1923
-          </span>
-        </div>
-      </Reveal>
+          The .raven-* CSS in App.css is intentionally left in place so this can
+          be restored by putting the markup back. Nothing else uses it. */}
 
       {/* The watches. Sits directly under the hero and proof strip so cold traffic
           sees the product before the story, while the kitchen-table hero stays first.
@@ -769,7 +745,7 @@ function App() {
                 ['bracelet', 'Bracelet', ['316L stainless steel', '20 mm lug width', 'Butterfly clasp']],
                 ['hands', 'Hands', ['Dauphine', 'Luminescent']],
                 ['glass', 'Glass', ['Sapphire crystal', 'Flat, not domed', 'Anti-reflective']],
-                ['caseback', 'Caseback', ['Chemically etched raven', 'Numbered within its wood', 'Assembled in Japan']],
+                ['caseback', 'Caseback', ['Chemically etched bird', 'Numbered within its wood', 'Assembled in Japan']],
                 // '100 of each wood' removed Sep 24 2026: with padauk cut it
                 // implied a 200-piece edition against the 300 stated above.
                 // The real split is not publishable until the factory confirms
@@ -787,7 +763,7 @@ function App() {
 
             <img
               src="/images/caseback.png"
-              alt="Gebauer caseback: an etched raven above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
+              alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
               style={{ display: 'block', width: '100%', maxWidth: 240, height: 'auto', margin: '56px auto 0' }}
             />
 

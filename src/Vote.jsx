@@ -4,9 +4,12 @@ import './Vote.css'
 
 // Active poll - update this when you want to change the question
 const ACTIVE_POLL = {
+  // The id stays 'raven-caseback-style' even though the copy no longer says
+  // raven. Votes already cast are stored against this id, so renaming it would
+  // orphan them and restart the count at zero.
   id: 'raven-caseback-style',
-  question: "We're deciding on the raven caseback. Which direction should we go?",
-  context: "The raven is Huginn, one of Odin's ravens from Norse mythology. It gets engraved on the back of every watch, right below the edition number. You'll see it every time you take the watch off.",
+  question: "We're deciding on the caseback bird. Which direction should we go?",
+  context: "The bird is chemical-etched on the back of every watch, right below the edition number. You'll see it every time you take the watch off.",
   options: [
     { id: 'detailed', label: 'Detailed', desc: 'Realistic feather texture and depth. Intricate.' },
     { id: 'simplified', label: 'Simplified', desc: 'Clean lines, almost abstract. Bold silhouette.' },
