@@ -112,7 +112,24 @@
    what kills fine pencil line. So the art gets its own column instead of
    sitting underneath the words. See the comment on <section className="hero
    hero-split"> in App.jsx for the full reasoning and how to revert. */
-.hero-split { height: auto; padding: 104px 0 88px; }
+/* Cream, matching .story-cream and the rest of the light sections. A drawing
+   on paper belongs on a light page; the dark hero was built for a photograph.
+   Every colour below is flipped for it, and all of it is scoped to
+   .hero-split so the dark .hero rules still stand if a photo hero returns. */
+.hero-split { height: auto; padding: 104px 0 88px; background: var(--bg-cream); }
+/* The overlay exists to hold white type up against a photograph. On cream it
+   has nothing to do but dirty the paper. */
+.hero-split .hero-overlay { display: none; }
+.hero-split .hero-headline { color: var(--text-dark); }
+.hero-split .hero-tagline { color: var(--text-warm); }
+.hero-split .hero-sub { color: var(--text-warm); opacity: 1; }
+/* --gold on cream is too pale to read; --gold-muted is the darker one. */
+.hero-split .hero-stats-btn { color: var(--text-dark); border-color: rgba(26, 23, 20, 0.2); }
+.hero-split .hero-stats-btn:hover { border-color: var(--gold-muted); color: var(--gold-muted); }
+.hero-split .hero-count { color: var(--text-muted); opacity: 0.7; }
+/* 0.15 opacity was tuned against near-black. On cream it disappears. */
+.hero-split .scroll-hint { opacity: 0.4; }
+.hero-split .scroll-hint-line { background: var(--text-muted); }
 .hero-split .hero-split-inner {
   position: relative; z-index: 2;
   display: grid; grid-template-columns: 1fr 1fr; align-items: center;
@@ -123,13 +140,15 @@
 .hero-split .hero-tagline { margin-left: 0; }
 .hero-split .hero-buttons { justify-content: flex-start; flex-wrap: wrap; }
 
-/* A bare white rectangle on a dark page reads as a rendering fault. Warm
-   paper stock with a hairline edge and a drop shadow reads as a sheet of
-   paper lying on the page, which is what it is. */
+/* The panel reads as a sheet of paper lying on the page, which is what it is.
+   It has to be LIGHTER than the hero now, not darker: --white against
+   --bg-cream. The old #f4f1ea was a hair off --bg-cream and would vanish into
+   it. The shadow does most of the lifting at this little contrast, so it is
+   warm and close rather than big and black. */
 .hero-sketch {
-  margin: 0; background: #f4f1ea; padding: 20px;
-  border: 1px solid rgba(240, 236, 229, 0.12);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  margin: 0; background: var(--white); padding: 20px;
+  border: 1px solid rgba(26, 23, 20, 0.1);
+  box-shadow: 0 18px 44px rgba(26, 23, 20, 0.13);
 }
 /* The drawing is 512x383 and that is all the resolution there is. Capping at
    its native width means it letterboxes on a wide screen instead of
