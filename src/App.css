@@ -87,7 +87,10 @@
 /* Hero with video */
 .hero { position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-dark); }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+/* object-position favours the right of the frame: the watch sits centre-right
+   in hero-train.jpeg, and a plain centre crop pushes it to the edge once a
+   16:9 image is covering a tall phone screen. */
+.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; z-index: 0; }
 .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.45) 0%, rgba(15, 13, 20, 0.75) 60%, rgba(15, 13, 20, 0.95) 100%); }
 .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 28px; max-width: 700px; }
 .hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(32px, 6vw, 56px); line-height: 1.12; color: var(--text-primary); margin-bottom: 24px; letter-spacing: -0.01em; max-width: 640px; }
@@ -1611,12 +1614,34 @@
    Four compact columns under the watches, icon stacked above the label.
    Two columns on tablets and phones. Icons are stroked heavier than a
    normal UI icon because thin lines go invisible on this background. */
+/* Photo column + spec column. The caseback photo is a 3:4 portrait, so it
+   gets a column of its own and fills it; the specs drop from four across to
+   two and sit alongside. Seven spec items in two columns is four rows, which
+   lands close to the photo's height, so neither side leaves a long gap. */
+.spec-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 56px;
+  align-items: center;
+  max-width: 1000px;
+  margin: 52px auto 0;
+}
+.spec-photo { margin: 0; }
+.spec-photo img { display: block; width: 100%; height: auto; }
+.spec-photo figcaption {
+  margin-top: 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
+  color: rgba(240, 232, 214, 0.5);
+  text-align: left;
+}
 .spec-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 38px 30px;
-  margin: 52px auto 0;
-  max-width: 1000px;
+  margin: 0;
   text-align: left;
 }
 .spec-item-icon {
@@ -1642,11 +1667,16 @@
   line-height: 1.72;
   color: rgba(240, 232, 214, 0.72);
 }
-@media (max-width: 1000px) {
-  .spec-grid { grid-template-columns: repeat(2, 1fr); gap: 34px 28px; max-width: 620px; }
+@media (max-width: 900px) {
+  /* Photo first, then the specs. Capped at 320px because a 3:4 portrait at
+     full phone width pushes the specs entirely below the fold. */
+  .spec-layout { grid-template-columns: 1fr; gap: 36px; max-width: 620px; justify-items: center; }
+  .spec-photo { max-width: 320px; }
+  .spec-photo figcaption { text-align: center; }
+  .spec-grid { gap: 34px 28px; width: 100%; }
 }
 @media (max-width: 560px) {
-  .spec-grid { gap: 28px 20px; margin-top: 40px; }
+  .spec-grid { gap: 28px 20px; }
   .spec-item-icon { width: 26px; height: 26px; margin-bottom: 10px; }
   .spec-item p { font-size: 13.5px; }
 }

@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
+import heroTrain from './assets/hero-train.jpeg'
+// Kept, unused: Liam's pencil sketch, which was the hero Oct 16-24 2026. Still
+// the best thing on hand for a quiet beat further down the page.
+// eslint-disable-next-line no-unused-vars
 import watchSketch from './assets/watch-sketch.png'
 // Real photograph, Oct 24 2026. Replaced tokiji-ebony-render.jpeg, which was a
 // factory render. Unwrapped, daylight, white cloth. The reddish-brown band
@@ -617,44 +621,35 @@ function App() {
 
       {/* 1. HERO — emotional hook.
 
-          The kitchen-table photo came out Oct 16 2026 and Liam's sketch of the
-          watch went in. The sketch cannot do the job the photo did. The photo
-          was a full-bleed background: object-fit:cover, stretched edge to edge
-          under a dark overlay so white type stayed readable. The sketch is
-          pencil on white paper at 512x383. Stretched across a 100vh hero it
-          upscales roughly 3x into mush, the crop eats the bracelet on a phone,
-          and the overlay that makes the type legible is the exact thing that
-          drowns fine pencil line.
+          Back to a full-bleed photograph Oct 24 2026, now a real one: the
+          watch on a newspaper by a train window. The cream split layout only
+          existed because the thing in the hero was a 512px pencil sketch,
+          which could not survive being stretched across 100vh under the dark
+          overlay that keeps white type readable. A photograph can, so the
+          hero returns to what it was built for.
 
-          So the hero stops being a backdrop and becomes a split: type on one
-          side, drawing on the other, shown whole at a size the file can
-          actually carry. Stacks on mobile with the drawing first.
+          Cherry dial on purpose. It is 250 of the 300 units, so it is the
+          watch most visitors would actually receive, and the grain reads at
+          hero size where the near-black ebony would not.
 
-          The paper panel is deliberate. A white rectangle floating on a dark
-          page reads as a mistake; a warm panel with a border reads as a sheet
-          of paper, which is what it is.
-
-          To revert: put <img className="hero-img" src={photo}> back as the
-          first child and drop the hero-split wrapper. */}
-      <section className="hero hero-split">
+          The sketch is still imported and still in assets. The cream
+          .hero-split rules are untouched in App.css, so that version is a
+          revert of this one block. */}
+      <section className="hero">
+        <img className="hero-img" src={heroTrain} alt="A Gebauer with a cherry wood dial resting on a newspaper by a train window, mountains beyond" />
         <div className="hero-overlay" />
-        <div className="hero-split-inner">
-          <div className="hero-content">
-            <h1 className="hero-headline fade-in">
-              Help me build this.
-            </h1>
-            <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
-            <div className="hero-buttons fade-in-delay-2">
-              <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
-              <a href="#story" className="hero-stats-btn">Hear the Story</a>
-              {email && (
-                <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
-              )}
-            </div>
+        <div className="hero-content">
+          <h1 className="hero-headline fade-in">
+            Help me build this.
+          </h1>
+          <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
+          <div className="hero-buttons fade-in-delay-2">
+            <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
+            <a href="#story" className="hero-stats-btn">Hear the Story</a>
+            {email && (
+              <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
+            )}
           </div>
-          <figure className="hero-sketch fade-in-delay-1">
-            <img src={watchSketch} alt="Liam's pencil sketch of the Gebauer watch, three-quarter view on its steel bracelet" />
-          </figure>
         </div>
         <div className="scroll-hint"><div className="scroll-hint-line" /></div>
       </section>
@@ -780,7 +775,21 @@ function App() {
           technical data sitting between the watches and their own reveal
           interrupted it. Sold first, evidence second. */}
       <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{maxWidth: 960, textAlign: 'center'}}>
+        <div className="story-beat-inner" style={{maxWidth: 1060, textAlign: 'center'}}>
+          {/* Photo BESIDE the specs, not under them. The caseback shot is a
+              3:4 portrait; sitting below a four-across grid it had to be
+              shrunk to stay in proportion, which threw away the engraving
+              that makes it worth showing. In its own column it runs tall at
+              full width and the spec list reflows to two columns next to it.
+              Collapses to photo-then-specs on narrow screens. */}
+          <div className="spec-layout">
+            <figure className="spec-photo">
+              <img
+                src="/images/caseback-photo.jpeg"
+                alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT, JAPAN MOVEMENT and the edition number around the edge"
+              />
+              <figcaption>Every caseback is numbered within its wood.</figcaption>
+            </figure>
             <div className="spec-grid">
               {[
                 ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
@@ -804,18 +813,7 @@ function App() {
                 </div>
               ))}
             </div>
-
-            {/* Real caseback photo, Oct 24 2026, replacing caseback.png (a
-                render). Wider than the render, so maxWidth goes 240 -> 420:
-                the engraving is legible in the photo and shrinking it to 240
-                throws that away. The sample reads 000 / 000; production casebacks
-                carry the real edition number. */}
-            <img
-              src="/images/caseback-photo.jpeg"
-              alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT, JAPAN MOVEMENT and the edition number around the edge"
-              style={{ display: 'block', width: '100%', maxWidth: 420, height: 'auto', margin: '56px auto 0' }}
-            />
-
+          </div>
         </div>
       </Reveal>
 
