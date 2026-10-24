@@ -1,7 +1,11 @@
 import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
 import watchSketch from './assets/watch-sketch.png'
-import watchEbony from './assets/tokiji-ebony-render.jpeg'
+// Real photograph, Oct 24 2026. Replaced tokiji-ebony-render.jpeg, which was a
+// factory render. Unwrapped, daylight, white cloth. The reddish-brown band
+// running through the near-black grain is real and is the best evidence on the
+// site for "no two dials are the same", so do not crop it out.
+import watchEbony from './assets/photo-ebony-dial.jpeg'
 import ravenSimple from './assets/raven-simple.png'
 import ravenMinimal from './assets/raven-minimal.png'
 import claspButterfly from './assets/polls/clasp-butterfly.png'
@@ -14,6 +18,16 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 // (unsourceable) and replaced by cherry, but no cherry render exists yet.
 // Showing a Hinoki dial labelled "Cherry" misrepresents the product. Replace
 // before the campaign, or before any outreach sends traffic here.
+// STILL THE HINOKI RENDER, and hinoki is a discontinued wood. A real
+// photograph of the light dial is sitting in assets as photo-light-dial.jpeg,
+// but it has NOT been confirmed as cherry rather than pau rosa. Liam's own
+// test is "pale yellow is cherry, orange is pau rosa"; white-balanced, that
+// dial measures hue 26deg at 40% saturation, which is in the orange band, and
+// the confirmed cherry sample from Oct 14 measured 34deg. Not conclusive,
+// because the two were shot in different light, but close enough to the
+// padauk mistake (copy describing one wood, photo showing another) that it
+// should not go live on a guess. ONE LINE to flip once Liam confirms:
+//   import watchCherry from './assets/photo-light-dial.jpeg'
 import watchCherry from './assets/tokiji-hinoki-render.jpeg'
 // Padauk renders (tokiji-padauk-render, padauk-aged, padauk-deep) are no longer
 // imported as of Sep 24 2026. The files are still in ./assets in case the red
@@ -789,10 +803,15 @@ function App() {
               ))}
             </div>
 
+            {/* Real caseback photo, Oct 24 2026, replacing caseback.png (a
+                render). Wider than the render, so maxWidth goes 240 -> 420:
+                the engraving is legible in the photo and shrinking it to 240
+                throws that away. The sample reads 000 / 000; production casebacks
+                carry the real edition number. */}
             <img
-              src="/images/caseback.png"
-              alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT and the edition number around the edge"
-              style={{ display: 'block', width: '100%', maxWidth: 240, height: 'auto', margin: '56px auto 0' }}
+              src="/images/caseback-photo.jpeg"
+              alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT, JAPAN MOVEMENT and the edition number around the edge"
+              style={{ display: 'block', width: '100%', maxWidth: 420, height: 'auto', margin: '56px auto 0' }}
             />
 
         </div>
