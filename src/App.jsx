@@ -18,17 +18,19 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 // (unsourceable) and replaced by cherry, but no cherry render exists yet.
 // Showing a Hinoki dial labelled "Cherry" misrepresents the product. Replace
 // before the campaign, or before any outreach sends traffic here.
-// STILL THE HINOKI RENDER, and hinoki is a discontinued wood. A real
-// photograph of the light dial is sitting in assets as photo-light-dial.jpeg,
-// but it has NOT been confirmed as cherry rather than pau rosa. Liam's own
-// test is "pale yellow is cherry, orange is pau rosa"; white-balanced, that
-// dial measures hue 26deg at 40% saturation, which is in the orange band, and
-// the confirmed cherry sample from Oct 14 measured 34deg. Not conclusive,
-// because the two were shot in different light, but close enough to the
-// padauk mistake (copy describing one wood, photo showing another) that it
-// should not go live on a guess. ONE LINE to flip once Liam confirms:
-//   import watchCherry from './assets/photo-light-dial.jpeg'
-import watchCherry from './assets/tokiji-hinoki-render.jpeg'
+// Real photograph, Oct 24 2026, replacing tokiji-hinoki-render.jpeg. Hinoki is
+// a discontinued wood, so the cherry card had been showing the wrong species
+// since September; a real dial is strictly better than that either way.
+//
+// UNVERIFIED SPECIES, and the card next to it is labelled "Cherry". Liam's own
+// test is "pale yellow is cherry, orange is pau rosa". White-balanced, this
+// dial measures hue 26deg at 40% saturation, inside the orange band, against
+// 34deg for the confirmed cherry sample from Oct 14. The two were shot under
+// different light so it is not conclusive, and Liam has both watches in hand
+// and is checking against the live page. If it turns out to be pau rosa this
+// has to come down immediately: pau rosa is not in the 250+50 run at all, and
+// a pau rosa photo under a Cherry label is the padauk mistake repeating.
+import watchCherry from './assets/photo-light-dial.jpeg'
 // Padauk renders (tokiji-padauk-render, padauk-aged, padauk-deep) are no longer
 // imported as of Sep 24 2026. The files are still in ./assets in case the red
 // wood returns in a later run, correctly named as pau rosa. See DECISIONS H13.
