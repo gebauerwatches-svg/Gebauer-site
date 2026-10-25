@@ -637,7 +637,7 @@ function App() {
           The sketch is still imported and still in assets. The cream
           .hero-split rules are untouched in App.css, so that version is a
           revert of this one block. */}
-      <section className="hero">
+      <section className="hero hero-wrist">
         <img className="hero-img" src={heroWrist} alt="Liam wearing the cherry Gebauer on his wrist, on the train to Lhasa" />
         <div className="hero-overlay" />
         <div className="hero-content">
