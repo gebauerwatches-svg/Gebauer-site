@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import logo from './assets/gebauer-logo.svg'
-import heroTrain from './assets/hero-train.jpeg'
+import heroWrist from './assets/hero-wrist.jpeg'
 // Kept, unused: Liam's pencil sketch, which was the hero Oct 16-24 2026. Still
 // the best thing on hand for a quiet beat further down the page.
 // eslint-disable-next-line no-unused-vars
@@ -34,7 +34,7 @@ import interiorMicrofiber from './assets/polls/interior-microfiber.jpeg'
 // and is checking against the live page. If it turns out to be pau rosa this
 // has to come down immediately: pau rosa is not in the 250+50 run at all, and
 // a pau rosa photo under a Cherry label is the padauk mistake repeating.
-import watchCherry from './assets/photo-light-dial.jpeg'
+import watchCherry from './assets/photo-cherry-dial.jpeg'
 // Padauk renders (tokiji-padauk-render, padauk-aged, padauk-deep) are no longer
 // imported as of Sep 24 2026. The files are still in ./assets in case the red
 // wood returns in a later run, correctly named as pau rosa. See DECISIONS H13.
@@ -621,12 +621,14 @@ function App() {
 
       {/* 1. HERO — emotional hook.
 
-          Back to a full-bleed photograph Oct 24 2026, now a real one: the
-          watch on a newspaper by a train window. The cream split layout only
-          existed because the thing in the hero was a 512px pencil sketch,
-          which could not survive being stretched across 100vh under the dark
-          overlay that keeps white type readable. A photograph can, so the
-          hero returns to what it was built for.
+          Full-bleed photograph again. The cream split layout only existed
+          because the thing in the hero was a 512px pencil sketch, which could
+          not survive being stretched across 100vh under the dark overlay that
+          keeps white type readable. A photograph can.
+
+          Wrist shot, not the flat lay: the headline is "Help me build this",
+          and a watch being worn by the person asking carries that where an
+          object on a table does not. Shot on the train to Lhasa.
 
           Cherry dial on purpose. It is 250 of the 300 units, so it is the
           watch most visitors would actually receive, and the grain reads at
@@ -636,7 +638,7 @@ function App() {
           .hero-split rules are untouched in App.css, so that version is a
           revert of this one block. */}
       <section className="hero">
-        <img className="hero-img" src={heroTrain} alt="A Gebauer with a cherry wood dial resting on a newspaper by a train window, mountains beyond" />
+        <img className="hero-img" src={heroWrist} alt="Liam wearing the cherry Gebauer on his wrist, on the train to Lhasa" />
         <div className="hero-overlay" />
         <div className="hero-content">
           <h1 className="hero-headline fade-in">
@@ -783,13 +785,6 @@ function App() {
               full width and the spec list reflows to two columns next to it.
               Collapses to photo-then-specs on narrow screens. */}
           <div className="spec-layout">
-            <figure className="spec-photo">
-              <img
-                src="/images/caseback-photo.jpeg"
-                alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT, JAPAN MOVEMENT and the edition number around the edge"
-              />
-              <figcaption>Every caseback is numbered within its wood.</figcaption>
-            </figure>
             <div className="spec-grid">
               {[
                 ['case', 'Case', ['316L stainless steel', '39 mm diameter', '10 mm thick', '44 mm lug to lug', '5 ATM water resistant']],
@@ -813,6 +808,13 @@ function App() {
                 </div>
               ))}
             </div>
+            <figure className="spec-photo">
+              <img
+                src="/images/caseback-photo.jpeg"
+                alt="Gebauer caseback: an etched bird above the wordmark, with ALL STAINLESS STEEL, 5 ATM WATER RESISTANT, JAPAN MOVEMENT and the edition number around the edge"
+              />
+              <figcaption>Every caseback is numbered within its wood.</figcaption>
+            </figure>
           </div>
         </div>
       </Reveal>

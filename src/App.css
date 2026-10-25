@@ -87,10 +87,10 @@
 /* Hero with video */
 .hero { position: relative; min-height: 100vh; min-height: 100dvh; display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--bg-dark); }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-/* object-position favours the right of the frame: the watch sits centre-right
-   in hero-train.jpeg, and a plain centre crop pushes it to the edge once a
-   16:9 image is covering a tall phone screen. */
-.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% center; z-index: 0; }
+/* object-position favours the left: the watch sits left of centre in
+   hero-wrist.jpeg, and a plain centre crop walks it off the edge once a 16:9
+   image has to cover a tall phone screen. */
+.hero-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 34% center; z-index: 0; }
 .hero-overlay { position: absolute; inset: 0; z-index: 1; background: radial-gradient(ellipse at 50% 45%, rgba(15, 13, 20, 0.45) 0%, rgba(15, 13, 20, 0.75) 60%, rgba(15, 13, 20, 0.95) 100%); }
 .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 28px; max-width: 700px; }
 .hero-headline { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: clamp(32px, 6vw, 56px); line-height: 1.12; color: var(--text-primary); margin-bottom: 24px; letter-spacing: -0.01em; max-width: 640px; }
@@ -954,7 +954,11 @@
 .wood-card { background: var(--bg-card); overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; border: 1px solid rgba(240, 236, 229, 0.06); text-align: center; }
 .wood-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3); }
 .wood-card-img { aspect-ratio: 1; overflow: hidden; background: var(--bg-deep); }
-.wood-card-img img { width: 115%; height: 115%; object-fit: cover; display: block; transition: transform 0.6s; margin: -7.5%; }
+/* 100%, not 115%. The 15% overscan was tuned for renders with empty margins;
+   against real photographs it cropped the crown off the right of the case and
+   cut the bracelet flush at top and bottom, so the watch read as though it
+   had been jammed into the card. The hover scale still gives the zoom. */
+.wood-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.6s; margin: 0; }
 .wood-card:hover .wood-card-img img { transform: scale(1.05); }
 .wood-card h3 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 22px; color: var(--text-primary); padding: 20px 20px 4px; }
 .wood-price { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--gold); letter-spacing: 0.1em; padding: 0 20px 8px; margin: 0; }
@@ -1614,13 +1618,18 @@
    Four compact columns under the watches, icon stacked above the label.
    Two columns on tablets and phones. Icons are stroked heavier than a
    normal UI icon because thin lines go invisible on this background. */
-/* Photo column + spec column. The caseback photo is a 3:4 portrait, so it
-   gets a column of its own and fills it; the specs drop from four across to
-   two and sit alongside. Seven spec items in two columns is four rows, which
-   lands close to the photo's height, so neither side leaves a long gap. */
+/* Specs left, photo right. The caseback shot is a 3:4 portrait, so it gets a
+   column of its own and fills it; the specs drop from four across to two and
+   sit alongside. Seven spec items in two columns is four rows, which lands
+   close to the photo's height, so neither side leaves a long gap.
+
+   Photo on the RIGHT, matching the reading order: the spec list is the claim
+   and the engraving is the evidence, so the eye should land on the words
+   first. DOM order is specs then photo, which also means the photo falls
+   below the specs rather than above them once this stacks. */
 .spec-layout {
   display: grid;
-  grid-template-columns: minmax(260px, 340px) 1fr;
+  grid-template-columns: 1fr minmax(260px, 340px);
   gap: 56px;
   align-items: center;
   max-width: 1000px;
@@ -1668,8 +1677,8 @@
   color: rgba(240, 232, 214, 0.72);
 }
 @media (max-width: 900px) {
-  /* Photo first, then the specs. Capped at 320px because a 3:4 portrait at
-     full phone width pushes the specs entirely below the fold. */
+  /* Specs then photo, following DOM order. Capped at 320px because a 3:4
+     portrait at full phone width eats most of a screen on its own. */
   .spec-layout { grid-template-columns: 1fr; gap: 36px; max-width: 620px; justify-items: center; }
   .spec-photo { max-width: 320px; }
   .spec-photo figcaption { text-align: center; }
