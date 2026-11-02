@@ -726,8 +726,8 @@ function App() {
           </div>
           <div className="wood-grid">
             {[
-              { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$339', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
-              { id: 'cherry', img: watchCherry, name: 'Cherry', price: '$339', desc: 'The wood American families passed down. Shaker chests, grandfather clocks. Starts pale and darkens to deep reddish brown, most of it in the first year.' },
+              { id: 'ebony', img: watchEbony, name: 'Black Ebony', price: '$379', desc: 'Rarer than gold in ancient Egypt. Used for Tutankhamun\'s chair. Razor-thin grain, nearly black. Permanent.' },
+              { id: 'cherry', img: watchCherry, name: 'Cherry', price: '$379', desc: 'The wood American families passed down. Shaker chests, grandfather clocks. Starts pale and darkens to deep reddish brown, most of it in the first year.' },
             ].map(w => (
               <div key={w.id} className="wood-card">
                 <div className="wood-card-img"><img src={w.img} alt={w.name} /></div>

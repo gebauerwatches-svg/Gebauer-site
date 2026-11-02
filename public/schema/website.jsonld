@@ -35,7 +35,7 @@
         "name": "Cherry Watch",
         "offers": {
           "@type": "Offer",
-          "price": "339",
+          "price": "379",
           "priceCurrency": "USD"
         }
       },
@@ -44,7 +44,7 @@
         "name": "Black Ebony Watch",
         "offers": {
           "@type": "Offer",
-          "price": "339",
+          "price": "379",
           "priceCurrency": "USD"
         }
       }

@@ -502,8 +502,8 @@
               // rows keep rendering and nothing new can be assigned to it.
               return el('select', { id: 'edit-wood' },
                 el('option', { value: '', selected: sel === '' ? 'true' : null }, 'No wood set'),
-                el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($339)'),
-                el('option', { value: 'ebony', selected: sel === 'ebony' ? 'true' : null }, 'Black Ebony ($339)'),
+                el('option', { value: 'cherry', selected: sel === 'cherry' ? 'true' : null }, 'Cherry ($379)'),
+                el('option', { value: 'ebony', selected: sel === 'ebony' ? 'true' : null }, 'Black Ebony ($379)'),
                 ...(sel === 'padauk'
                   ? [el('option', { value: 'padauk', selected: 'true' }, 'African Padauk (CUT, legacy record)')]
                   : []),
@@ -1010,8 +1010,8 @@
       const autoAssign = buildAutoAssignments(avail, items)
 
       const WOOD_LABEL = {
-        cherry: 'Cherry ($339)', hinoki: 'Cherry ($339)', ebony: 'Black Ebony ($339)',
-        padauk: 'African Padauk ($339)', unsure: 'Not sure',
+        cherry: 'Cherry ($379)', hinoki: 'Cherry ($379)', ebony: 'Black Ebony ($379)',
+        padauk: 'African Padauk ($379)', unsure: 'Not sure',
       }
 
       function statusPill(s) {
