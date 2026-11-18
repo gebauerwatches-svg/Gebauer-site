@@ -641,10 +641,16 @@ function App() {
         <img className="hero-img" src={heroWrist} alt="Liam wearing the cherry Gebauer on his wrist, on the train to Lhasa" />
         <div className="hero-overlay" />
         <div className="hero-content">
+          {/* Hero rewritten Nov 18 2026. "Help me build this" and the
+              remember/forget tagline were both written for people who already
+              knew the brand, and the page's first three seconds read as a club
+              a cold visitor was not in. That line was not deleted, it moved
+              down to the "you're early" beat where it is actually true. The
+              new pair faces the buyer instead: a parent marking a chapter. */}
           <h1 className="hero-headline fade-in">
-            Help me build this.
+            Some years change a person.
           </h1>
-          <p className="hero-tagline fade-in-delay-1">A Gebauer doesn't just remember. It refuses to forget.</p>
+          <p className="hero-tagline fade-in-delay-1">This is how you mark one.</p>
           <div className="hero-buttons fade-in-delay-2">
             <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
             <a href="#story" className="hero-stats-btn">Hear the Story</a>
@@ -694,6 +700,28 @@ function App() {
 
           The .raven-* CSS in App.css is intentionally left in place so this can
           be restored by putting the markup back. Nothing else uses it. */}
+
+      {/* The gift gap. Added Nov 18 2026, into the pale slot the Muninn beat
+          left open above. A cold visitor is usually a parent, and this puts
+          them inside their own memory before they meet the product or the
+          founder story.
+
+          Deliberately carries no statistics. The graduation-gift numbers
+          ($6.8B, the class ring collapse) stay down in the story beat, where
+          they are the payoff of a personal realization rather than an argument
+          aimed at the reader. Up here a stat invites you to assess a claim; a
+          memory just lands, and every visitor has given cash to someone.
+
+          Also deliberately not a swipe at cash. Everyone reading this has
+          given it, including the founder, so the block concedes that cash is a
+          good gift and locates the gap in the occasion instead. */}
+      <Reveal className="story-beat story-cream" id="gift-gap">
+        <div className="story-beat-inner" style={{maxWidth: 700, textAlign: 'center'}}>
+          <h2 className="story-beat-headline">We&rsquo;ve all given cash.</h2>
+          <p className="story-beat-text">Cash and gift cards are good gifts. People want them, people use them, and nobody is disappointed. But a few months later the money is gone, and the day it was meant to mark has nothing left to show for it.</p>
+          <p className="story-beat-text">That gap is what Gebauer is for.</p>
+        </div>
+      </Reveal>
 
       {/* The watches. Sits directly under the hero and proof strip so cold traffic
           sees the product before the story, while the kitchen-table hero stays first.
@@ -922,8 +950,12 @@ function App() {
       {/* SCENE 9 - you're early. Updated 2026-07-14 to remove references to a live poll that no longer exists. */}
       <Reveal className="story-beat story-dark">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">You're early.</h2>
-          <p className="story-beat-text">Kickstarter opens early next year. You're not joining a finished thing, you're walking in mid-build.</p>
+          {/* Took the old hero headline Nov 18 2026. "Help me build this" is a
+              community ask, not a buyer ask, so it belongs here rather than in
+              the first three seconds of the page. "You're early" folded into
+              the body so neither line was lost. */}
+          <h2 className="story-beat-headline">Help me build this.</h2>
+          <p className="story-beat-text">You're early. Kickstarter opens early next year. You're not joining a finished thing, you're walking in mid-build.</p>
         </div>
       </Reveal>
 
