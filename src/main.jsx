@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import Vote from './Vote.jsx'
 import Privacy from './Privacy.jsx'
+import Story from './Story.jsx'
 
 class ErrorBoundary extends Component {
   constructor(props) { super(props); this.state = { error: null } }
@@ -32,11 +33,15 @@ const path = window.location.pathname
 // shipping to every visitor. Both files stay in the repo.
 const isVote = path === '/vote' || path.startsWith('/vote/')
 const isPrivacy = path === '/privacy' || path.startsWith('/privacy/')
+// /story added Nov 18 2026. Carries the five founder-story beats that came off
+// the homepage. Needs a matching 200 rewrite in public/_redirects, or Cloudflare
+// serves 404.html for it.
+const isStory = path === '/story' || path.startsWith('/story/')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <ErrorBoundary>
-      {isPrivacy ? <Privacy /> : isVote ? <Vote /> : <App />}
+      {isPrivacy ? <Privacy /> : isVote ? <Vote /> : isStory ? <Story /> : <App />}
     </ErrorBoundary>
   </StrictMode>,
 )

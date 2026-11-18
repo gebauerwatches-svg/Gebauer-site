@@ -18,3 +18,26 @@ http://gebauerwatches.com/*      https://gebauerwatches.com/:splat 301!
 # one. The URL is kept alive because it is in llms.txt and was mailed out.
 /specs   /#watches   301
 /specs/  /#watches   301
+
+# SPA routes, added Nov 18 2026 with /story.
+#
+# These are rewrites, not redirects: the URL stays put and Cloudflare serves
+# the freshly built index.html, so React boots and main.jsx picks the route off
+# window.location.pathname.
+#
+# Without them Cloudflare falls through to public/404.html, which is a stale
+# hand-copied shell hardcoding /assets/index-BUdVLOXM.js. Vite content-hashes
+# that filename on every build, so the reference died the next time anyone ran
+# one. Verified Nov 18 2026: gebauerwatches.com/privacy returned 404 and
+# pointed at that missing bundle, meaning the privacy policy linked in the
+# footer rendered a blank page. These rules fix that for all three routes.
+#
+# Deliberately NOT a /* catch-all. A catch-all would answer genuinely missing
+# URLs with 200 and the homepage, which is the soft-404 problem the /blog rules
+# above exist to avoid. New SPA routes get a line here.
+/story     /index.html  200
+/story/*   /index.html  200
+/privacy   /index.html  200
+/privacy/* /index.html  200
+/vote      /index.html  200
+/vote/*    /index.html  200

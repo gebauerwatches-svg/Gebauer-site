@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { FALLBACK_WAITLIST_COUNT, founderAgeNow } from './founder.js'
 import logo from './assets/gebauer-logo.svg'
 import heroWrist from './assets/hero-wrist.jpeg'
 // Kept, unused: Liam's pencil sketch, which was the hero Oct 16-24 2026. Still
@@ -56,18 +57,8 @@ const POLL_IMAGES = {
 // by Liam, not earned through referrals. Historical referral_count data
 // preserved in D1 but the UI no longer displays it.
 
-const FALLBACK_WAITLIST_COUNT = 152
 
-// Founder's age is COMPUTED, never hardcoded. The story keeps the founding
-// moment in past tense ("when I was 14") so it never decays; this is the one
-// present-tense fact on the page and it updates itself. Born May 2011; exact
-// day unknown, so it ticks over on June 1 and never overstates his age.
-const FOUNDER_BIRTH_YEAR = 2011
-const FOUNDER_BIRTH_MONTH = 5 // May
-function founderAgeNow(now = new Date()) {
-  const past = now.getMonth() + 1 > FOUNDER_BIRTH_MONTH
-  return now.getFullYear() - FOUNDER_BIRTH_YEAR - (past ? 0 : 1)
-}
+
 
 // Wood choices for the insider vote card. Matches the wood vote API which
 // expects lowercase keys (ebony, cherry). Images use the existing
@@ -121,7 +112,10 @@ function useScrollReveal() {
   return ref
 }
 
-function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
+// Exported Nov 18 2026 for Story.jsx. The 'reveal' class starts at opacity 0
+// and useScrollReveal is what flips it, so a plain <section> with the same
+// story-beat classes would render invisible on the story page.
+export function Reveal({ as: Tag = 'section', className = '', children, ...props }) {
   const ref = useScrollReveal()
   return <Tag ref={ref} className={`reveal ${className}`} {...props}>{children}</Tag>
 }
@@ -301,11 +295,10 @@ function App() {
   const [pollVote, setPollVote] = useState('')
   const [pollSubmitted, setPollSubmitted] = useState(false)
   const [pollGated, setPollGated] = useState(false)
-  const [milestoneStory, setMilestoneStory] = useState('')
+  // milestoneStory, myMoment, communityStories and storyCount all went with the
+  // moments wall Nov 18 2026. hasSubmittedStory stays because the dormant poll
+  // block still gates on it.
   const [hasSubmittedStory, setHasSubmittedStory] = useState(() => localStorage.getItem('gebauer_story_submitted') === 'true')
-  const [myMoment, setMyMoment] = useState(() => localStorage.getItem('gebauer_my_moment') || '')
-  const [communityStories, setCommunityStories] = useState([])
-  const [storyCount, setStoryCount] = useState(0)
 
   // Generate a voter ID for preventing double votes
   const getVoterId = () => {
@@ -317,21 +310,19 @@ function App() {
   // Fetch vote results and active poll on mount
   useEffect(() => {
     fetch('/api/vote?poll=wood').then(r => r.json()).then(d => { if (d.results) setWoodResults(d.results) }).catch(() => {})
-    fetch('/api/stories').then(r => r.json()).then(d => {
-      if (d.stories) setCommunityStories(d.stories)
-      if (d.count) setStoryCount(d.count)
-    }).catch(() => {})
-    // Check if current user has submitted a story (persists across devices)
+    // The /api/stories fetch went with the moments wall Nov 18 2026. Nothing
+    // renders other people's moments now, so pulling them on every page load
+    // was a request for data no one sees.
+    // Check if current user has submitted a story (persists across devices).
+    // Still runs because the dormant poll block gates on hasSubmittedStory.
+    // The gebauer_my_moment mirror went with the wall: nothing displays a
+    // moment now, so there is nothing to hydrate.
     const savedEmail = localStorage.getItem('gebauer_email')
     if (savedEmail && !localStorage.getItem('gebauer_story_submitted')) {
       fetch(`/api/check-story?email=${encodeURIComponent(savedEmail)}`).then(r => r.json()).then(d => {
         if (d.has_story) {
           localStorage.setItem('gebauer_story_submitted', 'true')
           setHasSubmittedStory(true)
-          if (d.story && !localStorage.getItem('gebauer_my_moment')) {
-            localStorage.setItem('gebauer_my_moment', d.story)
-            setMyMoment(d.story)
-          }
         }
       }).catch(() => {})
     }
@@ -502,7 +493,6 @@ function App() {
           first_name: firstName,
           email,
           honeypot,
-          milestone_story: milestoneStory || undefined,
         }),
       })
 
@@ -522,34 +512,6 @@ function App() {
           localStorage.setItem('gebauer_email', email.trim().toLowerCase())
           localStorage.setItem('gebauer_name', firstName.trim())
           localStorage.setItem('gebauer_last_email', email.trim().toLowerCase())
-          if (milestoneStory.trim()) {
-            // Save story separately for existing users
-            // Only reflect what the server actually did. This used to add the
-            // story to the list and bump the count regardless of the response,
-            // so a failed or ignored save still looked like it had worked.
-            fetch('/api/submit-story', {
-              method: 'POST', headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: email.trim().toLowerCase(), first_name: firstName.trim(), story: milestoneStory.trim() }),
-            })
-              .then(r => r.json())
-              .then(d => {
-                if (!d || !d.ok) return
-                localStorage.setItem('gebauer_story_submitted', 'true')
-                localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
-                setHasSubmittedStory(true)
-                setMyMoment(milestoneStory.trim())
-                if (d.updated) {
-                  // Replaced an existing moment: swap the text, do not double count.
-                  setCommunityStories(prev => prev.map(x =>
-                    x.name === firstName.trim().split(' ')[0]
-                      ? { ...x, story: milestoneStory.trim() } : x))
-                } else {
-                  setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
-                  setStoryCount(prev => prev + 1)
-                }
-              })
-              .catch(() => {})
-          }
           fetchStats(email.trim().toLowerCase())
           setShowSignup(false)
           if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
@@ -561,14 +523,6 @@ function App() {
         localStorage.setItem('gebauer_email', email.trim().toLowerCase())
         localStorage.setItem('gebauer_name', firstName.trim())
         localStorage.setItem('gebauer_last_email', email.trim().toLowerCase())
-        if (milestoneStory.trim()) {
-          localStorage.setItem('gebauer_story_submitted', 'true')
-          localStorage.setItem('gebauer_my_moment', milestoneStory.trim())
-          setHasSubmittedStory(true)
-          setMyMoment(milestoneStory.trim())
-          setCommunityStories(prev => [{ name: firstName.trim().split(' ')[0], story: milestoneStory.trim() }, ...prev])
-          setStoryCount(prev => prev + 1)
-        }
         fetchStats(email.trim().toLowerCase())
         if (pendingVote) { setWoodVote(pendingVote); setPendingVote('') }
         setLayer('inside')
@@ -877,80 +831,22 @@ function App() {
         </div>
       </Reveal>
 
-      {/* SCENE 2 — Liam's own gift card pain. Specific (middle school grad), embarrassing, relatable. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I started getting gift cards.</h2>
-          <p className="story-beat-text">I spent one on a plant that just sits in my room, another on a book I half read, and another on some pants I grew out of. My middle school graduation gift card bought a snack at the airport. They were all nice. None of them marked anything.</p>
-        </div>
-      </Reveal>
-
-      {/* THE PROBLEM. Sits between his own gift-card story and the insight,
-          because without it the page reads as "one kid got annoying gift cards
-          so he started a watch company". This is the beat that widens it from
-          a personal grudge to a category that collapsed.
-
-          Every figure here was already written in index.html, the crawler
-          fallback, and nowhere in the app. Google could read the strongest
-          argument on this site and a human visitor could not.
-
-          Cash and gift cards are shown SEPARATELY on purpose. They are shares
-          of gifts, not of dollars, and respondents can pick both, so adding
-          them to reach one big number would be double counting. */}
-      <Reveal className="story-beat story-cream" id="problem">
-        <div className="story-beat-inner">
-          <h2 className="story-beat-headline">Then I realized it wasn&rsquo;t just me.</h2>
-          <p className="story-beat-text">Class rings used to be the object you got. Two decades ago around 65% of high school sophomores bought one. By the 2010s it was 20 to 30%, according to a Jostens representative. I have never seen a single person at my school with one.</p>
-
-          <div className="stats-bar-inner problem-stats">
-            <div className="stats-bar-item">
-              <span className="stats-bar-num">$6.8B</span>
-              <span className="stats-bar-label">Spent on graduation gifts</span>
-            </div>
-            <div className="stats-bar-item">
-              <span className="stats-bar-num">20&ndash;30%</span>
-              <span className="stats-bar-label">Sophomores with a class ring, from 65%</span>
-            </div>
-            <div className="stats-bar-item">
-              <span className="stats-bar-num">Over half</span>
-              <span className="stats-bar-label">Of graduation gifts are cash</span>
-            </div>
-          </div>
-
-          <p className="story-beat-text">The money never went anywhere. Graduation gift spending just hit a record. Cash is the single most popular gift and it turns up in more than half of them, with gift cards in another 31%. So the spending stayed exactly where it was. The object is the part that disappeared.</p>
-          <p className="problem-cite">Spending and gift data: National Retail Federation. Class ring figures: Jostens.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 3 — the insight. Tees up the watches reveal that comes immediately after. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">Then I put it together.</h2>
-          <p className="story-beat-text">A watch with a real wood dial. Something that lasts, that you can't spend, and that you'd actually want to wear. So I started designing it.</p>
-        </div>
-      </Reveal>
-
       {/* SCENE 5 — vulnerability. The kid had no clue. */}
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">But I had no idea where to start.</h2>
           <p className="story-beat-text">I was fourteen and I didn't run a watch company. I emailed manufacturers in five countries and most of them ignored me. Then one in Japan wrote back. Then one in Italy. I'm {founderAge} now, and they are making the first 300.</p>
-        </div>
-      </Reveal>
+          {/* Five beats moved to /story Nov 18 2026: the gift cards, the class
+              ring collapse and its citations, "then I put it together", "I told
+              my friends" and "that's when it became us". Nothing was deleted,
+              Story.jsx renders all eight in order.
 
-      {/* SCENE 6 — community emerges as the natural answer, not a marketing pitch. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">I told my friends. They told their friends.</h2>
-          <p className="story-beat-text">{waitlistCount} people signed up before I had a single sample to show. They started asking what I was actually making. So I asked them back.</p>
-        </div>
-      </Reveal>
-
-      {/* SCENE 7 — "we" not "me". Updated 2026-07-14 to replace outdated voting claims with real conversation data. */}
-      <Reveal className="story-beat story-dark">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">That's when it became us. Not me.</h2>
-          <p className="story-beat-text">I've had one-on-one conversations with over 60 of them. Every question, every "what if you..." shaped what I built.</p>
+              The homepage keeps the smartwatch, Milan and this one. Those three
+              carry the whole arc: a gift that did not land, an object that did,
+              and what it took to make one. Eight first-person sections between
+              the specifications and the CTA was the longest stretch on the page
+              and a visitor who had already decided had to scroll all of it. */}
+          <a href="/story" className="story-cta">Read the whole story</a>
         </div>
       </Reveal>
 
@@ -1090,46 +986,22 @@ function App() {
         </Reveal>
       )}
 
-      {/* SCENE 11 - the wall. Pinned moments from OGs. Yours could be next. */}
-      <Reveal className="story-beat story-cream">
-        <div className="story-beat-inner" style={{textAlign: 'center'}}>
-          <h2 className="story-beat-headline">These are pinned on the wall.</h2>
-          {/* Unlocked Nov 18 2026. The wall used to be hidden behind
-              hasSubmittedStory, so a first-time visitor saw "Share your moment
-              to read theirs" and an empty box. Other people's moments are the
-              reason to write one, and withholding them until you pay in first
-              is backwards. The wall now always renders; only the "YOUR MOMENT"
-              card is conditional, and the CTA shows to people who have not
-              written one yet. */}
-          {myMoment && (
-            <div className="my-moment-card">
-              <p className="my-moment-label">YOUR MOMENT</p>
-              <p className="my-moment-text">"{myMoment}"</p>
-              <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
-            </div>
-          )}
-          {communityStories.length > 0 && (
-            <div className="community-stories">
-              {/* No slice. This was .slice(0, 6) while the line directly
-                  below printed the real total, so with 7 moments the page
-                  said "7 moments submitted" above a grid of 6 and the
-                  oldest one was invisible. /api/stories already caps at 20
-                  and sorts newest first, so the display is bounded there
-                  rather than silently hiding a real person here. */}
-              {communityStories.map((s, i) => (
-                <div key={i} className="community-story">
-                  <p className="community-story-text">"{s.story}"</p>
-                  <p className="community-story-name">{s.name}</p>
-                </div>
-              ))}
-            </div>
-          )}
-          <p className="story-count-line">{storyCount > 0 ? `${storyCount} moments submitted. 300 watches.` : '300 watches.'}</p>
-          {!hasSubmittedStory && (
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Add yours</button>
-          )}
-        </div>
-      </Reveal>
+      {/* SCENE 11, the moments wall, removed Nov 18 2026.
+
+          The whole moments mechanic is gone from the page, not just unlocked.
+          Asking a stranger for a personal memory before they have bought
+          anything is a strange way to open a relationship, and it was the main
+          thing standing between a visitor and the waitlist. The wall also had
+          nothing to show a first-time visitor but other people's memories,
+          which is a weak reason to scroll.
+
+          The client side is fully removed: the textarea, the state, the
+          /api/stories fetch and the posting branches in handleSubmit are all
+          gone. Nothing was deleted server side. /api/submit-story,
+          /api/stories and /api/check-story still work and every moment people
+          already wrote is still in D1, so this is reversible without data
+          loss. The .my-moment-*, .community-stor* and .moments-locked rules
+          are left in App.css for the same reason. */}
 
       {/* The door */}
       <Reveal className="story-beat story-dark story-center">
@@ -1142,7 +1014,10 @@ function App() {
             <span className="og-label">watches</span>
           </div>
           <h2 className="story-beat-headline">This is the door.</h2>
-          <p className="story-beat-text">Beyond it: the next vote, the next drop, the card that ships in your box with the moment you submitted. 300 watches. Numbered in the order people joined. Once 300 is gone, it's gone.</p>
+          {/* Rewritten Nov 18 2026. This promised "the card that ships in your
+              box with the moment you submitted", which stopped being true when
+              the moments mechanic came off the page. */}
+          <p className="story-beat-text">Beyond it: the Kickstarter before it opens, the build as it happens, and your pick of wood and number. 300 watches. Numbered in the order people joined. Once 300 is gone, it's gone.</p>
           <div className="invitation-buttons">
             {/* "Share My Moment" relabelled Nov 18 2026 to match the signup
                 modal, which now asks for a name and an email and treats the
@@ -1222,11 +1097,10 @@ function App() {
                   <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
                   <div><label htmlFor="firstName">Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
                   <div><label htmlFor="email">Email</label><input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} /></div>
-                  <div><label htmlFor="milestoneStory">A moment worth marking (optional)</label><textarea id="milestoneStory" placeholder="One sentence is enough." value={milestoneStory} onChange={(e) => setMilestoneStory(e.target.value)} maxLength={500} rows={2} className="signup-story" /></div>
                   {error && <p className="signup-error">{error}</p>}
                   <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the waitlist'}</button>
                 </form>
-                <p className="signup-count">Share a moment and it gets printed on a card and placed inside your box.</p>
+                <p className="signup-count">No charge, and nothing to commit to. You can pick your wood and number later.</p>
               </>
             )}
           </div>
