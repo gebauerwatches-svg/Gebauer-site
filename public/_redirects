@@ -32,12 +32,18 @@ http://gebauerwatches.com/*      https://gebauerwatches.com/:splat 301!
 # pointed at that missing bundle, meaning the privacy policy linked in the
 # footer rendered a blank page. These rules fix that for all three routes.
 #
+# The target is / and NOT /index.html. Cloudflare Pages normalizes a request
+# for /index.html into a 308 redirect to /, and it applies that to the rewrite
+# target too, so "/story /index.html 200" shipped as a 308 from /story to the
+# homepage. Verified against production Nov 18 2026. Rewriting to / keeps the
+# 200 and the URL, which is what main.jsx reads to pick the route.
+#
 # Deliberately NOT a /* catch-all. A catch-all would answer genuinely missing
 # URLs with 200 and the homepage, which is the soft-404 problem the /blog rules
 # above exist to avoid. New SPA routes get a line here.
-/story     /index.html  200
-/story/*   /index.html  200
-/privacy   /index.html  200
-/privacy/* /index.html  200
-/vote      /index.html  200
-/vote/*    /index.html  200
+/story     /  200
+/story/*   /  200
+/privacy   /  200
+/privacy/* /  200
+/vote      /  200
+/vote/*    /  200
