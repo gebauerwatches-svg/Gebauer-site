@@ -652,8 +652,12 @@ function App() {
           </h1>
           <p className="hero-tagline fade-in-delay-1">This is how you mark one.</p>
           <div className="hero-buttons fade-in-delay-2">
+            {/* Secondary button repointed Nov 18 2026 from #story to #watches.
+                A cold visitor's second question is what the thing is and what
+                it costs, not how the founder got here. The story is still one
+                scroll further down for anyone who wants it. */}
             <a href="/reserve" className="hero-cta-btn">Reserve a Watch</a>
-            <a href="#story" className="hero-stats-btn">Hear the Story</a>
+            <a href="#watches" className="hero-stats-btn">See the watch</a>
             {email && (
               <button className="hero-stats-btn" onClick={() => setShowStats(true)}>My Spot</button>
             )}
@@ -668,19 +672,22 @@ function App() {
           scarcity on the right, no math that subtracts one from the other. */}
       <Reveal className="proof-strip" as="section">
         <div className="proof-strip-inner">
+          {/* Relabelled Nov 18 2026. "OGs already in" and "moments shared" were
+              the second thing a visitor saw, and both are insider words. A
+              parent shopping for a graduation gift reads "OGs" and concludes
+              the site is not for them. The waitlist number is real social proof
+              and stays, under a label anyone can read. The moments stat is gone
+              rather than relabelled: it measures participation in a thing a new
+              visitor has not heard of yet, and two stats sit better than three
+              against the sub-line below. */}
           <div className="proof-stat">
             <span className="proof-stat-num">{waitlistCount}</span>
-            <span className="proof-stat-label">OGs already in</span>
-          </div>
-          <div className="proof-divider" />
-          <div className="proof-stat">
-            <span className="proof-stat-num">{storyCount > 0 ? storyCount : '-'}</span>
-            <span className="proof-stat-label">moments shared</span>
+            <span className="proof-stat-label">on the waitlist</span>
           </div>
           <div className="proof-divider" />
           <div className="proof-stat">
             <span className="proof-stat-num">300</span>
-            <span className="proof-stat-label">first edition watches</span>
+            <span className="proof-stat-label">numbered watches</span>
           </div>
         </div>
         <p className="proof-strip-sub">First edition. 300 watches. Numbered. Never made again.</p>
@@ -892,7 +899,7 @@ function App() {
           them to reach one big number would be double counting. */}
       <Reveal className="story-beat story-cream" id="problem">
         <div className="story-beat-inner">
-          <h2 className="story-beat-headline">Then I realised it wasn&rsquo;t just me.</h2>
+          <h2 className="story-beat-headline">Then I realized it wasn&rsquo;t just me.</h2>
           <p className="story-beat-text">Class rings used to be the object you got. Two decades ago around 65% of high school sophomores bought one. By the 2010s it was 20 to 30%, according to a Jostens representative. I have never seen a single person at my school with one.</p>
 
           <div className="stats-bar-inner problem-stats">
@@ -1137,13 +1144,17 @@ function App() {
           <h2 className="story-beat-headline">This is the door.</h2>
           <p className="story-beat-text">Beyond it: the next vote, the next drop, the card that ships in your box with the moment you submitted. 300 watches. Numbered in the order people joined. Once 300 is gone, it's gone.</p>
           <div className="invitation-buttons">
-            <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
+            {/* "Share My Moment" relabelled Nov 18 2026 to match the signup
+                modal, which now asks for a name and an email and treats the
+                moment as optional. The button promised a different thing from
+                what the form does. */}
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Join the waitlist</button>
             {email && (
               <button className="story-share" onClick={() => setShowStats(true)}>Check My Status</button>
             )}
             <button className="story-share" onClick={(e) => {
               if (navigator.share) {
-                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials. Built in Colorado. I\'m one of the OGs.', url: 'https://gebauerwatches.com' })
+                navigator.share({ title: 'Gebauer Watches', text: '300 watches. Real wood dials, no two the same. Assembled in Japan.', url: 'https://gebauerwatches.com' })
               } else {
                 navigator.clipboard.writeText('https://gebauerwatches.com')
                 e.currentTarget.textContent = 'Link Copied'
