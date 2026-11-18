@@ -955,7 +955,10 @@ function App() {
               the first three seconds of the page. "You're early" folded into
               the body so neither line was lost. */}
           <h2 className="story-beat-headline">Help me build this.</h2>
-          <p className="story-beat-text">You're early. Kickstarter opens early next year. You're not joining a finished thing, you're walking in mid-build.</p>
+          {/* "early next year" was left over from the February 2027 Kickstarter
+              plan and contradicted the roadmap above, which says June 2027.
+              Pinned to the roadmap Nov 18 2026 so the page states one date. */}
+          <p className="story-beat-text">You're early. Kickstarter opens June 2027. You're not joining a finished thing, you're walking in mid-build.</p>
         </div>
       </Reveal>
 
@@ -1084,39 +1087,39 @@ function App() {
       <Reveal className="story-beat story-cream">
         <div className="story-beat-inner" style={{textAlign: 'center'}}>
           <h2 className="story-beat-headline">These are pinned on the wall.</h2>
-          {hasSubmittedStory ? (
-            <>
-              {myMoment && (
-                <div className="my-moment-card">
-                  <p className="my-moment-label">YOUR MOMENT</p>
-                  <p className="my-moment-text">"{myMoment}"</p>
-                  <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
-                </div>
-              )}
-              {communityStories.length > 0 && (
-                <div className="community-stories">
-                  {/* No slice. This was .slice(0, 6) while the line directly
-                      below printed the real total, so with 7 moments the page
-                      said "7 moments submitted" above a grid of 6 and the
-                      oldest one was invisible. /api/stories already caps at 20
-                      and sorts newest first, so the display is bounded there
-                      rather than silently hiding a real person here. */}
-                  {communityStories.map((s, i) => (
-                    <div key={i} className="community-story">
-                      <p className="community-story-text">"{s.story}"</p>
-                      <p className="community-story-name">{s.name}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <p className="story-count-line">{storyCount} moments submitted. 300 watches.</p>
-            </>
-          ) : (
-            <div className="moments-locked">
-              <p className="moments-locked-count">{storyCount > 0 ? `${storyCount} moments shared so far.` : 'Be the first to share yours.'}</p>
-              <p className="moments-locked-msg">Share your moment to read theirs.</p>
-              <button className="story-cta" onClick={() => setShowSignup(true)}>Share My Moment</button>
+          {/* Unlocked Nov 18 2026. The wall used to be hidden behind
+              hasSubmittedStory, so a first-time visitor saw "Share your moment
+              to read theirs" and an empty box. Other people's moments are the
+              reason to write one, and withholding them until you pay in first
+              is backwards. The wall now always renders; only the "YOUR MOMENT"
+              card is conditional, and the CTA shows to people who have not
+              written one yet. */}
+          {myMoment && (
+            <div className="my-moment-card">
+              <p className="my-moment-label">YOUR MOMENT</p>
+              <p className="my-moment-text">"{myMoment}"</p>
+              <p className="my-moment-note">Printed on a card. Placed inside your box.</p>
             </div>
+          )}
+          {communityStories.length > 0 && (
+            <div className="community-stories">
+              {/* No slice. This was .slice(0, 6) while the line directly
+                  below printed the real total, so with 7 moments the page
+                  said "7 moments submitted" above a grid of 6 and the
+                  oldest one was invisible. /api/stories already caps at 20
+                  and sorts newest first, so the display is bounded there
+                  rather than silently hiding a real person here. */}
+              {communityStories.map((s, i) => (
+                <div key={i} className="community-story">
+                  <p className="community-story-text">"{s.story}"</p>
+                  <p className="community-story-name">{s.name}</p>
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="story-count-line">{storyCount > 0 ? `${storyCount} moments submitted. 300 watches.` : '300 watches.'}</p>
+          {!hasSubmittedStory && (
+            <button className="story-cta" onClick={() => setShowSignup(true)}>Add yours</button>
           )}
         </div>
       </Reveal>
@@ -1191,17 +1194,28 @@ function App() {
               </>
             ) : (
               <>
-                <h2>If you could relive one moment, which one?</h2>
-                <p className="signup-sub">That's what Gebauer is for. The moments worth holding onto.</p>
+                {/* Reworked Nov 18 2026. The moment field was always optional,
+                    but the headline asked for a memory, the textarea sat above
+                    the name field, and the button said "Submit My Moment", so
+                    the whole thing read as a toll gate. Someone who just wants
+                    to be told when the Kickstarter opens should not have to
+                    decide whether to hand over a personal story first.
+
+                    Field order is now name, email, moment. The moment stays,
+                    demoted and plainly optional, and the card in the box is
+                    named here so sharing reads as a perk rather than a price
+                    of entry. */}
+                <h2>Join the waitlist.</h2>
+                <p className="signup-sub">You'll hear before the Kickstarter opens, and you can hold a wood and a number.</p>
                 <form className="signup-form" onSubmit={handleSubmit}>
                   <div className="honeypot" aria-hidden="true"><input type="text" name="website" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" /></div>
-                  <div><label htmlFor="milestoneStory">Your moment</label><textarea id="milestoneStory" placeholder="One sentence is enough." value={milestoneStory} onChange={(e) => setMilestoneStory(e.target.value)} maxLength={500} rows={2} className="signup-story" /></div>
                   <div><label htmlFor="firstName">Name</label><input id="firstName" type="text" placeholder="Your name" value={firstName} onChange={(e) => setFirstName(e.target.value)} required maxLength={100} /></div>
                   <div><label htmlFor="email">Email</label><input id="email" type="email" placeholder="Your email" value={email} onChange={(e) => setEmail(e.target.value)} required maxLength={255} /></div>
+                  <div><label htmlFor="milestoneStory">A moment worth marking (optional)</label><textarea id="milestoneStory" placeholder="One sentence is enough." value={milestoneStory} onChange={(e) => setMilestoneStory(e.target.value)} maxLength={500} rows={2} className="signup-story" /></div>
                   {error && <p className="signup-error">{error}</p>}
-                  <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Submit My Moment'}</button>
+                  <button type="submit" className="signup-submit" disabled={loading}>{loading ? 'Joining...' : 'Join the waitlist'}</button>
                 </form>
-                <p className="signup-count">You don't have to share. But those who do get deeper access.</p>
+                <p className="signup-count">Share a moment and it gets printed on a card and placed inside your box.</p>
               </>
             )}
           </div>
