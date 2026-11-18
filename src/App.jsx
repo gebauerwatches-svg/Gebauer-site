@@ -133,7 +133,7 @@ function InsiderView({ firstName, onBack }) {
   const [timeline, setTimeline] = useState([
     { id: 'design',      label: 'Design locked',         when: 'June 2026',     status: 'done' },
     { id: 'samples',     label: 'Samples arrive',        when: 'In progress',   status: 'current' },
-    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'June 2027',     status: 'upcoming' },
+    { id: 'kickstarter', label: 'Kickstarter launches',  when: 'Feb-Mar 2027',  status: 'upcoming' },
     { id: 'ship',        label: 'Watches ship',          when: 'Later 2027',    status: 'upcoming' },
   ])
 
@@ -858,10 +858,12 @@ function App() {
               the first three seconds of the page. "You're early" folded into
               the body so neither line was lost. */}
           <h2 className="story-beat-headline">Help me build this.</h2>
-          {/* "early next year" was left over from the February 2027 Kickstarter
-              plan and contradicted the roadmap above, which says June 2027.
-              Pinned to the roadmap Nov 18 2026 so the page states one date. */}
-          <p className="story-beat-text">You're early. Kickstarter opens June 2027. You're not joining a finished thing, you're walking in mid-build.</p>
+          {/* One date, stated the same way everywhere. Was "early next year",
+              then June 2027 for a day; Liam moved it to Feb-Mar 2027 on Nov 18
+              2026. The roadmap above, /api/timeline's fallback and this line
+              all have to agree, and the timeline is also editable from /admin,
+              so check there if the page still shows an old date. */}
+          <p className="story-beat-text">You're early. Kickstarter opens February or March 2027. You're not joining a finished thing, you're walking in mid-build.</p>
         </div>
       </Reveal>
 
